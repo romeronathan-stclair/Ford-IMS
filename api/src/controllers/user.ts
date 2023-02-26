@@ -3,6 +3,7 @@ import { check, validationResult } from "express-validator";
 import passport from "passport";
 import { User, UserDocument, Invite } from "../models";
 import passwordSchema from "../utils/passwordValidator";
+
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
     await check("password", "Password cannot be blank").isLength({ min: 1 }).run(req);

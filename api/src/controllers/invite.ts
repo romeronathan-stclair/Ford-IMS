@@ -6,17 +6,20 @@ import { Charset } from "../enums/charset";
 
 export const sendInvite = async (req: Request, res: Response) => {
     await check("email", "Email is not valid").isEmail().run(req);
-    await check("adminType", "adminType missing").isString().run(req);
     await check("plants", "plants missing").isArray().run(req);
-    await check("plants.departments", "plants.departments missing").isArray().run(req);
+    await check("adminType", "adminType missing").isString().run(req);
 
     // Check thats plants exist
     const plants = req.body.plants;
     const departments = [];
     if (plants) {
+       
         for (const p of plants) {
-            const plant = await Plant.find({ _id: p.plantId, isDeleted: false });
+          
+            const plant = await Plant.findOne({ _id: p.plantId, isDeleted: false });
+            console.log(plant);
             if (!plant) {
+                
                 return res.status(500).json("Plant being invited to does not exist.");
             }
             departments.push(p.departments);
@@ -25,7 +28,7 @@ export const sendInvite = async (req: Request, res: Response) => {
 
     if(departments) {
         for (const d of departments) {
-            const department = await Department.find({ _id: d, isDeleted: false });
+            const department = await Department.findOne({ _id: d, isDeleted: false });
             if (!department) {
                 return res.status(500).json("Department being invited to does not exist.");
             }
@@ -54,16 +57,19 @@ export const sendInvite = async (req: Request, res: Response) => {
 
   
     const email: string = req.body.email;
-    const adminType: string = req.body.role;
+    const adminType: string = req.body.adminType;
     const token: string = createRandomToken(6, Charset.NUMERIC);
     const validUntilDate = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000);
 
-    const newInviteLink: InviteDocument = new Invite();
-    newInviteLink.email = email;
-    newInviteLink.token = token;
-    newInviteLink.adminType = adminType;
-    newInviteLink.validUntilDate = validUntilDate;
-    newInviteLink.isDeleted = false;
+    const newInviteLink: InviteDocument = new Invite({
+        email: email,
+        token: token,
+        adminType: adminType,
+        validUntilDate: validUntilDate,
+        isDeleted: false,
+        isUsed: false,
+        plants: plants
+    });
  
 
 

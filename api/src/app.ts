@@ -7,8 +7,10 @@ import MongoStore from "connect-mongo";
 import passport from 'passport';
 import { configPassport } from './config/passport';
 
+import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 
+import * as inviteController from "./controllers/invite";
 const router: Router = express.Router();
 
 const app = express();
@@ -48,6 +50,8 @@ app.get("/health", (req, res) => {
 
 router.post("/auth/signup/dev", userController.signupUnsafe);
 router.post("/auth/signin", userController.signin);
+
+router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
 
 
