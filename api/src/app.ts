@@ -7,6 +7,7 @@ import MongoStore from "connect-mongo";
 import passport from 'passport';
 import { configPassport } from './config/passport';
 
+import * as userController from "./controllers/user";
 
 const router: Router = express.Router();
 
@@ -33,15 +34,19 @@ const sessionOptions: SessionOptions = {
 const expressSession: RequestHandler = session(sessionOptions);
 connectMongoDB(env.db.fullUrl);
 configPassport();
+app.use(expressSession);
 
 app.use(passport.initialize());
-
 app.use(passport.session());
-app.use(expressSession);
+
 app.use(`/${env.app.prefix}`, router);
 
 app.get("/health", (req, res) => {
     return res.status(200).json({ status: "UP" });
 });
+
+
+router.post("/auth/signup/dev", userController.signupUnsafe);
+
 const server: HttpServer =  http.createServer(app);
 export default server;
