@@ -4,6 +4,9 @@ import env from './utils/env';
 import session, { SessionOptions, CookieOptions } from "express-session";
 import { connectMongoDB } from "./config/mongoose";
 import MongoStore from "connect-mongo";
+import passport from 'passport';
+import { configPassport } from './config/passport';
+
 
 const router: Router = express.Router();
 
@@ -29,7 +32,11 @@ const sessionOptions: SessionOptions = {
 };
 const expressSession: RequestHandler = session(sessionOptions);
 connectMongoDB(env.db.fullUrl);
+configPassport();
 
+app.use(passport.initialize());
+
+app.use(passport.session());
 app.use(expressSession);
 app.use(`/${env.app.prefix}`, router);
 
