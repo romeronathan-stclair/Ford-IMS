@@ -158,6 +158,16 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
     });
 };
 
+export const logout = async (req: Request, res: Response) => {
+    req.session.destroy(() => {
+        
+        req.logout(function(err) {
+            if (err) { return res.sendStatus(500); }
+            res.redirect('/');
+          });
+        return res.sendStatus(204);
+    });
+};
 
 
 
