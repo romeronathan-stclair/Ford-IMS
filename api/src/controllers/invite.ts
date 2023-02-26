@@ -11,23 +11,25 @@ export const sendInvite = async (req: Request, res: Response) => {
 
     // Check thats plants exist
     const plants = req.body.plants;
-    const departments = [];
+    const departments: string[] = [];
     if (plants) {
        
         for (const p of plants) {
-          
+            console.log(p);
+            departments.concat(p.departments);
             const plant = await Plant.findOne({ _id: p.plantId, isDeleted: false });
-            console.log(plant);
+ 
             if (!plant) {
                 
                 return res.status(500).json("Plant being invited to does not exist.");
             }
-            departments.push(p.departments);
+            
         }
     }
 
     if(departments) {
         for (const d of departments) {
+            console.log(d);
             const department = await Department.findOne({ _id: d, isDeleted: false });
             if (!department) {
                 return res.status(500).json("Department being invited to does not exist.");
