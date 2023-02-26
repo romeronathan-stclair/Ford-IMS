@@ -46,8 +46,12 @@ app.get("/health", (req, res) => {
     return res.status(200).json({ status: "UP" });
 });
 
-
 router.post("/auth/signup/dev", userController.signupUnsafe);
+router.post("/auth/signin", userController.signin);
+
+
+
+
 
 const server: HttpServer =  http.createServer(app);
 export default server;
