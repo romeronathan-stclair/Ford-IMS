@@ -52,6 +52,9 @@ router.post("/auth/signup/dev", userController.signupUnsafe);
 router.post("/auth/signin", userController.signin);
 router.post("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
+router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
+router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController.getUserById);
+
 
 
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);

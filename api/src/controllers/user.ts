@@ -192,3 +192,22 @@ export const updateUser = async (req: Request, res: Response) => {
     }
 };
 
+
+export const getUser = (req: Request, res: Response) => {
+    const user: UserDocument = req.user as UserDocument;
+    return res.json(user);
+};
+// get user by id
+export const getUserById = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isMongoId().run(req);
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+    }
+    const user = await User.findOne({ _id: req.params.id, isDeleted: false });
+    if (!user) {
+        return res.status(500).json("User does not exist");
+    }
+    return res.json(user);
+
+};
