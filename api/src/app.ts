@@ -1,19 +1,19 @@
-import express from 'express';
+import express, { Router } from 'express';
 import http, { Server as HttpServer } from "http";
+import env from './utils/env';
+import session, { SessionOptions, CookieOptions } from "express-session";
+import expressSession from 'express-session';
 
+const router: Router = express.Router();
 
 
 const app = express();
-const port = 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.use(expressSession);
+app.use(`/${env.app.prefix}`, router);
+
+app.get("/health", (req, res) => {
+    return res.status(200).json({ status: "UP" });
 });
-
-app.listen(port, () => {
-  return console.log(`Express is listening at http://localhost:${port}`);
-});
-
 const server: HttpServer =  http.createServer(app);
-
 export default server;
