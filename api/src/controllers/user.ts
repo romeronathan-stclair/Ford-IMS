@@ -91,25 +91,9 @@ export const signupUnsafe = async (req: Request, res: Response, next: NextFuncti
     });
 };
 
-export const logout = async (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
-    const sessionId: String = req.sessionID;
 
 
-    req.session.destroy(() => {
-        
-        req.logout(function(err) {
-            if (err) { return res.sendStatus(500); }
-            res.redirect('/');
-          });
-        return res.sendStatus(204);
-    });
-};
 
-export const getUser = (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
-    return res.json(user);
-};
 
 
 

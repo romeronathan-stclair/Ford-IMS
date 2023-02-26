@@ -26,14 +26,13 @@ const InviteSchema = new Schema<InviteDocument>({
         type: String,
         required: true,
     },
-    plantId: {
-        type: [String],
-        required: false,
-    },
-    departmentId: {
-        type: [String],
-        required: false,
-    },
+    plants: [{
+        plantId: {
+            type: String,
+            required: true,
+        },
+        departments: [String],
+    }],
     validUntilDate: {
         type: Date,
         required: true,
