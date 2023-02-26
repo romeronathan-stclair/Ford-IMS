@@ -170,6 +170,25 @@ export const logout = async (req: Request, res: Response) => {
 };
 
 
+export const updateUser = async (req: Request, res: Response) => {
+    const user: UserDocument = req.user as UserDocument;
 
+    if (!user) {
+        return res.status(500).json("User does not exist");
+    }
 
+    const { name, email } = req.body;
+
+    user.name = name || user.name;
+    user.email = email || user.email;
+
+    
+
+    try {
+        await user.save();
+        res.json(user);
+    } catch (err) {
+        return res.status(500).json({ err });
+    }
+};
 

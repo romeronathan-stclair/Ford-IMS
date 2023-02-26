@@ -51,6 +51,7 @@ app.get("/health", (req, res) => {
 router.post("/auth/signup/dev", userController.signupUnsafe);
 router.post("/auth/signin", userController.signin);
 router.post("/auth/signout", userController.logout);
+router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
 
 
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
