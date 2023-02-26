@@ -34,6 +34,7 @@ const sessionOptions: SessionOptions = {
 const expressSession: RequestHandler = session(sessionOptions);
 connectMongoDB(env.db.fullUrl);
 configPassport();
+app.use(express.json());
 app.use(expressSession);
 
 app.use(passport.initialize());

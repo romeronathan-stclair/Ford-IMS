@@ -3,10 +3,6 @@ import { check, validationResult } from "express-validator";
 import passport from "passport";
 import { User, UserDocument, Invite } from "../models";
 import passwordSchema from "../utils/passwordValidator";
-import { createRandomToken } from "../utils/randomGenerator";
-import bcrypt from "bcrypt";
-
-
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
     await check("password", "Password cannot be blank").isLength({ min: 1 }).run(req);
@@ -41,8 +37,7 @@ export const signin = async (req: Request, res: Response, next: NextFunction) =>
 export const signupUnsafe = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
     await check("password", "Password is missing").not().isEmpty().run(req);
-    await check("firstName", "firstName is not valid").isLength({ min: 1 }).run(req);
-    await check("lastName", "lastName is not valid").isLength({ min: 1 }).run(req);
+    await check("name", "Name is not valid").isLength({ min: 1 }).run(req);
 
     const errors = validationResult(req);
 
@@ -59,13 +54,11 @@ export const signupUnsafe = async (req: Request, res: Response, next: NextFuncti
     }
   
     const user = new User({
-        name: req.body.firstName + " " + req.body.lastName,
+        name: req.body.name,
         password: req.body.password,
         email: req.body.email,
         plants: req.body.plants,
         role: req.body.role,
-        deactivatedDate: req.body.deactivatedDate,
-  
     });
 
     User.findOne({ email: req.body.email }, (err: NativeError, existingUser: UserDocument) => {
