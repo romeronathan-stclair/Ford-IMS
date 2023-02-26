@@ -10,6 +10,7 @@ export type UserDocument = Document & {
     plants: [{
         plantId: string;
         departments: [String];
+        isActive: boolean;
     }]
     role: string;
     deactivatedDate: Date;
@@ -18,11 +19,7 @@ export type UserDocument = Document & {
 };
 
 const userSchema = new Schema<UserDocument>({
-    firstName: {
-        type: String,
-        required: true,
-    },
-    lastName: {
+    name: {
         type: String,
         required: true,
     },
@@ -42,6 +39,10 @@ const userSchema = new Schema<UserDocument>({
             required: false,
         },
         departments: [String],
+        isActive: {
+            type: Boolean,
+            required: true,
+        },
     }],
     role: {
         type: String,
