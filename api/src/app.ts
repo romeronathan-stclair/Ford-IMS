@@ -75,6 +75,11 @@ router.delete("/auth/department/:id", authMiddleware.isAuthenticated, department
 
 //stock routes
 router.post("/auth/stock", authMiddleware.isAuthenticated, stockController.createStock);
+router.get("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.getStockById);
+router.get("/auth/stocks", authMiddleware.isAuthenticated, stockController.getAllStocks);
+router.get("/auth/stocks/department/:id", authMiddleware.isAuthenticated, stockController.getStockByDepartmentId);
+router.get("/auth/stocks/name/:name", authMiddleware.isAuthenticated, stockController.getStockByName);
+router.get("/auth/stocks/partNumber/:partNumber", authMiddleware.isAuthenticated, stockController.getStockByPartNumber);
 
 
 const server: HttpServer =  http.createServer(app);

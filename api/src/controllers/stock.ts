@@ -70,3 +70,90 @@ export const createStock = async (req: Request, res: Response) => {
     }
 
 };
+
+//get Stock by Id
+export const getStockById = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({min: 1}).run(req);
+
+    //find Stock by Id
+    const stock: StockDocument = (await Stock.findOne({
+        _id: req.body.id,
+        isDeleted: false
+    })) as StockDocument;
+
+    if (!stock) {
+        return res.status(500).json("Stock not found");
+    }
+
+    //return Stock
+    return res.status(200).json(stock);
+};
+
+//get all Stocks
+export const getAllStocks = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+
+    const stocks = await Stock.find({ isDeleted: false }).skip(page * pageSize).limit(pageSize).exec();
+
+    if (!stocks) {
+        return res.status(500).json("Stocks not found");
+    }
+
+    return res.status(200).json(stocks);
+
+};
+
+//get Stock by Departments Id
+export const getStockByDepartmentId = async (req: Request, res: Response) => {
+    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
+
+    //find Stock by Department Id
+    const stocks: StockDocument[] = (await Stock.find({
+        departmentId: req.body.departmentId,
+        isDeleted: false
+    })) as StockDocument[];
+
+    if (!stocks) {
+        return res.status(500).json("Stocks not found");
+    }
+
+    //return Stock
+    return res.status(200).json(stocks);
+};
+
+//get Stock by Name
+export const getStockByName = async (req: Request, res: Response) => {
+    await check("name", "name is not valid").isLength({min: 1}).run(req);
+
+    //find Stock by Name
+    const stocks: StockDocument[] = (await Stock.find({
+        name: req.body.name,
+        isDeleted: false
+    })) as StockDocument[];
+
+    if (!stocks) {
+        return res.status(500).json("Stocks not found");
+    }
+
+    //return Stock
+    return res.status(200).json(stocks);
+}
+
+//get Stock by Part Number
+export const getStockByPartNumber = async (req: Request, res: Response) => {
+    await check("partNumber", "partNumber is not valid").isLength({min: 1}).run(req);
+
+    //find Stock by Part Number
+    const stocks: StockDocument[] = (await Stock.find({
+        partNumber: req.body.partNumber,
+        isDeleted: false
+    })) as StockDocument[];
+
+    if (!stocks) {
+        return res.status(500).json("Stocks not found");
+    }
+
+    //return Stock
+    return res.status(200).json(stocks);
+}
