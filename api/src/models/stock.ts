@@ -1,5 +1,3 @@
-
-
 import { Schema, Document, model } from "mongoose";
 
 
@@ -7,7 +5,7 @@ export type StockDocument = Document & {
     departmentId: string;
     name: string;
     partNumber: string;
-    totalQuantity: string;
+    totalQuantity: number;
     stockPerTote: number;
     toteQuantity: number;
     skidQuantity?: number;
@@ -34,7 +32,7 @@ const stockSchema = new Schema<StockDocument>({
         required: true,
     },
     totalQuantity: {
-        type: String,
+        type: Number,
         required: true,
     },
     stockPerTote: {
@@ -63,4 +61,4 @@ const stockSchema = new Schema<StockDocument>({
 });
 
 
-export const Stock = model<StockDocument>("Plant", stockSchema);
+export const Stock = model<StockDocument>("Stock", stockSchema);
