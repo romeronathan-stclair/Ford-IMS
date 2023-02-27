@@ -11,6 +11,7 @@ import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 import * as departmentController from "./controllers/department";
 import * as stockController from "./controllers/stock";
+import * as dunnageController from "./controllers/dunnage";
 
 import * as inviteController from "./controllers/invite";
 const router: Router = express.Router();
@@ -82,6 +83,15 @@ router.get("/auth/stocks/name/:name", authMiddleware.isAuthenticated, stockContr
 router.get("/auth/stocks/partNumber/:partNumber", authMiddleware.isAuthenticated, stockController.getStockByPartNumber);
 router.put("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.updateStock);
 router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.deleteStock);
+
+//dunnage routes
+router.post("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.createDunnage);
+router.get("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.getDunnageById);
+router.get("/auth/dunnages", authMiddleware.isAuthenticated, dunnageController.getAllDunnage);
+router.get("/auth/dunnages/department/:id", authMiddleware.isAuthenticated, dunnageController.getDunnageByDepartmentId);
+router.get("/auth/dunnages/name/:name", authMiddleware.isAuthenticated, dunnageController.getDunnageByName);
+router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
+router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
 
 const server: HttpServer =  http.createServer(app);

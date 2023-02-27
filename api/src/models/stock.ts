@@ -8,7 +8,7 @@ export type StockDocument = Document & {
     totalQuantity: number;
     stockPerTote: number;
     toteQuantity: number;
-    skidQuantity?: number;
+    currentCount?: number;
     roughStock: boolean;
     lowStock: number;
     moderateStock: number;
@@ -43,7 +43,7 @@ const stockSchema = new Schema<StockDocument>({
         type: Number,
         required: true,
     },
-    skidQuantity: {
+    currentCount: {
         type: Number,
         required: false,
     },

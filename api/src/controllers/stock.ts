@@ -1,5 +1,5 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, Event, User, UserDocument } from "../models";
+import { UserDocument } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -14,7 +14,7 @@ export const createStock = async (req: Request, res: Response) => {
     await check("partNumber", "partNumber is not valid").isLength({min: 1}).run(req);
     await check("stockPerTote", "stockPerTote is not valid").isLength({min: 1}).run(req);
     await check("toteQuantity", "toteQuantity is not valid").isLength({min: 1}).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
+    await check("currentCount", "currentCount is not valid").isLength({min: 1}).run(req);
     await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
     await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
 
@@ -27,7 +27,7 @@ export const createStock = async (req: Request, res: Response) => {
         totalQuantity: req.body.totalQuantity,
         stockPerTote: req.body.stockPerTote,
         toteQuantity: req.body.toteQuantity,
-        skidQuantity: req.body.skidQuantity,
+        currentCount: req.body.currentCount,
         roughStock: req.body.roughStock,
         lowStock: req.body.lowStock,
         moderateStock: req.body.moderateStock,
@@ -50,7 +50,7 @@ export const createStock = async (req: Request, res: Response) => {
     newStock.totalQuantity = req.body.totalQuantity;
     newStock.stockPerTote = req.body.stockPerTote;
     newStock.toteQuantity = req.body.toteQuantity;
-    newStock.skidQuantity = req.body.skidQuantity;
+    newStock.currentCount = req.body.currentCount;
     newStock.roughStock = req.body.roughStock;
     newStock.lowStock = req.body.lowStock;
     newStock.moderateStock = req.body.moderateStock;
@@ -187,7 +187,7 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.totalQuantity = req.body.totalQuantity;
     stock.stockPerTote = req.body.stockPerTote;
     stock.toteQuantity = req.body.toteQuantity;
-    stock.skidQuantity = req.body.skidQuantity;
+    stock.currentCount = req.body.currentCount;
     stock.roughStock = req.body.roughStock;
     stock.lowStock = req.body.lowStock;
     stock.moderateStock = req.body.moderateStock;
