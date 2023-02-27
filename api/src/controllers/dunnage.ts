@@ -57,3 +57,72 @@ export const createDunnage = async (req: Request, res: Response) => {
     }
 
 };
+
+//get Dunnage by id
+export const getDunnageById = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({min: 1}).run(req);
+
+    //find Dunnage by id
+    const dunnage: DunnageDocument = (await Dunnage.findOne({
+        _id: req.body.id,
+        isDeleted: false
+    })) as DunnageDocument;
+
+    if (!dunnage) {
+        return res.status(500).json("Dunnage not found");
+    }
+
+    //return Dunnage
+    return res.status(200).json(dunnage);
+};
+
+//get all Dunnage
+export const getAllDunnage = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+
+    const dunnages = await Dunnage.find({ isDeleted: false }).skip(page * pageSize).limit(pageSize).exec();
+
+    if (!dunnages) {
+        return res.status(500).json("Dunnage not found");
+    }
+
+    //return Dunnage
+    return res.status(200).json(dunnages);
+};
+
+//get Dunnage by Department Id
+export const getDunnageByDepartmentId = async (req: Request, res: Response) => {
+    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
+
+    //find Dunnage by Department id
+    const dunnage: DunnageDocument[] = (await Dunnage.find({
+        departmentId: req.body.departmentId,
+        isDeleted: false
+    })) as DunnageDocument[];
+
+    if (!dunnage) {
+        return res.status(500).json("Dunnage not found");
+    }
+
+    //return Dunnage
+    return res.status(200).json(dunnage);
+};
+
+//get Dunnage by Name
+export const getDunnageByName = async (req: Request, res: Response) => {
+    await check("name", "name is not valid").isLength({min: 1}).run(req);
+
+    //find Dunnage by name
+    const dunnage: DunnageDocument[] = (await Dunnage.find({
+        name: req.body.name,
+        isDeleted: false
+    })) as DunnageDocument[];
+
+    if (!dunnage) {
+        return res.status(500).json("Dunnage not found");
+    }
+
+    //return Dunnage
+    return res.status(200).json(dunnage);
+};

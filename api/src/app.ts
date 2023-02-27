@@ -86,6 +86,10 @@ router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController
 
 //dunnage routes
 router.post("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.createDunnage);
+router.get("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.getDunnageById);
+router.get("/auth/dunnages", authMiddleware.isAuthenticated, dunnageController.getAllDunnage);
+router.get("/auth/dunnages/department/:id", authMiddleware.isAuthenticated, dunnageController.getDunnageByDepartmentId);
+router.get("/auth/dunnages/name/:name", authMiddleware.isAuthenticated, dunnageController.getDunnageByName);
 
 
 const server: HttpServer =  http.createServer(app);
