@@ -66,7 +66,11 @@ router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sen
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
-
+router.get("/auth/department/:departmentId", authMiddleware.isAuthenticated, departmentController.getDepartmentById);
+router.get("/auth/departments", authMiddleware.isAuthenticated, departmentController.getAllDepartments);
+router.get("/auth/departments/user", authMiddleware.isAuthenticated, departmentController.getDepartmentsByUser);
+router.put("/auth/department/:departmentId", authMiddleware.isAuthenticated, departmentController.updateDepartment);
+router.delete("/auth/department/:departmentId", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
 
 const server: HttpServer =  http.createServer(app);

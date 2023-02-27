@@ -54,7 +54,7 @@ export const createDepartment = async (req: Request, res: Response) => {
 };
 
 //get Department by Id
-export const getPlantById = async (req: Request, res: Response) => {
+export const getDepartmentById = async (req: Request, res: Response) => {
     await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
 
     //find Department
