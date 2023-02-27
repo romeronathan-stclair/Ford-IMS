@@ -126,3 +126,43 @@ export const getDunnageByName = async (req: Request, res: Response) => {
     //return Dunnage
     return res.status(200).json(dunnage);
 };
+
+//update Dunnage
+export const updateDunnage = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
+    await check("name", "name is not valid").isLength({min: 1}).run(req);
+    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
+    await check("currentCount", "currentCount is not valid").isLength({min: 1}).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
+    await check("moderateStock", "moderateStock is not valid").isLength({min: 1}).run(req);
+    await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
+
+    //find Dunnage by id
+    const dunnage: DunnageDocument = (await Dunnage.findOne({
+        _id: req.body.id,
+        isDeleted: false
+    })) as DunnageDocument;
+
+    if (!dunnage) {
+        return res.status(500).json("Dunnage not found");
+    }
+
+    //update Dunnage
+    dunnage.departmentId = req.body.departmentId;
+    dunnage.name = req.body.name;
+    dunnage.skidQuantity = req.body.skidQuantity;
+    dunnage.currentCount = req.body.currentCount;
+    dunnage.lowStock = req.body.lowStock;
+    dunnage.moderateStock = req.body.moderateStock;
+    dunnage.imageURL = req.body.imageURL;
+    dunnage.isDeleted = false;
+
+    //save Dunnage
+    try {
+        await dunnage.save();
+        return res.status(200).json("Dunnage updated successfully");
+    } catch (err) {
+        return res.status(500).json("Error updating Dunnage");
+    }
+};
