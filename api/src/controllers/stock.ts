@@ -156,4 +156,50 @@ export const getStockByPartNumber = async (req: Request, res: Response) => {
 
     //return Stock
     return res.status(200).json(stocks);
-}
+};
+
+//update Stock
+export const updateStock = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
+    await check("name", "name is not valid").isLength({min: 1}).run(req);
+    await check("partNumber", "partNumber is not valid").isLength({min: 1}).run(req);
+    await check("stockPerTote", "stockPerTote is not valid").isLength({min: 1}).run(req);
+    await check("toteQuantity", "toteQuantity is not valid").isLength({min: 1}).run(req);
+    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
+    await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
+
+    //find Stock by Id
+    const stock: StockDocument = (await Stock.findOne({
+        _id: req.body.id,
+        isDeleted: false
+    })) as StockDocument;
+
+    if (!stock) {
+        return res.status(500).json("Stock not found");
+    }
+    
+    //update Stock
+    stock.departmentId = req.body.departmentId;
+    stock.name = req.body.name;
+    stock.partNumber = req.body.partNumber;
+    stock.totalQuantity = req.body.totalQuantity;
+    stock.stockPerTote = req.body.stockPerTote;
+    stock.toteQuantity = req.body.toteQuantity;
+    stock.skidQuantity = req.body.skidQuantity;
+    stock.roughStock = req.body.roughStock;
+    stock.lowStock = req.body.lowStock;
+    stock.moderateStock = req.body.moderateStock;
+    stock.imageURL = req.body.imageURL;
+    stock.isDeleted = false;
+
+    //save Updated Stock
+    try {
+        await stock.save();
+        return res.status(200).json("Stock updated successfully");
+    }
+    catch (err) {
+        return res.status(500).json("Error updating Stock");
+    }
+};

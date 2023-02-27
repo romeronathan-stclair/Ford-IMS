@@ -80,6 +80,7 @@ router.get("/auth/stocks", authMiddleware.isAuthenticated, stockController.getAl
 router.get("/auth/stocks/department/:id", authMiddleware.isAuthenticated, stockController.getStockByDepartmentId);
 router.get("/auth/stocks/name/:name", authMiddleware.isAuthenticated, stockController.getStockByName);
 router.get("/auth/stocks/partNumber/:partNumber", authMiddleware.isAuthenticated, stockController.getStockByPartNumber);
+router.put("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.updateStock);
 
 
 const server: HttpServer =  http.createServer(app);
