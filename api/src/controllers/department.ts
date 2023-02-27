@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { json, NextFunction, Request, Response } from "express";
 import { Department, DepartmentDocument, Event, User, UserDocument } from "../models";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -34,19 +34,23 @@ export const createDepartment = async (req: Request, res: Response) => {
     newDepartment.isDeleted = false;
 
     //create Event
-    const event = new Event({
-        userId: user._id.valueOf(),
-        userEmailAddress: user.email,
-        operationType: CrudType.CREATE,
-        model: ModelType.DEPARTMENT,
-        modelId: newDepartment._id.valueOf(),
-    });
+    // const event = new Event({
+    //     userId: user._id.valueOf(),
+    //     userEmailAddress: user.email,
+    //     operationType: CrudType.CREATE,
+    //     model: ModelType.DEPARTMENT,
+    //     modelId: newDepartment._id.valueOf(),
+    // });
 
     //save new Department
+    response = {
+        department: newDepartment,
+        message: "Department created successfully"
+    }
     try {
         await newDepartment.save();
-        await event.save();
-        return res.status(200).json("Department created and Event Created");
+        // await event.save();
+        return res.status(200).json(response);
     } catch (err) {
         return res.status(500).json("Error creating Department");
     }
@@ -59,7 +63,7 @@ export const getDepartmentById = async (req: Request, res: Response) => {
 
     //find Department
     const department: DepartmentDocument = (await Department.findOne({
-        _id: req.params.departmentId,
+        _id: req.body.departmentId,
         isDeleted: false
     })) as DepartmentDocument;
 
@@ -114,7 +118,7 @@ export const updateDepartment = async (req: Request, res: Response) => {
 
     //find Department
     const department: DepartmentDocument = (await Department.findOne({
-        _id: req.params.departmentId,
+        _id: req.body.departmentId,
         isDeleted: false
     })) as DepartmentDocument;
 
@@ -127,18 +131,18 @@ export const updateDepartment = async (req: Request, res: Response) => {
     department.plantId = req.body.plantId;
 
     //create Event
-    const event = new Event({
-        userId: user._id.valueOf(),
-        userEmailAddress: user.email,
-        operationType: CrudType.UPDATE,
-        model: ModelType.DEPARTMENT,
-        modelId: department._id.valueOf(),
-    });
+    // const event = new Event({
+    //     userId: user._id.valueOf(),
+    //     userEmailAddress: user.email,
+    //     operationType: CrudType.UPDATE,
+    //     model: ModelType.DEPARTMENT,
+    //     modelId: department._id.valueOf(),
+    // });
 
     //save Department
     try {
         await department.save();
-        await event.save();
+        // await event.save();
         return res.status(200).json("Department updated and Event Created");
     }
     catch (err) {
@@ -155,7 +159,7 @@ export const deleteDepartment = async (req: Request, res: Response) => {
 
     //find Department
     const department: DepartmentDocument = (await Department.findOne({
-        _id: req.params.departmentId,
+        _id: req.body.departmentId,
         isDeleted: false
     })) as DepartmentDocument;
 
@@ -167,18 +171,18 @@ export const deleteDepartment = async (req: Request, res: Response) => {
     department.isDeleted = true;
     
     //create Event
-    const event = new Event({
-        userId: user._id.valueOf(),
-        userEmailAddress: user.email,
-        operationType: CrudType.DELETE,
-        model: ModelType.DEPARTMENT,
-        modelId: department._id.valueOf(),
-    });
+    // const event = new Event({
+    //     userId: user._id.valueOf(),
+    //     userEmailAddress: user.email,
+    //     operationType: CrudType.DELETE,
+    //     model: ModelType.DEPARTMENT,
+    //     modelId: department._id.valueOf(),
+    // });
 
     //save Department Status
     try {
         await department.save();
-        await event.save();
+        // await event.save();
         return res.status(200).json("Department deleted and Event Created");
     }
     catch (err) {
