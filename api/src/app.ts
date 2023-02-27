@@ -91,6 +91,7 @@ router.get("/auth/dunnages", authMiddleware.isAuthenticated, dunnageController.g
 router.get("/auth/dunnages/department/:id", authMiddleware.isAuthenticated, dunnageController.getDunnageByDepartmentId);
 router.get("/auth/dunnages/name/:name", authMiddleware.isAuthenticated, dunnageController.getDunnageByName);
 router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
+router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
 
 const server: HttpServer =  http.createServer(app);

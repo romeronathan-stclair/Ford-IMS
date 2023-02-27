@@ -166,3 +166,30 @@ export const updateDunnage = async (req: Request, res: Response) => {
         return res.status(500).json("Error updating Dunnage");
     }
 };
+
+//delete Dunnage
+export const deleteDunnage = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({min: 1}).run(req);
+
+    //find Dunnage by id
+    const dunnage: DunnageDocument = (await Dunnage.findOne({
+        _id: req.body.id,
+        isDeleted: false
+    })) as DunnageDocument;
+
+    if (!dunnage) {
+        return res.status(500).json("Dunnage not found");
+    }
+
+    //delete Dunnage
+    dunnage.isDeleted = true;
+
+    //save Dunnage
+    try {
+        await dunnage.save();
+        return res.status(200).json("Dunnage deleted successfully");
+    } catch (err) {
+        return res.status(500).json("Error deleting Dunnage");
+    }
+
+};
