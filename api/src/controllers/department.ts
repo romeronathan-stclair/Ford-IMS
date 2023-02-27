@@ -3,6 +3,7 @@ import { Department, DepartmentDocument, Event, User, UserDocument } from "../mo
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
+import { getPage, getPageSize } from "../utils/pagination";
 
 
 //create Department
@@ -69,4 +70,36 @@ export const getPlantById = async (req: Request, res: Response) => {
     return res.json(department);
 };
 
+//get all Departments
+export const getAllDepartments = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
 
+    const departments = await Department.find({ isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
+
+    if (!departments) {
+        return res.status(500).json("No Departments found");
+    }
+
+    return res.json(departments);
+};
+
+//get departments by User
+export const getDepartmentsByUser = async (req: Request, res: Response) => {
+    const user: UserDocument = req.user as UserDocument;
+
+    const userDepartmentIds = user.plants.map((plant) => {
+        return plant.departments;
+    });
+
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+
+    const departments = await Department.find({ _id: { $in: userDepartmentIds }, isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
+
+    if (!departments) {
+        return res.status(500).json("No Departments found");
+    }
+
+    return res.json(departments);
+};
