@@ -203,3 +203,32 @@ export const updateStock = async (req: Request, res: Response) => {
         return res.status(500).json("Error updating Stock");
     }
 };
+
+//delete Stock
+export const deleteStock = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({min: 1}).run(req);
+
+    //find Stock by Id
+    const stock: StockDocument = (await Stock.findOne({
+        _id: req.body.id,
+        isDeleted: false
+    })) as StockDocument;
+
+    if (!stock) {
+        return res.status(500).json("Stock not found");
+    }
+
+    //delete Stock
+    stock.isDeleted = true;
+
+    //save Deleted Stock
+    try {
+        await stock.save();
+        return res.status(200).json("Stock deleted successfully");
+    }
+    catch (err) {
+        return res.status(500).json("Error deleting Stock");
+    }
+    
+};
+
