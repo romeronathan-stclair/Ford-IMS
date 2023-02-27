@@ -52,4 +52,21 @@ export const createDepartment = async (req: Request, res: Response) => {
 
 };
 
+//get Department by Id
+export const getPlantById = async (req: Request, res: Response) => {
+    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
+
+    //find Department
+    const department: DepartmentDocument = (await Department.findOne({
+        _id: req.params.departmentId,
+        isDeleted: false
+    })) as DepartmentDocument;
+
+    if (!department) {
+        return res.status(500).json("Department does not exists");
+    }
+
+    return res.json(department);
+};
+
 
