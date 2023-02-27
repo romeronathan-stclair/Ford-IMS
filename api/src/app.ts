@@ -9,6 +9,7 @@ import { configPassport } from './config/passport';
 
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
+import * as departmentController from "./controllers/department";
 
 import * as inviteController from "./controllers/invite";
 const router: Router = express.Router();
@@ -48,6 +49,7 @@ app.get("/health", (req, res) => {
     return res.status(200).json({ status: "UP" });
 });
 
+//user routes
 router.post("/auth/signup/dev", userController.signupUnsafe);
 router.post("/auth/signin", userController.signin);
 router.post("/auth/signout", userController.logout);
@@ -55,11 +57,15 @@ router.post("/auth/update", authMiddleware.isAuthenticated, userController.updat
 router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
 router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController.getUserById);
 
-
-
+//invite routes
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
+//plant routes
 
+
+
+//department routes
+router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
 
 
 
