@@ -16,7 +16,8 @@ export const createDepartment = async (req: Request, res: Response) => {
     let response;
     const department: DepartmentDocument = (await Department.findOne({
         departmentName: req.body.departmentName,
-        plantId: req.body.plantId
+        plantId: req.body.plantId,
+        isDeleted: false
     })) as DepartmentDocument;
 
     //request User
