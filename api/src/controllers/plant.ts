@@ -172,12 +172,19 @@ export const createPlant = async (
             }
         });
 };
-export const getPlant = async (req: Request, res: Response) => {
+export const getActivePlant = async (req: Request, res: Response) => {
     await check("id", "id is not valid").isLength({ min: 1 }).run(req);
 
+    const user = req.user as UserDocument;
+
+    const activePlantId = user.plants.find((plant) => plant.isActive);
+
+    if (!activePlantId) {
+        return res.status(500).json("No active plant found!");
+    }
     const plant: PlantDocument = (await Plant.findOne({
-        _id: req.params.id,
-        isDeleted: false
+        _id: activePlantId.plantId,
+        isDeleted: false,
     })) as PlantDocument;
 
     if (!plant) {
@@ -191,10 +198,25 @@ export const getPlants = async (req: Request, res: Response) => {
 
     const page = getPage(req);
     const pageSize = getPageSize(req);
-    const userId = req.params.userId;
+    const userId = req.query.userId || undefined;
+    const plantId = req.query.plantId || undefined;
+    const isActive = req.query.isActive || undefined
 
-    console.log(page);
-    console.log(pageSize);
+    if (plantId) {
+        const plant: PlantDocument = (await Plant.findOne({
+            _id: plantId,
+            isDeleted: false
+        })) as PlantDocument;
+        return res.status(200).json(plant);
+    }
+
+    if (!userId) {
+        let plants: PlantDocument[] = (await Plant.find({
+            isDeleted: false,
+        }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
+
+        return res.status(200).json(plants);
+    }
 
 
     const user: UserDocument = (await User.findOne({
@@ -206,18 +228,25 @@ export const getPlants = async (req: Request, res: Response) => {
         return res.status(500).json("User does not exist!");
     }
 
-    const plants = user.plants.map((plant) => plant.plantId);
+    const plants = user.plants.map((plant) => {
+        if (isActive == "true") {
+            if (plant.isActive) {
+                return plant.plantId;
+            }
+        }
+        else {
+            return plant.plantId;
+        }
+
+    });
+
 
     const plantList: PlantDocument[] = (await Plant.find({
         _id: { $in: plants },
         isDeleted: false,
-    })
-        .limit(pageSize)
-        .skip(pageSize * page));
+    }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
 
-
-
-    if (!plants) {
+    if (!plantList) {
         return res.status(500).json("Plants do not exist!");
     }
 

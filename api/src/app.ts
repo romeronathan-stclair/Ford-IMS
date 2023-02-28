@@ -62,8 +62,8 @@ router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sen
 
 //plant routes
 router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
-router.get("/plant/:id", authMiddleware.isAuthenticated, plantController.getPlant);
-router.get("/plants/:userId?/:page?/:pageSize?", authMiddleware.isAuthenticated, plantController.getPlants);
+router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
+router.get("/plants", authMiddleware.isAuthenticated, plantController.getPlants);
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
