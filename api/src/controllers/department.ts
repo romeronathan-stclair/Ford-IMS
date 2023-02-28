@@ -67,7 +67,7 @@ export const getDepartments = async (req: Request, res: Response) => {
     console.log(JSON.stringify(req.params));
 
     let user: UserDocument;
-    User.findOne({ _id: userId }, (err: NativeError, existingUser: UserDocument) => {
+    User.findOne({ _id: userId }, async (err: NativeError, existingUser: UserDocument) => {
         if (err) {
             return res.status(500).json("Error finding user");
         }
@@ -78,15 +78,31 @@ export const getDepartments = async (req: Request, res: Response) => {
 
         const plantId = req.params.plantId;
         const departmentId = req.params.departmentId;
-        const userDepartmentIds = user.plants.map(plant => plant.departments.map(department => new Types.ObjectId(department.toString())));
+        const plant = user.plants.find(plant => plant.plantId === plantId);
+
+        if (!plant) {
+            return res.status(500).json("Plant does not exist");
+        }
+
+        const departmentIds = plant.departments.map(department => department).flat();
+        const userDepartmentIds = departmentIds.map(id => { 
+            
+            if (!departmentId) {
+                return new Types.ObjectId(id.toString());
+            } else if (departmentId === id.toString()) {
+                return new Types.ObjectId(id.toString());
+            } else {
+                return null;
+            }
+        });
 
         const query = { 
             isDeleted: false,
             plantId: plantId,
-            _id: { $in: userDepartmentIds[0]}
+            _id: { $in: userDepartmentIds }
         }
 
-        const departments = Department.find(query);
+        const departments = await Department.find(query).skip(page * pageSize).limit(pageSize).exec();
 
         console.log(JSON.stringify(query));
 
