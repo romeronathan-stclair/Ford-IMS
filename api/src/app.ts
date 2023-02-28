@@ -10,7 +10,7 @@ import { configPassport } from './config/passport';
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 import * as departmentController from "./controllers/department";
-
+import * as plantController from "./controllers/plant";
 import * as inviteController from "./controllers/invite";
 const router: Router = express.Router();
 
@@ -61,6 +61,7 @@ router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
 //plant routes
+router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
 
 
 
@@ -71,6 +72,7 @@ router.get("/auth/departments", authMiddleware.isAuthenticated, departmentContro
 router.get("/auth/departments/user", authMiddleware.isAuthenticated, departmentController.getDepartmentsByUser);
 router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
+
 
 
 const server: HttpServer =  http.createServer(app);
