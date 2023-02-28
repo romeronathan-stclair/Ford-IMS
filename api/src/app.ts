@@ -9,6 +9,7 @@ import { configPassport } from './config/passport';
 
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
+import * as eventController from "./controllers/event"
 import * as departmentController from "./controllers/department";
 import * as stockController from "./controllers/stock";
 import * as dunnageController from "./controllers/dunnage";
@@ -61,6 +62,10 @@ router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController
 
 //invite routes
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
+
+//event routes
+router.get("/events/:plantId?/:departmentId?/:user?/:operation?/:date?/:page?/:pageSize?", authMiddleware.isAdminAuthenticated, eventController.getEvents);
+
 
 //plant routes
 
