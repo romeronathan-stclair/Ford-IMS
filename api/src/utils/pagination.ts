@@ -12,7 +12,7 @@ export const getPage = (req: Request) => {
 export const getPageSize = (req: Request) => {
     if (!req.params.pageSize) return MAX_PAGE_SIZE;
 
-    const pageSize = parseInt(req.params.page);
+    const pageSize = parseInt(req.params.pageSize);
 
     return isNaN(pageSize) ? MAX_PAGE_SIZE : pageSize;
 };
