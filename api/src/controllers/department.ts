@@ -63,8 +63,8 @@ export const createDepartment = async (req: Request, res: Response) => {
 export const getDepartments = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
-    const userId = req.params.userId;
-    console.log(JSON.stringify(req.params));
+    const userId = req.query.userId;
+    console.log(JSON.stringify(req.query));
 
     let user: UserDocument;
     User.findOne({ _id: userId }, async (err: NativeError, existingUser: UserDocument) => {
@@ -76,8 +76,8 @@ export const getDepartments = async (req: Request, res: Response) => {
         }
         user = existingUser;
 
-        const plantId = req.params.plantId;
-        const departmentId = req.params.departmentId;
+        const plantId = req.query.plantId;
+        const departmentId = req.query.departmentId;
         const plant = user.plants.find(plant => plant.plantId === plantId);
 
         if (!plant) {
