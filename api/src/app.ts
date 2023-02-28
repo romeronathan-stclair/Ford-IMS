@@ -68,7 +68,7 @@ router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sen
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
-router.get("/auth/department/:id?/:user?/:page?/:pageSize?", authMiddleware.isAuthenticated, departmentController.getDepartments);
+router.get("/auth/department/:userId?/:plantId?/:departmentId?/:page?/:pageSize?", authMiddleware.isAuthenticated, departmentController.getDepartments);
 router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
