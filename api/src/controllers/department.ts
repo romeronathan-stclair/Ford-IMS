@@ -58,55 +58,53 @@ export const createDepartment = async (req: Request, res: Response) => {
 
 };
 
-//get Department by Id
-export const getDepartmentById = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-
-    //find Department
-    const department: DepartmentDocument = (await Department.findOne({
-        _id: req.body.departmentId,
-        isDeleted: false
-    })) as DepartmentDocument;
-
-    if (!department) {
-        return res.status(500).json("Department does not exists");
-    }
-
-    return res.json(department);
-};
-
-//get all Departments
-export const getAllDepartments = async (req: Request, res: Response) => {
+//get Departments
+export const getDepartments = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
+    const departmentId = req.body.id;
+    const userId = req.body.userId;
 
-    const departments = await Department.find({ isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
+    if (departmentId) {
+        //get department by id
+        await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
 
-    if (!departments) {
-        return res.status(500).json("No Departments found");
+        //find Department
+        const department: DepartmentDocument = (await Department.findOne({
+            _id: departmentId,
+            isDeleted: false
+        })) as DepartmentDocument;
+
+        if (!department) {
+            return res.status(500).json("Department does not exists");
+        }
+
+        return res.json(department);
+    } else if (userId) {
+        //get departments by user
+        const user: UserDocument = req.user as UserDocument;
+
+        const userDepartmentIds = user.plants.map((plant) => {
+            return plant.departments;
+        });
+
+        const departments = await Department.find({ _id: { $in: userDepartmentIds }, isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
+
+        if (!departments) {
+            return res.status(500).json("No Departments found");
+        }
+
+        return res.json(departments);
+    } else {
+        //get all departments
+        const departments = await Department.find({ isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
+
+        if (!departments) {
+            return res.status(500).json("No Departments found");
+        }
+
+        return res.json(departments);
     }
-
-    return res.json(departments);
-};
-
-//get departments by User
-export const getDepartmentsByUser = async (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
-
-    const userDepartmentIds = user.plants.map((plant) => {
-        return plant.departments;
-    });
-
-    const page = getPage(req);
-    const pageSize = getPageSize(req);
-
-    const departments = await Department.find({ _id: { $in: userDepartmentIds }, isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
-
-    if (!departments) {
-        return res.status(500).json("No Departments found");
-    }
-
-    return res.json(departments);
 };
 
 //update Department
