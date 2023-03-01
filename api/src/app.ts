@@ -71,9 +71,7 @@ router.delete("/plant/:id", authMiddleware.isAuthenticated, plantController.dele
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
-router.get("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.getDepartmentById);
-router.get("/auth/departments", authMiddleware.isAuthenticated, departmentController.getAllDepartments);
-router.get("/auth/departments/user", authMiddleware.isAuthenticated, departmentController.getDepartmentsByUser);
+router.get("/auth/department/:userId?/:plantId?/:departmentId?/:page?/:pageSize?", authMiddleware.isAuthenticated, departmentController.getDepartments);
 router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
