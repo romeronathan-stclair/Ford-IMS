@@ -3,6 +3,7 @@ import { check, validationResult } from "express-validator";
 import passport from "passport";
 import { User, UserDocument, Invite } from "../models";
 import passwordSchema from "../utils/passwordValidator";
+import bcrypt from "bcrypt";
 
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
@@ -187,6 +188,57 @@ export const updateUser = async (req: Request, res: Response) => {
     try {
         await user.save();
         res.json(user);
+    } catch (err) {
+        return res.status(500).json({ err });
+    }
+};
+export const changePassword = async (req: Request, res: Response) => {
+    await check("oldPassword", "Old password cannot be blank").isLength({ min: 1 }).run(req);
+    await check("password", "New password cannot be blank").isLength({ min: 1 }).run(req);
+    await check("confirmPassword", "New passwords do not match").isLength({ min: 1 }).run(req);
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+    }
+
+    const oldPassword: string = req.body.oldPassword;
+    const user: UserDocument = req.user as UserDocument;
+
+    if (!user) {
+        return res.status(400).json("User does not exist");
+    }
+
+    if (req.body.password !== req.body.confirmPassword) {
+        return res.status(400).json("New passwords do not match");
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+    if (!isMatch) {
+        return res.status(400).json("Old password is incorrect");
+    }
+
+    const passwordValidationResult: any = passwordSchema.validate(req.body.password, {
+        details: true,
+    });
+
+    if (passwordValidationResult.length > 0) {
+        return res.status(400).json(passwordValidationResult);
+    }
+
+    const newAndOldPasswordsMatch = await bcrypt.compare(req.body.password, user.password);
+
+    if (newAndOldPasswordsMatch) {
+        return res.status(400).json("New password is same as old password");
+    }
+
+    user.password = req.body.password;
+
+    try {
+        await user.save();
+        return res.json(user);
     } catch (err) {
         return res.status(500).json({ err });
     }
