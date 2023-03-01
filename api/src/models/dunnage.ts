@@ -7,11 +7,11 @@ export type DunnageDocument = Document & {
     departmentId: string;
     name: string;
     skidQuantity: number;
+    currentCount?: number;
     lowStock: number;
     moderateStock: number;
     imageURL: string;
     isDeleted: boolean;
-
 };
 
 const dunnageSchema = new Schema<DunnageDocument>({
@@ -23,20 +23,18 @@ const dunnageSchema = new Schema<DunnageDocument>({
         type: String,
         required: true,
     },
-    productId: {
-        type: String,
-        required: true,
-    },
     skidQuantity: {
         type: Number,
         required: true,
     },
+    currentCount: {
+        type: Number,
+        required: false,
+    },
     isDeleted: {
         type: Boolean,
         required: true,
-    },
-
-
+    }
 });
 
 
