@@ -57,6 +57,7 @@ router.post("/auth/signin", userController.signin);
 router.post("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
 router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
+router.get("/auth/users", authMiddleware.isAdminAuthenticated, userController.getUsers);
 router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController.getUserById);
 router.post("/auth/reset", authMiddleware.isAuthenticated, userController.changePassword);
 router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userController.changeActivePlant);

@@ -54,7 +54,7 @@ export const signupUnsafe = async (req: Request, res: Response, next: NextFuncti
     if (passwordValidationResult.length > 0) {
         return res.status(400).json(passwordValidationResult);
     }
-  
+
     const user = new User({
         name: req.body.name,
         password: req.body.password,
@@ -98,18 +98,18 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
         return res.status(400).json(errors);
     }
 
-  
 
 
-    const invite =  await Invite.findOne({ value: req.body.inviteCode, email: req.body.email });
+
+    const invite = await Invite.findOne({ value: req.body.inviteCode, email: req.body.email });
     const currentDate: Date = new Date();
 
 
     if (!invite || invite.isDeleted || invite.isUsed || invite.validUntilDate < currentDate) {
         return res.status(401).json("Invite code is not valid.");
     }
-    
-   
+
+
     const passwordValidationResult: any = passwordSchema.validate(req.body.password, {
         details: true,
     });
@@ -121,14 +121,14 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
     if (req.body.password !== req.body.confirmPassword) {
         return res.status(400).json("Passwords do not match");
     }
-    
+
 
     const user = new User({
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
         plants: invite.plants,
-        adminType: invite.adminType 
+        adminType: invite.adminType
     });
     user.plants[0].isActive = true;
 
@@ -145,15 +145,15 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
             }
             invite!.isUsed = true;
             await invite!.save();
-            
+
 
             req.logIn(user, async (err) => {
                 if (err) {
                     return next(err);
                 }
 
-               
-            return res.json(user);
+
+                return res.json(user);
             });
         });
     });
@@ -161,11 +161,11 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 
 export const logout = async (req: Request, res: Response) => {
     req.session.destroy(() => {
-        
-        req.logout(function(err) {
+
+        req.logout(function (err) {
             if (err) { return res.sendStatus(500); }
             res.redirect('/');
-          });
+        });
         return res.sendStatus(204);
     });
 };
@@ -183,7 +183,7 @@ export const updateUser = async (req: Request, res: Response) => {
     user.name = name || user.name;
     user.email = email || user.email;
 
-    
+
 
     try {
         await user.save();
@@ -266,10 +266,10 @@ export const changeActivePlant = async (req: Request, res: Response) => {
         return res.status(500).json("Plant does not exist");
     }
     user.plants.forEach((plant) => {
-        if(plant.plantId != plantId) plant.isActive = false;
+        if (plant.plantId != plantId) plant.isActive = false;
         else plant.isActive = true;
     });
-   
+
     try {
         await user.save();
         return res.json(user);
@@ -292,3 +292,44 @@ export const getUserById = async (req: Request, res: Response) => {
     return res.json(user);
 
 };
+export const getUsers = async (req: Request, res: Response) => {
+
+    const userId = req.query.userId;
+    const plantId = req.query.plantId;
+    const departmentId = req.query.departmentId;
+    const name = req.query.name;
+    const email = req.query.email;
+
+    let query: any = { isDeleted: false };
+
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (!user) {
+            return res.status(500).json("User does not exist");
+        }
+        return res.status(200).json(user);
+    }
+
+    if (plantId && departmentId) {
+        query["plants"] = { $elemMatch: { plantId, departmentId } };
+    }
+
+    if (name) {
+        query["name"] = { $regex: name, $options: "i" };
+    }
+
+    if (email) {
+        query["email"] = { $regex: email, $options: "i" };
+    }
+
+    console.log(query);
+
+    const users = await User.find(query);
+
+    if (!users || users.length === 0) {
+        return res.status(500).json("Users do not exist");
+    }
+
+    return res.status(200).json(users);
+}
+
