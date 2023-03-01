@@ -59,6 +59,7 @@ router.post("/auth/update", authMiddleware.isAuthenticated, userController.updat
 router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
 router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController.getUserById);
 router.post("/auth/reset", authMiddleware.isAuthenticated, userController.changePassword);
+router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userController.changeActivePlant);
 //invite routes
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
@@ -94,5 +95,5 @@ router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageControlle
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
 
-const server: HttpServer =  http.createServer(app);
+const server: HttpServer = http.createServer(app);
 export default server;

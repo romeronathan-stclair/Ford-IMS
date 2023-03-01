@@ -249,7 +249,36 @@ export const getUser = (req: Request, res: Response) => {
     const user: UserDocument = req.user as UserDocument;
     return res.json(user);
 };
-// get user by id
+
+export const changeActivePlant = async (req: Request, res: Response) => {
+    await check("plantId", "plantId is not valid").isMongoId().run(req);
+    const errors = validationResult(req);
+    const plantId = req.body.plantId;
+    if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
+    }
+    const user: UserDocument = req.user as UserDocument;
+    if (!user) {
+        return res.status(500).json("User does not exist");
+    }
+    const plant = user.plants.find((plant) => plant.plantId === plantId);
+    if (!plant) {
+        return res.status(500).json("Plant does not exist");
+    }
+    user.plants.forEach((plant) => {
+        if(plant.plantId != plantId) plant.isActive = false;
+        else plant.isActive = true;
+    });
+   
+    try {
+        await user.save();
+        return res.json(user);
+    } catch (err) {
+        return res.status(500).json({ err });
+    }
+};
+
+
 export const getUserById = async (req: Request, res: Response) => {
     await check("id", "id is not valid").isMongoId().run(req);
     const errors = validationResult(req);
