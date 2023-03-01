@@ -65,6 +65,7 @@ router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlan
 router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
 router.get("/plants", authMiddleware.isAuthenticated, plantController.getPlants);
 router.put("/plant", authMiddleware.isAuthenticated, plantController.updatePlant);
+router.delete("/plant/:id", authMiddleware.isAuthenticated, plantController.deletePlant);
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
