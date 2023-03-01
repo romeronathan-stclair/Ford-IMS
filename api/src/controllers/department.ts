@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
 import { getPage, getPageSize } from "../utils/pagination";
+import { Types } from "mongoose";
 
 
 //create Department
@@ -58,56 +59,60 @@ export const createDepartment = async (req: Request, res: Response) => {
 
 };
 
-//get Department by Id
-export const getDepartmentById = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-
-    //find Department
-    const department: DepartmentDocument = (await Department.findOne({
-        _id: req.body.departmentId,
-        isDeleted: false
-    })) as DepartmentDocument;
-
-    if (!department) {
-        return res.status(500).json("Department does not exists");
-    }
-
-    return res.json(department);
-};
-
-//get all Departments
-export const getAllDepartments = async (req: Request, res: Response) => {
+//get Departments
+export const getDepartments = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
+    const userId = req.query.userId;
+    console.log(JSON.stringify(req.query));
 
-    const departments = await Department.find({ isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
+    let user: UserDocument;
+    User.findOne({ _id: userId }, async (err: NativeError, existingUser: UserDocument) => {
+        if (err) {
+            return res.status(500).json("Error finding user");
+        }
+        if (!existingUser) {
+            return res.status(500).json("User does not exist");
+        }
+        user = existingUser;
 
-    if (!departments) {
-        return res.status(500).json("No Departments found");
-    }
+        const plantId = req.query.plantId;
+        const departmentId = req.query.departmentId;
+        const plant = user.plants.find(plant => plant.plantId === plantId);
 
-    return res.json(departments);
-};
+        if (!plant) {
+            return res.status(500).json("Plant does not exist");
+        }
 
-//get departments by User
-export const getDepartmentsByUser = async (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
+        const departmentIds = plant.departments.map(department => department).flat();
+        const userDepartmentIds = departmentIds.map(id => { 
+            
+            if (!departmentId) {
+                return new Types.ObjectId(id.toString());
+            } else if (departmentId === id.toString()) {
+                return new Types.ObjectId(id.toString());
+            } else {
+                return null;
+            }
+        });
 
-    const userDepartmentIds = user.plants.map((plant) => {
-        return plant.departments;
+        const query = { 
+            isDeleted: false,
+            plantId: plantId,
+            _id: { $in: userDepartmentIds }
+        }
+
+        const departments = await Department.find(query).skip(page * pageSize).limit(pageSize).exec();
+
+        console.log(JSON.stringify(query));
+
+        return res.status(200).json(departments);
     });
+  
+    
+  };
+  
 
-    const page = getPage(req);
-    const pageSize = getPageSize(req);
-
-    const departments = await Department.find({ _id: { $in: userDepartmentIds }, isDeleted: false}).skip(page * pageSize).limit(pageSize).exec();
-
-    if (!departments) {
-        return res.status(500).json("No Departments found");
-    }
-
-    return res.json(departments);
-};
 
 //update Department
 export const updateDepartment = async (req: Request, res: Response) => {

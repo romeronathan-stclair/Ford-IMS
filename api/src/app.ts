@@ -10,9 +10,9 @@ import { configPassport } from './config/passport';
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 import * as departmentController from "./controllers/department";
+import * as plantController from "./controllers/plant";
 import * as stockController from "./controllers/stock";
 import * as dunnageController from "./controllers/dunnage";
-
 import * as inviteController from "./controllers/invite";
 const router: Router = express.Router();
 
@@ -65,14 +65,15 @@ router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userC
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
 //plant routes
-
-
+router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
+router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
+router.get("/plants", authMiddleware.isAuthenticated, plantController.getPlants);
+router.put("/plant", authMiddleware.isAuthenticated, plantController.updatePlant);
+router.delete("/plant/:id", authMiddleware.isAuthenticated, plantController.deletePlant);
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
-router.get("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.getDepartmentById);
-router.get("/auth/departments", authMiddleware.isAuthenticated, departmentController.getAllDepartments);
-router.get("/auth/departments/user", authMiddleware.isAuthenticated, departmentController.getDepartmentsByUser);
+router.get("/auth/department/:userId?/:plantId?/:departmentId?/:page?/:pageSize?", authMiddleware.isAuthenticated, departmentController.getDepartments);
 router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
@@ -94,7 +95,6 @@ router.get("/auth/dunnages/department/:id", authMiddleware.isAuthenticated, dunn
 router.get("/auth/dunnages/name/:name", authMiddleware.isAuthenticated, dunnageController.getDunnageByName);
 router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
-
 
 const server: HttpServer = http.createServer(app);
 export default server;
