@@ -253,6 +253,35 @@ export const getPlants = async (req: Request, res: Response) => {
     return res.status(200).json(plantList);
 
 };
+export const updatePlant = async (req: Request, res: Response) => {
+    const user: UserDocument = req.user as UserDocument;
+
+    await check("plantId", "plantId is not valid").isLength({ min: 1 }).run(req);
+    await check("plantName", "plantName is not valid").isLength({ min: 1 }).run(req);
+    await check("plantLocation", "plantLocation is not valid").isLength({ min: 1 }).run(req);
+
+    const plant: PlantDocument = (await Plant.findOne({
+        _id: req.body.plantId,
+        isDeleted: false
+    })) as PlantDocument;
+
+    if (!plant) {
+        return res.status(500).json("Plant does not exist!");
+    }
+
+    plant.plantName = req.body.plantName;
+    plant.plantLocation = req.body.plantLocation;
+
+  
+    try {
+        await plant.save();
+        return res.json(plant);
+    }
+    catch (err) {
+        return res.status(500).json({ err });
+    }
+
+};
 const assignUsers = async (
     newPlant: any,
     departments: DepartmentDocument[],

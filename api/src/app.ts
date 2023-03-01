@@ -64,6 +64,7 @@ router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sen
 router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
 router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
 router.get("/plants", authMiddleware.isAuthenticated, plantController.getPlants);
+router.put("/plant", authMiddleware.isAuthenticated, plantController.updatePlant);
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
