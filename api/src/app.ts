@@ -11,10 +11,26 @@ import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 import * as eventController from "./controllers/event"
 import * as departmentController from "./controllers/department";
+import * as plantController from "./controllers/plant";
 import * as stockController from "./controllers/stock";
 import * as dunnageController from "./controllers/dunnage";
-
 import * as inviteController from "./controllers/invite";
+
+import * as redis from "redis";
+
+
+
+export const redisClient: redis.RedisClientType = redis.createClient({
+    legacyMode: true,
+
+    socket: {
+        port: 6379,
+        host: env.aws.redisUrl,
+        connectTimeout: 10000,
+
+    },
+});
+
 const router: Router = express.Router();
 
 const app = express();
@@ -58,8 +74,10 @@ router.post("/auth/signin", userController.signin);
 router.post("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
 router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
+router.get("/auth/users", authMiddleware.isAdminAuthenticated, userController.getUsers);
 router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController.getUserById);
-
+router.post("/auth/reset", authMiddleware.isAuthenticated, userController.changePassword);
+router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userController.changeActivePlant);
 //invite routes
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
@@ -68,14 +86,15 @@ router.get("/events/:plantId?/:departmentId?/:user?/:operation?/:date?/:page?/:p
 
 
 //plant routes
-
-
+router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
+router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
+router.get("/plants", authMiddleware.isAuthenticated, plantController.getPlants);
+router.put("/plant", authMiddleware.isAuthenticated, plantController.updatePlant);
+router.delete("/plant/:id", authMiddleware.isAuthenticated, plantController.deletePlant);
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
-router.get("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.getDepartmentById);
-router.get("/auth/departments", authMiddleware.isAuthenticated, departmentController.getAllDepartments);
-router.get("/auth/departments/user", authMiddleware.isAuthenticated, departmentController.getDepartmentsByUser);
+router.get("/auth/department/:userId?/:plantId?/:departmentId?/:page?/:pageSize?", authMiddleware.isAuthenticated, departmentController.getDepartments);
 router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
@@ -98,6 +117,5 @@ router.get("/auth/dunnages/name/:name", authMiddleware.isAuthenticated, dunnageC
 router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
-
-const server: HttpServer =  http.createServer(app);
+const server: HttpServer = http.createServer(app);
 export default server;

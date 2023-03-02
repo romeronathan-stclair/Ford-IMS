@@ -36,12 +36,12 @@ const userSchema = new Schema<UserDocument>({
     plants: [{
         plantId: {
             type: String,
-            required: false,
+            required: true,
         },
         departments: [String],
         isActive: {
             type: Boolean,
-            required: true,
+            required: false,
         },
     }],
     role: {
