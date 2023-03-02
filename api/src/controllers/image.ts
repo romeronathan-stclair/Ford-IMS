@@ -28,8 +28,20 @@ export const uploadImage = async (imageRequest: ImageRequest) => {
 
         const dirPath = getImagePath(imageRequest);
 
+        // Check if the image is valid.
+        if (imageRequest.oldImage) {
+            const publicPath = "public/";
+            const imagePath = imageRequest.oldImage.split(publicPath)[1];
+            const dirPath = path.join(__dirname, '..', '..', 'public', imagePath);
+            // Delete the file if it exists
+            if (fs.existsSync(dirPath)) {
+                fs.unlinkSync(dirPath);
+            }
+        }
 
         // Move the uploaded image to our upload folder
+
+
         image.mv(dirPath, (err: any) => {
             if (err) {
                 console.log(err);
