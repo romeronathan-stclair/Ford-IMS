@@ -5,16 +5,15 @@ export type StockDocument = Document & {
     departmentId: string;
     name: string;
     partNumber: string;
-    totalQuantity: number;
-    stockPerTote: number;
-    toteQuantity: number;
+    totalStockQty: number;
+    stockQtyPerTote?: number;
+    totesPerSkid?: number;
     currentCount?: number;
     roughStock: boolean;
     lowStock: number;
     moderateStock: number;
-    imageURL?: string;
+    imageURL: string;
     isDeleted: boolean;
-    skidQuantity?: number;
 };
 
 const stockSchema = new Schema<StockDocument>({
@@ -32,17 +31,17 @@ const stockSchema = new Schema<StockDocument>({
 
         required: true,
     },
-    totalQuantity: {
+    totalStockQty: {
         type: Number,
         required: true,
     },
-    stockPerTote: {
+    stockQtyPerTote: {
         type: Number,
-        required: true,
+        required: false,
     },
-    toteQuantity: {
+    totesPerSkid: {
         type: Number,
-        required: true,
+        required: false,
     },
     currentCount: {
         type: Number,
@@ -67,14 +66,7 @@ const stockSchema = new Schema<StockDocument>({
     imageURL: {
         type: String,
         required: false,
-    },
-    skidQuantity: {
-        type: Number,
-        required: false,
-    },
-    
-
-
+    }
 });
 
 

@@ -110,11 +110,7 @@ router.delete("/auth/department/:id", authMiddleware.isAuthenticated, department
 
 //stock routes
 router.post("/auth/stock", stockController.createStock);
-router.get("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.getStockById);
-router.get("/auth/stocks", authMiddleware.isAuthenticated, stockController.getAllStocks);
-router.get("/auth/stocks/department/:id", authMiddleware.isAuthenticated, stockController.getStockByDepartmentId);
-router.get("/auth/stocks/name/:name", authMiddleware.isAuthenticated, stockController.getStockByName);
-router.get("/auth/stocks/partNumber/:partNumber", authMiddleware.isAuthenticated, stockController.getStockByPartNumber);
+router.get("/auth/stock", authMiddleware.isAuthenticated, stockController.getStock);
 router.put("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.updateStock);
 router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.deleteStock);
 
