@@ -35,15 +35,6 @@ export const createDepartment = async (req: Request, res: Response) => {
     newDepartment.plantId = req.body.plantId;
     newDepartment.isDeleted = false;
 
-    //create Event
-    // const event = new Event({
-    //     userId: user._id.valueOf(),
-    //     userEmailAddress: user.email,
-    //     operationType: CrudType.CREATE,
-    //     model: ModelType.DEPARTMENT,
-    //     modelId: newDepartment._id.valueOf(),
-    // });
-
     //save new Department
     response = {
         department: newDepartment,
@@ -51,8 +42,23 @@ export const createDepartment = async (req: Request, res: Response) => {
     }
     try {
         await newDepartment.save();
-        // await event.save();
-        return res.status(200).json(response);
+
+        // create Event
+        const event = new Event({
+            plantId: newDepartment.plantId,
+            departmentId: newDepartment._id.valueOf(),
+            eventDate: new Date().toISOString(),
+            userId: user._id.valueOf(),
+            operationType: CrudType.CREATE,
+            itemType: ModelType.DEPARTMENT,
+            userName: user.name,
+            userEmailAddress: user.email,
+            itemId: newDepartment._id.valueOf()
+        });
+
+        await event.save();
+
+        return res.status(200).json(newDepartment + "Department created successfully\n" + event + "Event created successfully");
     } catch (err) {
         return res.status(500).json("Error creating Department");
     }
