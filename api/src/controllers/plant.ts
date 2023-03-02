@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { check, validationResult } from "express-validator";
-import passport from "passport";
+import passport, { use } from "passport";
 import {
     User,
     UserDocument,
@@ -10,6 +10,7 @@ import {
     DepartmentDocument,
     Department,
     Event,
+    EventDocument,
 } from "../models";
 import passwordSchema from "../utils/passwordValidator";
 import { createRandomToken } from "../utils/randomGenerator";
@@ -20,6 +21,7 @@ import logger from "../utils/logger";
 import { getPage, getPageSize } from "../utils/pagination";
 import { CrudType } from "../enums/crudType";
 import mongoose from "mongoose";
+import { ModelType } from "../enums/modelType";
 
 export const createPlant = async (
     req: Request,
@@ -33,6 +35,7 @@ export const createPlant = async (
         .isLength({ min: 1 })
         .run(req);
 
+    let eventList: EventDocument[] = [];
     let response;
     let departments: DepartmentDocument[] = [];
     let departmentIds: [String] = [""];
@@ -53,11 +56,22 @@ export const createPlant = async (
 
     try {
         await newPlant.save();
-        user.plants.push({
+
+        const event = {
+            itemType: ModelType.PLANT,
             plantId: newPlant._id.valueOf(),
-            departments: [""],
-            isActive: false,
-        });
+            userId: user._id.valueOf(),
+            operationType: CrudType.CREATE,
+            userName: user.name,
+            itemId: newPlant._id.valueOf(),
+            userEmailAddress: user.email,
+            eventDate: new Date().toDateString(),
+        } as EventDocument;
+
+        eventList.push(event);
+
+
+
         await user.save();
     } catch (err) {
         return res.status(500).json({ err });
@@ -69,9 +83,9 @@ export const createPlant = async (
             return res.status(400).json("Departments must be an array");
         }
 
-        const departmentNames = req.body.departments.map(
-            (department: any) => department.departmentName
-        );
+        // map the departments from the req.body, they are an array of strings
+        const departmentNames = req.body.departments;
+
 
         const existingDepartments = await Department.find({
             departmentName: { $in: departmentNames },
@@ -81,7 +95,7 @@ export const createPlant = async (
             const existingDepartmentNames = existingDepartments.map(
                 (department: any) => department.departmentName
             );
-            newPlant.remove();
+            cancelPlantCreate(newPlant, departments, eventList);
             return res
                 .status(500)
                 .json(
@@ -92,34 +106,46 @@ export const createPlant = async (
             try {
                 departments = req.body.departments.map((department: any) => {
                     const newDepartment: DepartmentDocument = new Department();
-                    newDepartment.departmentName = department.departmentName;
+                    newDepartment.departmentName = department;
                     newDepartment.plantId = newPlant._id.valueOf();
                     newDepartment.isDeleted = false;
+
+                    const event: EventDocument = {
+                        eventDate: new Date().toDateString(),
+                        userId: user._id.valueOf(),
+                        operationType: CrudType.CREATE,
+                        itemType: ModelType.DEPARTMENT,
+                        userName: user.name,
+                        plantId: newPlant._id.valueOf(),
+                        userEmailAddress: user.email,
+                        itemId: newDepartment._id.valueOf(),
+                    } as EventDocument;
+
+                    eventList.push(event);
+
+
                     return newDepartment;
                 });
                 await Promise.all(
                     departments.map((department: { save: () => any }) => {
                         return department.save();
                     })
+
                 );
+
+
+
                 departmentIds = departments.map((department: DepartmentDocument) =>
                     department._id.toString()
                 ) as [String];
             } catch (err) {
-                newPlant.remove();
-                departments.forEach((department: { remove: () => any }) => {
-                    department.remove();
-                });
+                cancelPlantCreate(newPlant, departments, eventList);
                 return res.status(500).json("Error while creating departments." + err);
             }
         }
     }
 
-    response = {
-        plant: newPlant,
-        message: "Plant created successfully",
-    };
-
+   
     try {
         response = {
             plant: newPlant,
@@ -150,6 +176,11 @@ export const createPlant = async (
                 plant: newPlant,
                 message: result,
             };
+
+            eventList.map((event: { save: () => any }) => {
+                return event.save();
+            })
+
             return res.status(200).json(response);
         })
         .catch((err) => {
@@ -158,11 +189,8 @@ export const createPlant = async (
                 message: err,
             };
             try {
-                newPlant.remove();
+                cancelPlantCreate(newPlant, departments, eventList);
 
-                departments.forEach((department: { remove: () => any }) => {
-                    department.remove();
-                });
 
                 return res.status(500).json(err);
             } catch (err) {
@@ -272,9 +300,19 @@ export const updatePlant = async (req: Request, res: Response) => {
 
     plant.plantName = req.body.plantName;
     plant.plantLocation = req.body.plantLocation;
-
+    const event: EventDocument = {
+        eventDate: new Date().toDateString(),
+        userId: user._id.valueOf(),
+        operationType: CrudType.UPDATE,
+        itemType: ModelType.PLANT,
+        userName: user.name,
+        plantId: plant._id.valueOf(),
+        userEmailAddress: user.email,
+        itemId: plant._id.valueOf(),
+    } as EventDocument;
 
     try {
+        await event.save();
         await plant.save();
         return res.json(plant);
     }
@@ -287,7 +325,7 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     let plantId = req.params.id;
 
-    if(!plantId){
+    if (!plantId) {
         return res.status(500).json("PlantId is not valid!");
     }
 
@@ -304,8 +342,20 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     plant.isDeleted = true;
 
+    const event: EventDocument = {
+        eventDate: new Date().toDateString(),
+        userId: user._id.valueOf(),
+        operationType: CrudType.DELETE,
+        itemType: ModelType.PLANT,
+        userName: user.name,
+        plantId: plant._id.valueOf(),
+        userEmailAddress: user.email,
+        itemId: plant._id.valueOf(),
+    } as EventDocument;
+
     try {
         await plant.save();
+        await event.save();
         return res.status(200).json(plant);
     }
     catch (err) {
@@ -400,15 +450,26 @@ const assignUsers = async (
 
 const cancelPlantCreate = (
     plant: PlantDocument,
-    departments: DepartmentDocument[]
+    departments: DepartmentDocument[],
+    events: EventDocument[]
 ) => {
     return new Promise(async (resolve, reject) => {
         try {
-            await plant.remove();
+            if (plant) {
+                await plant.remove();
+            }
 
-            departments.forEach((department: { remove: () => any }) => {
-                department.remove();
-            });
+            if (departments && departments.length > 0) {
+                departments.forEach((department: { remove: () => any }) => {
+                    department.remove();
+                });
+
+            }
+            if (events && events.length > 0) {
+                events.forEach((event: { remove: () => any }) => {
+                    event.remove();
+                });
+            }
 
             resolve("Plant creation cancelled successfully.");
         } catch (err) {
