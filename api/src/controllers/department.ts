@@ -159,40 +159,29 @@ export const updateDepartment = async (req: Request, res: Response) => {
 
 //delete Department
 export const deleteDepartment = async (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
-
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-
-    //find Department
+    const departmentId = req.params.id;
+    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
+  
+    // find Department by Id
     const department: DepartmentDocument = (await Department.findOne({
-        _id: req.body.departmentId,
-        isDeleted: false
+      _id: departmentId,
+      isDeleted: false,
     })) as DepartmentDocument;
-
+  
     if (!department) {
-        return res.status(500).json("Department does not exists");
+      return res.status(500).json("Department not found");
     }
-
-    //delete Department
+  
+    // delete Department
     department.isDeleted = true;
-    
-    //create Event
-    // const event = new Event({
-    //     userId: user._id.valueOf(),
-    //     userEmailAddress: user.email,
-    //     operationType: CrudType.DELETE,
-    //     model: ModelType.DEPARTMENT,
-    //     modelId: department._id.valueOf(),
-    // });
-
-    //save Department Status
+  
+    // save Department
     try {
-        await department.save();
-        // await event.save();
-        return res.status(200).json("Department deleted and Event Created");
+      await department.save();
+      return res.status(200).json("Department deleted successfully");
+    } catch (err) {
+      return res.status(500).json("Error deleting Department" + err);
     }
-    catch (err) {
-        return res.status(500).json("Error deleting Department");
-    }
-
-};
+  };
+  
+  
