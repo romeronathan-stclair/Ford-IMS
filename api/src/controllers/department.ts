@@ -70,51 +70,45 @@ export const getDepartments = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
     const userId = req.query.userId;
-    console.log(JSON.stringify(req.query));
+    const plantId = req.params.plantId;
+    const departmentId = req.query.departmentId;
+    const query: any = { 
+        isDeleted: false,
+    }
 
-    let user: UserDocument;
-    User.findOne({ _id: userId }, async (err: NativeError, existingUser: UserDocument) => {
-        if (err) {
-            return res.status(500).json("Error finding user");
-        }
-        if (!existingUser) {
+    if (plantId) {
+        query["plantId"] = plantId;
+
+    }
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (!user) {
             return res.status(500).json("User does not exist");
         }
-        user = existingUser;
 
-        const plantId = req.query.plantId;
-        const departmentId = req.query.departmentId;
-        const plant = user.plants.find(plant => plant.plantId === plantId);
+        const plant = user.plants.find(plant => {
+            return plant.plantId = plantId;
+        });
 
         if (!plant) {
             return res.status(500).json("Plant does not exist");
         }
 
-        const departmentIds = plant.departments.map(department => department).flat();
-        const userDepartmentIds = departmentIds.map(id => { 
-            
-            if (!departmentId) {
-                return new Types.ObjectId(id.toString());
-            } else if (departmentId === id.toString()) {
-                return new Types.ObjectId(id.toString());
-            } else {
-                return null;
-            }
+        const departmentIds = plant.departments.map(department => { 
+            return new Types.ObjectId(department.toString())
         });
+        query["_id"] = { $in: departmentIds };
 
-        const query = { 
-            isDeleted: false,
-            plantId: plantId,
-            _id: { $in: userDepartmentIds }
-        }
+    }
 
-        const departments = await Department.find(query).skip(page * pageSize).limit(pageSize).exec();
+    if (departmentId) {
+        query["_id"] = new Types.ObjectId(departmentId.toString());
+    }
+    
 
-        console.log(JSON.stringify(query));
-
-        return res.status(200).json(departments);
-    });
-  
+    const departments = await Department.find(query).skip(page * pageSize).limit(pageSize).exec();
+    
+    return res.status(200).json(departments);
     
   };
   
