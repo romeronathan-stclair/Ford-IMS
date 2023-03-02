@@ -4,6 +4,8 @@ import passport from "passport";
 import { User, UserDocument, Invite } from "../models";
 import passwordSchema from "../utils/passwordValidator";
 import bcrypt from "bcrypt";
+import { ModelType } from "../enums/modelType";
+import { ImageRequest } from "../type/imageRequest";
 
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
@@ -332,4 +334,3 @@ export const getUsers = async (req: Request, res: Response) => {
 
     return res.status(200).json(users);
 }
-
