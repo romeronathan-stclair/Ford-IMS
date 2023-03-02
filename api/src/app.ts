@@ -5,6 +5,7 @@ import session, { SessionOptions, CookieOptions } from "express-session";
 import { connectMongoDB } from "./config/mongoose";
 import MongoStore from "connect-mongo";
 import passport from 'passport';
+import fileUpload from 'express-fileupload';
 import { configPassport } from './config/passport';
 
 import * as authMiddleware from "./middleware/auth.middleware";
@@ -14,8 +15,10 @@ import * as plantController from "./controllers/plant";
 import * as stockController from "./controllers/stock";
 import * as dunnageController from "./controllers/dunnage";
 import * as inviteController from "./controllers/invite";
+import * as imageController from "./controllers/image";
 
 import * as redis from "redis";
+import bodyParser from 'body-parser';
 
 
 
@@ -52,6 +55,9 @@ const sessionOptions: SessionOptions = {
     cookie: cookieOptions,
 
 };
+
+
+
 const expressSession: RequestHandler = session(sessionOptions);
 connectMongoDB(env.db.fullUrl);
 configPassport();
@@ -59,8 +65,9 @@ app.use(express.json());
 app.use(expressSession);
 
 app.use(passport.initialize());
-app.use(passport.session());
-
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+app.use(fileUpload());
 app.use(`/${env.app.prefix}`, router);
 
 app.get("/health", (req, res) => {
@@ -79,7 +86,8 @@ router.post("/auth/reset", authMiddleware.isAuthenticated, userController.change
 router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userController.changeActivePlant);
 //invite routes
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
-
+router.post("/image", imageController.imageUpload);
+router.get("/image/:plantId/:departmentId/:modelType/:item", imageController.retrieveImage);
 //plant routes
 router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
 router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
