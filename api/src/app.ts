@@ -92,8 +92,7 @@ router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEve
 
 // image routes
 router.post("/image", imageController.imageUpload);
-router.get("/image/:plantId/:departmentId/:modelType/:item", imageController.retrieveImage);
-
+router.get("/public/images/:plantId/:departmentId/:modelType/:item", imageController.retrieveImage);
 //plant routes
 router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
 router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
@@ -108,7 +107,7 @@ router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentCon
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
 //stock routes
-router.post("/auth/stock", authMiddleware.isAuthenticated, stockController.createStock);
+router.post("/auth/stock", stockController.createStock);
 router.get("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.getStockById);
 router.get("/auth/stocks", authMiddleware.isAuthenticated, stockController.getAllStocks);
 router.get("/auth/stocks/department/:id", authMiddleware.isAuthenticated, stockController.getStockByDepartmentId);

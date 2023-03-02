@@ -12,8 +12,9 @@ export type StockDocument = Document & {
     roughStock: boolean;
     lowStock: number;
     moderateStock: number;
-    imageURL: string;
+    imageURL?: string;
     isDeleted: boolean;
+    skidQuantity?: number;
 };
 
 const stockSchema = new Schema<StockDocument>({
@@ -54,6 +55,22 @@ const stockSchema = new Schema<StockDocument>({
     isDeleted: {
         type: Boolean,
         required: true,
+    },
+    lowStock: {
+        type: Number,
+        required: true,
+    },
+    moderateStock: {
+        type: Number,
+        required: true,
+    },
+    imageURL: {
+        type: String,
+        required: false,
+    },
+    skidQuantity: {
+        type: Number,
+        required: false,
     },
     
 
