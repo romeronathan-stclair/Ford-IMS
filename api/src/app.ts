@@ -14,6 +14,22 @@ import * as plantController from "./controllers/plant";
 import * as stockController from "./controllers/stock";
 import * as dunnageController from "./controllers/dunnage";
 import * as inviteController from "./controllers/invite";
+
+import * as redis from "redis";
+
+
+
+export const redisClient: redis.RedisClientType = redis.createClient({
+    legacyMode: true,
+
+    socket: {
+        port: 6379,
+        host: env.aws.redisUrl,
+        connectTimeout: 10000,
+
+    },
+});
+
 const router: Router = express.Router();
 
 const app = express();

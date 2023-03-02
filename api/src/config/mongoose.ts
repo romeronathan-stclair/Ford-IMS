@@ -9,7 +9,6 @@ export const connectMongoDB = (url: string) => {
             logger.info("MongoDB running");
         })
         .catch((err) => {
-
             logger.info(`MongoDB connection error. Please make sure MongoDB is running. ${err} URL : ${url}`);
         });
 };
