@@ -31,6 +31,14 @@ const dunnageSchema = new Schema<DunnageDocument>({
         type: Number,
         required: false,
     },
+    lowStock: {
+        type: Number,
+        required: true,
+    },
+    moderateStock: {
+        type: Number,
+        required: true,
+    },
     isDeleted: {
         type: Boolean,
         required: true,
