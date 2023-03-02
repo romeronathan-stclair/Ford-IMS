@@ -66,6 +66,8 @@ app.use(express.json());
 app.use(expressSession);
 
 app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(fileUpload());

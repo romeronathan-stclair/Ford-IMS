@@ -86,13 +86,6 @@ export const createStock = async (req: Request, res: Response) => {
         await uploadImage(imageRequest)
             .then((result: any) => {
                 stock.imageURL = env.app.apiUrl + "/" + result;
-                try {
-                    stock.save();
-                }
-                catch (err) {
-                    stock.remove();
-                    return res.status(500).json("Error creating Stock");
-                }
 
             })
             .catch((err: any) => {
@@ -106,7 +99,18 @@ export const createStock = async (req: Request, res: Response) => {
                 }
                 return res.status(500).json("Error creating Stock");
             });
+    } else {
+        stock.imageURL = env.app.apiUrl + "/images/defaultStock.png";
     }
+
+    try {
+        stock.save();
+    }
+    catch (err) {
+        stock.remove();
+        return res.status(500).json("Error creating Stock");
+    }
+
     return res.status(200).json(stock);
 };
 
@@ -199,7 +203,6 @@ export const getStockByPartNumber = async (req: Request, res: Response) => {
 
 //update Stock
 export const updateStock = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
     await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
     await check("name", "name is not valid").isLength({ min: 1 }).run(req);
     await check("partNumber", "partNumber is not valid").isLength({ min: 1 }).run(req);
@@ -207,11 +210,20 @@ export const updateStock = async (req: Request, res: Response) => {
     await check("toteQuantity", "toteQuantity is not valid").isLength({ min: 1 }).run(req);
     await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
-    await check("imageURL", "imageURL is not valid").isLength({ min: 1 }).run(req);
+    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+
+    console.log(req.params.id);
+
+    const stockId = req.params.id;
+
+    if (stockId === undefined) {
+        return res.status(500).json("Stock Id Required.");
+    }
+
 
     //find Stock by Id
     const stock: StockDocument = (await Stock.findOne({
-        _id: req.body.id,
+        _id: stockId,
         isDeleted: false
     })) as StockDocument;
 
@@ -219,19 +231,54 @@ export const updateStock = async (req: Request, res: Response) => {
         return res.status(500).json("Stock not found");
     }
 
-    //update Stock
-    stock.departmentId = req.body.departmentId;
-    stock.name = req.body.name;
-    stock.partNumber = req.body.partNumber;
-    stock.totalQuantity = req.body.totalQuantity;
-    stock.stockPerTote = req.body.stockPerTote;
-    stock.toteQuantity = req.body.toteQuantity;
-    stock.currentCount = req.body.currentCount;
-    stock.roughStock = req.body.roughStock;
-    stock.lowStock = req.body.lowStock;
-    stock.moderateStock = req.body.moderateStock;
-    stock.imageURL = req.body.imageURL;
-    stock.isDeleted = false;
+    const departmentId = stock.departmentId;
+
+    const department = (await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    })) as DepartmentDocument;
+
+
+
+    stock.name = req.body.name || stock.name;
+    stock.partNumber = req.body.partNumber || stock.partNumber;
+    stock.stockPerTote = req.body.stockPerTote || stock.stockPerTote;
+    stock.toteQuantity = req.body.toteQuantity || stock.toteQuantity;
+    stock.skidQuantity = req.body.skidQuantity || stock.skidQuantity;
+    stock.lowStock = req.body.lowStock || stock.lowStock;
+    stock.moderateStock = req.body.moderateStock || stock.moderateStock;
+
+    if (req.files) {
+        const image = req.files.file;
+
+        const imageRequest: ImageRequest = {
+            itemId: stock._id.toString(),
+            plantId: department.plantId,
+            departmentId: stock.departmentId,
+            modelType: ModelType.STOCK,
+            image: image,
+            oldImage: stock.imageURL
+        };
+
+        await uploadImage(imageRequest)
+            .then((result: any) => {
+                stock.imageURL = env.app.apiUrl + "/" + result;
+
+            })
+            .catch((err: any) => {
+                console.log(err);
+
+                try {
+                    stock.remove();
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                return res.status(500).json("Error creating Stock");
+            });
+    }
+
+
 
     //save Updated Stock
     try {
