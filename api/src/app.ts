@@ -10,6 +10,7 @@ import { configPassport } from './config/passport';
 
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
+import * as eventController from "./controllers/event"
 import * as departmentController from "./controllers/department";
 import * as plantController from "./controllers/plant";
 import * as stockController from "./controllers/stock";
@@ -86,8 +87,13 @@ router.post("/auth/reset", authMiddleware.isAuthenticated, userController.change
 router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userController.changeActivePlant);
 //invite routes
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
+//event routes
+router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEvents);
+
+// image routes
 router.post("/image", imageController.imageUpload);
 router.get("/image/:plantId/:departmentId/:modelType/:item", imageController.retrieveImage);
+
 //plant routes
 router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
 router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);
