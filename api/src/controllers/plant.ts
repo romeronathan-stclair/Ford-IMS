@@ -57,7 +57,7 @@ export const createPlant = async (
     try {
         await newPlant.save();
 
-        const event = {
+        const event: EventDocument = new Event({
             itemType: ModelType.PLANT,
             plantId: newPlant._id.valueOf(),
             userId: user._id.valueOf(),
@@ -66,7 +66,7 @@ export const createPlant = async (
             itemId: newPlant._id.valueOf(),
             userEmailAddress: user.email,
             eventDate: new Date().toDateString(),
-        } as EventDocument;
+        }) as EventDocument;
 
         eventList.push(event);
 
@@ -110,7 +110,7 @@ export const createPlant = async (
                     newDepartment.plantId = newPlant._id.valueOf();
                     newDepartment.isDeleted = false;
 
-                    const event: EventDocument = {
+                    const event: EventDocument = new Event({
                         eventDate: new Date().toDateString(),
                         userId: user._id.valueOf(),
                         operationType: CrudType.CREATE,
@@ -119,7 +119,7 @@ export const createPlant = async (
                         plantId: newPlant._id.valueOf(),
                         userEmailAddress: user.email,
                         itemId: newDepartment._id.valueOf(),
-                    } as EventDocument;
+                    }) as EventDocument;
 
                     eventList.push(event);
 
@@ -145,7 +145,7 @@ export const createPlant = async (
         }
     }
 
-   
+
     try {
         response = {
             plant: newPlant,
@@ -300,7 +300,7 @@ export const updatePlant = async (req: Request, res: Response) => {
 
     plant.plantName = req.body.plantName;
     plant.plantLocation = req.body.plantLocation;
-    const event: EventDocument = {
+    const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
@@ -309,8 +309,9 @@ export const updatePlant = async (req: Request, res: Response) => {
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
-    } as EventDocument;
+    }) as EventDocument;
 
+    console.log("HERE");
     try {
         await event.save();
         await plant.save();
@@ -342,7 +343,7 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     plant.isDeleted = true;
 
-    const event: EventDocument = {
+    const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
@@ -351,7 +352,7 @@ export const deletePlant = async (req: Request, res: Response) => {
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
-    } as EventDocument;
+    }) as EventDocument;
 
     try {
         await plant.save();
