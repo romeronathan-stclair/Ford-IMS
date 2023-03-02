@@ -30,7 +30,8 @@ const env = {
         apiPort: getOsEnv("API_PORT"),
         appName: getOsEnv("API_NAME"),
         sessionSecret: getOsEnv("SESSION_SECRET"),
-        prefix: getOsEnv("API_PREFIX")
+        prefix: getOsEnv("API_PREFIX"),
+        apiUrl: getOsEnv("API_URL")
     },
     db: {
         dbUser: getOsEnv("DB_USERNAME"),

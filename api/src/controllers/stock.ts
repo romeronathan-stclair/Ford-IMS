@@ -1,79 +1,118 @@
 import { json, NextFunction, Request, Response } from "express";
-import { UserDocument } from "../models";
+import { Department, DepartmentDocument, UserDocument } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
 import { getPage, getPageSize } from "../utils/pagination";
+import { ImageRequest } from "../type/imageRequest";
+import { uploadImage } from "./image";
+import { Types } from "mongoose";
+import env from "../utils/env";
 
 //create Stock
 export const createStock = async (req: Request, res: Response) => {
     //check if inputs are valid
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-    await check("partNumber", "partNumber is not valid").isLength({min: 1}).run(req);
-    await check("stockPerTote", "stockPerTote is not valid").isLength({min: 1}).run(req);
-    await check("toteQuantity", "toteQuantity is not valid").isLength({min: 1}).run(req);
-    await check("currentCount", "currentCount is not valid").isLength({min: 1}).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
-    await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
+    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
+    await check("partNumber", "partNumber is not valid").isLength({ min: 1 }).run(req);
+    await check("stockPerTote", "stockPerTote is not valid").isLength({ min: 1 }).run(req);
+    await check("toteQuantity", "toteQuantity is not valid").isLength({ min: 1 }).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
+    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("roughStock", "roughStock is not valid").isLength({ min: 1 }).run(req);
+    await check("totalQuantity", "totalQuantity is not valid").isLength({ min: 1 }).run(req);
 
-    //check if Stock already exists
-    let response;
-    const stock: StockDocument = (await Stock.findOne({
-        departmentId: req.body.departmentId,
+
+    const departmentId = req.body.departmentId;
+
+    console.log(departmentId);
+
+    const department = await Department.findById({
+        _id: departmentId,
+        isDeleted: false,
+    });
+
+    if (!department) {
+        return res.status(500).json("Department does not exist");
+    }
+    const plantId = department.plantId;
+
+    const user = req.user as UserDocument;
+
+    const existingStock: StockDocument = (await Stock.findOne({
+        departmentId: req.body.departmentId.toString(),
+        name: req.body.name,
+    })) as StockDocument;
+
+    if (existingStock) {
+        return res.status(500).json("Stock already exists");
+    }
+
+    const stock: StockDocument = new Stock({
+        departmentId: req.body.departmentId.toString(),
         name: req.body.name,
         partNumber: req.body.partNumber,
         totalQuantity: req.body.totalQuantity,
         stockPerTote: req.body.stockPerTote,
         toteQuantity: req.body.toteQuantity,
-        currentCount: req.body.currentCount,
+        currentCount: 0,
         roughStock: req.body.roughStock,
         lowStock: req.body.lowStock,
         moderateStock: req.body.moderateStock,
-        imageURL: req.body.imageURL,
-        isDeleted: false
-    })) as StockDocument;
+        isDeleted: false,
 
-    //request User
-    const user: UserDocument = req.user as UserDocument;
+    });
 
-    if (stock) {
-        return res.status(500).json("Stock already exists");
-    }
-
-    //create new Stock
-    const newStock: StockDocument = new Stock();
-    newStock.departmentId = req.body.departmentId;
-    newStock.name = req.body.name;
-    newStock.partNumber = req.body.partNumber;
-    newStock.totalQuantity = req.body.totalQuantity;
-    newStock.stockPerTote = req.body.stockPerTote;
-    newStock.toteQuantity = req.body.toteQuantity;
-    newStock.currentCount = req.body.currentCount;
-    newStock.roughStock = req.body.roughStock;
-    newStock.lowStock = req.body.lowStock;
-    newStock.moderateStock = req.body.moderateStock;
-    newStock.imageURL = req.body.imageURL;
-    newStock.isDeleted = false;
-
-    //save new Stock
-    response = {    
-        stock: newStock,
-        message: "Stock created successfully"
-    }
     try {
-        await newStock.save();
-        return res.status(200).json(response);
+        await stock.save();
     } catch (err) {
-        return res.status(500).json("Error creating Stock");
+        return res.status(500).json("Error creating Stock: " + err);
     }
 
+
+    if (req.files) {
+        const image = req.files.file;
+
+        const imageRequest: ImageRequest = {
+            itemId: stock._id.toString(),
+            plantId: plantId,
+            departmentId: stock.departmentId,
+            modelType: ModelType.STOCK,
+            image: image,
+
+        };
+
+        await uploadImage(imageRequest)
+            .then((result: any) => {
+                stock.imageURL = env.app.apiUrl + "/" + result;
+                try {
+                    stock.save();
+                }
+                catch (err) {
+                    stock.remove();
+                    return res.status(500).json("Error creating Stock");
+                }
+
+            })
+            .catch((err: any) => {
+                console.log(err);
+
+                try {
+                    stock.remove();
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                return res.status(500).json("Error creating Stock");
+            });
+    }
+    return res.status(200).json(stock);
 };
 
 //get Stock by Id
 export const getStockById = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({min: 1}).run(req);
+    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Id
     const stock: StockDocument = (await Stock.findOne({
@@ -106,7 +145,7 @@ export const getAllStocks = async (req: Request, res: Response) => {
 
 //get Stock by Departments Id
 export const getStockByDepartmentId = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Department Id
     const stocks: StockDocument[] = (await Stock.find({
@@ -124,7 +163,7 @@ export const getStockByDepartmentId = async (req: Request, res: Response) => {
 
 //get Stock by Name
 export const getStockByName = async (req: Request, res: Response) => {
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
+    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Name
     const stocks: StockDocument[] = (await Stock.find({
@@ -142,7 +181,7 @@ export const getStockByName = async (req: Request, res: Response) => {
 
 //get Stock by Part Number
 export const getStockByPartNumber = async (req: Request, res: Response) => {
-    await check("partNumber", "partNumber is not valid").isLength({min: 1}).run(req);
+    await check("partNumber", "partNumber is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Part Number
     const stocks: StockDocument[] = (await Stock.find({
@@ -160,15 +199,15 @@ export const getStockByPartNumber = async (req: Request, res: Response) => {
 
 //update Stock
 export const updateStock = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({min: 1}).run(req);
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-    await check("partNumber", "partNumber is not valid").isLength({min: 1}).run(req);
-    await check("stockPerTote", "stockPerTote is not valid").isLength({min: 1}).run(req);
-    await check("toteQuantity", "toteQuantity is not valid").isLength({min: 1}).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
-    await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
+    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
+    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
+    await check("partNumber", "partNumber is not valid").isLength({ min: 1 }).run(req);
+    await check("stockPerTote", "stockPerTote is not valid").isLength({ min: 1 }).run(req);
+    await check("toteQuantity", "toteQuantity is not valid").isLength({ min: 1 }).run(req);
+    await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
+    await check("imageURL", "imageURL is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Id
     const stock: StockDocument = (await Stock.findOne({
@@ -179,7 +218,7 @@ export const updateStock = async (req: Request, res: Response) => {
     if (!stock) {
         return res.status(500).json("Stock not found");
     }
-    
+
     //update Stock
     stock.departmentId = req.body.departmentId;
     stock.name = req.body.name;
@@ -206,7 +245,7 @@ export const updateStock = async (req: Request, res: Response) => {
 
 //delete Stock
 export const deleteStock = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({min: 1}).run(req);
+    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Id
     const stock: StockDocument = (await Stock.findOne({
@@ -229,6 +268,6 @@ export const deleteStock = async (req: Request, res: Response) => {
     catch (err) {
         return res.status(500).json("Error deleting Stock");
     }
-    
+
 };
 

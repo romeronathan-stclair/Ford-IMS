@@ -20,23 +20,26 @@ const MIME_TYPE_MAP: MimeTypeMap = {
     'image/jpeg': 'jpg',
     'image/jpg': 'jpg'
 };
-export const uploadImage = (imageRequest: ImageRequest) => {
+export const uploadImage = async (imageRequest: ImageRequest) => {
 
-    const image = imageRequest.image;
+    return new Promise((resolve, reject) => {
 
-    const dirPath = getImagePath(imageRequest);
+        const image = imageRequest.image;
+
+        const dirPath = getImagePath(imageRequest);
 
 
-    // Move the uploaded image to our upload folder
-    image.mv(dirPath, (err: any) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
+        // Move the uploaded image to our upload folder
+        image.mv(dirPath, (err: any) => {
+            if (err) {
+                console.log(err);
+                return reject(err);
+            }
+        });
+
+
+        return resolve(dirPath);
     });
-
-
-
 
 }
 export const imageUpload = async (req: Request, res: Response) => {
@@ -49,9 +52,6 @@ export const imageUpload = async (req: Request, res: Response) => {
     if (req.files) {
         const image = req.files.file;
 
-        console.log(image);
-
-
         const imageRequest: ImageRequest = {
             image,
             modelType,
@@ -59,21 +59,10 @@ export const imageUpload = async (req: Request, res: Response) => {
             departmentId,
             itemId
         };
-        console.log(imageRequest);
         uploadImage(imageRequest);
-
-
-
     }
 
-
-
-
-
     return res.status(200).json("Image upload success").end();
-
-
-
 }
 export const retrieveImage = async (req: Request, res: Response) => {
 
@@ -82,25 +71,21 @@ export const retrieveImage = async (req: Request, res: Response) => {
     const item = req.params.item;
     const modelType = req.params.modelType;
 
-
-
     const dirPath = path.join(`images/${plantId}/${departmentId}/${modelType}/${item}`);
 
-
     res.sendFile(dirPath, { root: 'public' });
-
 }
 
 export const getImagePath = (imageRequest: ImageRequest) => {
 
     const ext = "." + MIME_TYPE_MAP[imageRequest.image.mimetype];
 
-    const dirPath = path.join(`public/images/${imageRequest.plantId}/${imageRequest.departmentId}/${imageRequest.modelType}`);
+    const dirPath = path.join(`public/images/${imageRequest.plantId}/${imageRequest.departmentId}/${imageRequest.modelType}/`);
     if (!fs.existsSync(dirPath)) {
         fs.mkdirSync(dirPath, { recursive: true });
+
     }
     const imagePath = path.join(dirPath, imageRequest.itemId + ext);
 
     return imagePath;
-
 }
