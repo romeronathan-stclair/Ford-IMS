@@ -11,6 +11,22 @@ import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 
 import * as inviteController from "./controllers/invite";
+
+import * as redis from "redis";
+
+
+
+export const redisClient: redis.RedisClientType = redis.createClient({
+    legacyMode: true,
+
+    socket: {
+        port: 6379,
+        host: env.aws.redisUrl,
+        connectTimeout: 10000,
+
+    },
+});
+
 const router: Router = express.Router();
 
 const app = express();
