@@ -6,66 +6,49 @@ import { CrudType } from "../enums/crudType";
 import { getPage, getPageSize } from "../utils/pagination";
 
 //get Events
-
 export const getEvents = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
-    const plantId = req.body.plantId;
-    const departmentId = req.body.departmentId;
-    const user = req.body.user;
-    const operation = req.body.operation;
-    const date = req.body.date;
-
+    const plantId = req.query.plantId;
+    const departmentId = req.query.departmentId;
+    const userId = req.query.userId;
+    const operation = req.query.operation;
+    const date = req.query.eventDate;
+    const query: any = {
+      isDeleted: false,
+    };
+  
     if (plantId) {
-        const event: EventDocument = (await Event.findOne({
-            plantId: plantId
-        })) as EventDocument;
-
-        if (!event) {
-            return res.status(500).json("No events found for this plant");
-        }
-
-        return res.json(event)
-    } else if (departmentId) {
-        const event: EventDocument = (await Event.findOne({
-            departmentId: departmentId
-        })) as EventDocument;
-
-        if (!event) {
-            return res.status(500).json("No events found for this department");
-        }
-
-        return res.json(event)
-    } else if (user) {
-        const events: EventDocument[] = (await Event.find({
-            userId: user
-        })) as EventDocument[];
-
-        if (!events) {
-            return res.status(500).json("No events found for this user");
-        }
-
-        return res.json(events)
-    } else if (operation) {
-        const events: EventDocument[] = (await Event.find({
-            operationType: operation
-        })) as EventDocument[];
-
-        if (!events) {
-            return res.status(500).json("No events found for this operation");
-        }
-
-        return res.json(events)
-    } else if (date) {
-        const events: EventDocument[] = (await Event.find({
-            eventDate: date
-        })) as EventDocument[];
-
-        if (!events) {
-            return res.status(500).json("No events found for this date");
-        }
-
-        return res.json(events)
+      query["plantId"] = plantId;
+      console.log(plantId)
     }
+  
+    if (departmentId) {
+      query["departmentId"] = departmentId;
+      console.log(departmentId)
+    }
+  
+    if (userId) {
+      query["userId"] = userId;
+      console.log(userId);
+    }
+  
+    if (operation) {
+      query["operationType"] = operation;
+        console.log(operation);
+    }
+  
+    if (date) {
+      query["eventDate"] = date;
+        console.log(date);
+    }
+  
+    const events = await Event.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-};
+    if (!events || events.length === 0) {
+      return res.status(500).json("No events found");
+    }
+  
+    return res.json(events);
+  };
+  

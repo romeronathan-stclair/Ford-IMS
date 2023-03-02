@@ -82,7 +82,7 @@ router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userC
 router.post("/invite", authMiddleware.isAdminAuthenticated, inviteController.sendInvite);
 
 //event routes
-router.get("/events/:plantId?/:departmentId?/:user?/:operation?/:date?/:page?/:pageSize?", authMiddleware.isAdminAuthenticated, eventController.getEvents);
+router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEvents);
 
 
 //plant routes
