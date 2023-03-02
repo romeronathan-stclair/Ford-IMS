@@ -122,6 +122,7 @@ export const getStock = async (req: Request, res: Response) => {
     const departmentId = req.query.departmentId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const partNumber = req.query.partNumber;
+    const stockId = req.query.stockId;
 
     const query: any = {
         isDeleted: false,
@@ -140,6 +141,10 @@ export const getStock = async (req: Request, res: Response) => {
     if (partNumber) {
         query["partNumber"] = partNumber;
         console.log(partNumber);
+    }
+
+    if (stockId) {
+        query["_id"] = new Types.ObjectId(stockId.toString());
     }
 
     const stocks = await Stock.find(query).skip(page * pageSize).limit(pageSize).exec();
@@ -239,13 +244,14 @@ export const updateStock = async (req: Request, res: Response) => {
     }
 };
 
-//delete Stock
+// delete Stock
 export const deleteStock = async (req: Request, res: Response) => {
+    const stockId = req.params.id;
     await check("id", "id is not valid").isLength({ min: 1 }).run(req);
 
     //find Stock by Id
     const stock: StockDocument = (await Stock.findOne({
-        _id: req.body.id,
+        _id: stockId,
         isDeleted: false
     })) as StockDocument;
 
@@ -264,6 +270,6 @@ export const deleteStock = async (req: Request, res: Response) => {
     catch (err) {
         return res.status(500).json("Error deleting Stock");
     }
-
 };
+
 
