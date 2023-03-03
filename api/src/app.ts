@@ -17,6 +17,7 @@ import * as stockController from "./controllers/stock";
 import * as dunnageController from "./controllers/dunnage";
 import * as inviteController from "./controllers/invite";
 import * as imageController from "./controllers/image";
+import * as productController from "./controllers/product";
 
 import * as redis from "redis";
 import bodyParser from 'body-parser';
@@ -107,6 +108,12 @@ router.post("/auth/department", authMiddleware.isAuthenticated, departmentContro
 router.get("/auth/department/:plantId?", authMiddleware.isAuthenticated, departmentController.getDepartments);
 router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
+
+//product routes
+router.post("/auth/product", authMiddleware.isAuthenticated, productController.createProduct);
+router.get("/auth/product", authMiddleware.isAuthenticated, productController.getProduct);
+router.put("/auth/product/:id", authMiddleware.isAuthenticated, productController.updateProduct);
+router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productController.deleteProduct);
 
 //stock routes
 router.post("/auth/stock", stockController.createStock);
