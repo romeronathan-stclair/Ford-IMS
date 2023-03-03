@@ -114,7 +114,40 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
 //get Product
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
-    
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+    const departmentId = req.query.departmentId;
+    const productId = req.query.productId;
+    const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
+    const partNumber = req.query.partNumber;
+
+    const query: any = {
+        isDeleted: false,
+    }
+
+    if (departmentId) {
+        query["departmentId"] = departmentId;
+    }
+
+    if (productId) {
+        query["_id"] = productId;
+    }
+
+    if (name) {
+        query["name"] = name;
+    }
+
+    if (partNumber) {
+        query["partNumber"] = partNumber;
+    }
+
+    const products = await Product.find(query).skip(page * pageSize).limit(pageSize).exec();
+
+    if (!products || products.length == 0) {
+        return res.status(500).json("No Products found");
+    }
+
+    return res.status(200).json(products);
 };
 
 //update Product
