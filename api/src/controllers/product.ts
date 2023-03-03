@@ -152,7 +152,85 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
 //update Product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
-    
+    await check("departmentId", "Department Id is required").isLength({ min: 1 }).run(req);
+    await check("productId", "Product Id is required").isLength({ min: 1 }).run(req);
+    await check("name", "Name is required").isLength({ min: 1 }).run(req);
+    await check("partNumber", "Part Number is required").isLength({ min: 1 }).run(req);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const productId = req.params.id;
+
+    if (productId === undefined) {
+        return res.status(500).json("Product Id is required");
+    }
+
+    //find product by id
+    const product: ProductDocument = (await Product.findOne({
+        _id: productId,
+        isDeleted: false
+    })) as ProductDocument;
+
+    if (!product) {
+        return res.status(500).json("Product not found");
+    }
+
+    const departmentId = product.departmentId;
+
+    const department = await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    });
+
+    if (!department) {
+        return res.status(500).json("Department not found");
+    }
+
+    product.name = req.body.name || product.name;
+    product.partNumber = req.body.partNumber || product.partNumber;
+    product.dailyTarget = req.body.dailyTarget || product.dailyTarget;
+    product.marketLocation = req.body.marketLocation || product.marketLocation;
+    product.departmentId = req.body.departmentId || product.departmentId;
+
+    if (req.files) {
+        const image = req.files.file;
+
+        const imageRequest: ImageRequest = {
+            itemId: product._id.toString(),
+            plantId: department.plantId,
+            departmentId: product.departmentId,
+            modelType: ModelType.PRODUCT,
+            image: image,
+            oldImage: product.imageURL
+        };
+
+        await uploadImage(imageRequest)
+            .then((result: any) => {
+                product.imageURL = env.app.apiUrl + "/" + result;
+
+            })
+            .catch((err: any) => {
+                console.log(err);
+
+                try {
+                    product.remove();
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                return res.status(500).json("Error creating Product");
+            });
+    }
+
+    try {
+        await product.save();
+        return res.status(500).json("Product updated successfully");
+    } catch (err) {
+        return res.status(500).json("Error updating Product: " + err);
+    }
 };
 
 //delete Product
