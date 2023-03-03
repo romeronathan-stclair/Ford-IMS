@@ -20,7 +20,7 @@ const EventSchema = new Schema<EventDocument>(
     },
     departmentId: {
       type: String,
-      required: true,
+      required: false,
     },
     eventDate: {
       type: String,
