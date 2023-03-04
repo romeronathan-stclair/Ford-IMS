@@ -36,4 +36,4 @@ const dunnageSchema = new Schema<DunnageDocument>({
 });
 
 
-export const Dunnage = model<DunnageDocument>("Dunnage", dunnageSchema);
+export const ProductDunnage = model<DunnageDocument>("ProductDunnage", dunnageSchema);

@@ -11,7 +11,7 @@ export type ProductStockDocument = Document & {
     dailyTarget: number;
     usePerProduct: string;
     isDeleted: boolean;
-    
+
 };
 
 const productStockSchema = new Schema<ProductStockDocument>({
@@ -51,4 +51,4 @@ const productStockSchema = new Schema<ProductStockDocument>({
 });
 
 
-export const Stock = model<ProductStockDocument>("Stock", productStockSchema);
+export const ProductStock = model<ProductStockDocument>("ProductStock", productStockSchema);
