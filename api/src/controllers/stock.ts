@@ -201,6 +201,7 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.totesPerSkid = req.body.totesPerSkid || stock.totesPerSkid;
     stock.lowStock = req.body.lowStock || stock.lowStock;
     stock.moderateStock = req.body.moderateStock || stock.moderateStock;
+    stock.departmentId = req.body.departmentId || stock.departmentId;
 
     if (req.files) {
         const image = req.files.file;

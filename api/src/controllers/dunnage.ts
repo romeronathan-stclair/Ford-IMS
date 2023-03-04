@@ -174,6 +174,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     dunnage.skidQuantity = req.body.skidQuantity || dunnage.skidQuantity;
     dunnage.lowStock = req.body.lowStock || dunnage.lowStock;
     dunnage.moderateStock = req.body.moderateStock || dunnage.moderateStock;
+    dunnage.departmentId = req.body.departmentId || dunnage.departmentId;
 
     if (req.files) {
         const image = req.files.file;
@@ -182,7 +183,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
             itemId: dunnage._id.toString(),
             plantId: department.plantId,
             departmentId: dunnage.departmentId,
-            modelType: ModelType.STOCK,
+            modelType: ModelType.DUNNAGE,
             image: image,
             oldImage: dunnage.imageURL
         };
