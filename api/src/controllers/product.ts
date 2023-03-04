@@ -57,11 +57,6 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         isDeleted: false
     });
 
-    try {
-        await product.save();
-    } catch (err) {
-        return res.status(500).json("Error creating Product: " + err);
-    }
 
     if (req.files) {
         console.log(req.files)
@@ -75,6 +70,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
             image: image,
 
         };
+
 
         await uploadImage(imageRequest)
             .then((result: any) => {
@@ -95,6 +91,8 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     } else {
         product.imageURL = env.app.apiUrl + "/images/defaultProduct.png";
     }
+
+
 
     try {
         product.save();
