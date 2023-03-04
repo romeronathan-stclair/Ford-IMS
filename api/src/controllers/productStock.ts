@@ -91,5 +91,33 @@ export const createProductStock = async (req: Request, res: Response) => {
 
 
 
+export const deleteProductStock = async (req: Request, res: Response, next: NextFunction) => {
+    const productStockId = req.params.id;
+    await check("productId", "Product Id is required").isLength({ min: 1 }).run(req);
 
+    let errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(500).json(errors);
+    }
 
+    //find product by id
+    const productStock: ProductStockDocument = (await ProductStock.findOne({
+        _id: productStockId,
+        isDeleted: false
+    })) as ProductStockDocument;
+
+    if (!productStock) {
+        return res.status(500).json("Product not found");
+    }
+
+    //delete product
+    productStock.isDeleted = true;
+
+    //save delete product
+    try {
+        await productStock.save();
+        return res.status(200).json("Product deleted successfully");
+    } catch (err) {
+        return res.status(500).json("Error deleting Product: " + err);
+    }
+};
