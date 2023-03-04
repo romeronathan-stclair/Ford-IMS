@@ -8,7 +8,7 @@ export type StockDocument = Document & {
     totalStockQty: number;
     stockQtyPerTote?: number;
     totesPerSkid?: number;
-    currentCount?: number;
+    currentCount: number;
     roughStock: boolean;
     lowStock: number;
     moderateStock: number;
@@ -45,7 +45,7 @@ const stockSchema = new Schema<StockDocument>({
     },
     currentCount: {
         type: Number,
-        required: false,
+        required: true,
     },
     roughStock: {
         type: Boolean,

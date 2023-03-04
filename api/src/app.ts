@@ -20,6 +20,7 @@ import * as imageController from "./controllers/image";
 import * as productController from "./controllers/product";
 import * as productDunnageController from "./controllers/productDunnage";
 import * as productStockController from "./controllers/productStock";
+import * as forecastController from "./controllers/forecast";
 
 import * as redis from "redis";
 import bodyParser from 'body-parser';
@@ -138,5 +139,8 @@ router.post("/auth/product-stock", authMiddleware.isAuthenticated, productStockC
 router.delete("/auth/product-stock/:id", authMiddleware.isAuthenticated, productStockController.deleteProductStock);
 router.put("/auth/product-stock", authMiddleware.isAuthenticated, productStockController.changeUserPerProduct);
 
+
+// forecast routes
+router.get("/auth/forecast/:id", authMiddleware.isAuthenticated, forecastController.productForecast);
 const server: HttpServer = http.createServer(app);
 export default server;
