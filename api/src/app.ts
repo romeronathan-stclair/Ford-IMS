@@ -132,5 +132,7 @@ router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageContro
 
 // product dunnage routes
 router.post("/auth/product-dunnage", authMiddleware.isAuthenticated, productDunnageController.createProductDunnage);
+router.delete("/auth/product-dunnage/:id", authMiddleware.isAuthenticated, productDunnageController.deleteProductDunnage);
+
 const server: HttpServer = http.createServer(app);
 export default server;

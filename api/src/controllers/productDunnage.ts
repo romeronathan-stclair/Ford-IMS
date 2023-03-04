@@ -46,7 +46,7 @@ export const createProductDunnage = async (req: Request, res: Response) => {
     })) as ProductDunnageDocument;
 
     if (productDunnage) {
-        return res.status(500).json("ProductStock already exists");
+        return res.status(500).json("ProductDunnage already exists");
     }
 
     const newProductDunnage = new ProductDunnage({
@@ -68,4 +68,35 @@ export const createProductDunnage = async (req: Request, res: Response) => {
 };
 
 
+
+export const deleteProductDunnage = async (req: Request, res: Response) => {
+    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(500).json(errors);
+    }
+
+    const productDunnage: ProductDunnageDocument = (await ProductDunnage.findOne({
+        _id: req.params.id,
+        isDeleted: false,
+    })) as ProductDunnageDocument;
+
+    if (!productDunnage) {
+        return res.status(500).json("ProductDunnage does not exist");
+    }
+    productDunnage.isDeleted = true;
+
+    const response = {
+        productDunnage: productDunnage,
+        message: "ProductDunnage deleted successfully"
+    };
+
+    try {
+        await productDunnage.save();
+        return res.status(200).json(response);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
 
