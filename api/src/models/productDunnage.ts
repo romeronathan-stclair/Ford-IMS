@@ -1,30 +1,22 @@
 import { Schema, Document, model } from "mongoose";
 
 
-export type DunnageDocument = Document & {
+export type ProductDunnageDocument = Document & {
     productId: string;
-    departmentId: string;
-    name: string;
-    skidQuantity: number;
+
+    dunnageId: string;
     isDeleted: boolean;
+
 
 };
 
-const dunnageSchema = new Schema<DunnageDocument>({
-    departmentId: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
+const dunnageSchema = new Schema<ProductDunnageDocument>({
     productId: {
         type: String,
         required: true,
     },
-    skidQuantity: {
-        type: Number,
+    dunnageId: {
+        type: String,
         required: true,
     },
     isDeleted: {
@@ -36,4 +28,4 @@ const dunnageSchema = new Schema<DunnageDocument>({
 });
 
 
-export const Dunnage = model<DunnageDocument>("Dunnage", dunnageSchema);
+export const ProductDunnage = model<ProductDunnageDocument>("ProductDunnage", dunnageSchema);
