@@ -92,9 +92,9 @@ export const createProductStock = async (req: Request, res: Response) => {
 
 
 export const deleteProductStock = async (req: Request, res: Response, next: NextFunction) => {
-    const productStockId = req.params.id;
-    await check("productId", "Product Id is required").isLength({ min: 1 }).run(req);
+    await check("id", "Product Id is required").isLength({ min: 1 }).run(req);
 
+    const productStockId = req.params.id;
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(500).json(errors);
@@ -121,3 +121,43 @@ export const deleteProductStock = async (req: Request, res: Response, next: Next
         return res.status(500).json("Error deleting Product: " + err);
     }
 };
+
+export const changeUserPerProduct = async (req: Request, res: Response, next: NextFunction) => {
+    await check("productStockId", "productId is not valid").isLength({ min: 1 }).run(req);
+    await check("usePerProduct", "stockId is not valid").isLength({ min: 1 }).run(req);
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(500).json(errors);
+    }
+
+    const productStockId = req.body.productStockId;
+    const usePerProduct = req.body.usePerProduct;
+
+    const productStock: ProductStockDocument = (await ProductStock.findOne({
+        _id: productStockId,
+        isDeleted: false
+    })) as ProductStockDocument;
+
+    if (!productStock) {
+        return res.status(500).json("Product not found");
+    }
+
+    productStock.usePerProduct = usePerProduct;
+
+    try {
+        await productStock.save();
+        return res.status(200).json({
+            message: "Product updated successfully",
+            productStock: productStock
+        }
+        );
+    }
+    catch (err) {
+        return res.status(500).json("Error updating Product: " + err);
+    }
+
+
+
+
+}
