@@ -19,6 +19,7 @@ import * as inviteController from "./controllers/invite";
 import * as imageController from "./controllers/image";
 import * as productController from "./controllers/product";
 import * as productDunnageController from "./controllers/productDunnage";
+import * as productStockController from "./controllers/productStock";
 
 import * as redis from "redis";
 import bodyParser from 'body-parser';
@@ -128,11 +129,14 @@ router.get("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.ge
 router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
-
-
 // product dunnage routes
 router.post("/auth/product-dunnage", authMiddleware.isAuthenticated, productDunnageController.createProductDunnage);
 router.delete("/auth/product-dunnage/:id", authMiddleware.isAuthenticated, productDunnageController.deleteProductDunnage);
+
+// product stock routes
+router.post("/auth/product-stock", authMiddleware.isAuthenticated, productStockController.createProductStock);
+router.delete("/auth/product-stock/:id", authMiddleware.isAuthenticated, productStockController.deleteProductStock);
+router.put("/auth/product-stock", authMiddleware.isAuthenticated, productStockController.changeUserPerProduct);
 
 const server: HttpServer = http.createServer(app);
 export default server;

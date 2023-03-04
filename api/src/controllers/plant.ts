@@ -386,7 +386,7 @@ const assignUsers = async (
 
                     if (!assignedUser) {
                         return reject(
-                            "Plant created successfully but user not found when assigning"
+                            "User not found when assigning."
                         );
                     }
 
