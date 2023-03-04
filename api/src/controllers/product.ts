@@ -235,5 +235,27 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 
 //delete Product
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.params.id;
+    await check("productId", "Product Id is required").isLength({ min: 1 }).run(req);
 
+    //find product by id
+    const product: ProductDocument = (await Product.findOne({
+        _id: productId,
+        isDeleted: false
+    })) as ProductDocument;
+
+    if (!product) {
+        return res.status(500).json("Product not found");
+    }
+
+    //delete product
+    product.isDeleted = true;
+
+    //save delete product
+    try {
+        await product.save();
+        return res.status(200).json("Product deleted successfully");
+    } catch (err) {
+        return res.status(500).json("Error deleting Product: " + err);
+    }
 };
