@@ -140,6 +140,6 @@ router.put("/auth/product-stock", authMiddleware.isAuthenticated, productStockCo
 
 // cycle check route
 router.get("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.getCycleCheck);
-
+router.put("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.submitCycleCheck);
 const server: HttpServer = http.createServer(app);
 export default server;
