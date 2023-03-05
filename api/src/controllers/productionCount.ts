@@ -15,6 +15,8 @@ import {
     StockDocument,
 } from "../models";
 
+import * as forecastService from "../services/forecastService";
+
 import { ProductStock, ProductStockDocument } from "../models/productStock";
 
 export const submitProductionCount = async (req: Request, res: Response) => {
@@ -86,11 +88,14 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 await stock.save();
             }
         }
-        return res.status(200).json("Submitted production count.");
+
 
     } catch (e) {
         return res.status(500).json(e);
 
+    } finally {
+        await forecastService.forecastDepartment(request.departmentId);
+        return res.status(200).json("Submitted production count.");
     }
 
 

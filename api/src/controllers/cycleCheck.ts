@@ -4,6 +4,7 @@ import { Stock, StockDocument } from "../models/stock";
 import { check, validationResult } from "express-validator";
 import { CycleCheckList } from "../type/CycleCheckList";
 import { ForecastItem } from "../type/Forecast";
+import * as forecastService from "../services/forecastService";
 
 export const getCycleCheck = async (req: Request, res: Response) => {
     const user = req.user as UserDocument;
@@ -56,6 +57,16 @@ export const getCycleCheck = async (req: Request, res: Response) => {
 export const submitCycleCheck = async (req: Request, res: Response) => {
     await check("cycleCheckList", "stocks is not valid").isLength({ min: 1 }).run(req);
 
+    const user = req.user as UserDocument;
+
+    const plant = user.plants.find((plant) => {
+        if (plant.isActive) {
+            return plant
+        }
+    });
+    if (!plant) {
+        return res.status(500).json("No active plants");
+    }
     const errors = validationResult(req);
 
     const stockSaveList = [];
@@ -145,18 +156,13 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
         }
     } catch (err) {
         return res.status(500).json(err);
+    } finally {
+        const forecast = await forecastService.forecastPlant(plant.plantId);
+        return res.status(200).json("Cycle Check Submitted");
     }
 
-    return res.status(200).json("Cycle Check Submitted");
-};
-
-
-
-export const lowProductEntry = async (forecastItem: ForecastItem) => {
-
-
-
-
-
 
 };
+
+
+

@@ -143,7 +143,11 @@ router.put("/auth/product-stock", authMiddleware.isAuthenticated, productStockCo
 
 
 // forecast routes
-router.get("/auth/forecast/:id", authMiddleware.isAuthenticated, forecastController.productForecast);
+router.get("/auth/forecast/:id", authMiddleware.isAuthenticated, forecastController.getForecastProduct);
+router.get("/auth/forecast/department/low/:id", authMiddleware.isAuthenticated, forecastController.departmentLowForecasts);
+router.get("/auth/forecast", authMiddleware.isAuthenticated, forecastController.forecastAll);
+router.get("/auth/forecast/plant/low", authMiddleware.isAuthenticated, forecastController.getPlantLowForecasts);
+router.get("/auth/forecast/department/:id", authMiddleware.isAuthenticated, forecastController.getDepartmentForecasts);
 
 // cycle check routes
 router.get("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.getCycleCheck);
