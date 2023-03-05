@@ -21,6 +21,7 @@ export const createStock = async (req: Request, res: Response) => {
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
     await check("roughStock", "roughStock is not valid").isLength({ min: 1 }).run(req);
+    await check("isSubAssembly", "isSubAssembly is not valid").isLength({ min: 1 }).run(req);
     await check("totalQuantity", "totalQuantity is not valid").isLength({ min: 1 }).run(req);
 
 
@@ -53,11 +54,12 @@ export const createStock = async (req: Request, res: Response) => {
         departmentId: req.body.departmentId.toString(),
         name: req.body.name,
         partNumber: req.body.partNumber,
-        totalStockQty: req.body.totalStockQty,
+        totalStockPerSkid: req.body.totalStockPerSkid,
         stockQtyPerTote: req.body.stockQtyPerTote,
         totesPerSkid: req.body.totesPerSkid,
         currentCount: 0,
         roughStock: req.body.roughStock,
+        isSubAssembly: req.body.isSubAssembly,
         lowStock: req.body.lowStock,
         moderateStock: req.body.moderateStock,
         isDeleted: false,
@@ -201,6 +203,8 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.totesPerSkid = req.body.totesPerSkid || stock.totesPerSkid;
     stock.lowStock = req.body.lowStock || stock.lowStock;
     stock.moderateStock = req.body.moderateStock || stock.moderateStock;
+    stock.roughStock = req.body.roughStock || stock.roughStock;
+    stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
 
     if (req.files) {
