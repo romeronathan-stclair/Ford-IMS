@@ -47,6 +47,20 @@ export const createDepartment = async (req: Request, res: Response) => {
         message: "Department created successfully"
     }
     try {
+
+        const userPlant = user.plants.find(p => p.plantId === newDepartment.plantId);
+        if (!userPlant) {
+            return res.status(500).json("User does not have access to this plant");
+        }
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: user._id, "plants.plantId": newDepartment.plantId },
+            { $addToSet: { "plants.$.departments": newDepartment._id } },
+            { new: true }
+        );
+
+
+
+
         await newDepartment.save();
 
         // create Event

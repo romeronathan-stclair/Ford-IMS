@@ -133,8 +133,6 @@ export const createPlant = async (
 
                 );
 
-
-
                 departmentIds = departments.map((department: DepartmentDocument) =>
                     department._id.toString()
                 ) as [String];
