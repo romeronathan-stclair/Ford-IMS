@@ -3,6 +3,7 @@ import { Department, DepartmentDocument, Dunnage, DunnageDocument, ProductDunnag
 import { Stock, StockDocument } from "../models/stock";
 import { check, validationResult } from "express-validator";
 import { CycleCheckList } from "../type/CycleCheckList";
+import { ForecastItem } from "../type/Forecast";
 
 export const getCycleCheck = async (req: Request, res: Response) => {
     const user = req.user as UserDocument;
@@ -98,7 +99,10 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                     }
                     matchedStock.currentCount = stock.currentCount;
 
+                    matchedStock.totalAvailableQty = stock.currentCount * matchedStock.totalStockPerSkid;
+
                     stockSaveList.push(matchedStock);
+                    console.log(matchedStock);
 
 
                 }
@@ -118,6 +122,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                         return res.status(500).json("Dunnage does not match");
                     }
                     matchedDunnage.currentCount = dunnage.currentCount;
+
 
                     dunnageSaveList.push(matchedDunnage);
                 }
@@ -143,4 +148,15 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json("Cycle Check Submitted");
+};
+
+
+
+export const lowProductEntry = async (forecastItem: ForecastItem) => {
+
+
+
+
+
+
 };
