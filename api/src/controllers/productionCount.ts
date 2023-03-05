@@ -60,7 +60,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                         isDeleted: false
                     })) as StockDocument;
                     if (stock) {
-                        stock.totalStockQty = stock.totalStockQty - stockUsed;
+                        stock.totalAvailableQty = stock.totalAvailableQty - stockUsed;
                     }
 
                     console.log(stock);
