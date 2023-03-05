@@ -15,6 +15,7 @@ export type StockDocument = Document & {
     imageURL: string;
     isSubAssembly: boolean;
     isDeleted: boolean;
+    totalAvailableQty: number;
 };
 
 const stockSchema = new Schema<StockDocument>({
@@ -70,6 +71,10 @@ const stockSchema = new Schema<StockDocument>({
     },
     isSubAssembly: {
         type: Boolean,
+        required: true,
+    },
+    totalAvailableQty: {
+        type: Number,
         required: true,
     }
 });
