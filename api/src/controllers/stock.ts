@@ -58,6 +58,7 @@ export const createStock = async (req: Request, res: Response) => {
         stockQtyPerTote: req.body.stockQtyPerTote,
         totesPerSkid: req.body.totesPerSkid,
         currentCount: 0,
+        totalAvailableQty: 0,
         roughStock: req.body.roughStock,
         isSubAssembly: req.body.isSubAssembly,
         lowStock: req.body.lowStock,

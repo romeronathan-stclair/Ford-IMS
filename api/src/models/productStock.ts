@@ -8,8 +8,7 @@ export type ProductStockDocument = Document & {
     partNumber: string;
     stockId: string;
     departmentId: string;
-    dailyTarget: number;
-    usePerProduct: string;
+    usePerProduct: number;
     isDeleted: boolean;
 
 };
@@ -35,12 +34,8 @@ const productStockSchema = new Schema<ProductStockDocument>({
         type: String,
         required: true,
     },
-    dailyTarget: {
-        type: Number,
-        required: true,
-    },
     usePerProduct: {
-        type: String,
+        type: Number,
         required: true,
     },
     isDeleted: {
