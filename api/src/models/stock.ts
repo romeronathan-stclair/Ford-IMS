@@ -5,7 +5,7 @@ export type StockDocument = Document & {
     departmentId: string;
     name: string;
     partNumber: string;
-    totalStockQty: number;
+    totalStockPerSkid: number;
     stockQtyPerTote?: number;
     totesPerSkid?: number;
     currentCount: number;
@@ -13,7 +13,9 @@ export type StockDocument = Document & {
     lowStock: number;
     moderateStock: number;
     imageURL: string;
+    isSubAssembly: boolean;
     isDeleted: boolean;
+    totalAvailableQty: number;
 };
 
 const stockSchema = new Schema<StockDocument>({
@@ -31,7 +33,7 @@ const stockSchema = new Schema<StockDocument>({
 
         required: true,
     },
-    totalStockQty: {
+    totalStockPerSkid: {
         type: Number,
         required: true,
     },
@@ -66,6 +68,14 @@ const stockSchema = new Schema<StockDocument>({
     imageURL: {
         type: String,
         required: false,
+    },
+    isSubAssembly: {
+        type: Boolean,
+        required: true,
+    },
+    totalAvailableQty: {
+        type: Number,
+        required: true,
     }
 });
 

@@ -21,8 +21,10 @@ import * as productController from "./controllers/product";
 import * as productDunnageController from "./controllers/productDunnage";
 import * as productStockController from "./controllers/productStock";
 import * as forecastController from "./controllers/forecast";
-
+import * as cycleCheckController from "./controllers/cycleCheck";
+import * as productionCountController from "./controllers/productionCount";
 import * as redis from "redis";
+
 import bodyParser from 'body-parser';
 
 
@@ -142,5 +144,13 @@ router.put("/auth/product-stock", authMiddleware.isAuthenticated, productStockCo
 
 // forecast routes
 router.get("/auth/forecast/:id", authMiddleware.isAuthenticated, forecastController.productForecast);
+
+// cycle check routes
+router.get("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.getCycleCheck);
+router.put("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.submitCycleCheck);
+
+// production count routes
+router.post("/auth/production-count", authMiddleware.isAuthenticated, productionCountController.submitProductionCount);
+
 const server: HttpServer = http.createServer(app);
 export default server;
