@@ -8,6 +8,7 @@ import passport from 'passport';
 import fileUpload from 'express-fileupload';
 import { configPassport } from './config/passport';
 
+import cors, { CorsOptions } from "cors";
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 import * as eventController from "./controllers/event"
@@ -62,6 +63,17 @@ const sessionOptions: SessionOptions = {
     cookie: cookieOptions,
 
 };
+const corsOptions: CorsOptions = {
+    origin: env.client.url,
+    credentials: true,
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Cache-Control",
+    ],
+};
 
 
 
@@ -73,7 +85,7 @@ app.use(expressSession);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(fileUpload());

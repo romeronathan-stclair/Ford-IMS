@@ -7,7 +7,12 @@ import { AccountPageComponent } from '../pages/account/account-page/account-page
 import { LoginPageComponent } from '../pages/account/login-page/login-page.component';
 import { DashboardComponent } from '../pages/account/dashboard/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { ToastModule } from 'primeng/toast';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,6 +24,13 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    MessagesModule,
+    MessageModule,
+    MatFormFieldModule,
+    ToastModule,
+    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
