@@ -1,0 +1,23 @@
+@import "src/styles.scss";
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+input {
+    width: 300px;
+    height: 35px;
+    border: 1px solid $lightGrey;
+    border-radius: 5px;
+}
+.submit-button {
+    background-color: $darkBlue;
+    margin-top: 15px;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    width: 120px;
+    height: 30px;
+}

@@ -1,7 +1,6 @@
-<h2 class="page-header">Sign in</h2>
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-        <label for="email-input" class="form-label">Email address</label>
+    <div>
+
         <input formControlName="email" type="email" class="form-control" id="email-input" aria-describedby="emailHelp"
             required />
         <mat-error class="field-validation-error" *ngIf="
@@ -13,8 +12,7 @@
         </mat-error>
     </div>
 
-    <div class="mb-3">
-        <label for="password-input" class="form-label">Password</label>
+    <div>
         <input formControlName="password" type="password" class="form-control" id="password-input" required />
         <mat-error class="field-validation-error" *ngIf="
             userForm.controls['password'].errors &&
@@ -25,13 +23,12 @@
             <span *ngIf="userForm.controls['password'].hasError('required')">Password is required</span>
         </mat-error>
     </div>
+    <button type="submit" class="submit-button">Login</button>
 
-
-    <div class="button-holder">
-        <button type="submit" class="mb-3 btn btn-primary submit-button">Submit</button>
+    <!-- <div class="button-holder">
+      
         <a routerLink="/account/reset-password">Forgot Password?</a>
-    </div>
+    </div> -->
 
     <p-toast position="bottom-center"></p-toast>
 </form>
-<p>Don't have an account? <a routerLink="/account/signup">Sign up</a></p>
