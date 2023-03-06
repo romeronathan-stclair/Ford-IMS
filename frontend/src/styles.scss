@@ -1,0 +1,70 @@
+/*******************
+  * Global Style Variables  *
+  *******************/
+
+$darkBlue: #133a7c;
+$lightBlue: #2a6bac;
+$darkGrey: #d9d9d9;
+$lightGrey: #f1f1f1;
+
+/*******************
+    * Breakpoints  *
+    *******************/
+@mixin very-small-screens {
+    @media (max-width: 200px) {
+        @content;
+    }
+}
+@mixin mobile {
+    @media (min-width: 200px) and (max-width: 480px) {
+        @content;
+    }
+}
+@mixin tablets {
+    @media (min-width: 481px) and (max-width: 768px) {
+        @content;
+    }
+}
+@mixin small-screens {
+    @media (min-width: 769px) and (max-width: 1024px) {
+        @content;
+    }
+}
+@mixin column-lg-break {
+    @media (min-width: 0px) and (max-width: 992px) {
+        @content;
+    }
+}
+@mixin column-sm-break {
+    @media (min-width: 0px) and (max-width: 500px) {
+        @content;
+    }
+}
+@mixin column-very-sm-break {
+    @media (min-width: 0px) and (max-width: 300px) {
+        @content;
+    }
+}
+
+@mixin large-screens {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+@mixin side-bar-mobile {
+    @media (max-width: 1350px) {
+        @content;
+    }
+}
+
+/*******************
+    * Global Normalize Fixes  *
+    *******************/
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+}
