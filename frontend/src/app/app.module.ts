@@ -13,6 +13,8 @@ import { MessageModule } from 'primeng/message';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastModule } from 'primeng/toast';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgSimpleSidebarModule } from 'ng-simple-sidebar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,8 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MessageModule,
     MatFormFieldModule,
     ToastModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    NgSimpleSidebarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
