@@ -7,6 +7,7 @@ $darkBlue: #133a7c;
 $lightBlue: #2a6bac;
 $darkGrey: #d9d9d9;
 $lightGrey: #f1f1f1;
+$border: 0.75px solid black;
 
 /*******************
     * Breakpoints  *
@@ -87,6 +88,7 @@ body {
     background-size: 80%;
     display: flex;
     align-items: center;
+
     justify-content: center;
 }
 .menu-opener {
@@ -116,6 +118,7 @@ body {
 }
 .sidebar-container lib-sidebar-item .menu-item {
     padding: 7px;
+    font-weight: 400;
 }
 .sidebar-container a .menu-icon-pointer {
     text-align: center;
@@ -127,4 +130,52 @@ body {
 }
 .menu-icon-item {
     padding-bottom: 5px;
+}
+.page-header {
+    font-size: 4rem;
+    margin: 0;
+}
+.table-header {
+    min-height: 80px;
+    background-color: $darkBlue !important;
+    color: white;
+}
+table {
+    background-color: $lightGrey !important;
+    border-bottom: 0.75px solid black;
+}
+tbody {
+    background-color: $lightGrey !important;
+    border: $border !important;
+}
+
+.general-button {
+    background-color: $lightBlue;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 400;
+}
+.general-button:hover {
+    background-color: $darkBlue;
+    transition: 0.2s ease-in-out;
+}
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+    border: none;
+}
+mat-row {
+    border-top: 0.75px solid black;
+    justify-content: space-between;
+}
+.table-holder,
+table,
+.table {
+    overflow: visible;
+
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
 }

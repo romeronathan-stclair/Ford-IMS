@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { AuthNoGuard } from 'src/guards/auth.no.guard';
-import { AccountPageComponent } from 'src/pages/account/account-page/account-page.component';
-import { LoginPageComponent } from 'src/pages/account/login-page/login-page.component';
-import { SignoutPageComponent } from 'src/pages/account/signout-page/signout-page.component';
-import { DashboardComponent } from '../pages/account/dashboard/dashboard/dashboard.component';
+import { AccountPageComponent } from 'src/pages/account/accounts/account-page/account-page.component';
+import { LoginPageComponent } from 'src/pages/account/accounts/login-page/login-page.component';
+import { SignoutPageComponent } from 'src/pages/account/accounts/signout-page/signout-page.component';
+import { PlantListComponent } from 'src/pages/plants/plant-list/plant-list.component';
+import { DashboardComponent } from '../pages/dashboard/dashboard.component';
 const routes: Routes = [
   {
     path: 'account',
@@ -26,6 +27,13 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
     data: { animation: 'Home Page' },
+    children: [
+      {
+        path: 'plants',
+        data: { animation: 'Plants Page' },
+        component: PlantListComponent
+      }
+    ]
   },
   {
     path: 'signout',

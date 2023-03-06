@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Plants',
         icon: 'fa-solid fa-city',
-        routerLink: ['/about'],
+        routerLink: ['plants'],
         position: SimpleSidebarPosition.bottom
       },
       {

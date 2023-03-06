@@ -255,15 +255,7 @@ export const getPlants = async (req: Request, res: Response) => {
     }
 
     const plants = user.plants.map((plant) => {
-        if (isActive == "true") {
-            if (plant.isActive) {
-                return plant.plantId;
-            }
-        }
-        else {
-            return plant.plantId;
-        }
-
+        return plant.plantId;
     });
 
 
