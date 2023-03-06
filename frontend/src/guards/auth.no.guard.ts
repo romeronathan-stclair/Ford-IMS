@@ -12,7 +12,7 @@ export class AuthNoGuard implements CanActivate {
   canActivate(): Observable<any> {
     return this.authService.getUser().pipe(
       map((r) => {
-
+        console.log('r', r);
         this._router.navigate(['/dashboard']);
         return false;
       }),

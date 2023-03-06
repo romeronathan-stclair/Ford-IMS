@@ -14,13 +14,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ToastModule } from 'primeng/toast';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgSimpleSidebarModule } from 'ng-simple-sidebar';
+import { SignoutPageComponent } from '../pages/account/signout-page/signout-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccountPageComponent,
     LoginPageComponent,
-    DashboardComponent
+    DashboardComponent,
+    SignoutPageComponent
   ],
   imports: [
     BrowserModule,

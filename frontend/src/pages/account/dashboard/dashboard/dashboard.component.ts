@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Logout',
         icon: 'fa-solid fa-arrow-right-from-bracket',
-        routerLink: ['/about'],
+        routerLink: ['/signout'],
         position: SimpleSidebarPosition.bottom
       },
     ];
@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
+
     this.botsideItems$ = this.ngSimpleSidebarService.getBotsideItems();
     console.log(this.botsideItems$);
 

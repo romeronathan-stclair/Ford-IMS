@@ -40,6 +40,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.authService.getUser().pipe(
       map((res) => {
         this.authService.setUser(res.body);
+        
         return true;
       }),
       catchError(() => {

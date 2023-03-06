@@ -49,6 +49,8 @@ const cookieOptions: CookieOptions = {
     maxAge: 1000 * 60 * 10,
     sameSite: env.isProd ? "none" : "lax",
     secure: env.isProd ? true : false,
+    domain: env.isProd ? env.client.url : undefined,
+    path: "/",
 };
 
 const sessionOptions: SessionOptions = {

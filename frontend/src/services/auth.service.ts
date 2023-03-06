@@ -23,6 +23,7 @@ export class AuthService {
 
     setUser(obj: any) {
         const {
+            _id,
             name,
             email,
             plants,
@@ -32,6 +33,7 @@ export class AuthService {
             passwordResetExpires,
         } = obj;
         this.user = {
+            _id,
             name,
             email,
             plants,
@@ -62,7 +64,7 @@ export class AuthService {
 
 
     signout(): Observable<any> {
-        return this.http.get(`${this.endPoint}/signout`, {
+        return this.http.post(`${this.endPoint}/signout`, {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true,

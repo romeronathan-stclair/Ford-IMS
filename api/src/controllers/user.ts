@@ -6,6 +6,7 @@ import passwordSchema from "../utils/passwordValidator";
 import bcrypt from "bcrypt";
 import { ModelType } from "../enums/modelType";
 import { ImageRequest } from "../type/imageRequest";
+import env from "../utils/env";
 
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
@@ -162,14 +163,10 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
 };
 
 export const logout = async (req: Request, res: Response) => {
-    req.session.destroy(() => {
 
-        req.logout(function (err) {
-            if (err) { return res.sendStatus(500); }
-            res.redirect('/');
-        });
-        return res.sendStatus(204);
-    });
+    req.session.destroy((err) => {
+        res.redirect('') // will always fire after session is destroyed
+    })
 };
 
 
@@ -249,6 +246,21 @@ export const changePassword = async (req: Request, res: Response) => {
 
 export const getUser = (req: Request, res: Response) => {
     const user: UserDocument = req.user as UserDocument;
+
+    console.log(req.session);
+
+    req.session.destroy(function (err) {
+        if (err) {
+            console.log(err);
+            return res.sendStatus(500);
+        }
+        else {
+            req.logout(function (err) {
+
+            });
+        }
+    });
+
     return res.json(user);
 };
 
