@@ -100,7 +100,7 @@ app.get("/health", (req, res) => {
 //user routes
 router.post("/auth/signup/dev", userController.signupUnsafe);
 router.post("/auth/signin", userController.signin);
-router.post("/auth/signout", userController.logout);
+router.get("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
 router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
 router.get("/auth/users", authMiddleware.isAdminAuthenticated, userController.getUsers);

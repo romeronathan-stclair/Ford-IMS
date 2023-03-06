@@ -64,7 +64,7 @@ export class AuthService {
 
 
     signout(): Observable<any> {
-        return this.http.post(`${this.endPoint}/signout`, {
+        return this.http.get(`${this.endPoint}/signout`, {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true,

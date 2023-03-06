@@ -12,6 +12,8 @@ export class SignoutPageComponent implements OnInit, OnDestroy {
   constructor(private authService: AuthService, private router: Router,) { }
   timer: number = 5;
   timerSub: any;
+  timeoutSub: any;
+
 
   ngOnInit() {
     this.authService.signout().subscribe({
@@ -19,13 +21,13 @@ export class SignoutPageComponent implements OnInit, OnDestroy {
         this.authService.user = null as any;
 
 
-        setInterval(() => {
+        this.timerSub = setInterval(() => {
           this.timer--;
           console.log(this.timer);
         }, 1000);
 
 
-        setTimeout(() => {
+        this.timeoutSub = setTimeout(() => {
 
           this.router.navigate(['/account/login']);
         }, 5000);
@@ -33,12 +35,13 @@ export class SignoutPageComponent implements OnInit, OnDestroy {
 
       },
       error: (err) => {
+        
         console.log('THERE WAS AN ERROR ' + JSON.stringify(err));
         this.timerSub = setInterval(() => {
           this.timer--;
         }, 1000);
 
-        setTimeout(() => {
+        this.timeoutSub = setTimeout(() => {
 
           this.router.navigate(['/account/login']);
         }, 5000);
@@ -51,6 +54,7 @@ export class SignoutPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.timerSub) {
       clearInterval(this.timerSub);
+      clearTimeout(this.timeoutSub);
     }
   }
 

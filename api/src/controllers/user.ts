@@ -162,11 +162,10 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
     });
 };
 
-export const logout = async (req: Request, res: Response) => {
-
-    req.session.destroy((err) => {
-        res.redirect('') // will always fire after session is destroyed
-    })
+export const logout = async (req: Request, res: Response, next: NextFunction) => {
+    req.session.destroy(function (err) {
+        res.redirect('/');
+    });
 };
 
 
@@ -249,17 +248,6 @@ export const getUser = (req: Request, res: Response) => {
 
     console.log(req.session);
 
-    req.session.destroy(function (err) {
-        if (err) {
-            console.log(err);
-            return res.sendStatus(500);
-        }
-        else {
-            req.logout(function (err) {
-
-            });
-        }
-    });
 
     return res.json(user);
 };
