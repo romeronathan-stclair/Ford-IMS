@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgSimpleSidebarService, SimpleSidebarPosition } from 'ng-simple-sidebar';
 
 @Component({
@@ -6,10 +6,10 @@ import { NgSimpleSidebarService, SimpleSidebarPosition } from 'ng-simple-sidebar
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   sidebarItems: any[] = [];
   constructor(private ngSimpleSidebarService: NgSimpleSidebarService) { }
-
+  botsideItems$: any;
   ngOnInit() {
     this.sidebarItems = [
       {
@@ -20,13 +20,13 @@ export class DashboardComponent implements OnInit {
       },
       {
         name: 'Products',
-        icon: 'pi pi-map',
+        icon: 'fa-solid fa-car-side',
         routerLink: ['/about'],
         position: SimpleSidebarPosition.top
       },
       {
         name: 'Stock',
-        icon: 'pi pi-map',
+        icon: 'fa-solid fa-gear',
         routerLink: ['/welcome'],
         position: SimpleSidebarPosition.top
       },
@@ -39,9 +39,41 @@ export class DashboardComponent implements OnInit {
       },
       {
         name: 'Forecast',
-        icon: 'pi pi-sync',
+        icon: 'fa-solid fa-arrow-trend-up',
         routerLink: ['/about'],
         position: SimpleSidebarPosition.top
+      },
+      {
+        name: 'Cycle Check',
+        icon: 'fa-regular fa-clipboard',
+        routerLink: ['/about'],
+        position: SimpleSidebarPosition.top
+      },
+      {
+        name: 'Sub Assembly',
+        icon: 'fa-solid fa-arrow-trend-up',
+        routerLink: ['/about'],
+        position: SimpleSidebarPosition.top
+      },
+      {
+        name: 'Production Count',
+        icon: 'fa-regular fa-circle-check',
+        routerLink: ['/about'],
+        position: SimpleSidebarPosition.top,
+        class: 'hello'
+      },
+      ,
+      {
+        name: 'Plants',
+        icon: 'fa-solid fa-city',
+        routerLink: ['/about'],
+        position: SimpleSidebarPosition.bottom
+      },
+      {
+        name: 'Logout',
+        icon: 'fa-solid fa-arrow-right-from-bracket',
+        routerLink: ['/about'],
+        position: SimpleSidebarPosition.bottom
       },
     ];
     // required, configure items
@@ -59,12 +91,18 @@ export class DashboardComponent implements OnInit {
         "darkModeFont": "#fff"
       },
 
-      
+
     });
 
-    // optional, configuration and set states
-    this.ngSimpleSidebarService.open();
-    this.ngSimpleSidebarService.close();
+
+  }
+
+  ngAfterViewInit() {
+    
+    this.botsideItems$ = this.ngSimpleSidebarService.getBotsideItems();
+    console.log(this.botsideItems$);
 
   }
 }
+
+
