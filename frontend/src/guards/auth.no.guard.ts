@@ -13,7 +13,7 @@ export class AuthNoGuard implements CanActivate {
     return this.authService.getUser().pipe(
       map((r) => {
         console.log('AuthNoGuard: SUCCESS: map: r: ', r);
-        this._router.navigate(['/dashboard/plants']);
+        this._router.navigate(['/dashboard/plants/list']);
         return false;
       }),
       catchError((r) => {

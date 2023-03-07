@@ -13,6 +13,7 @@ import { PlantService } from 'src/services/plant.service';
 })
 export class PlantListComponent {
   currentPage = 0;
+  length = 100;
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -59,7 +60,9 @@ export class PlantListComponent {
       .subscribe({
         next: (data: any) => {
           console.log('PlantListComponent: ngOnInit: data: ', data);
-          this.plants = data.body;
+          this.plants = data.body.plants;
+          this.length = data.body.plantCount;
+          this.dataSource.data = this.plants;
           console.log(this.plants);
         },
         error: (error: any) => {

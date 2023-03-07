@@ -10,7 +10,7 @@
     <div *ngIf="plants.length == 0" class="form-text mb-3">
         There are currently no plants to display.
     </div>
-    <table mat-table [dataSource]="plants" class="mat-elevation-z0 demo-table">
+    <table *ngIf="plants.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z0 demo-table">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef></th>
@@ -59,8 +59,10 @@
 
 </div>
 <div class="paginator-holder">
-    <button type="submit" class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New Plant</button>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <button [routerLink]="'/dashboard/plants/create/step-one'" type="submit" class="general-button first-button"><i
+            class="fa-solid fa-plus"></i>Create New Plant</button>
+    <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="pageSize"
+        aria-label="Select page of periodic elements" [length]="length">
     </mat-paginator>
     <button type="submit" class="general-button">View Event Log</button>
 </div>

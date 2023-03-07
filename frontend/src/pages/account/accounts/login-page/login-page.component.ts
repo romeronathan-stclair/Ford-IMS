@@ -38,7 +38,7 @@ export class LoginPageComponent implements OnInit {
 
     this.authService.signin(jsonField).subscribe({
       next: () => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/plants/list']);
       },
       error: (error: any) => {
         console.log(error);

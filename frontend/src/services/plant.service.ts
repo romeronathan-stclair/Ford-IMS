@@ -31,6 +31,13 @@ export class PlantService {
             withCredentials: true,
         });
     }
+    createPlant(plant: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/plant`, plant, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
 
 
 

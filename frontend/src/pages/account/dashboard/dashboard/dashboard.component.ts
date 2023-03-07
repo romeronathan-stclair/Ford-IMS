@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Plants',
         icon: 'fa-solid fa-city',
-        routerLink: ['plants'],
+        routerLink: ['plants/list'],
         position: SimpleSidebarPosition.bottom
       },
       {
@@ -100,8 +100,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
 
     this.botsideItems$ = this.ngSimpleSidebarService.getBotsideItems();
-    console.log(this.botsideItems$);
-
   }
 }
 
