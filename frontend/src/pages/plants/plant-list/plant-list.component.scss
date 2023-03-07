@@ -19,7 +19,7 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: $darkGrey !important;
+    background-color: $grey !important;
     border-bottom: 0.75px solid black;
     border-right: 0.75px solid black;
     border-left: 0.75px solid black;
@@ -29,7 +29,7 @@ img {
     }
 }
 mat-paginator {
-    background-color: $darkGrey !important;
+    background-color: $grey !important;
     width: 50%;
     @include column-lg-break {
         order: 0;

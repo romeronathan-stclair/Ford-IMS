@@ -7,10 +7,10 @@
 <div class="table-holder">
 
 
-    <div *ngIf="plants.length == 0" class="form-text mb-3">
+    <div *ngIf="dataSource.data.length == 0" class="form-text mb-3">
         There are currently no plants to display.
     </div>
-    <table *ngIf="plants.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z0 demo-table">
+    <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource" class="mat-elevation-z0 demo-table">
 
         <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef></th>

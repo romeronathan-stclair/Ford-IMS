@@ -86,6 +86,13 @@ export class AuthService {
         });
 
     }
+    getUsers(query?: string): Observable<any> {
+        return this.http.get(`${this.endPoint}/users`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
 
 
 }

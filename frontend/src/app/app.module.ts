@@ -26,6 +26,7 @@ import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/creat
 import { CreatePlantStepOneComponent } from '../pages/plants/create-plants/create-plant-step-one/create-plant-step-one.component';
 import { MessageService } from 'primeng/api';
 import { SharedService } from 'src/services/shared.service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { SharedService } from 'src/services/shared.service';
     NgSimpleSidebarModule,
     MatTableModule,
     MatPaginatorModule,
-    FormsModule
+    FormsModule,
+    MatCheckboxModule
   ],
   providers: [MessageService, SharedService],
   bootstrap: [AppComponent]

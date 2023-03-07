@@ -6,7 +6,8 @@
 $darkBlue: #133a7c;
 $blue: #2a6bac;
 $lightBlue: #47a8e5;
-$darkGrey: #d9d9d9;
+$darkGrey: #999999;
+$grey: #d9d9d9;
 $lightGrey: #f1f1f1;
 $border: 0.75px solid black;
 
@@ -129,7 +130,7 @@ body {
     display: flex;
 
     align-items: center;
-    background-color: $darkGrey !important;
+    background-color: $grey !important;
     border-bottom: 0.75px solid black;
     border-right: 0.75px solid black;
     border-left: 0.75px solid black;
@@ -172,7 +173,7 @@ p {
     padding-bottom: 5px;
 }
 .page-header {
-    font-size: 4rem;
+    font-size: 3rem;
     margin: 0;
 }
 .table-header {
