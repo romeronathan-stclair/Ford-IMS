@@ -38,12 +38,13 @@ export class PlantListComponent {
   constructor(private plantService: PlantService, private authService: AuthService) { }
   ngOnInit() {
 
-    this.loadData();
 
 
   }
 
   ngAfterViewInit() {
+    this.loadData();
+
     this.dataSource.paginator = this.paginator;
     console.log(this.paginator);
   }
@@ -62,7 +63,7 @@ export class PlantListComponent {
           console.log('PlantListComponent: ngOnInit: data: ', data);
           this.plants = data.body.plants;
           this.length = data.body.plantCount;
-          this.dataSource.data = this.plants;
+          this.dataSource = new MatTableDataSource(this.plants);
           console.log(this.plants);
         },
         error: (error: any) => {
