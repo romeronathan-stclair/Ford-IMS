@@ -302,6 +302,8 @@ export const getUsers = async (req: Request, res: Response) => {
     const name = req.query.name;
     const email = req.query.email;
 
+    console.log(req.query);
+
     let query: any = { isDeleted: false };
 
     if (userId) {
@@ -328,9 +330,6 @@ export const getUsers = async (req: Request, res: Response) => {
 
     const users = await User.find(query);
 
-    if (!users || users.length === 0) {
-        return res.status(500).json("Users do not exist");
-    }
 
     return res.status(200).json(users);
 }

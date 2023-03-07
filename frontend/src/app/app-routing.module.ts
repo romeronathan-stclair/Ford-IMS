@@ -5,6 +5,8 @@ import { AuthNoGuard } from 'src/guards/auth.no.guard';
 import { AccountPageComponent } from 'src/pages/account/accounts/account-page/account-page.component';
 import { LoginPageComponent } from 'src/pages/account/accounts/login-page/login-page.component';
 import { SignoutPageComponent } from 'src/pages/account/accounts/signout-page/signout-page.component';
+import { CreatePlantAssignUsersComponent } from 'src/pages/plants/create-plants/create-plant-assign-users/create-plant-assign-users.component';
+import { CreatePlantSuccessComponent } from 'src/pages/plants/create-plants/create-plant-success/create-plant-success.component';
 import { CreatePlantComponent } from 'src/pages/plants/create-plants/create-plant/create-plant.component';
 import { CreatePlantsDepartmentsComponent } from 'src/pages/plants/create-plants/create-plants-departments/create-plants-departments.component';
 import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/create-plants-users/create-plants-users.component';
@@ -58,7 +60,18 @@ const routes: Routes = [
               },
               {
                 path: 'step-three',
-                component: CreatePlantsUsersComponent,
+                component: CreatePlantAssignUsersComponent
+              }, {
+                path: 'step-three',
+                component: CreatePlantAssignUsersComponent,
+              },
+              {
+                path: 'step-three-users',
+                component: CreatePlantsUsersComponent
+              },
+              {
+                path: 'success',
+                component: CreatePlantSuccessComponent
               }
             ]
           },

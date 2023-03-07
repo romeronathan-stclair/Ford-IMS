@@ -87,7 +87,7 @@ export class AuthService {
 
     }
     getUsers(query?: string): Observable<any> {
-        return this.http.get(`${this.endPoint}/users`, {
+        return this.http.get(`${this.endPoint}/users` + query, {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true,

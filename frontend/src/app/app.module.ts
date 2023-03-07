@@ -27,7 +27,11 @@ import { CreatePlantStepOneComponent } from '../pages/plants/create-plants/creat
 import { MessageService } from 'primeng/api';
 import { SharedService } from 'src/services/shared.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { MatIconModule } from '@angular/material/icon';
+import { CreatePlantAssignUsersComponent } from '../pages/plants/create-plants/create-plant-assign-users/create-plant-assign-users.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AssignDepartmentsDialogComponent } from '../components/assign-departments-dialog/assign-departments-dialog.component';
+import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/create-plant-success/create-plant-success.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +45,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     PlantsComponent,
     CreatePlantsDepartmentsComponent,
     CreatePlantsUsersComponent,
-    CreatePlantStepOneComponent
+    CreatePlantStepOneComponent,
+    CreatePlantAssignUsersComponent,
+    AssignDepartmentsDialogComponent,
+    CreatePlantSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +64,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatTableModule,
     MatPaginatorModule,
     FormsModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatIconModule,
+    MatDialogModule
   ],
   providers: [MessageService, SharedService],
   bootstrap: [AppComponent]

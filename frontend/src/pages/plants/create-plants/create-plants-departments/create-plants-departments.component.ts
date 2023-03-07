@@ -22,7 +22,7 @@ export class CreatePlantsDepartmentsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.request);
+
 
 
   }
@@ -34,12 +34,13 @@ export class CreatePlantsDepartmentsComponent implements OnInit {
     this.departments.splice(i, 1);
   }
   submit() {
-    this.request.departments = this.departments.map((department) => {
-      return department.name;
-    });
+    this.request.departments = this.departments
+      .filter(department => department.name !== '') // filter out empty department names
+      .map(department => department.name); // map the remaining department names to new array
+
     this.sharedService.setData(this.request);
 
-    console.log(this.request);
+
 
     // this.plantService.createPlant(this.request).subscribe({
     //   next: (response) => {

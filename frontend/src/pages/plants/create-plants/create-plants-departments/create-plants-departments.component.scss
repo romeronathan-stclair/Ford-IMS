@@ -48,3 +48,13 @@ input {
     display: flex;
     flex-direction: column;
 }
+.next-button {
+    @include column-lg-break {
+        order: 1;
+    }
+}
+.back-button {
+    @include column-lg-break {
+        order: 2;
+    }
+}
