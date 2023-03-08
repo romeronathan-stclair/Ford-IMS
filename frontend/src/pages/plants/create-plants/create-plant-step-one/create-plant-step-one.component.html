@@ -1,0 +1,44 @@
+<app-ford-container title="1. Enter Plant Information">
+    <div class="holder">
+        <form [formGroup]="plantForm" (ngSubmit)="onSubmit()">
+            <div>
+
+                <input placeholder="Plant Name" formControlName="plantName" type="plantName" class="form-control"
+                    id="plantName-input" aria-describedby="plantNameHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                displayValidationErrors ||
+                plantForm.controls['plantName'].dirty ||
+                plantForm.controls['plantName'].touched
+              ">
+                    <span *ngIf="plantForm.controls['plantName'].hasError('required')">plantName is required</span>
+                </mat-error>
+            </div>
+
+            <div>
+                <input placeholder="Plant Location" formControlName="plantLocation" type="plantLocation"
+                    class="form-control" id="plantLocation-input" required />
+                <mat-error class="field-validation-error" *ngIf="
+                plantForm.controls['plantLocation'].errors &&
+                (displayValidationErrors ||
+                  plantForm.controls['plantLocation'].dirty ||
+                  plantForm.controls['plantLocation'].touched)
+              ">
+                    <span *ngIf="plantForm.controls['plantLocation'].hasError('required')">plantLocation is
+                        required</span>
+                </mat-error>
+            </div>
+            <div class="button-holders">
+
+
+                <button type="button" [routerLink]="'/dashboard/plants/list'" class="submit-button">Cancel</button>
+                <button type="submit" class="submit-button">Next</button>
+            </div>
+            <!-- <div class="button-holder">
+          
+            <a routerLink="/account/reset-plantLocation">Forgot plantLocation?</a>
+        </div> -->
+
+            <p-toast position="bottom-center"></p-toast>
+        </form>
+    </div>
+</app-ford-container>

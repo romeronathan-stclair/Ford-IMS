@@ -1,0 +1,23 @@
+<div class="container-header">
+    <p>2. Add Departments</p>
+
+    <img class="container-img" src="/assets/ford-logo.png" />
+
+</div>
+<div class="container-holder">
+
+    <div class="department" *ngFor="let department of departments; let i = index">
+        Department Name: <input type="text" [(ngModel)]="department.name" />
+        <button (click)="removeDepartment(i)" class="remove-department-button">
+            <i class="fa-solid fa-minus"></i>
+        </button>
+    </div>
+
+    <button (click)="addDepartment()" class="add-department-button">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+</div>
+<div class="footer-holder">
+    <button [routerLink]="'/dashboard/plants/create/step-one'" class="general-button back-button">Back</button>
+    <button type="submit" (click)="submit()" class="general-button next-button">Next</button>
+</div>

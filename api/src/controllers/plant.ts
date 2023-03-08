@@ -237,11 +237,21 @@ export const getPlants = async (req: Request, res: Response) => {
     }
 
     if (!userId) {
-        let plants: PlantDocument[] = (await Plant.find({
+        let plantCount = (await Plant.find({
             isDeleted: false,
+        }).countDocuments());
+
+        let plants: PlantDocument[] = (await Plant.find({
         }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
 
-        return res.status(200).json(plants);
+        if (!plants) {
+            return res.status(500).json("Plants do not exist!");
+        }
+        let response = {
+            plants: plants,
+            plantCount: plantCount
+        }
+        return res.status(200).json(response);
     }
 
 
@@ -255,15 +265,7 @@ export const getPlants = async (req: Request, res: Response) => {
     }
 
     const plants = user.plants.map((plant) => {
-        if (isActive == "true") {
-            if (plant.isActive) {
-                return plant.plantId;
-            }
-        }
-        else {
-            return plant.plantId;
-        }
-
+        return plant.plantId;
     });
 
 
@@ -272,11 +274,21 @@ export const getPlants = async (req: Request, res: Response) => {
         isDeleted: false,
     }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
 
+    const plantCount = (await Plant.find({
+        _id: { $in: plants },
+        isDeleted: false,
+    }).countDocuments());
+
+
     if (!plantList) {
         return res.status(500).json("Plants do not exist!");
     }
+    let response = {
+        plants: plantList,
+        plantCount: plantCount
+    }
 
-    return res.status(200).json(plantList);
+    return res.status(200).json(response);
 
 };
 

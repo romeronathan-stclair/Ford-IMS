@@ -12,11 +12,11 @@ import { Types } from "mongoose";
 
 //create Dunnage
 export const createDunnage = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
+    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
+    await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
+    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
 
     const departmentId = req.body.departmentId;
 
@@ -135,11 +135,11 @@ export const getDunnage = async (req: Request, res: Response) => {
 
 //update Dunnage
 export const updateDunnage = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
+    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
+    await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
+    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
 
     const dunnageId = req.params.id;
 
@@ -169,7 +169,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     }
 
     //update Dunnage
-    
+
     dunnage.name = req.body.name || dunnage.name;
     dunnage.skidQuantity = req.body.skidQuantity || dunnage.skidQuantity;
     dunnage.lowStock = req.body.lowStock || dunnage.lowStock;
@@ -219,26 +219,26 @@ export const updateDunnage = async (req: Request, res: Response) => {
 export const deleteDunnage = async (req: Request, res: Response) => {
     const dunnageId = req.params.id;
     await check("id", "id is not valid").isLength({ min: 1 }).run(req);
-  
+
     // find Dunnage by id
     const dunnage: DunnageDocument = (await Dunnage.findOne({
-      _id: dunnageId,
-      isDeleted: false,
+        _id: dunnageId,
+        isDeleted: false,
     })) as DunnageDocument;
-  
+
     if (!dunnage) {
-      return res.status(500).json("Dunnage not found");
+        return res.status(500).json("Dunnage not found");
     }
-  
+
     // delete Dunnage
     dunnage.isDeleted = true;
-  
+
     // save Dunnage
     try {
-      await dunnage.save();
-      return res.status(200).json("Dunnage deleted successfully");
+        await dunnage.save();
+        return res.status(200).json("Dunnage deleted successfully");
     } catch (err) {
-      return res.status(500).json("Error deleting Dunnage" + err);
+        return res.status(500).json("Error deleting Dunnage" + err);
     }
-  };
-  
+};
+

@@ -1,11 +1,15 @@
+@import "~primeicons/primeicons.css";
 /*******************
   * Global Style Variables  *
   *******************/
 
 $darkBlue: #133a7c;
-$lightBlue: #2a6bac;
-$darkGrey: #d9d9d9;
+$blue: #2a6bac;
+$lightBlue: #47a8e5;
+$darkGrey: #999999;
+$grey: #d9d9d9;
 $lightGrey: #f1f1f1;
+$border: 0.75px solid black;
 
 /*******************
     * Breakpoints  *
@@ -67,4 +71,178 @@ body {
 }
 body {
     margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+input {
+    width: 300px;
+    height: 35px;
+    border: 1px solid $lightGrey;
+    border-radius: 5px;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.sidebar-header {
+    height: 90px;
+    padding: 10px;
+    background-image: url("/assets/ford-logo.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 80%;
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+}
+.menu-opener {
+    align-self: flex-end;
+    justify-self: center;
+    padding-left: 10px;
+
+    text-align: center;
+    background-color: $darkBlue;
+}
+// i {
+//     font-size: 40px !important;
+//     padding-bottom: 20px !important;
+//     color: transparent !important;
+//     -webkit-box-flex: 1;
+//     flex: 1;
+//     -webkit-text-stroke: 2px white;
+// }
+
+// Common container styling
+.container-holder {
+    min-height: 70vh;
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+}
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+    padding-right: 50px;
+    background-color: $darkBlue;
+}
+.footer-holder {
+    padding: 20px;
+    display: flex;
+
+    align-items: center;
+    background-color: $grey !important;
+    border-bottom: 0.75px solid black;
+    border-right: 0.75px solid black;
+    border-left: 0.75px solid black;
+    @include column-lg-break {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+h4 {
+    margin: 0;
+}
+p {
+    padding-left: 25px;
+}
+.container-img {
+    width: 150px;
+}
+// .sidebar-container {
+.sidebar-container-end a {
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 0px !important;
+    padding: 10px;
+}
+.sidebar-container lib-sidebar-item .menu-item {
+    padding: 7px;
+    font-weight: 400;
+}
+.sidebar-container a .menu-icon-pointer {
+    text-align: center;
+}
+.dock {
+    padding: 5px !important;
+    min-width: 50px !important;
+    height: 100vh !important;
+}
+.menu-icon-item {
+    padding-bottom: 5px;
+}
+.page-header {
+    font-size: 3rem;
+    margin: 0;
+}
+.table-header {
+    min-height: 80px;
+    background-color: $darkBlue !important;
+    color: white;
+}
+table {
+    background-color: $lightGrey !important;
+    border-bottom: 0.75px solid black;
+}
+tbody {
+    background-color: $lightGrey !important;
+    border: $border !important;
+}
+
+.general-button {
+    background-color: $blue;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 400;
+    min-width: 150px;
+}
+.general-button:hover {
+    background-color: $darkBlue;
+    transition: 0.2s ease-in-out;
+}
+.submit-button {
+    background-color: $darkBlue;
+    cursor: pointer;
+    margin-top: 15px;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    width: 120px;
+    height: 30px;
+}
+.submit-button:hover {
+    background-color: $blue;
+    transition: 0.2s ease-in-out;
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+    border: none;
+}
+mat-row {
+    border-top: 0.75px solid black;
+    justify-content: space-between;
+}
+.table-holder,
+table,
+.table {
+    overflow: visible;
+
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.field-validation-error {
+    display: flex;
+    flex-direction: column;
 }

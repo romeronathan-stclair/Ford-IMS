@@ -8,6 +8,7 @@ import passport from 'passport';
 import fileUpload from 'express-fileupload';
 import { configPassport } from './config/passport';
 
+import cors, { CorsOptions } from "cors";
 import * as authMiddleware from "./middleware/auth.middleware";
 import * as userController from "./controllers/user";
 import * as eventController from "./controllers/event"
@@ -48,6 +49,8 @@ const cookieOptions: CookieOptions = {
     maxAge: 1000 * 60 * 10,
     sameSite: env.isProd ? "none" : "lax",
     secure: env.isProd ? true : false,
+    domain: env.isProd ? env.client.url : undefined,
+    path: "/",
 };
 
 const sessionOptions: SessionOptions = {
@@ -62,6 +65,17 @@ const sessionOptions: SessionOptions = {
     cookie: cookieOptions,
 
 };
+const corsOptions: CorsOptions = {
+    origin: env.client.url,
+    credentials: true,
+    allowedHeaders: [
+        "Content-Type",
+        "Authorization",
+        "Access-Control-Allow-Origin",
+        "Access-Control-Allow-Credentials",
+        "Cache-Control",
+    ],
+};
 
 
 
@@ -73,7 +87,7 @@ app.use(expressSession);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(fileUpload());
@@ -86,10 +100,10 @@ app.get("/health", (req, res) => {
 //user routes
 router.post("/auth/signup/dev", userController.signupUnsafe);
 router.post("/auth/signin", userController.signin);
-router.post("/auth/signout", userController.logout);
+router.get("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
 router.get("/auth/user", authMiddleware.isAuthenticated, userController.getUser);
-router.get("/auth/users", authMiddleware.isAdminAuthenticated, userController.getUsers);
+router.get("/auth/users", authMiddleware.isAuthenticated, userController.getUsers);
 router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController.getUserById);
 router.post("/auth/reset", authMiddleware.isAuthenticated, userController.changePassword);
 router.put("/auth/user/active-plant", authMiddleware.isAdminAuthenticated, userController.changeActivePlant);

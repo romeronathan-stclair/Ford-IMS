@@ -1,0 +1,24 @@
+@import "src/styles.scss";
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 1.3rem !important;
+    min-height: 100vh;
+    min-width: 100vw !important;
+}
+
+.content {
+    padding: 10px 50px;
+
+    width: 100vw;
+}
+.mdc-data-table__cell {
+    width: 25% !important;
+}
