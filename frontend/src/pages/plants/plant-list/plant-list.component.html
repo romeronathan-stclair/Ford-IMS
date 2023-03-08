@@ -26,7 +26,8 @@
         <ng-container matColumnDef="makeActive">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let plant">
-                <button (click)="makePlantActive(plant._id)" class="general-button">Make Active</button>
+                <button [disabled]="plant._id == activePlantId" (click)="makePlantActive(plant._id)"
+                    class="general-button">Make Active</button>
 
             </td>
         </ng-container>

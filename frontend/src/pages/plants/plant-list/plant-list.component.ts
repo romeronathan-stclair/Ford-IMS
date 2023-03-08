@@ -19,6 +19,7 @@ export class PlantListComponent {
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
+  activePlantId: any;
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   plants: any[] = [];
@@ -69,6 +70,7 @@ export class PlantListComponent {
           this.plants = data.body.plants;
           this.length = data.body.plantCount;
           this.dataSource = new MatTableDataSource(this.plants);
+          this.activePlantId = this.authService.activePlantId;
           console.log(this.plants);
         },
         error: (error: any) => {
@@ -98,6 +100,8 @@ export class PlantListComponent {
           next: (data: any) => {
             this.spinnerService.hide();
             this.authService.setActivePlantId(plantId);
+            this.activePlantId = plantId;
+
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Plant is now active' });
           },
           error: (error: any) => {
