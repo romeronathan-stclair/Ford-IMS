@@ -38,6 +38,20 @@ export class PlantService {
             withCredentials: true,
         });
     }
+    getActivePlant(): Observable<any> {
+        return this.http.get(`${this.endPoint}/plant`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
+    getPlants(query?: string): Observable<any> {
+        return this.http.get(`${this.endPoint}/plants${query}`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
 
 
 

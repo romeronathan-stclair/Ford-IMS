@@ -7,6 +7,8 @@ import { PlantService } from 'src/services/plant.service';
 import { SharedService } from 'src/services/shared.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignDepartmentsDialogComponent } from 'src/components/assign-departments-dialog/assign-departments-dialog.component';
+import { SpinnerService } from 'src/services/spinner.service';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-create-plant-assign-users',
   templateUrl: './create-plant-assign-users.component.html',
@@ -23,7 +25,13 @@ export class CreatePlantAssignUsersComponent {
   request: any;
   selectedUsers: any[] = [];
 
-  constructor(public dialog: MatDialog, private authService: AuthService, private sharedService: SharedService, private router: Router, private plantService: PlantService) {
+  constructor(public dialog: MatDialog,
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private router: Router,
+    private messageService: MessageService,
+    private plantService: PlantService,
+    private spinnerService: SpinnerService) {
     this.sharedService.setDataKey('plants');
 
     this.request = this.sharedService.getData();
@@ -31,19 +39,15 @@ export class CreatePlantAssignUsersComponent {
 
   ngOnInit() {
 
-
     if (this.request.users) {
       this.selectedUsers = this.request.users;
       this.dataSource.data = this.request.users;
     }
 
-
-
-
-
   }
   removeUser(id: string) {
 
+    console.log(id);
     if (!id) {
       return;
     }
@@ -57,13 +61,11 @@ export class CreatePlantAssignUsersComponent {
 
   openDialog(user: any) {
 
-    console.log({
-      userDepartments:
-        user.departments,
-      departments: this.request.departments,
-    },);
+
+    console.log(user);
 
     const dialogRef = this.dialog.open(AssignDepartmentsDialogComponent, {
+
       data: {
         userDepartments:
           user.departments,
@@ -81,10 +83,6 @@ export class CreatePlantAssignUsersComponent {
         this.selectedUsers[index].departments = result;
       }
 
-
-
-
-
       this.request.users = this.selectedUsers;
       this.sharedService.setData(this.request);
       this.dataSource.data = this.selectedUsers;
@@ -92,7 +90,8 @@ export class CreatePlantAssignUsersComponent {
   }
 
   submit() {
-    console.log(this.request);
+    this.spinnerService.show();
+
     let request = {
       assignments: this.selectedUsers,
       departments: this.request.departments,
@@ -102,10 +101,18 @@ export class CreatePlantAssignUsersComponent {
 
     this.plantService.createPlant(request).subscribe({
       next: (response) => {
+        this.spinnerService.hide();
         this.router.navigate(['/dashboard/plants/create/success']);
       },
       error: (error) => {
+        this.spinnerService.hide();
         console.log(error);
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `${error.error}`,
+        });
       }
     });
 

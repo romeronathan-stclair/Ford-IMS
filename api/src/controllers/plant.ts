@@ -20,7 +20,7 @@ import bcrypt from "bcrypt";
 import logger from "../utils/logger";
 import { getPage, getPageSize } from "../utils/pagination";
 import { CrudType } from "../enums/crudType";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { ModelType } from "../enums/modelType";
 
 export const createPlant = async (
@@ -199,8 +199,6 @@ export const createPlant = async (
         });
 };
 export const getActivePlant = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
-
     const user = req.user as UserDocument;
 
     const activePlantId = user.plants.find((plant) => plant.isActive);
@@ -226,13 +224,25 @@ export const getPlants = async (req: Request, res: Response) => {
     const pageSize = getPageSize(req);
     const userId = req.query.userId || undefined;
     const plantId = req.query.plantId || undefined;
+    const plantName = req.query.plantName || undefined;
     const isActive = req.query.isActive || undefined
 
     if (plantId) {
+        console.log(plantId);
         const plant: PlantDocument = (await Plant.findOne({
-            _id: plantId,
-            isDeleted: false
+            _id: plantId.toString(),
+            isDeleted: false,
         })) as PlantDocument;
+
+
+        return res.status(200).json(plant);
+    }
+    if (plantName) {
+        const plant: PlantDocument = (await Plant.findOne({
+            plantName: plantName.toString(),
+            isDeleted: false,
+        })) as PlantDocument;
+
         return res.status(200).json(plant);
     }
 

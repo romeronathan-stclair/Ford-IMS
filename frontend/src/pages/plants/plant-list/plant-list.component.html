@@ -26,7 +26,7 @@
         <ng-container matColumnDef="makeActive">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let plant">
-                <button type="submit" class="general-button">Make Active</button>
+                <button (click)="makePlantActive(plant._id)" class="general-button">Make Active</button>
 
             </td>
         </ng-container>
@@ -66,3 +66,13 @@
     </mat-paginator>
     <button type="submit" class="general-button">View Event Log</button>
 </div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+    <ng-template pTemplate="header">
+        <h3></h3>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+    </ng-template>
+</p-confirmDialog>

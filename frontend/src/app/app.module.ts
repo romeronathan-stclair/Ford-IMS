@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountPageComponent } from '../pages/account/accounts/account-page/account-page.component';
@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ToastModule } from 'primeng/toast';
+import { Toast, ToastModule } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSimpleSidebarModule } from 'ng-simple-sidebar';
 import { SignoutPageComponent } from '../pages/account/accounts/signout-page/signout-page.component';
@@ -24,7 +24,7 @@ import { CreatePlantComponent } from 'src/pages/plants/create-plants/create-plan
 import { CreatePlantsDepartmentsComponent } from 'src/pages/plants/create-plants/create-plants-departments/create-plants-departments.component';
 import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/create-plants-users/create-plants-users.component';
 import { CreatePlantStepOneComponent } from '../pages/plants/create-plants/create-plant-step-one/create-plant-step-one.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SharedService } from 'src/services/shared.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +32,9 @@ import { CreatePlantAssignUsersComponent } from '../pages/plants/create-plants/c
 import { MatDialogModule } from '@angular/material/dialog';
 import { AssignDepartmentsDialogComponent } from '../components/assign-departments-dialog/assign-departments-dialog.component';
 import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/create-plant-success/create-plant-success.component';
+import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SpinnerService } from 'src/services/spinner.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,8 @@ import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/creat
     CreatePlantStepOneComponent,
     CreatePlantAssignUsersComponent,
     AssignDepartmentsDialogComponent,
-    CreatePlantSuccessComponent
+    CreatePlantSuccessComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +70,12 @@ import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/creat
     FormsModule,
     MatCheckboxModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSpinnerModule,
+    ConfirmDialogModule,
+    ToastModule
   ],
-  providers: [MessageService, SharedService],
+  providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

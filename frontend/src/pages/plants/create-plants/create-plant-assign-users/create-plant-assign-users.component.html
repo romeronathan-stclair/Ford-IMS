@@ -35,7 +35,7 @@
             <td mat-cell *matCellDef="let user">
                 <button (click)="openDialog(user)" type="submit" class="general-button">Assign
                     Departments</button>
-                <button (click)="removeUser(user._id)" class="remove-user-button">
+                <button (click)="removeUser(user.userId)" class="remove-user-button">
                     <i class="fa-solid fa-minus"></i>
                 </button>
             </td>

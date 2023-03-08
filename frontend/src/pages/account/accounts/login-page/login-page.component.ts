@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { User } from 'src/models/user';
 import { AuthService } from 'src/services/auth.service';
+import { SpinnerService } from 'src/services/spinner.service';
 
 @Component({
   selector: 'app-login-page',
@@ -18,6 +19,7 @@ export class LoginPageComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
+    private spinnerService: SpinnerService,
     private messageService: MessageService) {
     this.userForm = this.formBuilder.group({
       email: new FormControl(''),
@@ -28,8 +30,10 @@ export class LoginPageComponent implements OnInit {
   ngOnInit(): void {
   }
   onSubmit() {
+    this.spinnerService.show();
     if (!this.userForm.valid) {
       this.displayValidationErrors = true;
+      this.spinnerService.hide();
       return;
     }
 
@@ -38,9 +42,11 @@ export class LoginPageComponent implements OnInit {
 
     this.authService.signin(jsonField).subscribe({
       next: () => {
+        this.spinnerService.hide();
         this.router.navigate(['/dashboard/plants/list']);
       },
       error: (error: any) => {
+        this.spinnerService.hide();
         console.log(error);
         this.messageService.clear();
         this.messageService.add({

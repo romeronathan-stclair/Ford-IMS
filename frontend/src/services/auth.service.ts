@@ -11,6 +11,7 @@ import { User } from '../models/user';
 export class AuthService {
     endPoint: string = `${environment.apiUrl}/auth`;
     user: User = {} as User;
+    activePlantId: string = '';
 
     baseHeaders: HttpHeaders = new HttpHeaders({
         'Content-type': 'application/json',
@@ -20,6 +21,10 @@ export class AuthService {
     });
 
     constructor(private http: HttpClient) { }
+
+    setActivePlantId(id: string) {
+        this.activePlantId = id;
+    }
 
     setUser(obj: any) {
         const {
@@ -91,6 +96,14 @@ export class AuthService {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true,
+        });
+    }
+    makePlantActive(plantId: string): Observable<any> {
+        return this.http.put(`${this.endPoint}/user/active-plant`, plantId, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+
         });
     }
 
