@@ -4,6 +4,8 @@
     background-color: $lightGrey !important;
     width: 100%;
     border: $border;
+    display: flex;
+    align-items: center;
 }
 .container-header {
     display: flex;

@@ -35,6 +35,7 @@ import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/creat
 import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerService } from 'src/services/spinner.service';
+import { EditPlantPageComponent } from '../pages/plants/edit-plant-page/edit-plant-page.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,7 +53,8 @@ import { SpinnerService } from 'src/services/spinner.service';
     CreatePlantAssignUsersComponent,
     AssignDepartmentsDialogComponent,
     CreatePlantSuccessComponent,
-    LoadingIndicatorComponent
+    LoadingIndicatorComponent,
+    EditPlantPageComponent
   ],
   imports: [
     BrowserModule,
