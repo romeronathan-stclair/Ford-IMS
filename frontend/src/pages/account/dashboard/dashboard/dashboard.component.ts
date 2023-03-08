@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgSimpleSidebarService, SimpleSidebarPosition } from 'ng-simple-sidebar';
+import { AuthService } from 'src/services/auth.service';
+import { PlantService } from 'src/services/plant.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,7 +10,7 @@ import { NgSimpleSidebarService, SimpleSidebarPosition } from 'ng-simple-sidebar
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   sidebarItems: any[] = [];
-  constructor(private ngSimpleSidebarService: NgSimpleSidebarService) { }
+  constructor(private plantService: PlantService, private authService: AuthService, private ngSimpleSidebarService: NgSimpleSidebarService) { }
   botsideItems$: any;
   ngOnInit() {
     this.sidebarItems = [
@@ -94,13 +96,29 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     });
 
+    this.plantService.getActivePlant().subscribe({
+      next: (data: any) => {
+        this.authService.setActivePlantId(data.body._id);
 
+
+
+
+      },
+      error: (error: any) => {
+
+      },
+    });
+
+    console.log(this.authService.activePlantId);
   }
+
+
+
 
   ngAfterViewInit() {
 
     this.botsideItems$ = this.ngSimpleSidebarService.getBotsideItems();
   }
+
+
 }
-
-

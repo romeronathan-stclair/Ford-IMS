@@ -57,7 +57,6 @@ export class PlantListComponent {
     let userId = this.authService.user._id;
 
     let query = "?userId=" + userId + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    console.log(userId);
 
 
     this.plantService
@@ -96,7 +95,7 @@ export class PlantListComponent {
         this.authService.makePlantActive(JSON.stringify({ plantId })).subscribe({
           next: (data: any) => {
             this.spinnerService.hide();
-
+            this.authService.setActivePlantId(plantId);
           },
           error: (error: any) => {
             this.spinnerService.hide();

@@ -199,8 +199,6 @@ export const createPlant = async (
         });
 };
 export const getActivePlant = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
-
     const user = req.user as UserDocument;
 
     const activePlantId = user.plants.find((plant) => plant.isActive);
