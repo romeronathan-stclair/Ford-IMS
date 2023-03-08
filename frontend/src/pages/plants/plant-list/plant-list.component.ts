@@ -2,6 +2,7 @@ import { ViewChild } from '@angular/core';
 import { Component } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { ConfirmationService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
@@ -10,7 +11,7 @@ import { SpinnerService } from 'src/services/spinner.service';
   selector: 'app-plant-list',
   templateUrl: './plant-list.component.html',
   styleUrls: ['./plant-list.component.scss'],
-  providers: [PlantService]
+  providers: [PlantService, ConfirmationService]
 })
 export class PlantListComponent {
   currentPage = 0;
@@ -36,7 +37,7 @@ export class PlantListComponent {
     "Assigned",
     "Resolved"
   ];
-  constructor(private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
+  constructor(private confirmationService: ConfirmationService, private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
   ngOnInit() {
     this.loadData();
 
@@ -64,7 +65,6 @@ export class PlantListComponent {
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log('PlantListComponent: ngOnInit: data: ', data);
           this.plants = data.body.plants;
           this.length = data.body.plantCount;
           this.dataSource = new MatTableDataSource(this.plants);
@@ -72,7 +72,6 @@ export class PlantListComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log('PlantListComponent: ngOnInit: error: ', error);
 
         },
       });
@@ -86,5 +85,35 @@ export class PlantListComponent {
     this.currentPage = event.pageIndex;
     this.loadData();
   }
+  makePlantActive(plantId: any) {
+
+
+    this.confirmationService.confirm({
+
+      message: 'Are you sure that you want to make this plant active?',
+      accept: () => {
+        this.spinnerService.show();
+        this.authService.makePlantActive(JSON.stringify({ plantId })).subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+
+          },
+        });
+
+
+
+      },
+      reject: () => {
+        //reject action
+      }
+    });
+  }
+
+
+
 
 }

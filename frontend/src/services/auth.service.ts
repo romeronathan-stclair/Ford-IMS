@@ -93,6 +93,14 @@ export class AuthService {
             withCredentials: true,
         });
     }
+    makePlantActive(plantId: string): Observable<any> {
+        return this.http.put(`${this.endPoint}/user/active-plant`, plantId, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+
+        });
+    }
 
 
 }

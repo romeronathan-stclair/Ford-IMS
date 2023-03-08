@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountPageComponent } from '../pages/account/accounts/account-page/account-page.component';
@@ -24,7 +24,7 @@ import { CreatePlantComponent } from 'src/pages/plants/create-plants/create-plan
 import { CreatePlantsDepartmentsComponent } from 'src/pages/plants/create-plants/create-plants-departments/create-plants-departments.component';
 import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/create-plants-users/create-plants-users.component';
 import { CreatePlantStepOneComponent } from '../pages/plants/create-plants/create-plant-step-one/create-plant-step-one.component';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { SharedService } from 'src/services/shared.service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -71,9 +71,10 @@ import { SpinnerService } from 'src/services/spinner.service';
     MatCheckboxModule,
     MatIconModule,
     MatDialogModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ConfirmDialogModule,
   ],
-  providers: [MessageService, SharedService, SpinnerService],
+  providers: [MessageService, SharedService,  SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

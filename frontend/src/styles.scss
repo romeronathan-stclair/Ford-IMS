@@ -210,7 +210,9 @@ tbody {
     background-color: $darkBlue;
     transition: 0.2s ease-in-out;
 }
-.submit-button {
+.submit-button,
+.p-confirm-dialog-reject,
+.p-confirm-dialog-accept {
     background-color: $darkBlue;
     cursor: pointer;
     margin-top: 15px;
@@ -245,4 +247,26 @@ table,
 .field-validation-error {
     display: flex;
     flex-direction: column;
+}
+
+// Confirmation Dialog Styles
+::ng-deep .p-dialog.p-confirm-dialog {
+    border-radius: 7.5px;
+}
+
+::ng-deep .p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+    padding: 50px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    background-color: $grey;
+}
+::ng-deep .p-dialog .p-dialog-header {
+    background-color: $darkBlue;
+}
+::ng-deep .p-dialog .p-dialog-footer {
+    background-color: $grey;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
 }
