@@ -2,7 +2,7 @@ import { ViewChild } from '@angular/core';
 import { Component } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
@@ -37,7 +37,9 @@ export class PlantListComponent {
     "Assigned",
     "Resolved"
   ];
-  constructor(private confirmationService: ConfirmationService, private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
+  constructor(private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
   ngOnInit() {
     this.loadData();
 
@@ -96,9 +98,13 @@ export class PlantListComponent {
           next: (data: any) => {
             this.spinnerService.hide();
             this.authService.setActivePlantId(plantId);
+            this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Plant is now active' });
           },
           error: (error: any) => {
             this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'error', summary: 'Error', detail: 'Something went wrong - please try again later'
+            });
 
           },
         });

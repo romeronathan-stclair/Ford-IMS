@@ -11,7 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ToastModule } from 'primeng/toast';
+import { Toast, ToastModule } from 'primeng/toast';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSimpleSidebarModule } from 'ng-simple-sidebar';
 import { SignoutPageComponent } from '../pages/account/accounts/signout-page/signout-page.component';
@@ -73,8 +73,9 @@ import { SpinnerService } from 'src/services/spinner.service';
     MatDialogModule,
     NgxSpinnerModule,
     ConfirmDialogModule,
+    ToastModule
   ],
-  providers: [MessageService, SharedService,  SpinnerService, ConfirmationService],
+  providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
