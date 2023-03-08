@@ -32,6 +32,9 @@ import { CreatePlantAssignUsersComponent } from '../pages/plants/create-plants/c
 import { MatDialogModule } from '@angular/material/dialog';
 import { AssignDepartmentsDialogComponent } from '../components/assign-departments-dialog/assign-departments-dialog.component';
 import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/create-plant-success/create-plant-success.component';
+import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { SpinnerService } from 'src/services/spinner.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,8 @@ import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/creat
     CreatePlantStepOneComponent,
     CreatePlantAssignUsersComponent,
     AssignDepartmentsDialogComponent,
-    CreatePlantSuccessComponent
+    CreatePlantSuccessComponent,
+    LoadingIndicatorComponent
   ],
   imports: [
     BrowserModule,
@@ -66,9 +70,10 @@ import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/creat
     FormsModule,
     MatCheckboxModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxSpinnerModule
   ],
-  providers: [MessageService, SharedService],
+  providers: [MessageService, SharedService, SpinnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

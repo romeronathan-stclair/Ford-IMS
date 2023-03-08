@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
+import { SpinnerService } from 'src/services/spinner.service';
 
 @Component({
   selector: 'app-plant-list',
@@ -35,21 +36,23 @@ export class PlantListComponent {
     "Assigned",
     "Resolved"
   ];
-  constructor(private plantService: PlantService, private authService: AuthService) { }
+  constructor(private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
   ngOnInit() {
-
+    this.loadData();
 
 
   }
 
   ngAfterViewInit() {
-    this.loadData();
+
 
     this.dataSource.paginator = this.paginator;
     console.log(this.paginator);
   }
 
   loadData() {
+    this.spinnerService.show();
+
     let userId = this.authService.user._id;
 
     let query = "?userId=" + userId + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
@@ -60,6 +63,7 @@ export class PlantListComponent {
       .getUserPlants(query)
       .subscribe({
         next: (data: any) => {
+          this.spinnerService.hide();
           console.log('PlantListComponent: ngOnInit: data: ', data);
           this.plants = data.body.plants;
           this.length = data.body.plantCount;
@@ -67,6 +71,7 @@ export class PlantListComponent {
           console.log(this.plants);
         },
         error: (error: any) => {
+          this.spinnerService.hide();
           console.log('PlantListComponent: ngOnInit: error: ', error);
 
         },
