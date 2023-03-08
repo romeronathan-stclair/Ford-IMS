@@ -122,6 +122,9 @@ body {
     background-color: $lightGrey !important;
     width: 100%;
     border: $border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .container-header {
     display: flex;
@@ -145,12 +148,7 @@ body {
         gap: 20px;
     }
 }
-h4 {
-    margin: 0;
-}
-p {
-    padding-left: 25px;
-}
+
 .container-img {
     width: 150px;
     padding: 10px;
