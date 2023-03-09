@@ -13,11 +13,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(private plantService: PlantService, private authService: AuthService, private ngSimpleSidebarService: NgSimpleSidebarService) { }
   botsideItems$: any;
   ngOnInit() {
+    this.ngSimpleSidebarService.open();
     this.sidebarItems = [
       {
         name: 'Departments',
         icon: 'pi pi-map',
-        routerLink: ['/welcome'],
+        routerLink: ['departments/list'],
         position: SimpleSidebarPosition.top
       },
       {
@@ -92,24 +93,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         "darkModeBackground": "#333",
         "darkModeFont": "#fff"
       },
+      closeAfterClick: false
 
 
     });
 
-    this.plantService.getActivePlant().subscribe({
-      next: (data: any) => {
-        this.authService.setActivePlantId(data.body._id);
 
 
 
-
-      },
-      error: (error: any) => {
-
-      },
-    });
-
-    console.log(this.authService.activePlantId);
   }
 
 

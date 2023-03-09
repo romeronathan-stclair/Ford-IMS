@@ -11,4 +11,5 @@ export interface User {
     deactivatedDate: Date;
     passwordResetToken: String | undefined;
     passwordResetExpires: Date | undefined;
+    activePlantId: string;
 };

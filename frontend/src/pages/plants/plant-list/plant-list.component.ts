@@ -70,7 +70,7 @@ export class PlantListComponent {
           this.plants = data.body.plants;
           this.length = data.body.plantCount;
           this.dataSource = new MatTableDataSource(this.plants);
-          this.activePlantId = this.authService.activePlantId;
+          this.activePlantId = this.authService.user.activePlantId;
           console.log(this.plants);
         },
         error: (error: any) => {
@@ -99,7 +99,6 @@ export class PlantListComponent {
         this.authService.makePlantActive(JSON.stringify({ plantId })).subscribe({
           next: (data: any) => {
             this.spinnerService.hide();
-            this.authService.setActivePlantId(plantId);
             this.activePlantId = plantId;
 
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Plant is now active' });

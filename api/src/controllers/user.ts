@@ -246,7 +246,6 @@ export const changePassword = async (req: Request, res: Response) => {
 export const getUser = (req: Request, res: Response) => {
     const user: UserDocument = req.user as UserDocument;
 
-    console.log(req.session);
 
 
     return res.json(user);

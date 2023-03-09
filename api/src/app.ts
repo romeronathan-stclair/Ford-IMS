@@ -124,8 +124,8 @@ router.delete("/plant/:id", authMiddleware.isAuthenticated, plantController.dele
 
 //department routes
 router.post("/auth/department", authMiddleware.isAuthenticated, departmentController.createDepartment);
-router.get("/auth/department/:plantId?", authMiddleware.isAuthenticated, departmentController.getDepartments);
-router.put("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.updateDepartment);
+router.get("/auth/departments", authMiddleware.isAuthenticated, departmentController.getDepartments);
+router.put("/auth/department", authMiddleware.isAuthenticated, departmentController.updateDepartment);
 router.delete("/auth/department/:id", authMiddleware.isAuthenticated, departmentController.deleteDepartment);
 
 //product routes
