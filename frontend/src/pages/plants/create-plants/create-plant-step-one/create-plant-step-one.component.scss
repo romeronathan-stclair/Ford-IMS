@@ -6,6 +6,9 @@
     align-items: center;
     gap: 15px;
     height: 70vh;
+    @include column-lg-break {
+        padding: 30px;
+    }
 }
 form {
     display: flex;
