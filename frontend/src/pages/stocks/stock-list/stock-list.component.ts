@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {DataViewModule} from 'primeng/dataview';
+
 
 @Component({
   selector: 'app-stock-list',
