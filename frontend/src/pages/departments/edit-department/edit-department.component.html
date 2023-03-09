@@ -1,0 +1,34 @@
+<h1 class="page-header">Edit Department Information</h1>
+<app-ford-container>
+    <div class="holder">
+        <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+            <div>
+
+                <input placeholder="Department Name" formControlName="departmentName" type="departmentName"
+                    class="form-control" id="departmentName-input" aria-describedby="departmentNameHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+            displayValidationErrors ||
+            departmentForm.controls['departmentName'].dirty ||
+            departmentForm.controls['departmentName'].touched
+          ">
+                    <span *ngIf="departmentForm.controls['departmentName'].hasError('required')">departmentName is
+                        required</span>
+                </mat-error>
+            </div>
+
+
+            <div class="button-holders">
+
+
+                <button type="button" [routerLink]="'/dashboard/departments/list'" class="submit-button">Cancel</button>
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+            <!-- <div class="button-holder">
+      
+        <a routerLink="/account/reset-departmentLocation">Forgot departmentLocation?</a>
+    </div> -->
+
+            <p-toast position="bottom-center"></p-toast>
+        </form>
+    </div>
+</app-ford-container>

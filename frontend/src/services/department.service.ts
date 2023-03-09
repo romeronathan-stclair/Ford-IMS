@@ -39,6 +39,13 @@ export class DepartmentService {
             withCredentials: true,
         });
     }
+    editDepartment(department: any): Observable<any> {
+        return this.http.put(`${this.endPoint}/department`, department, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
 
 
 

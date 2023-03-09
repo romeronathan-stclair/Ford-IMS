@@ -39,6 +39,7 @@ import { EditPlantPageComponent } from '../pages/plants/edit-plant-page/edit-pla
 import { DepartmentsComponent } from '../pages/departments/departments/departments.component';
 import { DepartmentListComponent } from 'src/pages/departments/department-list/department-list.component';
 import { CreateDepartmentComponent } from '../pages/departments/create-department/create-department.component';
+import { EditDepartmentComponent } from '../pages/departments/edit-department/edit-department.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { CreateDepartmentComponent } from '../pages/departments/create-departmen
     EditPlantPageComponent,
     DepartmentsComponent,
     DepartmentListComponent,
-    CreateDepartmentComponent
+    CreateDepartmentComponent,
+    EditDepartmentComponent
   ],
   imports: [
     BrowserModule,

@@ -101,9 +101,21 @@ export const getDepartments = async (req: Request, res: Response) => {
         isDeleted: false,
     }
 
+    if (departmentId) {
+        query["_id"] = departmentId;
+        const department = await Department.findOne({ _id: departmentId, isDeleted: false });
+
+        if (!department) {
+            return res.status(500).json("Department does not exist");
+        }
+        return res.status(200).json(department);
+    }
+
+
     if (plantId) {
         query["plantId"] = plantId;
     }
+
 
 
     if (departmentName) {
