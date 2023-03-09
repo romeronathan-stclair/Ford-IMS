@@ -91,56 +91,45 @@ export const createPlant = async (
             departmentName: { $in: departmentNames },
         });
 
-        if (existingDepartments.length > 0) {
-            const existingDepartmentNames = existingDepartments.map(
-                (department: any) => department.departmentName
+
+        try {
+            departments = req.body.departments.map((department: any) => {
+                const newDepartment: DepartmentDocument = new Department();
+                newDepartment.departmentName = department;
+                newDepartment.plantId = newPlant._id.valueOf();
+                newDepartment.isDeleted = false;
+
+                const event: EventDocument = new Event({
+                    eventDate: new Date().toDateString(),
+                    userId: user._id.valueOf(),
+                    operationType: CrudType.CREATE,
+                    itemType: ModelType.DEPARTMENT,
+                    userName: user.name,
+                    plantId: newPlant._id.valueOf(),
+                    userEmailAddress: user.email,
+                    itemId: newDepartment._id.valueOf(),
+                }) as EventDocument;
+
+                eventList.push(event);
+
+
+                return newDepartment;
+            });
+            await Promise.all(
+                departments.map((department: { save: () => any }) => {
+                    return department.save();
+                })
+
             );
+
+            departmentIds = departments.map((department: DepartmentDocument) =>
+                department._id.toString()
+            ) as [String];
+        } catch (err) {
             cancelPlantCreate(newPlant, departments, eventList);
-            return res
-                .status(500)
-                .json(
-                    "Departments already exist with the names " +
-                    existingDepartmentNames.join(", ")
-                );
-        } else {
-            try {
-                departments = req.body.departments.map((department: any) => {
-                    const newDepartment: DepartmentDocument = new Department();
-                    newDepartment.departmentName = department;
-                    newDepartment.plantId = newPlant._id.valueOf();
-                    newDepartment.isDeleted = false;
-
-                    const event: EventDocument = new Event({
-                        eventDate: new Date().toDateString(),
-                        userId: user._id.valueOf(),
-                        operationType: CrudType.CREATE,
-                        itemType: ModelType.DEPARTMENT,
-                        userName: user.name,
-                        plantId: newPlant._id.valueOf(),
-                        userEmailAddress: user.email,
-                        itemId: newDepartment._id.valueOf(),
-                    }) as EventDocument;
-
-                    eventList.push(event);
-
-
-                    return newDepartment;
-                });
-                await Promise.all(
-                    departments.map((department: { save: () => any }) => {
-                        return department.save();
-                    })
-
-                );
-
-                departmentIds = departments.map((department: DepartmentDocument) =>
-                    department._id.toString()
-                ) as [String];
-            } catch (err) {
-                cancelPlantCreate(newPlant, departments, eventList);
-                return res.status(500).json("Error while creating departments." + err);
-            }
+            return res.status(500).json("Error while creating departments." + err);
         }
+
     }
 
 

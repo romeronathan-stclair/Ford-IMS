@@ -94,16 +94,22 @@ export const getDepartments = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
     const userId = req.query.userId;
-    const plantId = req.params.plantId;
+    const plantId = req.query.plantId;
     const departmentId = req.query.departmentId;
+    const departmentName = req.query.departmentName;
     const query: any = {
         isDeleted: false,
     }
 
     if (plantId) {
         query["plantId"] = plantId;
-
     }
+
+
+    if (departmentName) {
+        query["departmentName"] = departmentName;
+    }
+
     if (userId) {
         const user = await User.findOne({ _id: userId, isDeleted: false });
         if (!user) {
@@ -111,7 +117,7 @@ export const getDepartments = async (req: Request, res: Response) => {
         }
 
         const plant = user.plants.find(plant => {
-            return plant.plantId = plantId;
+            return plant.plantId == plantId;
         });
 
         if (!plant) {
@@ -125,14 +131,21 @@ export const getDepartments = async (req: Request, res: Response) => {
 
     }
 
-    if (departmentId) {
-        query["_id"] = new Types.ObjectId(departmentId.toString());
+
+    if (departmentName) {
+        query["departmentName"] = { $regex: departmentName, $options: "i" };
     }
 
 
+    console.log(query);
+    const departmentCount = await Department.countDocuments(query);
     const departments = await Department.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-    return res.status(200).json(departments);
+    let response = {
+        departments: departments,
+        departmentCount: departmentCount
+    }
+    return res.status(200).json(response);
 
 };
 

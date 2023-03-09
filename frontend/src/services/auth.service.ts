@@ -11,7 +11,6 @@ import { User } from '../models/user';
 export class AuthService {
     endPoint: string = `${environment.apiUrl}/auth`;
     user: User = {} as User;
-    activePlantId: string = '';
 
     baseHeaders: HttpHeaders = new HttpHeaders({
         'Content-type': 'application/json',
@@ -22,11 +21,9 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-    setActivePlantId(id: string) {
-        this.activePlantId = id;
-    }
 
-    setUser(obj: any) {
+    setUser(obj: User): void {
+        console.log(obj);
         const {
             _id,
             name,
@@ -37,6 +34,11 @@ export class AuthService {
             passwordResetToken,
             passwordResetExpires,
         } = obj;
+        const activePlant = plants.find((plant) => plant.isActive);
+        if (!activePlant) {
+            throw new Error("No active plant found");
+        }
+        const { plantId } = activePlant;
         this.user = {
             _id,
             name,
@@ -46,9 +48,8 @@ export class AuthService {
             deactivatedDate,
             passwordResetToken,
             passwordResetExpires,
+            activePlantId: plantId,
         };
-
-
     }
 
     signin(creds: string): Observable<any> {

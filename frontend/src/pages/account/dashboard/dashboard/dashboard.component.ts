@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Departments',
         icon: 'pi pi-map',
-        routerLink: ['/welcome'],
+        routerLink: ['departments/list'],
         position: SimpleSidebarPosition.top
       },
       {
@@ -96,20 +96,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     });
 
-    this.plantService.getActivePlant().subscribe({
-      next: (data: any) => {
-        this.authService.setActivePlantId(data.body._id);
 
 
 
-
-      },
-      error: (error: any) => {
-
-      },
-    });
-
-    console.log(this.authService.activePlantId);
   }
 
 
