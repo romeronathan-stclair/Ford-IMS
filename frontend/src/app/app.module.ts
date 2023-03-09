@@ -38,6 +38,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { EditPlantPageComponent } from '../pages/plants/edit-plant-page/edit-plant-page.component';
 import { DepartmentsComponent } from '../pages/departments/departments/departments.component';
 import { DepartmentListComponent } from 'src/pages/departments/department-list/department-list.component';
+import { CreateDepartmentComponent } from '../pages/departments/create-department/create-department.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { DepartmentListComponent } from 'src/pages/departments/department-list/d
     LoadingIndicatorComponent,
     EditPlantPageComponent,
     DepartmentsComponent,
-    DepartmentListComponent
+    DepartmentListComponent,
+    CreateDepartmentComponent
   ],
   imports: [
     BrowserModule,

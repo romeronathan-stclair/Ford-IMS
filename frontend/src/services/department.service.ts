@@ -32,6 +32,14 @@ export class DepartmentService {
         });
     }
 
+    createDepartment(department: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/department`, department, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
+
 
 
 

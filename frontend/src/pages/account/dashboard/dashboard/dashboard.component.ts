@@ -13,6 +13,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(private plantService: PlantService, private authService: AuthService, private ngSimpleSidebarService: NgSimpleSidebarService) { }
   botsideItems$: any;
   ngOnInit() {
+    this.ngSimpleSidebarService.open();
     this.sidebarItems = [
       {
         name: 'Departments',
@@ -92,6 +93,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         "darkModeBackground": "#333",
         "darkModeFont": "#fff"
       },
+      closeAfterClick: false
 
 
     });

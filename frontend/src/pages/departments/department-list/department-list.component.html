@@ -63,7 +63,7 @@
 
 </div>
 <div class="paginator-holder">
-    <button [routerLink]="'/dashboard/departments/create/step-one'" type="submit" class="general-button first-button"><i
+    <button [routerLink]="'/dashboard/departments/create'" type="submit" class="general-button first-button"><i
             class="fa-solid fa-plus"></i>Create New department</button>
     <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
