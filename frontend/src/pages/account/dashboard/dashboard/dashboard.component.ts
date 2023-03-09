@@ -14,6 +14,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   botsideItems$: any;
   ngOnInit() {
     this.ngSimpleSidebarService.open();
+
+    console.log(this.authService.user);
     this.sidebarItems = [
       {
         name: 'Departments',
@@ -97,8 +99,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
     });
-
-
 
 
   }

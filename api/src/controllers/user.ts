@@ -246,9 +246,17 @@ export const changePassword = async (req: Request, res: Response) => {
 export const getUser = (req: Request, res: Response) => {
     const user: UserDocument = req.user as UserDocument;
 
+    const activePlantId = user.plants.find((plant) => plant.isActive)?.plantId || '0';
 
 
-    return res.json(user);
+
+
+
+
+
+
+
+    return res.json({ user: user, activePlantId: activePlantId });
 };
 
 export const changeActivePlant = async (req: Request, res: Response) => {
