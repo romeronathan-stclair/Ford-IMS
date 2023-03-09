@@ -122,10 +122,8 @@ body {
     background-color: $lightGrey !important;
     width: 100%;
     border: $border;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
+
 .container-header {
     display: flex;
     justify-content: space-between;
@@ -180,6 +178,9 @@ body {
 .page-header {
     font-size: 3rem;
     margin: 0;
+    @include column-lg-break {
+        font-size: 2rem;
+    }
 }
 .table-header {
     min-height: 80px;

@@ -18,6 +18,9 @@ body {
     padding: 10px 50px;
 
     width: 100vw;
+    @include column-lg-break {
+        padding: 10px 15px;
+    }
 }
 .mdc-data-table__cell {
     width: 25% !important;

@@ -2,23 +2,31 @@
 .holder {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding: 10px;
     justify-content: center;
     align-items: center;
-    margin: auto;
-    min-height: 100% !important; /* set the height of the container to 100% of the viewport height */
+    gap: 15px;
+    height: 70vh;
+    @include column-lg-break {
+        padding: 30px;
+    }
 }
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+input {
+    width: 300px;
+    height: 35px;
+    border: 1px solid $lightGrey;
+    border-radius: 5px;
+}
+
 .button-holders {
     display: flex;
     justify-content: space-between;
     width: 100%;
     gap: 15px;
-}
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-self: center !important;
-    justify-self: center !important;
 }
