@@ -1,0 +1,24 @@
+@import "src/styles.scss";
+.holder {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    min-height: 100% !important; /* set the height of the container to 100% of the viewport height */
+}
+.button-holders {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-self: center !important;
+    justify-self: center !important;
+}

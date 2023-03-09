@@ -1,32 +1,5 @@
 @import "src/styles.scss";
-.container-holder {
-    min-height: 70vh;
-    background-color: $lightGrey !important;
-    width: 100%;
-    border: $border;
-}
-.container-header {
-    display: flex;
-    justify-content: space-between;
-    color: white;
-    align-items: center;
-    padding-right: 50px;
-    background-color: $darkBlue;
-}
-.footer-holder {
-    padding: 20px;
-    display: flex;
 
-    align-items: center;
-    background-color: $grey !important;
-    border-bottom: 0.75px solid black;
-    border-right: 0.75px solid black;
-    border-left: 0.75px solid black;
-    @include column-lg-break {
-        flex-direction: column;
-        gap: 20px;
-    }
-}
 h4 {
     margin: 0;
 }

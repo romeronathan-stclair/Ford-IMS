@@ -52,6 +52,14 @@ export class PlantService {
             withCredentials: true,
         });
     }
+    editPlant(plant: any): Observable<any> {
+        return this.http.put(`${this.endPoint}/plant`, plant, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
+
 
 
 

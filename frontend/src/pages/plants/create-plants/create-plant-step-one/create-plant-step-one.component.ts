@@ -43,13 +43,12 @@ export class CreatePlantStepOneComponent {
 
   }
   onSubmit() {
-    this.spinnerService.show();
     if (!this.plantForm.valid) {
       this.displayValidationErrors = true;
       this.spinnerService.hide();
       return;
     }
-
+    this.spinnerService.show();
     const plant = {
       plantName: this.plantForm.value.plantName,
       plantLocation: this.plantForm.value.plantLocation,

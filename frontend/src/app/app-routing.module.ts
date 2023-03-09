@@ -10,6 +10,7 @@ import { CreatePlantSuccessComponent } from 'src/pages/plants/create-plants/crea
 import { CreatePlantComponent } from 'src/pages/plants/create-plants/create-plant/create-plant.component';
 import { CreatePlantsDepartmentsComponent } from 'src/pages/plants/create-plants/create-plants-departments/create-plants-departments.component';
 import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/create-plants-users/create-plants-users.component';
+import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-plant-page.component';
 import { PlantListComponent } from 'src/pages/plants/plant-list/plant-list.component';
 import { PlantsComponent } from 'src/pages/plants/plants/plants.component';
 import { DashboardComponent } from '../pages/account/dashboard/dashboard/dashboard.component';
@@ -79,6 +80,12 @@ const routes: Routes = [
             path: 'list',
             data: { animation: 'Plants Page' },
             component: PlantListComponent,
+          },
+          {
+            path: 'edit/:id',
+            data: { animation: 'Edit Plant Page' },
+            component: EditPlantPageComponent
+
           }
         ]
       }

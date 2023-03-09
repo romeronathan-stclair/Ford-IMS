@@ -122,6 +122,9 @@ body {
     background-color: $lightGrey !important;
     width: 100%;
     border: $border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .container-header {
     display: flex;
@@ -145,14 +148,10 @@ body {
         gap: 20px;
     }
 }
-h4 {
-    margin: 0;
-}
-p {
-    padding-left: 25px;
-}
+
 .container-img {
     width: 150px;
+    padding: 10px;
 }
 // .sidebar-container {
 .sidebar-container-end a {
@@ -195,7 +194,7 @@ tbody {
     background-color: $lightGrey !important;
     border: $border !important;
 }
-
+// Button styles
 .general-button {
     background-color: $blue;
     border: none;
@@ -209,6 +208,15 @@ tbody {
 .general-button:hover {
     background-color: $darkBlue;
     transition: 0.2s ease-in-out;
+}
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: auto;
 }
 .submit-button,
 .p-confirm-dialog-reject,
