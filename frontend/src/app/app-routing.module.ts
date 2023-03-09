@@ -19,6 +19,11 @@ import { PlantListComponent } from 'src/pages/plants/plant-list/plant-list.compo
 import { PlantsComponent } from 'src/pages/plants/plants/plants.component';
 import { DashboardComponent } from '../pages/account/dashboard/dashboard/dashboard.component';
 import { CreatePlantStepOneComponent } from '../pages/plants/create-plants/create-plant-step-one/create-plant-step-one.component';
+import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
+import { CreateStockComponent } from 'src/pages/stocks/create-stock/create-stock.component';
+import { EditStockComponent} from 'src/pages/stocks/edit-stock/edit-stock.component';
+import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
+
 const routes: Routes = [
   {
     path: 'account',
@@ -115,8 +120,29 @@ const routes: Routes = [
           }
         ]
 
+      },
+      {
+        path: 'stock',
+        data: { animation: 'Stock Page' },
+        component: StocksComponent,
+        children: [
+          {
+            path: 'list',
+            data: { animation: 'Stock List Page' },
+            component: StockListComponent,
+          },
+          {
+            path: 'create',
+            data: { animation: 'Create Stock Page' },
+            component: CreateStockComponent
+          },
+          {
+            path: 'edit/:id',
+            data: { animation: 'Edit Stock Page' },
+            component: EditStockComponent
+          }
+        ]
       }
-
     ]
   },
   {

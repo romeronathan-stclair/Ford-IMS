@@ -40,6 +40,11 @@ import { DepartmentsComponent } from '../pages/departments/departments/departmen
 import { DepartmentListComponent } from 'src/pages/departments/department-list/department-list.component';
 import { CreateDepartmentComponent } from '../pages/departments/create-department/create-department.component';
 import { EditDepartmentComponent } from '../pages/departments/edit-department/edit-department.component';
+import { StockListComponent } from '../pages/stocks/stock-list/stock-list.component';
+import { StocksComponent } from '../pages/stocks/stocks/stocks.component';
+import { CreateStockComponent } from 'src/pages/stocks/create-stock/create-stock.component';
+import { EditStockComponent} from 'src/pages/stocks/edit-stock/edit-stock.component';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +68,11 @@ import { EditDepartmentComponent } from '../pages/departments/edit-department/ed
     DepartmentsComponent,
     DepartmentListComponent,
     CreateDepartmentComponent,
-    EditDepartmentComponent
+    EditDepartmentComponent,
+    StockListComponent,
+    StocksComponent,
+    CreateStockComponent,
+    EditStockComponent
   ],
   imports: [
     BrowserModule,
