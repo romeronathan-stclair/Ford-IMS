@@ -22,8 +22,8 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
 
-    setUser(obj: User): void {
-        console.log(obj);
+    setUser(obj: any): void {
+
         const {
             _id,
             name,
@@ -33,12 +33,12 @@ export class AuthService {
             deactivatedDate,
             passwordResetToken,
             passwordResetExpires,
-        } = obj;
-        const activePlant = plants.find((plant) => plant.isActive);
-        if (!activePlant) {
-            throw new Error("No active plant found");
-        }
-        const { plantId } = activePlant;
+
+        } = obj.user;
+
+        const activePlantId = obj.activePlantId;
+
+
         this.user = {
             _id,
             name,
@@ -48,7 +48,8 @@ export class AuthService {
             deactivatedDate,
             passwordResetToken,
             passwordResetExpires,
-            activePlantId: plantId,
+            activePlantId
+
         };
     }
 

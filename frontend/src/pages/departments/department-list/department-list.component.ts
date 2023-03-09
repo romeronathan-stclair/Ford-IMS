@@ -48,6 +48,7 @@ export class DepartmentListComponent {
 
   }
   ngOnInit() {
+    this.activePlantId = this.authService.user.activePlantId;
     this.loadData();
 
 
@@ -78,7 +79,7 @@ export class DepartmentListComponent {
           this.departments = data.body.departments;
           this.length = data.body.departmentCount;
           this.dataSource = new MatTableDataSource(this.departments);
-          this.activePlantId = this.authService.user.activePlantId;
+
           console.log(this.departments);
         },
         error: (error: any) => {
