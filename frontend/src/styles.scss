@@ -240,12 +240,25 @@ button[disabled]:hover {
 .mdc-data-table__header-cell {
     border: none;
 }
+.mdc-data-table__header-row {
+    background-color: $darkGrey !important;
+}
+mat-header-cell {
+    color: white !important;
+}
+.mat-mdc-row {
+    background-color: $grey !important;
+}
 mat-row {
-    border-top: 0.75px solid black;
     justify-content: space-between;
 }
-.table-holder,
-table,
+mat-row {
+    border-top: $border !important;
+}
+.mdc-data-table__row {
+    border-top: $border !important;
+}
+
 .table {
     overflow: visible;
 
@@ -269,6 +282,10 @@ table,
     margin: 0;
     text-align: center;
     background-color: $grey;
+}
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+    padding: 0 16px 0 16px;
 }
 ::ng-deep .p-dialog .p-dialog-header {
     background-color: $darkBlue;
@@ -364,4 +381,30 @@ ng-deep .p-toast .p-toast-message .p-toast-message-content {
 .p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
     color: #721c24;
+}
+// Dropdown Styling
+
+.p-dropdown {
+    width: 300px;
+    height: 40px;
+    border: 1px solid $lightGrey;
+    border-radius: 7.5px;
+    background-color: white;
+    color: $darkGrey;
+    padding: 10px;
+    font-size: 0.75rem;
+    align-items: center;
+}
+.p-dropdown-trigger-icon {
+    color: $darkGrey;
+}
+.p-dropdown-items {
+    border: 1px solid $lightGrey;
+    padding: 100px;
+    border-radius: 7.5px;
+    background-color: white;
+    color: $darkGrey;
+}
+.p-dropdown-item {
+    padding: 15px;
 }

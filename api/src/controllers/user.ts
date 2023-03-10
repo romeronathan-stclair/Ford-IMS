@@ -7,6 +7,7 @@ import bcrypt from "bcrypt";
 import { ModelType } from "../enums/modelType";
 import { ImageRequest } from "../type/imageRequest";
 import env from "../utils/env";
+import { getPage, getPageSize } from "../utils/pagination";
 
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
@@ -302,7 +303,8 @@ export const getUserById = async (req: Request, res: Response) => {
 
 };
 export const getUsers = async (req: Request, res: Response) => {
-
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
     const userId = req.query.userId;
     const plantId = req.query.plantId;
     const departmentId = req.query.departmentId;
@@ -322,7 +324,18 @@ export const getUsers = async (req: Request, res: Response) => {
     }
 
     if (plantId && departmentId) {
-        query["plants"] = { $elemMatch: { plantId, departmentId } };
+        query["plants"] = {
+            $elemMatch: {
+                plantId: plantId,
+                departments: departmentId
+            }
+        };
+    } else if (plantId) {
+        query["plants"] = {
+            $elemMatch: {
+                plantId: plantId
+            }
+        };
     }
 
     if (name) {
@@ -333,10 +346,20 @@ export const getUsers = async (req: Request, res: Response) => {
         query["email"] = { $regex: email, $options: "i" };
     }
 
+
+
+    const userCount = await User.countDocuments(query);
+    const users = await User.find(query).skip(page * pageSize).limit(pageSize).exec();
+
     console.log(query);
+    let response = {
+        users: users,
+        userCount: userCount,
+    };
 
-    const users = await User.find(query);
+    console.log(response);
 
 
-    return res.status(200).json(users);
+
+    return res.status(200).json(response);
 }

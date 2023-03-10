@@ -56,7 +56,7 @@ export class CreatePlantsUsersComponent {
     this.authService.getUsers('').subscribe({
       next: (response) => {
 
-        this.dataSource.data = response.body.map((user: any) => {
+        this.dataSource.data = response.body.users.map((user: any) => {
           const existingUser = this.selectedUsers.find(u => u.userId === user.userId);
           return {
             userId: user._id,
@@ -81,7 +81,7 @@ export class CreatePlantsUsersComponent {
 
       this.authService.getUsers(query).subscribe({
         next: (response) => {
-          this.dataSource.data = response.body.map((user: any) => {
+          this.dataSource.data = response.body.users.map((user: any) => {
             const existingUser = this.selectedUsers.find(u => u.userId === user.userId);
             return {
               userId: user._id,
@@ -90,8 +90,6 @@ export class CreatePlantsUsersComponent {
               checked: existingUser ? true : false,
               departments: existingUser ? existingUser.departments : this.request.departments
             };
-
-
           });
         }
       });
