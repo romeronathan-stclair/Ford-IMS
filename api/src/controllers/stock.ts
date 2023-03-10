@@ -150,6 +150,7 @@ export const getStock = async (req: Request, res: Response) => {
         query["_id"] = new Types.ObjectId(stockId.toString());
     }
 
+    const stockCount = await Stock.countDocuments(query);
     const stocks = await Stock.find(query).skip(page * pageSize).limit(pageSize).exec();
 
     if (!stocks || stocks.length === 0) {
