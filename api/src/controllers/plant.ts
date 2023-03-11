@@ -399,23 +399,19 @@ const assignUsers = async (
                         );
                     }
 
-                    const assignedDepartments = departments.find(
-                        (department: { departmentName: string }) =>
-                            assignment.departments.includes(department.departmentName)
-                    );
-
-                    if (!assignedDepartments) {
-                        return reject(
-                            "Department not found when assigning to users. Please try again or contact support."
-                        );
-                    }
-
-                    assignedUser.plants.push({
-                        plantId: newPlant._id.valueOf(),
-                        departments: assignedDepartments._id,
-                        isActive: false,
-                    });
-
+                const assignedDepartmentIds: [string] = departments
+                    .filter((department) => assignment.departments.includes(department.departmentName))
+                    .map((department) => department._id.toString()) as [string];
+                  
+                  if (!assignedDepartmentIds) {
+                    return reject("Department not found when assigning to users. Please try again or contact support.");
+                  }
+                  
+                  assignedUser.plants.push({
+                    plantId: newPlant._id.valueOf(),
+                    departments: assignedDepartmentIds,
+                    isActive: false,
+                  });
                     await assignedUser.save();
 
                     return assignedUser;

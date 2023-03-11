@@ -99,6 +99,8 @@ export class CreatePlantAssignUsersComponent {
       plantLocation: this.request.plantLocation,
     }
 
+    console.log(request);
+
     this.plantService.createPlant(request).subscribe({
       next: (response) => {
         this.spinnerService.hide();

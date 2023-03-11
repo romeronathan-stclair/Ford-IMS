@@ -22,6 +22,7 @@ export class SharedService {
     }
 
     clearData() {
+        console.log('clearing data');
         localStorage.removeItem(this.dataKey);
     }
 

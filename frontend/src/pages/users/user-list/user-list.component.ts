@@ -90,6 +90,7 @@ export class UserListComponent {
     this.authService.getUsers(userQuery).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
+        console.log(data.body.users);
         this.users = data.body.users;
         this.length = data.body.userCount;
         this.dataSource = new MatTableDataSource(this.users);
@@ -126,7 +127,7 @@ export class UserListComponent {
     if(this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments"){
       query += "&departmentId=" + this.selectedDepartment._id;
     }
-    
+
       this.authService.getUsers(query).subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
