@@ -44,6 +44,8 @@ import { UserListComponent } from 'src/pages/users/user-list/user-list.component
 import { UsersComponent } from 'src/pages/users/users/users.component';
 import { DropdownModule } from 'primeng/dropdown';
 import {DataViewModule} from 'primeng/dataview';
+import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
+import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import {DataViewModule} from 'primeng/dataview';
     CreateDepartmentComponent,
     EditDepartmentComponent,
     UsersComponent,
-    UserListComponent
+    UserListComponent,
+    StocksComponent,
+    StockListComponent
   ],
   imports: [
     BrowserModule,

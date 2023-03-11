@@ -19,6 +19,9 @@ import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/creat
 import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-plant-page.component';
 import { PlantListComponent } from 'src/pages/plants/plant-list/plant-list.component';
 import { PlantsComponent } from 'src/pages/plants/plants/plants.component';
+import { EditStockComponent } from 'src/pages/stocks/edit-stock/edit-stock.component';
+import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
+import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
 
@@ -115,6 +118,24 @@ const routes: Routes = [
             path: 'edit/:id',
             data: { animation: 'Edit Department Page' },
             component: EditDepartmentComponent
+          }
+        ]
+
+      },
+      {
+        path: 'stock',
+        data: { animation: 'Stock Page' },
+        component: StocksComponent,
+        children: [
+          {
+            path: 'list',
+            data: { animation: 'Stock List Page' },
+            component: StockListComponent,
+          },
+          {
+            path: 'edit/:id',
+            data: { animation: 'Edit Stock Page' },
+            component: EditStockComponent
           }
         ]
 
