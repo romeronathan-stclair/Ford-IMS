@@ -116,25 +116,38 @@ export class UserListComponent {
   }
   searchByName() {
 
-    let userQuery;
     const nameControl = this.userForm.get('name');
-    if (nameControl && this.selectedDepartment) {
 
-      const name = nameControl.value;
+    let query = "?plantId=" + this.authService.user.activePlantId;
 
-      if (this.selectedDepartment.departmentName == "All Departments") {
-        userQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-      }
-      else {
-        userQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}&name=${name}`;
-
-      }
-
-    } else {
-      userQuery = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&plantId=" + this.authService.user.activePlantId;
+    if(nameControl?.value != ""){
+      query += "&name=" + nameControl?.value;
     }
+    if(this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments"){
+      query += "&departmentId=" + this.selectedDepartment._id;
+    }
+    
+      this.authService.getUsers(query).subscribe({
+        next: (data: any) => {
+          this.spinnerService.hide();
+          this.users = data.body.users;
+          this.length = data.body.userCount;
+          this.dataSource = new MatTableDataSource(this.users);
+        },
+        error: (error: any) => {
+          this.spinnerService.hide();
+        }
+      });
 
-    this.authService.getUsers(userQuery).subscribe({
+
+
+
+
+
+
+
+
+    this.authService.getUsers(query).subscribe({
       next: (data: any) => {
         this.users = data.body.users;
         this.length = data.body.userCount;

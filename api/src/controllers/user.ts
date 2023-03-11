@@ -357,8 +357,6 @@ export const getUsers = async (req: Request, res: Response) => {
         userCount: userCount,
     };
 
-    console.log(response);
-
 
 
     return res.status(200).json(response);
