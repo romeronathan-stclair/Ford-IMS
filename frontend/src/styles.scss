@@ -186,15 +186,29 @@ body {
     min-height: 80px;
     background-color: $darkBlue !important;
     color: white;
+    @include column-lg-break {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+.search-bar {
+  @include column-lg-break {
+    order: 1;
+}
+
 }
 table {
     background-color: $lightGrey !important;
     border-bottom: 0.75px solid black;
+    overflow: scroll;
 }
-tbody {
-    background-color: $lightGrey !important;
-    border: $border !important;
+.table-holder, table, .table {
+  overflow: visible;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: auto;
 }
+
 // Button styles
 .general-button {
     background-color: $blue;
