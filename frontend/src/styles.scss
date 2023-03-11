@@ -202,21 +202,13 @@ table {
     border-bottom: 0.75px solid black;
     overflow: scroll;
 }
-.mat-mdc-row {
-    background-color: $lightGrey !important;
-    margin: 20px;
-    border: $border !important;
-}
 .table-holder, table, .table {
   overflow: visible;
   position: relative;
   overflow-x: auto;
   overflow-y: auto;
 }
-tbody {
-    background-color: $lightGrey !important;
-    border: $border !important;
-}
+
 // Button styles
 .general-button {
     background-color: $blue;
