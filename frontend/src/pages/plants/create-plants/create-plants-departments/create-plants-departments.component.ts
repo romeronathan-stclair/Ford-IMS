@@ -20,6 +20,7 @@ export class CreatePlantsDepartmentsComponent implements OnInit {
     this.sharedService.setDataKey('plants');
 
     this.request = this.sharedService.getData();
+    console.log(this.request);
 
     if (this.request.departments) {
       this.departments = this.request.departments.map((department: string) => {

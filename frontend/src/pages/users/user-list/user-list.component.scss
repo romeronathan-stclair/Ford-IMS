@@ -13,6 +13,7 @@ img {
     justify-content: space-between;
     align-items: center;
     padding-right: 50px;
+    padding-left: 50px;
 }
 .paginator-holder {
     padding: 10px;
@@ -36,10 +37,7 @@ mat-paginator {
         width: 90%;
     }
 }
-.mat-column-name {
-    width: 40%;
-    max-width: 40%;
-}
+
 i {
     padding-right: 5.5px;
 }
@@ -57,4 +55,11 @@ i {
 .fa-magnifying-glass {
     padding-left: 7.5px;
     color: $darkGrey;
+}
+.mat-column-editUser,
+.mat-column-viewUser,
+.mat-column-name,
+.mat-column-departments {
+    width: 25%;
+    max-width: 25%;
 }
