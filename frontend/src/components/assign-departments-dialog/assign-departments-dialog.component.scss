@@ -1,6 +1,7 @@
 @import "src/styles.scss";
 .holder {
     width: 50vw;
+    overflow: hidden;
 }
 .container-holder {
     display: flex;
@@ -15,6 +16,8 @@ button {
 }
 .department-holder {
     min-width: 100%;
+    background-color: $grey;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,7 +25,8 @@ button {
 .department-item {
     display: flex;
     justify-content: space-between;
-    min-width: 100%;
+    min-width: 80%;
+    margin: 0 auto;
     background-color: $grey;
 }
 .mat-icon {

@@ -16,7 +16,7 @@ export class AppComponent {
     this.subscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         // If navigating away from any of the three routes, clear the data
-        if (event.url !== '/dashboard/plants/create/step-one' && event.url !== '/dashboard/plants/create/step-two' && event.url !== '/dashboard/plants/create/step-three') {
+        if (event.url !== '/dashboard/plants/create/step-one' && event.url !== '/dashboard/plants/create/step-two' && event.url !== '/dashboard/plants/create/step-three' && event.url !== '/dashboard/plants/create/step-three-users') {
           this.sharedService.setDataKey('plants');
           this.sharedService.clearData();
         }

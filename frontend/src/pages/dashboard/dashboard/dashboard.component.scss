@@ -11,17 +11,15 @@ body {
     flex-wrap: nowrap;
     font-size: 1.3rem !important;
     min-height: 100vh;
-    min-width: 100vw !important;
+    width: 100%;
+
 }
 
 .content {
-    padding: 10px 50px;
-
-    width: 100vw;
+    padding: 10px 30px;
+    margin: 0 auto;
+    min-width: 80vw;
     @include column-lg-break {
         padding: 10px 15px;
     }
-}
-.mdc-data-table__cell {
-    width: 25% !important;
 }

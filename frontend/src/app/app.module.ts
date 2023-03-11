@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AccountPageComponent } from '../pages/account/accounts/account-page/account-page.component';
 import { LoginPageComponent } from '../pages/account/accounts/login-page/login-page.component';
-import { DashboardComponent } from '../pages/account/dashboard/dashboard/dashboard.component';
+import { DashboardComponent } from '../pages/dashboard/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MessagesModule } from 'primeng/messages';
@@ -35,16 +35,15 @@ import { CreatePlantSuccessComponent } from '../pages/plants/create-plants/creat
 import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SpinnerService } from 'src/services/spinner.service';
-import { EditPlantPageComponent } from '../pages/plants/edit-plant-page/edit-plant-page.component';
-import { DepartmentsComponent } from '../pages/departments/departments/departments.component';
+import { CreateDepartmentComponent } from 'src/pages/departments/create-department/create-department.component';
 import { DepartmentListComponent } from 'src/pages/departments/department-list/department-list.component';
-import { CreateDepartmentComponent } from '../pages/departments/create-department/create-department.component';
-import { EditDepartmentComponent } from '../pages/departments/edit-department/edit-department.component';
-import { StockListComponent } from '../pages/stocks/stock-list/stock-list.component';
-import { StocksComponent } from '../pages/stocks/stocks/stocks.component';
-import { CreateStockComponent } from 'src/pages/stocks/create-stock/create-stock.component';
-import { EditStockComponent} from 'src/pages/stocks/edit-stock/edit-stock.component';
-
+import { DepartmentsComponent } from 'src/pages/departments/departments/departments.component';
+import { EditDepartmentComponent } from 'src/pages/departments/edit-department/edit-department.component';
+import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-plant-page.component';
+import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
+import { UsersComponent } from 'src/pages/users/users/users.component';
+import { DropdownModule } from 'primeng/dropdown';
+import {DataViewModule} from 'primeng/dataview';
 
 @NgModule({
   declarations: [
@@ -69,10 +68,8 @@ import { EditStockComponent} from 'src/pages/stocks/edit-stock/edit-stock.compon
     DepartmentListComponent,
     CreateDepartmentComponent,
     EditDepartmentComponent,
-    StockListComponent,
-    StocksComponent,
-    CreateStockComponent,
-    EditStockComponent
+    UsersComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +90,9 @@ import { EditStockComponent} from 'src/pages/stocks/edit-stock/edit-stock.compon
     MatDialogModule,
     NgxSpinnerModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    DropdownModule,
+    DataViewModule
   ],
   providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]

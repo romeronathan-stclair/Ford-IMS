@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import {DataViewModule} from 'primeng/dataview';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ConfirmationService, MessageService } from 'primeng/api';

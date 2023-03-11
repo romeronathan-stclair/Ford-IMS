@@ -55,21 +55,21 @@ export class CreatePlantsUsersComponent {
 
     this.authService.getUsers('').subscribe({
       next: (response) => {
-
-        this.dataSource.data = response.body.map((user: any) => {
-          const existingUser = this.selectedUsers.find(u => u.userId === user.userId);
-          return {
-            userId: user._id,
-            name: user.name,
-            email: user.email,
-            checked: existingUser ? true : false,
-            departments: existingUser ? existingUser.departments : this.request.departments
-          };
-        });
-
+        const currentUser = this.authService.user._id;
+        this.dataSource.data = response.body.users
+          .filter((user: any) => user._id !== currentUser)
+          .map((user: any) => {
+            const existingUser = this.selectedUsers.find(u => u.userId === user._id);
+            return {
+              userId: user._id,
+              name: user.name,
+              email: user.email,
+              checked: existingUser ? true : false,
+              departments: existingUser ? existingUser.departments : this.request.departments
+            };
+          });
       }
     });
-
 
   }
   searchByName() {
@@ -81,18 +81,19 @@ export class CreatePlantsUsersComponent {
 
       this.authService.getUsers(query).subscribe({
         next: (response) => {
-          this.dataSource.data = response.body.map((user: any) => {
-            const existingUser = this.selectedUsers.find(u => u.userId === user.userId);
-            return {
-              userId: user._id,
-              name: user.name,
-              email: user.email,
-              checked: existingUser ? true : false,
-              departments: existingUser ? existingUser.departments : this.request.departments
-            };
-
-
-          });
+          const currentUser = this.authService.user._id;
+          this.dataSource.data = response.body.users
+            .filter((user: any) => user._id !== currentUser)
+            .map((user: any) => {
+              const existingUser = this.selectedUsers.find(u => u.userId === user._id);
+              return {
+                userId: user._id,
+                name: user.name,
+                email: user.email,
+                checked: existingUser ? true : false,
+                departments: existingUser ? existingUser.departments : this.request.departments
+              };
+            });
         }
       });
     }

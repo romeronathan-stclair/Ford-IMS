@@ -16,6 +16,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 export class CreatePlantStepOneComponent {
   public displayValidationErrors: boolean = false;
   plantForm: FormGroup;
+  request: any;
   constructor(
     private plantService: PlantService,
     private formBuilder: FormBuilder,
@@ -30,8 +31,9 @@ export class CreatePlantStepOneComponent {
     });
     this.sharedService.setDataKey('plants');
     if (this.sharedService.getData() != null) {
+      this.request = this.sharedService.getData();
       this.plantForm.patchValue(
-        this.sharedService.getData()
+       this.request.plant
       );
     }
 
@@ -54,7 +56,9 @@ export class CreatePlantStepOneComponent {
       plantLocation: this.plantForm.value.plantLocation,
     }
 
-    this.sharedService.setData(plant);
+    this.request.plant = plant;
+
+    this.sharedService.setData(this.request);
 
     let query = "?plantName=" + plant.plantName;
 
