@@ -43,6 +43,12 @@ import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-pl
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
+import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
+import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
+import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
+import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
+import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +73,13 @@ import { DropdownModule } from 'primeng/dropdown';
     CreateDepartmentComponent,
     EditDepartmentComponent,
     UsersComponent,
-    UserListComponent
+    UserListComponent,
+    InviteUsersComponent,
+    InviteOneUserComponent,
+    InviteMultipleUsersComponent,
+    InviteOneUserStepOneComponent,
+    InviteOneUserStepTwoComponent,
+    InviteOneUserStepThreeComponent
   ],
   imports: [
     BrowserModule,

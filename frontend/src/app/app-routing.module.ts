@@ -19,6 +19,11 @@ import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/creat
 import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-plant-page.component';
 import { PlantListComponent } from 'src/pages/plants/plant-list/plant-list.component';
 import { PlantsComponent } from 'src/pages/plants/plants/plants.component';
+import { InviteOneUserStepOneComponent } from 'src/pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
+import { InviteOneUserStepThreeComponent } from 'src/pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
+import { InviteOneUserStepTwoComponent } from 'src/pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
+import { InviteOneUserComponent } from 'src/pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
+import { InviteUsersComponent } from 'src/pages/users/user-invite/invite-users/invite-users.component';
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
 
@@ -128,7 +133,37 @@ const routes: Routes = [
           data: { animation: 'Users List Page' },
           component: UserListComponent
 
+        },
+        {
+          path: 'invite',
+          component: InviteUsersComponent,
+          children: [
+            {
+              path: 'invite-one-user',
+              component: InviteOneUserComponent,
+              children: [
+                {
+                  path: 'step-one',
+                  component: InviteOneUserStepOneComponent
+                },
+                {
+                  path: 'step-two',
+                  component: InviteOneUserStepTwoComponent
+                },
+                {
+                  path: 'step-three',
+                  component: InviteOneUserStepThreeComponent
+
+                }
+              ]
+            },
+            {
+              path: 'invite-users',
+              component: InviteUsersComponent
+            }
+          ]
         }
+
         ]
       }
     ]
@@ -137,7 +172,7 @@ const routes: Routes = [
     path: 'signout',
     data: { animation: 'Signout Page' },
     component: SignoutPageComponent
-  }
+  },
 
 
 ];

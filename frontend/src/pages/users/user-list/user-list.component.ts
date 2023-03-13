@@ -121,24 +121,24 @@ export class UserListComponent {
 
     let query = "?plantId=" + this.authService.user.activePlantId;
 
-    if(nameControl?.value != ""){
+    if (nameControl?.value != "") {
       query += "&name=" + nameControl?.value;
     }
-    if(this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments"){
+    if (this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments") {
       query += "&departmentId=" + this.selectedDepartment._id;
     }
 
-      this.authService.getUsers(query).subscribe({
-        next: (data: any) => {
-          this.spinnerService.hide();
-          this.users = data.body.users;
-          this.length = data.body.userCount;
-          this.dataSource = new MatTableDataSource(this.users);
-        },
-        error: (error: any) => {
-          this.spinnerService.hide();
-        }
-      });
+    this.authService.getUsers(query).subscribe({
+      next: (data: any) => {
+        this.spinnerService.hide();
+        this.users = data.body.users;
+        this.length = data.body.userCount;
+        this.dataSource = new MatTableDataSource(this.users);
+      },
+      error: (error: any) => {
+        this.spinnerService.hide();
+      }
+    });
 
 
 
@@ -198,6 +198,7 @@ export class UserListComponent {
   }
 
   multipleDepartments(user: any) {
+    console.log(user);
     let plant = user.plants.find((plant: any) => plant.plantId == this.authService.user.activePlantId);
     if (plant) {
       if (plant.departments.length == 1) {
