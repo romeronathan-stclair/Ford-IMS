@@ -28,7 +28,7 @@ export const createStock = async (req: Request, res: Response) => {
 
     const departmentId = req.body.departmentId;
 
-    console.log(departmentId);
+    console.log(req.body.departmentId);
 
     const department = await Department.findById({
         _id: departmentId,

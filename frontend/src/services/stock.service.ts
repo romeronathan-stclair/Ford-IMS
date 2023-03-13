@@ -5,7 +5,7 @@ import { environment } from "src/environments/environment";
 import { User } from "../models/user";
 
 @Injectable({
-    providedIn: "root",
+  providedIn: "root",
 })
 
 export class StockService {
@@ -18,7 +18,10 @@ export class StockService {
     "Access-Control-Allow-Credentials": "true",
     "Cache-Control": "no-cache",
   });
-
+  multiFormDataHeaders: HttpHeaders = new HttpHeaders({
+    'Access-Control-Allow-Origin': 'true',
+    'Cache-Control': 'no-cache',
+  });
   constructor(private http: HttpClient) { }
 
   getStocks(query?: string): Observable<any> {
@@ -31,17 +34,17 @@ export class StockService {
 
   createStock(stock: any): Observable<any> {
     return this.http.post(`${this.endPoint}/stock`, stock, {
-      headers: this.baseHeaders,
+      headers: this.multiFormDataHeaders,
       observe: 'response',
       withCredentials: true
-  });
+    });
   }
 
   editStock(stock: any): Observable<any> {
     return this.http.put(`${this.endPoint}/stock`, stock, {
-        headers: this.baseHeaders,
-        observe: 'response',
-        withCredentials: true
+      headers: this.baseHeaders,
+      observe: 'response',
+      withCredentials: true
     });
   }
 

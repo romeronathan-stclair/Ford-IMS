@@ -82,14 +82,14 @@ const corsOptions: CorsOptions = {
 const expressSession: RequestHandler = session(sessionOptions);
 connectMongoDB(env.db.fullUrl);
 configPassport();
-app.use(express.json());
 app.use(expressSession);
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json({ limit: '1000mb' }));
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }))
+app.use(express.json());
 app.use(fileUpload());
 app.use(`/${env.app.prefix}`, router);
 

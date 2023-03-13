@@ -19,7 +19,8 @@ export class CreateStockStepTwoComponent {
   stockForm: FormGroup;
   request: any;
   activePlantId: any;
-  departmentNames: any[] = [];
+  departments: any[] = [];
+  selectedDepartment: any;
 
   constructor(
     private router: Router,
@@ -30,88 +31,91 @@ export class CreateStockStepTwoComponent {
     private formBuilder: FormBuilder,
     private departmentService: DepartmentService,
     private authService: AuthService
-    ) {
+  ) {
+    this.stockForm = this.formBuilder.group({
+      marketLocation: new FormControl(''),
+      department: new FormControl(''),
+    });
+    this.sharedService.setDataKey('stock');
+    if (this.sharedService.getData() != null) {
+
       this.request = this.sharedService.getData();
-      console.log(this.request);
-
-      this.stockForm = this.formBuilder.group({
-        marketLocation: new FormControl(''),
-        department: new FormControl(''),
-      });
-
-      if (this.sharedService.getData() != null) {
-        this.request = this.sharedService.getData();
-        this.stockForm.patchValue(
+      console.log("REQUEST => " + JSON.stringify(this.request));
+      this.stockForm.patchValue(
         this.request.stock
-        );
-      }
-
-    }
-
-    async ngOnInit() {
-      this.spinnerService.showHide();
-      this.activePlantId = this.authService.user.activePlantId;
-      await this.loadDepartments();
-    }
-
-
-    async loadDepartments() {
-      let departmentQuery = "?plantId=" + this.activePlantId;
-      console.log("DEPARTMENT QUERY => " + departmentQuery);
-
-      try {
-        const data = await this.departmentService.getDepartments(departmentQuery).toPromise();
-        data.body.departments.forEach((department: any) => {
-          this.departmentNames.push(department.departmentName);
-        });
-
-        console.log("DEPARTMENT NAMES => " + this.departmentNames);
-      } catch (error) {
-        console.log(error);
+      );
+      if (this.request.stock.selectedDepartment != null) {
+        this.selectedDepartment = this.request.stock.selectedDepartment;
       }
     }
 
+  }
+
+  async ngOnInit() {
+    this.spinnerService.showHide();
+    this.activePlantId = this.authService.user.activePlantId;
+    await this.loadDepartments();
+  }
 
 
-    onSubmit() {
+  async loadDepartments() {
+    let departmentQuery = "?plantId=" + this.activePlantId;
+    console.log("DEPARTMENT QUERY => " + departmentQuery);
 
-      if (!this.stockForm.valid) {
-        this.displayValidationErrors = true;
-        this.spinnerService.hide();
-        return;
-      }
-
-      this.spinnerService.show();
-
-      let departmentQuery = "?plantId=" + this.activePlantId + "&departmentName=" + this.stockForm.value.department;
-
-      this.departmentService.getDepartments(departmentQuery).subscribe((data: any) => {
+    this.departmentService.getDepartments(departmentQuery).subscribe({
+      next: (data: any) => {
         console.log(data);
-        const stock = {
-        name: this.request.stock.name,
-        partNumber: this.request.stock.partNumber,
-        stockQtyPerTote: this.request.stock.stockQtyPerTote || null,
-        totesPerSkid: this.request.stock.totesPerSkid || null,
-        totalStockPerSkid: this.request.stock.totalStockPerSkid,
-        lowStock: this.request.stock.lowStock,
-        moderateStock: this.request.stock.moderateStock,
-        roughStock: this.request.stock.roughStock,
-        subAssembly: this.request.stock.subAssembly,
-        marketLocation: this.stockForm.value.marketLocation,
-        departmentId: data.body.departments[0]._id
-        };
+        this.departments = data.body.departments;
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+  }
 
-        this.request.stock = stock;
-        this.sharedService.setData(this.request);
 
-        console.log(this.request);
-        this.router.navigate(['/dashboard/stock/create/step-three']);
 
-        }, (error) => {
-        console.log(error);
-        this.spinnerService.hide();
-        });
+  onSubmit() {
+    this.spinnerService.show();
+    if (!this.stockForm.valid) {
+      this.displayValidationErrors = true;
+      this.spinnerService.hide();
+      return;
     }
+    this.spinnerService.showHide();
 
+
+
+    let departmentQuery = "?plantId=" + this.activePlantId + "&departmentName=" + this.stockForm.value.department;
+
+
+
+
+    this.request.stock.marketLocation = this.stockForm.value.marketLocation;
+    this.request.stock.selectedDepartment = this.selectedDepartment;
+
+    this.sharedService.setData(this.request).then(() => {
+      this.spinnerService.hide();
+      this.router.navigate(['/dashboard/stock/create/step-three']);
+    });
+
+    console.log(this.request);
+
+
+  }
+  changeDepartment($event: any) {
+    console.log(this.selectedDepartment);
+
+    this.request.stock.selectedDepartment = this.selectedDepartment;
+    this.sharedService.setData(this.request);
+    console.log(this.request);
+
+
+  }
 
 }
+
+
+
+
+

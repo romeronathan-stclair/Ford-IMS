@@ -10,7 +10,9 @@ export class SharedService {
     constructor() { }
 
     setData(data: any) {
-        localStorage.setItem(this.dataKey, JSON.stringify(data));
+        return new Promise((resolve, reject) => {
+            localStorage.setItem(this.dataKey, JSON.stringify(data));
+        });
     }
 
     getData() {
