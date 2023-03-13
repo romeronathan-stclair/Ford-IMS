@@ -53,16 +53,19 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
     }
 
     onFileSelected(event: any): void {
-      const file: File = event.target.files[0];
-      const reader = new FileReader();
+      if (event.target.files && event.target.files.length > 0) {
+        const file: File = event.target.files[0];
+        const reader = new FileReader();
 
-      reader.onload = (event: any) => {
-        this.imageUrl = event.target.result;
-        this.showOverlay = true; // set to true to show the replace button
-      };
+        reader.onload = (event: any) => {
+          this.imageUrl = event.target.result;
+          this.showOverlay = true; // set to true to show the replace button
+        };
 
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      }
     }
+
 
     onBrowseClick(): void {
       const fileInput = this.fileInput.nativeElement;
