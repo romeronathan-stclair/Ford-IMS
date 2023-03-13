@@ -17,6 +17,7 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
   public displayValidationErrors: boolean = false;
   request: any;
   public imageUrl: string = '';
+  file: any;
   public showOverlay: boolean = false;
   public isImageUploaded: boolean = false;
 
@@ -34,8 +35,6 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
   ) {
     this.sharedService.setDataKey('stock');
     this.request = this.sharedService.getData();
-    console.log(this.request);
-
   }
 
   async ngOnInit() {
@@ -56,9 +55,11 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
     if (event.target.files && event.target.files.length > 0) {
       const file: File = event.target.files[0];
       const reader = new FileReader();
+      this.file = file;
 
       reader.onload = (event: any) => {
         this.imageUrl = event.target.result;
+
         this.showOverlay = true; // set to true to show the replace button
       };
 
@@ -91,15 +92,15 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
       lowStock: this.request.stock.lowStock,
       moderateStock: this.request.stock.moderateStock,
       marketLocation: this.request.stock.marketLocation,
-      isSubAssembly: this.request.stock.subAssembly,
-      files: [
-        this.imageUrl
-      ]
+      isSubAssembly: this.request.stock.subAssembly
     }
 
-    console.log(stock);
+    const formData: FormData = new FormData();
 
-    this.stockService.createStock(stock).subscribe({
+    formData.append('file', this.file);
+    formData.append('stock', JSON.stringify(stock));
+
+    this.stockService.createStock(formData).subscribe({
       next: (response) => {
         this.spinnerService.hide();
         this.router.navigate(['/dashboard/stock/create/success']);

@@ -26,9 +26,14 @@ export const createStock = async (req: Request, res: Response) => {
     await check("totalQuantity", "totalQuantity is not valid").isLength({ min: 1 }).run(req);
 
 
-    const departmentId = req.body.departmentId;
 
-    console.log(req.body.departmentId);
+
+
+    console.log(req.body);
+
+    req.body = JSON.parse(req.body.stock);
+
+    const departmentId = req.body.departmentId;
 
     const department = await Department.findById({
         _id: departmentId,
@@ -75,9 +80,8 @@ export const createStock = async (req: Request, res: Response) => {
         return res.status(500).json("Error creating Stock: " + err);
     }
 
-
     if (req.files) {
-        console.log(req.files)
+
         const image = req.files.file;
 
         const imageRequest: ImageRequest = {
@@ -216,8 +220,8 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
 
-    if (req.files) {
-        const image = req.files.file;
+    if (req.body.files) {
+        const image = req.body.files.file;
 
         const imageRequest: ImageRequest = {
             itemId: stock._id.toString(),
