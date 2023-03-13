@@ -311,7 +311,7 @@ export const getUsers = async (req: Request, res: Response) => {
     const name = req.query.name;
     const email = req.query.email;
 
-    console.log(req.query);
+
 
     let query: any = { isDeleted: false };
 
@@ -351,7 +351,6 @@ export const getUsers = async (req: Request, res: Response) => {
     const userCount = await User.countDocuments(query);
     const users = await User.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-    console.log(query);
     let response = {
         users: users,
         userCount: userCount,

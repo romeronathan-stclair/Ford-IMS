@@ -10,20 +10,31 @@ export class SharedService {
     constructor() { }
 
     setData(data: any) {
-        localStorage.setItem(this.dataKey, JSON.stringify(data));
+        return new Promise((resolve, reject) => {
+            try {
+                console.log('setting data' + data + " " + this.dataKey + "");
+                localStorage.setItem(this.dataKey, JSON.stringify(data));
+                resolve(true);
+
+            } catch (error) {
+                reject(error);
+            }
+        });
     }
 
     getData() {
         const data = localStorage.getItem(this.dataKey);
+
+        console.log('getting data', this.dataKey);
         if (data) {
             return JSON.parse(data);
         }
         return {};
     }
 
-    clearData() {
-        console.log('clearing data');
-        localStorage.removeItem(this.dataKey);
+    clearData(key: string) {
+        console.log('clearing data', key);
+        localStorage.removeItem(key);
     }
 
     setDataKey(key: string) {

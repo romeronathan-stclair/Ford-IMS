@@ -108,7 +108,7 @@ router.get("/auth/user/:id", authMiddleware.isAdminAuthenticated, userController
 router.post("/auth/reset", authMiddleware.isAuthenticated, userController.changePassword);
 router.put("/auth/user/active-plant", authMiddleware.isAuthenticated, userController.changeActivePlant);
 //invite routes
-router.post("/invite", authMiddleware.isAuthenticated, inviteController.sendInvite);
+router.post("/auth/invite", authMiddleware.isAuthenticated, inviteController.sendInvite);
 //event routes
 router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEvents);
 

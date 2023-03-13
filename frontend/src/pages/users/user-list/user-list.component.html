@@ -71,8 +71,8 @@
 
 </div>
 <div class="paginator-holder">
-    <button [routerLink]="'/dashboard/users/create/step-one'" type="submit" class="general-button first-button"><i
-            class="fa-solid fa-plus"></i>Create New User</button>
+    <button [routerLink]="'/dashboard/users/invite/invite-one-user/step-one'" type="submit"
+        class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New User</button>
     <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
     </mat-paginator>
