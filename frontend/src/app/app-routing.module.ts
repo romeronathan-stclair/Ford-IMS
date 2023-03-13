@@ -19,6 +19,11 @@ import { CreatePlantsUsersComponent } from 'src/pages/plants/create-plants/creat
 import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-plant-page.component';
 import { PlantListComponent } from 'src/pages/plants/plant-list/plant-list.component';
 import { PlantsComponent } from 'src/pages/plants/plants/plants.component';
+import { CreateStockStepOneComponent } from 'src/pages/stocks/create-stocks/create-stock-step-one/create-stock-step-one.component';
+import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/create-stock-step-two/create-stock-step-two.component';
+import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
+import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
+import { CreateStockComponent } from 'src/pages/stocks/create-stocks/create-stock/create-stock.component';
 import { EditStockComponent } from 'src/pages/stocks/edit-stock/edit-stock.component';
 import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
 import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
@@ -128,17 +133,40 @@ const routes: Routes = [
         component: StocksComponent,
         children: [
           {
+            path: 'create',
+            data: { animation: 'Create Plant Page' },
+            component: CreateStockComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CreateStockStepOneComponent,
+              },
+              {
+                path: 'step-two',
+                component: CreateStockStepTwoComponent,
+              },
+              {
+                path: 'step-three',
+                component: CreateStockStepThreeComponent,
+              },
+              {
+                path: 'success',
+                component: CreateStockSuccessComponent
+              },
+            ]
+          },
+          {
             path: 'list',
-            data: { animation: 'Stock List Page' },
+            data: { animation: 'Stock Page' },
             component: StockListComponent,
           },
           {
             path: 'edit/:id',
             data: { animation: 'Edit Stock Page' },
             component: EditStockComponent
+
           }
         ]
-
       },
       {
         path: 'users',

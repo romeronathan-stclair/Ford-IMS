@@ -46,6 +46,13 @@ import { DropdownModule } from 'primeng/dropdown';
 import {DataViewModule} from 'primeng/dataview';
 import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
 import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
+import { CreateStockComponent } from 'src/pages/stocks/create-stocks/create-stock/create-stock.component';
+import { CreateStockStepOneComponent } from 'src/pages/stocks/create-stocks/create-stock-step-one/create-stock-step-one.component';
+import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/create-stock-step-two/create-stock-step-two.component';
+import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
+import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
+import {MatSelectModule} from '@angular/material/select';
+
 
 @NgModule({
   declarations: [
@@ -73,7 +80,12 @@ import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
     UsersComponent,
     UserListComponent,
     StocksComponent,
-    StockListComponent
+    StockListComponent,
+    CreateStockComponent,
+    CreateStockStepOneComponent,
+    CreateStockStepTwoComponent,
+    CreateStockStepThreeComponent,
+    CreateStockSuccessComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +108,8 @@ import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
     ConfirmDialogModule,
     ToastModule,
     DropdownModule,
-    DataViewModule
+    DataViewModule,
+    MatSelectModule
   ],
   providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]

@@ -65,7 +65,7 @@ export class CreatePlantStepOneComponent {
     this.plantService.getPlants(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
+        console.log("DATA =>" + data);
         if (data.body) {
           this.messageService.clear();
           this.messageService.add({

@@ -39,8 +39,8 @@
   </p-dataView>
 </div>
 <div class="paginator-holder">
-  <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create'" type="submit"
-      class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New department</button>
+  <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create/step-one'" type="submit"
+      class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New Stock</button>
   <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
       aria-label="Select page of periodic elements" [length]="length">
   </mat-paginator>

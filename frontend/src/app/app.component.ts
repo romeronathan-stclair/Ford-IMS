@@ -20,6 +20,10 @@ export class AppComponent {
           this.sharedService.setDataKey('plants');
           this.sharedService.clearData();
         }
+        if (event.url !== '/dashboard/stock/create/step-one' && event.url !== '/dashboard/stock/create/step-two' && event.url !== '/dashboard/stock/create/step-three') {
+          this.sharedService.setDataKey('stock');
+          this.sharedService.clearData();
+        }
       }
     });
   }

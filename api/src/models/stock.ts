@@ -80,7 +80,7 @@ const stockSchema = new Schema<StockDocument>({
     },
     totalAvailableQty: {
         type: Number,
-        required: true,
+        required: false,
     }
 });
 

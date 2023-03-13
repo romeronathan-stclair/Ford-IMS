@@ -89,7 +89,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '1000mb' }));
 app.use(fileUpload());
 app.use(`/${env.app.prefix}`, router);
 
