@@ -111,5 +111,14 @@ export class AuthService {
         });
     }
 
+    inviteUsers(request: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/invite`, request, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
+
+
 
 }

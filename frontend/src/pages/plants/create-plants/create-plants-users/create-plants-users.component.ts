@@ -27,6 +27,7 @@ export class CreatePlantsUsersComponent {
     this.sharedService.setDataKey('plants');
 
     this.request = this.sharedService.getData();
+    console.log(this.request);
     this.selectedUsers = this.request.users || [];
 
     this.userForm = new FormGroup({
@@ -108,6 +109,7 @@ export class CreatePlantsUsersComponent {
     console.log(selectedCheckedUsers);
 
     this.request.users = selectedCheckedUsers;
+    console.log(this.request);
     this.sharedService.setData(this.request);
     this.router.navigate(['/dashboard/plants/create/step-three']);
   }

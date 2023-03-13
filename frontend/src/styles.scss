@@ -192,21 +192,22 @@ body {
     }
 }
 .search-bar {
-  @include column-lg-break {
-    order: 1;
-}
-
+    @include column-lg-break {
+        order: 1;
+    }
 }
 table {
     background-color: $lightGrey !important;
     border-bottom: 0.75px solid black;
     overflow: scroll;
 }
-.table-holder, table, .table {
-  overflow: visible;
-  position: relative;
-  overflow-x: auto;
-  overflow-y: auto;
+.table-holder,
+table,
+.table {
+    overflow: visible;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
 }
 
 // Button styles
@@ -288,6 +289,11 @@ mat-row {
 // Confirmation Dialog Styles
 ::ng-deep .p-dialog.p-confirm-dialog {
     border-radius: 7.5px;
+    min-width: 50vw;
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
 }
 
 ::ng-deep .p-dialog.p-confirm-dialog .p-confirm-dialog-message {

@@ -1,0 +1,50 @@
+<app-ford-container title="1. Enter User Information">
+    <div class="holder">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div>
+
+                <input placeholder="Full Name" formControlName="fullName" type="fullName" class="form-control"
+                    id="fullName-input" aria-describedby="fullNameHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                displayValidationErrors ||
+                userForm.controls['fullName'].dirty ||
+                userForm.controls['fullName'].touched
+              ">
+                    <span *ngIf="userForm.controls['fullName'].hasError('required')">fullName is required</span>
+                </mat-error>
+            </div>
+
+            <div>
+                <input placeholder="Email" formControlName="email" type="email" class="form-control" id="email-input"
+                    required />
+                <mat-error class="field-validation-error" *ngIf="
+                userForm.controls['email'].errors &&
+                (displayValidationErrors ||
+                  userForm.controls['email'].dirty ||
+                  userForm.controls['email'].touched)
+              ">
+                    <span *ngIf="userForm.controls['email'].hasError('required')">email is
+                        required</span>
+                </mat-error>
+            </div>
+
+            <div class="dropdown">
+                <p-dropdown formControlName="adminType" placeholder="Select Role" [options]=" roles"
+                    (onChange)="changeRole($event)"></p-dropdown>
+            </div>
+            <div class="button-holders">
+
+
+                <button type="button" [routerLink]="'/dashboard/users/list'" class="submit-button">Cancel</button>
+                <button type="submit" class="submit-button">Next</button>
+            </div>
+            <button type="submit" class="submit-button invite-multiple">Invite Multiple Users</button>
+            <!-- <div class="button-holder">
+          
+            <a routerLink="/account/reset-email">Forgot email?</a>
+        </div> -->
+
+            <p-toast position="bottom-center"></p-toast>
+        </form>
+    </div>
+</app-ford-container>

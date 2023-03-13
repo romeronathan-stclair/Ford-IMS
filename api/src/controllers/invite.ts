@@ -10,6 +10,7 @@ import { CreateEmailProps, BullEmailQueueProps } from "../type/Email";
 export const sendInvite = async (req: Request, res: Response) => {
     await check("invites", "Invites are not valid").run(req);
 
+
     if (!req.body.invites) {
         return res.status(500).json("No invites found");
     }
@@ -30,7 +31,10 @@ export const sendInvite = async (req: Request, res: Response) => {
 
             for (const p of plants) {
                 console.log(p);
-                departments.concat(p.departments);
+                // add only the departmentId to the array
+
+                p.departments = p.departments.map((d: any) => d.departmentId);
+                departments.push(...p.departments);
                 const plant = await Plant.findOne({ _id: p.plantId, isDeleted: false });
 
                 if (!plant) {
@@ -43,7 +47,7 @@ export const sendInvite = async (req: Request, res: Response) => {
 
         if (departments) {
             for (const d of departments) {
-                console.log(d);
+
                 const department = await Department.findOne({ _id: d, isDeleted: false });
                 if (!department) {
                     return res.status(500).json("Department being invited to does not exist.");

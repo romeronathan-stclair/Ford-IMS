@@ -17,8 +17,16 @@ export class AppComponent {
       if (event instanceof NavigationEnd) {
         // If navigating away from any of the three routes, clear the data
         if (event.url !== '/dashboard/plants/create/step-one' && event.url !== '/dashboard/plants/create/step-two' && event.url !== '/dashboard/plants/create/step-three' && event.url !== '/dashboard/plants/create/step-three-users') {
-          this.sharedService.setDataKey('plants');
-          this.sharedService.clearData();
+
+          console.log('clearing plants');
+          this.sharedService.clearData('plants');
+        }
+        if (event.url !== '/dashboard/users/invite/invite-one-user/step-one'
+          && event.url !== '/dashboard/users/invite/invite-one-user/step-two'
+          && event.url !== '/dashboard/users/invite/invite-one-user/step-three') {
+
+          console.log('clearing invite-one');
+          this.sharedService.clearData('inviteUser');
         }
         if (event.url !== '/dashboard/stock/create/step-one' && event.url !== '/dashboard/stock/create/step-two' && event.url !== '/dashboard/stock/create/step-three') {
           this.sharedService.setDataKey('stock');

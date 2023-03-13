@@ -35,6 +35,7 @@ export class CreatePlantAssignUsersComponent {
     this.sharedService.setDataKey('plants');
 
     this.request = this.sharedService.getData();
+    console.log(this.request);
   }
 
   ngOnInit() {
