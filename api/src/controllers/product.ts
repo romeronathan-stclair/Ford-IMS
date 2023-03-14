@@ -89,7 +89,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
                 return res.status(500).json("Error creating Product");
             });
     } else {
-        product.imageURL = env.app.apiUrl + "/images/defaultProduct.png";
+        product.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
 
@@ -101,10 +101,6 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         product.remove();
         return res.status(500).json("Error creating Product");
     }
-
-    //TODO add the productStock controllers createProductStock function here
-
-    //TODO add the productDunnage controllers createProductDunnage function here
 
 
     return res.status(200).json(product);

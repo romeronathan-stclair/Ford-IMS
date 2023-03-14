@@ -17,26 +17,28 @@
 
 </div>
 <div class="table-holder">
-  <p-dataView #dv [value]="stocks" [rows]="6" layout="grid">
-      <ng-template let-stock pTemplate="gridItem">
-        <div class="col-12 md:col-4">
-            <div class="stock-grid-item card">
-                <div class="stock-grid-item-top">
-                  <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
-                </div>
-                <div class="stock-grid-item-content">
-                    <img [src]="stock.imageURL" alt="{{stock.name}}">
-                    <div class="stock-name">{{stock.name}}</div>
-                    <div class="stock-market-location">{{stock.marketLocation}}</div>
-                </div>
-                <div class="stock-grid-item-bottom">
-                    <p-button icon="pi pi-pencil"></p-button>
-                    <p-button icon="pi pi-info-circle"></p-button>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-  </p-dataView>
+  <div class="card">
+    <p-dataView #dv [value]="stocks" [rows]="1" layout="grid">
+        <ng-template let-stock pTemplate="gridItem">
+          <div class="col-12 md:col-4">
+              <div class="stock-grid-item card">
+                  <div class="stock-grid-item-top">
+                    <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                  </div>
+                  <div class="stock-grid-item-content">
+                      <img [src]="stock.imageURL" alt="{{stock.name}}">
+                      <div class="stock-name">{{stock.name}}</div>
+                      <div class="stock-market-location">{{stock.marketLocation}}</div>
+                  </div>
+                  <div class="stock-grid-item-bottom">
+                      <p-button icon="pi pi-pencil"></p-button>
+                      <p-button icon="pi pi-info-circle"></p-button>
+                  </div>
+              </div>
+          </div>
+      </ng-template>
+    </p-dataView>
+  </div>
 </div>
 <div class="paginator-holder">
   <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create/step-one'" type="submit"

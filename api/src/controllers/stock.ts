@@ -110,7 +110,7 @@ export const createStock = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Stock");
             });
     } else {
-        stock.imageURL = env.app.apiUrl + "/images/defaultStock.png";
+        stock.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
     try {
