@@ -115,8 +115,14 @@ body {
 //     flex: 1;
 //     -webkit-text-stroke: 2px white;
 // }
-
+.text-success {
+    color: #28a745 !important;
+}
+.text-danger {
+    color: #dc3545 !important;
+}
 // Common container styling
+
 .container-holder {
     min-height: 70vh;
     background-color: $lightGrey !important;

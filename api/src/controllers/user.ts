@@ -126,13 +126,15 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
         return res.status(400).json("Passwords do not match");
     }
 
+    console.log(invite);
+
 
     const user = new User({
         name: req.body.name,
         password: req.body.password,
         email: req.body.email,
         plants: invite.plants,
-        adminType: invite.adminType
+        role: invite.adminType
     });
     user.plants[0].isActive = true;
 

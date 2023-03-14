@@ -2,9 +2,15 @@
 form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 15px;
+}
+.holder {
+    min-height: 65vh !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 input {
     width: 300px;
@@ -20,4 +26,7 @@ input {
     border: none;
     width: 120px;
     height: 30px;
+}
+img {
+    width: 350px;
 }

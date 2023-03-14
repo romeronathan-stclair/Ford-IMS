@@ -1,14 +1,11 @@
 @import "src/styles.scss";
-img {
-    width: 350px;
-}
 .account-page {
     background-color: $blue;
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
 }
 

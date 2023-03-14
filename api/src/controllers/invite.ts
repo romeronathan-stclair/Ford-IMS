@@ -116,4 +116,21 @@ export const sendInvite = async (req: Request, res: Response) => {
 
     return res.status(200).json("Invite sent");
 };
+export const getInvite = async (req: Request, res: Response) => {
 
+    let token = req.query.token as string;
+    let email = req.query.email as string;
+
+    const invite = await Invite.findOne({ token: token, email: email, isDeleted: false, isUsed: false });
+
+    if (!invite) {
+        return res.status(500).json("Invite not found");
+    }
+
+    const currentDate: Date = new Date();
+    if (invite.validUntilDate < currentDate) {
+        return res.status(500).json("Invite expired");
+    }
+
+    return res.status(200).json(invite);
+}

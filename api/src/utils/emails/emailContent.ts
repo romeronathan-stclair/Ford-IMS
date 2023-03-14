@@ -13,7 +13,7 @@ export const newUser = (inviteCode: String, adminName: string): Email => {
         You have been invited to the Ford IMS portal by ${adminName}.
         <br>
         <br>
-        Click <a href="${env.client.url}/account/signup/${inviteCode}">here</a> to complete your account setup.
+        Click <a href="${env.client.url}/account/signup/step-one/${inviteCode}">here</a> to complete your account setup.
         <br>
         <br>
         Your invitation code is: <strong>${inviteCode}</strong>.

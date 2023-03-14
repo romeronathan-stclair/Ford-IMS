@@ -49,6 +49,10 @@ import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-
 import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
 import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
 import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
+import { SignupPageComponent } from '../pages/account/accounts/signup-page/signup-page.component';
+import { SignupStepOneComponent } from '../pages/account/accounts/signup-page/signup-step-one/signup-step-one.component';
+import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/signup-step-two/signup-step-two.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +83,10 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     InviteMultipleUsersComponent,
     InviteOneUserStepOneComponent,
     InviteOneUserStepTwoComponent,
-    InviteOneUserStepThreeComponent
+    InviteOneUserStepThreeComponent,
+    SignupPageComponent,
+    SignupStepOneComponent,
+    SignupStepTwoComponent
   ],
   imports: [
     BrowserModule,
