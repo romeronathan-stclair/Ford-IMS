@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
@@ -31,8 +31,8 @@ export class CreateStockStepOneComponent {
         this.stockForm = this.formBuilder.group({
           name: new FormControl(''),
           partNumber: new FormControl(''),
-          stockQtyPerTote: new FormControl(''),
-          totesPerSkid: new FormControl(''),
+          stockQtyPerTote: new FormControl('', [Validators.required]),
+          totesPerSkid: new FormControl('', [Validators.required]),
           totalStockPerSkid: new FormControl(''),
           lowStock: new FormControl(''),
           roughStock: new FormControl(''),
@@ -50,8 +50,12 @@ export class CreateStockStepOneComponent {
     ngAfterViewInit() {
 
     }
-    ngOnInit(): void {
 
+    ngOnInit(): void {
+      if (this.request.stock != null) {
+        this.roughStockChecked = this.request.stock.roughStockChecked;
+        this.subAssemblyChecked = this.request.stock.subAssemblyChecked;
+      }
     }
 
     onCheckboxChange(event: MatCheckboxChange, type: string) {
@@ -70,6 +74,26 @@ export class CreateStockStepOneComponent {
           this.subAssemblyChecked = false;
         }
       }
+
+      if (this.roughStockChecked) {
+        this.stockForm.controls['totalStockPerSkid'].enable();
+        this.stockForm.controls['totalStockPerSkid'].setValidators([Validators.required]);
+        this.stockForm.controls['stockQtyPerTote'].disable();
+        this.stockForm.controls['totesPerSkid'].disable();
+        this.stockForm.controls['stockQtyPerTote'].setValidators(null);
+        this.stockForm.controls['totesPerSkid'].setValidators(null);
+        this.stockForm.controls['stockQtyPerTote'].setValue(null);
+        this.stockForm.controls['totesPerSkid'].setValue(null);
+      } else {
+        this.stockForm.controls['stockQtyPerTote'].enable();
+        this.stockForm.controls['totesPerSkid'].enable();
+        this.stockForm.controls['stockQtyPerTote'].setValidators([Validators.required]);
+        this.stockForm.controls['totesPerSkid'].setValidators([Validators.required]);
+        this.stockForm.controls['totalStockPerSkid'].disable();
+        this.stockForm.controls['totalStockPerSkid'].setValidators(null);
+        this.stockForm.controls['totalStockPerSkid'].setValue(null);
+      }
+
     }
 
     onSubmit() {
@@ -95,11 +119,13 @@ export class CreateStockStepOneComponent {
         partNumber: this.stockForm.value.partNumber,
         stockQtyPerTote: this.stockForm.value.stockQtyPerTote || null,
         totesPerSkid: this.stockForm.value.totesPerSkid || null,
-        totalStockPerSkid: this.stockForm.value.totalStockPerSkid || totalStock,
+        totalStockPerSkid: totalStock || this.stockForm.value.totalStockPerSkid ,
         lowStock: this.stockForm.value.lowStock,
         moderateStock: moderateStock,
         roughStock: this.roughStockChecked,
         subAssembly: this.subAssemblyChecked,
+        roughStockChecked: this.roughStockChecked,
+        subAssemblyChecked: this.subAssemblyChecked
       };
 
       this.request.stock = stock;
