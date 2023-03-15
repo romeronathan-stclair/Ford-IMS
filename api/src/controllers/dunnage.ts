@@ -17,6 +17,7 @@ export const createDunnage = async (req: Request, res: Response) => {
     await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
 
     const departmentId = req.body.departmentId;
 
@@ -51,6 +52,7 @@ export const createDunnage = async (req: Request, res: Response) => {
         currentCount: 0,
         lowStock: req.body.lowStock,
         moderateStock: req.body.moderateStock,
+        marketLocation: req.body.marketLocation,
         isDeleted: false
     });
 
@@ -124,6 +126,7 @@ export const getDunnage = async (req: Request, res: Response) => {
         query["_id"] = new Types.ObjectId(dunnageId.toString());
     }
 
+    const dunnageCount = await Dunnage.countDocuments(query);
     const dunnages = await Dunnage.find(query).skip(page * pageSize).limit(pageSize).exec();
 
     if (!dunnages || dunnages.length === 0) {
@@ -140,6 +143,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
 
     const dunnageId = req.params.id;
 
@@ -175,6 +179,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     dunnage.lowStock = req.body.lowStock || dunnage.lowStock;
     dunnage.moderateStock = req.body.moderateStock || dunnage.moderateStock;
     dunnage.departmentId = req.body.departmentId || dunnage.departmentId;
+    dunnage.marketLocation = req.body.marketLocation || dunnage.marketLocation;
 
     if (req.files) {
         const image = req.files.file;

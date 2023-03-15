@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { StockService } from 'src/services/stock.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/services/department.service';
 import { AuthService } from 'src/services/auth.service';
 
@@ -34,7 +34,7 @@ export class CreateStockStepTwoComponent {
   ) {
     this.stockForm = this.formBuilder.group({
       marketLocation: new FormControl(''),
-      department: new FormControl(''),
+      department: new FormControl('', [Validators.required]),
     });
     this.sharedService.setDataKey('stock');
     if (this.sharedService.getData() != null) {

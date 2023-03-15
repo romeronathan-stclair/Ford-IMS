@@ -38,7 +38,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Dunnage',
         icon: 'pi pi-box',
-        routerLink: ['/about'],
+        routerLink: ['dunnage/list'],
 
         position: SimpleSidebarPosition.top
       },

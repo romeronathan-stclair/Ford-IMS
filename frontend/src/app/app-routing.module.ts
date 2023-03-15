@@ -34,6 +34,12 @@ import { InviteOneUserComponent } from 'src/pages/users/user-invite/invite-one/i
 import { InviteUsersComponent } from 'src/pages/users/user-invite/invite-users/invite-users.component';
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
+import { DunnagesComponent } from 'src/pages/dunnages/dunnages/dunnages.component';
+import { DunnageListComponent } from 'src/pages/dunnages/dunnage-list/dunnage-list.component';
+import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage/create-dunnage.component';
+import { CreateDunnageStepOneComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-one/create-dunnage-step-one.component';
+import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-two/create-dunnage-step-two.component';
+import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
 
 const routes: Routes = [
   {
@@ -139,7 +145,7 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Plant Page' },
+            data: { animation: 'Create Stock Page' },
             component: CreateStockComponent,
             children: [
               {
@@ -172,6 +178,37 @@ const routes: Routes = [
 
           }
         ]
+      },
+      {
+        path: 'dunnage',
+        data: { animation: 'Dunnage Page' },
+        component: DunnagesComponent,
+        children: [
+          {
+            path: 'create',
+            data: { animation: 'Create Stock Page' },
+            component: CreateDunnageComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CreateDunnageStepOneComponent,
+              },
+              {
+                path: 'step-two',
+                component: CreateDunnageStepTwoComponent,
+              },
+              {
+                path: 'success',
+                component: CreateDunnageSuccessComponent
+              },
+            ]
+          },
+          {
+            path: 'list',
+            data: { animation: 'Dunnage Page' },
+            component: DunnageListComponent,
+          },
+        ],
       },
       {
         path: 'users',
