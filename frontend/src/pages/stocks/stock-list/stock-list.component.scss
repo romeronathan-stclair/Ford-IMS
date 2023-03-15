@@ -1,5 +1,5 @@
 @import "src/styles.scss";
-img {
+.table-header img {
     width: 150px;
 }
 .table-holder {
@@ -61,173 +61,111 @@ i {
   color: $darkGrey;
 }
 
-// :host ::ng-deep {
-
-//   .stock-name {
-//       font-size: 1.5rem;
-//       font-weight: 700;
-//   }
-
-//   .stock-market-location {
-//       margin: 0 0 1rem 0;
-//   }
-
-//   .stock-grid-item {
-//       margin: .5em;
-//       border: 1px solid #dee2e6;
-
-//       .stock-grid-item-top,
-//       .stock-grid-item-bottom {
-//           display: flex;
-//           align-items: center;
-//           justify-content: space-between;
-//       }
-
-//       img {
-//           width: 30%;
-//           height: 20%;
-//           box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-//           margin: 2rem 0;
-//       }
-
-//       .stockgrid-item-content {
-//           text-align: center;
-//       }
-//   }
-// }
-
-// .card {
-//   padding: 2rem;
-//   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-//   border-radius: 4px;
-//   margin-bottom: 2rem;
-// }
-:host ::ng-deep {
-    .p-dropdown {
-        width: 14rem;
-        font-weight: normal;
-    }
-
-    .stock-name {
-        font-size: 1.5rem;
-        font-weight: 700;
-    }
-
-    .stock-market-location {
-        margin: 0 0 1rem 0;
-    }
-
-    .stock-category-icon {
-        vertical-align: middle;
-        margin-right: .5rem;
-    }
-
-    .stock-category {
-        font-weight: 600;
-        vertical-align: middle;
-    }
-
-    .stock-list-item {
-        display: flex;
-        align-items: center;
-        padding: 1rem;
-        width: 100%;
-
-        img {
-            width: 150px;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            margin-right: 2rem;
-        }
-
-        .stock-list-detail {
-            flex: 1 1 0;
-        }
-
-        .p-rating {
-            margin: 0 0 .5rem 0;
-        }
-
-        .stock-price {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: .5rem;
-            align-self: flex-end;
-        }
-
-        .stock-list-action {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .p-button {
-            margin-bottom: .5rem;
-        }
-    }
-
-    .stock-grid-item {
-        margin: .5em;
-        border: 1px solid #dee2e6;
-
-        .stock-grid-item-top,
-        .stock-grid-item-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        img {
-            width: 75%;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            margin: 2rem 0;
-        }
-
-        .stock-grid-item-content {
-            text-align: center;
-        }
-
-        .stock-price {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-    }
-}
-
 .card {
-    padding: 2rem;
-    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    border-radius: 4px;
-    margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
+  margin: 15px;
 }
 
-@media screen and (max-width: 576px) {
-	:host ::ng-deep .stock-list-item {
-		flex-direction: column;
-		align-items: center;
-
-		img {
-			width: 75%;
-			margin: 2rem 0;
-		}
-
-		.stock-list-detail {
-			text-align: center;
-		}
-
-		.stock-price {
-			align-self: center;
-		}
-
-		.stock-list-action {
-			display: flex;
-			flex-direction: column;
-		}
-
-		.stock-list-action {
-			margin-top: 2rem;
-			flex-direction: row;
-			justify-content: space-between;
-			align-items: center;
-			width: 100%;
-		}
-	}
+mat-card {
+  display: inline-block;
+  width: calc(50% - 20px);
+  margin: 10px;
+  vertical-align: top;
 }
+
+.stock-img {
+  max-width: 50%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: solid black 1px;
+}
+
+mat-card-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+}
+
+mat-card-subtitle {
+  font-size: 16px;
+  text-align: center;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  float: right;
+}
+
+mat-card-actions button {
+  margin-right: 10px;
+}
+
+.low-stock-label-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1% 3% 2% 0%;
+}
+
+.low-stock-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  height: 100%;
+  min-width: 70px;
+  color: rgb(184, 67, 61);
+  background-color: rgb(247, 207, 211);
+  border-radius: 4px;
+  padding: .1em;
+}
+
+.moderate-stock-label-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1%;
+  margin-bottom: 2%;
+}
+
+.moderate-stock-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  height: 100%;
+  min-width: 70px;
+  color: rgb(131, 86, 68);
+  background-color: rgb(252, 237, 182);
+  border-radius: 4px;
+  padding: .1em;
+}
+
+.high-stock-label-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin: 1%;
+  margin-bottom: 2%;
+}
+
+.high-stock-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  height: 100%;
+  min-width: 70px;
+  color: rgb(53, 95, 47);
+  background-color: rgb(206, 229, 203);
+  border-radius: 4px;
+  padding: .1em;
+}
+
+
+

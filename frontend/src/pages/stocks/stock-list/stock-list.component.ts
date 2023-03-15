@@ -17,7 +17,7 @@ import { StockService } from 'src/services/stock.service';
 export class StockListComponent {
   currentPage = 0;
   length = 100;
-  pageSize = 10;
+  pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   activePlantId: any;

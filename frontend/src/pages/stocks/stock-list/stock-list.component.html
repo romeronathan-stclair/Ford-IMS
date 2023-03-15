@@ -18,26 +18,24 @@
 </div>
 <div class="table-holder">
   <div class="card">
-    <p-dataView #dv [value]="stocks" [rows]="1" layout="grid">
-        <ng-template let-stock pTemplate="gridItem">
-          <div class="col-12 md:col-4">
-              <div class="stock-grid-item card">
-                  <div class="stock-grid-item-top">
-                    <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
-                  </div>
-                  <div class="stock-grid-item-content">
-                      <img [src]="stock.imageURL" alt="{{stock.name}}">
-                      <div class="stock-name">{{stock.name}}</div>
-                      <div class="stock-market-location">{{stock.marketLocation}}</div>
-                  </div>
-                  <div class="stock-grid-item-bottom">
-                      <p-button icon="pi pi-pencil"></p-button>
-                      <p-button icon="pi pi-info-circle"></p-button>
-                  </div>
-              </div>
-          </div>
-      </ng-template>
-    </p-dataView>
+    <mat-card *ngFor="let stock of stocks">
+      <div class="low-stock-label-wrapper" *ngIf="stock.currentCount <= stock.lowStock">
+        <div class="low-stock-label">LOW STOCK</div>
+      </div>
+      <div class="moderate-stock-label-wrapper" *ngIf="stock.currentCount <= stock.moderateStock && stock.currentCount > stock.lowStock">
+        <div class="moderate-stock-label">MODERATE STOCK</div>
+      </div>
+      <div class="high-stock-label-wrapper" *ngIf="stock.currentCount > stock.moderateStock">
+        <div class="high-stock-label">HIGH STOCK</div>
+      </div>
+      <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
+        <mat-card-title>{{stock.name}}</mat-card-title>
+        <mat-card-subtitle>{{stock.marketLocation}}</mat-card-subtitle>
+      <mat-card-actions>
+        <button mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+        <button mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
   </div>
 </div>
 <div class="paginator-holder">

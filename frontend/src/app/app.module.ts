@@ -52,8 +52,8 @@ import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/crea
 import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
 import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
 import {MatSelectModule} from '@angular/material/select';
-import {ButtonModule} from 'primeng/button';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
@@ -123,7 +123,8 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     DropdownModule,
     DataViewModule,
     MatSelectModule,
-    ButtonModule
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]
