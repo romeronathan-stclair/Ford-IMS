@@ -106,7 +106,7 @@ export const createDunnage = async (req: Request, res: Response) => {
 export const getDunnage = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
-    const departmentId = req.query.departmentId as string;
+    const departmentId = req.query.departmentId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const dunnageId = req.query.dunnageId;
 
@@ -129,11 +129,12 @@ export const getDunnage = async (req: Request, res: Response) => {
     const dunnageCount = await Dunnage.countDocuments(query);
     const dunnages = await Dunnage.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-    if (!dunnages || dunnages.length === 0) {
-        return res.status(200).json("No Dunnage found");
+    let response = {
+        dunnages: dunnages,
+        count: dunnageCount
     }
 
-    return res.status(200).json(dunnages);
+    return res.status(200).json(response);
 };
 
 //update Dunnage

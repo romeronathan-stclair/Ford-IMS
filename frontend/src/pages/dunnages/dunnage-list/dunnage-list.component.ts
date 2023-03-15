@@ -129,11 +129,12 @@ export class DunnageListComponent {
       this.dunnageService.getDunnages(dunnageQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
+          console.log("DUNNAGE DATA => " + data);
           this.spinnerService.hide();
           this.dunnages = data.body.dunnages;
           this.length = data.body.dunnageCount;
           this.dataSource = new MatTableDataSource(this.dunnages);
+          console.log(this.dunnages);
         },
         error: (error: any) => {
           this.spinnerService.hide();
