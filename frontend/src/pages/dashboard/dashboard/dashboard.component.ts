@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Products',
         icon: 'fa-solid fa-car-side',
-        routerLink: ['/about'],
+        routerLink: ['products/list'],
         position: SimpleSidebarPosition.top
       },
       {

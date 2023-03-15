@@ -34,6 +34,8 @@ import { InviteOneUserComponent } from 'src/pages/users/user-invite/invite-one/i
 import { InviteUsersComponent } from 'src/pages/users/user-invite/invite-users/invite-users.component';
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
+import { ProductsComponent } from 'src/pages/products/products/products.component';
+import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
 
 const routes: Routes = [
   {
@@ -133,95 +135,107 @@ const routes: Routes = [
 
       },
       {
-        path: 'stock',
-        data: { animation: 'Stock Page' },
-        component: StocksComponent,
+        path: 'products',
+        data: { animation: 'Products Page' },
+        component: ProductsComponent,
         children: [
           {
-            path: 'create',
-            data: { animation: 'Create Plant Page' },
-            component: CreateStockComponent,
-            children: [
-              {
-                path: 'step-one',
-                component: CreateStockStepOneComponent,
-              },
-              {
-                path: 'step-two',
-                component: CreateStockStepTwoComponent,
-              },
-              {
-                path: 'step-three',
-                component: CreateStockStepThreeComponent,
-              },
-              {
-                path: 'success',
-                component: CreateStockSuccessComponent
-              },
-            ]
-          },
-          {
             path: 'list',
-            data: { animation: 'Stock Page' },
-            component: StockListComponent,
+            data: { animation: 'Product List Page' },
+            component: ProductListComponent,
           },
-          {
-            path: 'edit/:id',
-            data: { animation: 'Edit Stock Page' },
-            component: EditStockComponent
-
-          }
         ]
       },
       {
-        path: 'users',
-        data: { animation: 'Users Page' },
-        component: UsersComponent,
-        children: [{
-          path: 'list',
-          data: { animation: 'Users List Page' },
-          component: UserListComponent
-
-        },
-        {
-          path: 'invite',
-          component: InviteUsersComponent,
-          children: [
-            {
-              path: 'invite-one-user',
-              component: InviteOneUserComponent,
-              children: [
-                {
-                  path: 'step-one',
-                  component: InviteOneUserStepOneComponent
-                },
-                {
-                  path: 'step-two',
-                  component: InviteOneUserStepTwoComponent
-                },
-                {
-                  path: 'step-three',
-                  component: InviteOneUserStepThreeComponent
-
-                }
-              ]
-            },
-            {
-              path: 'invite-users',
-              component: InviteUsersComponent
-            }
-          ]
-        }
-
+    path: 'stock',
+    data: { animation: 'Stock Page' },
+    component: StocksComponent,
+    children: [
+      {
+        path: 'create',
+        data: { animation: 'Create Plant Page' },
+        component: CreateStockComponent,
+        children: [
+          {
+            path: 'step-one',
+            component: CreateStockStepOneComponent,
+          },
+          {
+            path: 'step-two',
+            component: CreateStockStepTwoComponent,
+          },
+          {
+            path: 'step-three',
+            component: CreateStockStepThreeComponent,
+          },
+          {
+            path: 'success',
+            component: CreateStockSuccessComponent
+          },
         ]
+      },
+      {
+        path: 'list',
+        data: { animation: 'Stock Page' },
+        component: StockListComponent,
+      },
+      {
+        path: 'edit/:id',
+        data: { animation: 'Edit Stock Page' },
+        component: EditStockComponent
+
       }
     ]
   },
   {
-    path: 'signout',
-    data: { animation: 'Signout Page' },
-    component: SignoutPageComponent
+    path: 'users',
+    data: { animation: 'Users Page' },
+    component: UsersComponent,
+    children: [{
+      path: 'list',
+      data: { animation: 'Users List Page' },
+      component: UserListComponent
+
+    },
+    {
+      path: 'invite',
+      component: InviteUsersComponent,
+      children: [
+        {
+          path: 'invite-one-user',
+          component: InviteOneUserComponent,
+          children: [
+            {
+              path: 'step-one',
+              component: InviteOneUserStepOneComponent
+            },
+            {
+              path: 'step-two',
+              component: InviteOneUserStepTwoComponent
+            },
+            {
+              path: 'step-three',
+              component: InviteOneUserStepThreeComponent
+
+            }
+          ]
+        },
+        {
+          path: 'invite-users',
+          component: InviteUsersComponent
+        }
+      ]
+    }
+
+    ]
+  }
+]
   },
+{
+  path: 'signout',
+    data: { animation: 'Signout Page' },
+  component: SignoutPageComponent
+},
 
 
 ];

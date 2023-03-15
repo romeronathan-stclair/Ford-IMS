@@ -61,6 +61,8 @@ import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-
 import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
 import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
 import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
+import { ProductsComponent } from '../pages/products/products/products.component';
+import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,7 +100,9 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     InviteMultipleUsersComponent,
     InviteOneUserStepOneComponent,
     InviteOneUserStepTwoComponent,
-    InviteOneUserStepThreeComponent
+    InviteOneUserStepThreeComponent,
+    ProductListComponent,
+    ProductsComponent
   ],
   imports: [
     BrowserModule,

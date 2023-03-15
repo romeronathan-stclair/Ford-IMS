@@ -111,6 +111,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     const page = getPage(req);
     const pageSize = getPageSize(req);
     const departmentId = req.query.departmentId;
+    const plantId = req.query.plantId;
     const productId = req.query.productId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const partNumber = req.query.partNumber;
@@ -121,6 +122,9 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
     if (departmentId) {
         query["departmentId"] = departmentId;
+    }
+    if (plantId) {
+        query["plantId"] = plantId;
     }
 
     if (productId) {
@@ -136,12 +140,18 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     }
 
     const products = await Product.find(query).skip(page * pageSize).limit(pageSize).exec();
+    const productCount = await Product.countDocuments(query).exec();
+
+    let response = {
+        products: products,
+        productCount: productCount
+    }
 
     if (!products || products.length == 0) {
         return res.status(500).json("No Products found");
     }
 
-    return res.status(200).json(products);
+    return res.status(200).json(response);
 };
 
 //update Product
