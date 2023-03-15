@@ -20,7 +20,7 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
 
 export const isAdminAuthenticated = (req: Request, res: Response, next: NextFunction) => {
     const user: UserDocument = req.user as UserDocument;
-    if (!req.isAuthenticated() ) {
+    if (!req.isAuthenticated()) {
         return res.status(401).json("Admin user not authenticated!");
     }
 

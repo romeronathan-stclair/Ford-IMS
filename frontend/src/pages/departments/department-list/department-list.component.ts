@@ -16,7 +16,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 export class DepartmentListComponent {
   currentPage = 0;
   length = 100;
-  pageSize = 5;
+  pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   activePlantId: any;

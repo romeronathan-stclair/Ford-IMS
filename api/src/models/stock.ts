@@ -12,6 +12,7 @@ export type StockDocument = Document & {
     roughStock: boolean;
     lowStock: number;
     moderateStock: number;
+    marketLocation: string;
     imageURL: string;
     isSubAssembly: boolean;
     isDeleted: boolean;
@@ -65,6 +66,10 @@ const stockSchema = new Schema<StockDocument>({
         type: Number,
         required: true,
     },
+    marketLocation: {
+        type: String,
+        required: true,
+    },
     imageURL: {
         type: String,
         required: false,
@@ -75,7 +80,7 @@ const stockSchema = new Schema<StockDocument>({
     },
     totalAvailableQty: {
         type: Number,
-        required: true,
+        required: false,
     }
 });
 

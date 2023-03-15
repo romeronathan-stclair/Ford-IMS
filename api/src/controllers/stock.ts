@@ -20,14 +20,20 @@ export const createStock = async (req: Request, res: Response) => {
     await check("totesPerSkid", "totesPerSkid is not valid").isLength({ min: 1 }).run(req);
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
     await check("roughStock", "roughStock is not valid").isLength({ min: 1 }).run(req);
     await check("isSubAssembly", "isSubAssembly is not valid").isLength({ min: 1 }).run(req);
     await check("totalQuantity", "totalQuantity is not valid").isLength({ min: 1 }).run(req);
 
 
-    const departmentId = req.body.departmentId;
 
-    console.log(departmentId);
+
+
+    console.log(req.body);
+
+    req.body = JSON.parse(req.body.stock);
+
+    const departmentId = req.body.departmentId;
 
     const department = await Department.findById({
         _id: departmentId,
@@ -63,6 +69,7 @@ export const createStock = async (req: Request, res: Response) => {
         isSubAssembly: req.body.isSubAssembly,
         lowStock: req.body.lowStock,
         moderateStock: req.body.moderateStock,
+        marketLocation: req.body.marketLocation,
         isDeleted: false,
 
     });
@@ -73,9 +80,8 @@ export const createStock = async (req: Request, res: Response) => {
         return res.status(500).json("Error creating Stock: " + err);
     }
 
-
     if (req.files) {
-        console.log(req.files)
+
         const image = req.files.file;
 
         const imageRequest: ImageRequest = {
@@ -104,7 +110,7 @@ export const createStock = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Stock");
             });
     } else {
-        stock.imageURL = env.app.apiUrl + "/images/defaultStock.png";
+        stock.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
     try {
@@ -150,13 +156,17 @@ export const getStock = async (req: Request, res: Response) => {
         query["_id"] = new Types.ObjectId(stockId.toString());
     }
 
+    const stockCount = await Stock.countDocuments(query);
     const stocks = await Stock.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-    if (!stocks || stocks.length === 0) {
-        return res.status(500).json("Stock does not exist");
+    let response = {
+        stocks: stocks,
+        stockCount: stockCount,
     }
 
-    return res.status(200).json(stocks);
+
+
+    return res.status(200).json(response);
 };
 
 
@@ -169,6 +179,7 @@ export const updateStock = async (req: Request, res: Response) => {
     await check("totesPerSkid", "totesPerSkid is not valid").isLength({ min: 1 }).run(req);
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
 
     console.log(req.params.id);
 
@@ -204,12 +215,13 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.totesPerSkid = req.body.totesPerSkid || stock.totesPerSkid;
     stock.lowStock = req.body.lowStock || stock.lowStock;
     stock.moderateStock = req.body.moderateStock || stock.moderateStock;
+    stock.marketLocation = req.body.marketLocation || stock.marketLocation;
     stock.roughStock = req.body.roughStock || stock.roughStock;
     stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
 
-    if (req.files) {
-        const image = req.files.file;
+    if (req.body.files) {
+        const image = req.body.files.file;
 
         const imageRequest: ImageRequest = {
             itemId: stock._id.toString(),

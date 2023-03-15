@@ -88,7 +88,7 @@ export const createDunnage = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Stock");
             });
     } else {
-        dunnage.imageURL = env.app.apiUrl + "/images/defaultDunnage.png";
+        dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
     try {

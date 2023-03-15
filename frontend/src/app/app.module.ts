@@ -43,6 +43,18 @@ import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-pl
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
 import { DropdownModule } from 'primeng/dropdown';
+import {DataViewModule} from 'primeng/dataview';
+import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
+import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
+import { CreateStockComponent } from 'src/pages/stocks/create-stocks/create-stock/create-stock.component';
+import { CreateStockStepOneComponent } from 'src/pages/stocks/create-stocks/create-stock-step-one/create-stock-step-one.component';
+import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/create-stock-step-two/create-stock-step-two.component';
+import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
+import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
+import {MatSelectModule} from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
 import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
@@ -74,6 +86,13 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     EditDepartmentComponent,
     UsersComponent,
     UserListComponent,
+    StocksComponent,
+    StockListComponent,
+    CreateStockComponent,
+    CreateStockStepOneComponent,
+    CreateStockStepTwoComponent,
+    CreateStockStepThreeComponent,
+    CreateStockSuccessComponent,
     InviteUsersComponent,
     InviteOneUserComponent,
     InviteMultipleUsersComponent,
@@ -101,7 +120,11 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     NgxSpinnerModule,
     ConfirmDialogModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    DataViewModule,
+    MatSelectModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]

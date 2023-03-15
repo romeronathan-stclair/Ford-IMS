@@ -28,6 +28,9 @@ export class AppComponent {
           console.log('clearing invite-one');
           this.sharedService.clearData('inviteUser');
         }
+        if (event.url !== '/dashboard/stock/create/step-one' && event.url !== '/dashboard/stock/create/step-two' && event.url !== '/dashboard/stock/create/step-three') {
+          this.sharedService.clearData('stock');
+        }
       }
     });
   }
