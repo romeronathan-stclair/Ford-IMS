@@ -69,7 +69,7 @@ export const createDunnage = async (req: Request, res: Response) => {
             itemId: dunnage._id.toString(),
             plantId: plantId,
             departmentId: dunnage.departmentId,
-            modelType: ModelType.STOCK,
+            modelType: ModelType.DUNNAGE,
             image: image
         };
 
@@ -87,7 +87,7 @@ export const createDunnage = async (req: Request, res: Response) => {
                 catch (err) {
                     console.log(err);
                 }
-                return res.status(500).json("Error creating Stock");
+                return res.status(500).json("Error creating Dunnage");
             });
     } else {
         dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";

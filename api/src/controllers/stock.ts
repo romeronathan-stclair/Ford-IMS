@@ -26,9 +26,6 @@ export const createStock = async (req: Request, res: Response) => {
     await check("totalQuantity", "totalQuantity is not valid").isLength({ min: 1 }).run(req);
 
 
-
-
-
     console.log(req.body);
 
     req.body = JSON.parse(req.body.stock);

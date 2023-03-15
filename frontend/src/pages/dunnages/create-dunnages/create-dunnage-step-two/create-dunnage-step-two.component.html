@@ -5,7 +5,6 @@
 
 <app-ford-container title="2. Upload Dunnage Image">
   <div class="holder">
-
     <div class="image-upload-container"
   (mouseover)="onImageHover(true)"
   (mouseleave)="onImageHover(false)"
@@ -21,6 +20,8 @@
 
       <img [src]="imageUrl" *ngIf="imageUrl" (click)="onBrowseClick()" class="image-upload-preview">
     </div>
+
+    <button *ngIf="imageUrl" class="image-upload-button" (click)="onBrowseClick()">Change Image</button>
 
     <div class="button-holders">
       <button type="button" [routerLink]="'/dashboard/dunnage/create/step-one'" class="submit-button">Back</button>

@@ -47,7 +47,11 @@ const dunnageSchema = new Schema<DunnageDocument>({
     isDeleted: {
         type: Boolean,
         required: true,
-    }
+    },
+    imageURL: {
+        type: String,
+        required: false,
+    },
 });
 
 

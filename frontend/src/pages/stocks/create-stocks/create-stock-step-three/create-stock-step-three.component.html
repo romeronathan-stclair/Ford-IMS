@@ -22,6 +22,8 @@
       <img [src]="imageUrl" *ngIf="imageUrl" (click)="onBrowseClick()" class="image-upload-preview">
     </div>
 
+    <button *ngIf="imageUrl" class="image-upload-button" (click)="onBrowseClick()">Change Image</button>
+
     <div class="button-holders">
       <button type="button" [routerLink]="'/dashboard/stock/create/step-two'" class="submit-button">Back</button>
       <button (click)="onSubmit()" class="submit-button">Create</button>
