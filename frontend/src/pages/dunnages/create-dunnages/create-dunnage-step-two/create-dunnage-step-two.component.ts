@@ -92,7 +92,7 @@ export class CreateDunnageStepTwoComponent {
     const formData: FormData = new FormData();
 
     formData.append('file', this.file);
-    formData.append('stock', JSON.stringify(dunnage));
+    formData.append('dunnage', JSON.stringify(dunnage));
 
     this.dunnageService.createDunnage(formData).subscribe({
       next: (response) => {

@@ -19,9 +19,9 @@ export const createDunnage = async (req: Request, res: Response) => {
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
     await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
 
-    const departmentId = req.body.departmentId;
+    req.body = JSON.parse(req.body.dunnage);
 
-    console.log(departmentId);
+    const departmentId = req.body.departmentId;
 
     const department = await Department.findById({
         _id: departmentId,

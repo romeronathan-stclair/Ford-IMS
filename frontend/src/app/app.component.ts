@@ -32,7 +32,7 @@ export class AppComponent {
           this.sharedService.clearData('stock');
         }
 
-        if (event.url !== '/dashboard/dunnage/create/step-one' && event.url !== '/dashboard/dunnafe/create/step-two') {
+        if (event.url !== '/dashboard/dunnage/create/step-one' && event.url !== '/dashboard/dunnage/create/step-two') {
           this.sharedService.clearData('dunnage');
         }
       }

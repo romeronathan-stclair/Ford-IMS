@@ -54,6 +54,10 @@ export class CreateDunnageStepOneComponent {
       this.spinnerService.showHide();
       this.activePlantId = this.authService.user.activePlantId;
       await this.loadDepartments();
+
+      if (this.request != null) {
+        this.selectedDepartment = this.request.dunnage.selectedDepartment;
+      }
     }
 
     async loadDepartments() {
