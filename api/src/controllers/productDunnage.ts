@@ -55,7 +55,7 @@ export const createProductDunnage = async (req: Request, res: Response) => {
     });
 
     const response = {
-        productStock: newProductDunnage,
+        productDunnage: newProductDunnage,
         message: "ProductDunnage created successfully"
     };
 

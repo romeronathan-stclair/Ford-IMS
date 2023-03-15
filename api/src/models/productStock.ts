@@ -6,7 +6,7 @@ export type ProductStockDocument = Document & {
     productId: string;
     stockId: string;
     departmentId: string;
-    usePerProduct: string;
+    usePerProduct: number;
     isDeleted: boolean;
 
 };
@@ -25,7 +25,7 @@ const productStockSchema = new Schema<ProductStockDocument>({
         required: true,
     },
     usePerProduct: {
-        type: String,
+        type: Number,
         required: true,
     },
     isDeleted: {
