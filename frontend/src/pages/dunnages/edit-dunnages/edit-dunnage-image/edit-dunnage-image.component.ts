@@ -15,7 +15,6 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class EditDunnageImageComponent {
   public displayValidationErrors: boolean = false;
-  request: any;
   public imageUrl: string = '';
   file: any;
   public showOverlay: boolean = false;
@@ -40,7 +39,7 @@ export class EditDunnageImageComponent {
     this.spinnerService.showHide();
     this.route.params.subscribe(params => {
       this.dunnageId = params['id'];
-      this.loadStockData();
+      this.loadDunnageData();
     })
   }
 
@@ -70,7 +69,7 @@ export class EditDunnageImageComponent {
     fileInput.click();
   }
 
-  loadStockData() {
+  loadDunnageData() {
     this.spinnerService.show();
     let query = "?dunnageId=" + this.dunnageId;
 
