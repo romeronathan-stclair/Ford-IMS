@@ -36,6 +36,11 @@ import { UserListComponent } from 'src/pages/users/user-list/user-list.component
 import { UsersComponent } from 'src/pages/users/users/users.component';
 import { ProductsComponent } from 'src/pages/products/products/products.component';
 import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
+import { CreateProductComponent } from 'src/pages/products/create-products/create-product/create-product.component';
+import { CreateProductStepFourComponent } from 'src/pages/products/create-products/create-product-step-four/create-product-step-four.component';
+import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
+import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
+import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
 
 const routes: Routes = [
   {
@@ -144,98 +149,122 @@ const routes: Routes = [
             data: { animation: 'Product List Page' },
             component: ProductListComponent,
           },
+          {
+            path: 'create',
+            data: { animation: 'Create Product Page' },
+            component: CreateProductComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CreateProductStepOneComponent,
+              },
+              {
+                path: 'step-two',
+                component: CreateProductStepTwoComponent,
+              },
+              {
+                path: 'step-three',
+                component: CreateProductStepThreeComponent,
+              },
+              {
+                path: 'step-four',
+                component: CreateProductStepFourComponent,
+              },
+            ]
+
+          }
         ]
       },
       {
-    path: 'stock',
-    data: { animation: 'Stock Page' },
-    component: StocksComponent,
-    children: [
-      {
-        path: 'create',
-        data: { animation: 'Create Plant Page' },
-        component: CreateStockComponent,
+        path: 'stock',
+        data: { animation: 'Stock Page' },
+        component: StocksComponent,
         children: [
           {
-            path: 'step-one',
-            component: CreateStockStepOneComponent,
+            path: 'create',
+            data: { animation: 'Create Plant Page' },
+            component: CreateStockComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CreateStockStepOneComponent,
+              },
+              {
+                path: 'step-two',
+                component: CreateStockStepTwoComponent,
+              },
+              {
+                path: 'step-three',
+                component: CreateStockStepThreeComponent,
+              },
+              {
+                path: 'success',
+                component: CreateStockSuccessComponent
+              },
+            ]
           },
           {
-            path: 'step-two',
-            component: CreateStockStepTwoComponent,
+            path: 'list',
+            data: { animation: 'Stock Page' },
+            component: StockListComponent,
           },
           {
-            path: 'step-three',
-            component: CreateStockStepThreeComponent,
-          },
-          {
-            path: 'success',
-            component: CreateStockSuccessComponent
-          },
+            path: 'edit/:id',
+            data: { animation: 'Edit Stock Page' },
+            component: EditStockComponent
+
+          }
         ]
       },
       {
-        path: 'list',
-        data: { animation: 'Stock Page' },
-        component: StockListComponent,
-      },
-      {
-        path: 'edit/:id',
-        data: { animation: 'Edit Stock Page' },
-        component: EditStockComponent
+        path: 'users',
+        data: { animation: 'Users Page' },
+        component: UsersComponent,
+        children: [{
+          path: 'list',
+          data: { animation: 'Users List Page' },
+          component: UserListComponent
 
+        },
+        {
+          path: 'invite',
+          component: InviteUsersComponent,
+          children: [
+            {
+              path: 'invite-one-user',
+              component: InviteOneUserComponent,
+              children: [
+                {
+                  path: 'step-one',
+                  component: InviteOneUserStepOneComponent
+                },
+                {
+                  path: 'step-two',
+                  component: InviteOneUserStepTwoComponent
+                },
+                {
+                  path: 'step-three',
+                  component: InviteOneUserStepThreeComponent
+
+                }
+              ]
+            },
+            {
+              path: 'invite-users',
+              component: InviteUsersComponent
+            }
+          ]
+        }
+
+        ]
       }
     ]
   },
   {
-    path: 'users',
-    data: { animation: 'Users Page' },
-    component: UsersComponent,
-    children: [{
-      path: 'list',
-      data: { animation: 'Users List Page' },
-      component: UserListComponent
-
-    },
-    {
-      path: 'invite',
-      component: InviteUsersComponent,
-      children: [
-        {
-          path: 'invite-one-user',
-          component: InviteOneUserComponent,
-          children: [
-            {
-              path: 'step-one',
-              component: InviteOneUserStepOneComponent
-            },
-            {
-              path: 'step-two',
-              component: InviteOneUserStepTwoComponent
-            },
-            {
-              path: 'step-three',
-              component: InviteOneUserStepThreeComponent
-
-            }
-          ]
-        },
-        {
-          path: 'invite-users',
-          component: InviteUsersComponent
-        }
-      ]
-    }
-
-    ]
-  }
-]
-  },
-{
-  path: 'signout',
+    path: 'signout',
     data: { animation: 'Signout Page' },
-  component: SignoutPageComponent
-},
+    component: SignoutPageComponent
+  },
 
 
 ];

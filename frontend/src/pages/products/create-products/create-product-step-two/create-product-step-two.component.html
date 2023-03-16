@@ -1,0 +1,30 @@
+<div class="file-input-wrapper">
+    <input type="file" #fileInput (change)="onFileSelected($event)">
+    <button class="image-upload-button" (click)="onBrowseClick()">Browse</button>
+</div>
+
+<app-ford-container title="2. Upload Product Image">
+    <div class="holder">
+
+        <div class="image-upload-container" (mouseover)="onImageHover(true)" (mouseleave)="onImageHover(false)"
+            [ngClass]="{'overlay': showOverlay, 'hover-active': isImageUploaded}">
+
+            <div class="image-upload-placeholder" *ngIf="!imageUrl">
+                <i class="pi pi-cloud-upload"></i>
+                <div class="image-upload-text">
+                    Drag and drop here<br>or<br>
+                    <button class="image-upload-button" (click)="onBrowseClick()">Browse</button>
+                </div>
+            </div>
+
+            <img [src]="imageUrl" *ngIf="imageUrl" (click)="onBrowseClick()" class="image-upload-preview">
+        </div>
+
+        <div class="button-holders">
+            <button type="button" [routerLink]="'/dashboard/products/create/step-one'"
+                class="submit-button">Back</button>
+            <button (click)="onSubmit()" class="submit-button">Next</button>
+        </div>
+
+    </div>
+</app-ford-container>

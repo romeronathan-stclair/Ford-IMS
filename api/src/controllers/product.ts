@@ -132,8 +132,9 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     }
 
     if (name) {
-        query["name"] = name;
+        query["name"] = { $regex: name, $options: "i" };
     }
+
 
     if (partNumber) {
         query["partNumber"] = partNumber;
@@ -145,10 +146,6 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     let response = {
         products: products,
         productCount: productCount
-    }
-
-    if (!products || products.length == 0) {
-        return res.status(500).json("No Products found");
     }
 
     return res.status(200).json(response);

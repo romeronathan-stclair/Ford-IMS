@@ -22,16 +22,6 @@
     </div>
     <div class="card">
         <mat-card *ngFor="let product of products">
-            <div class="low-product-label-wrapper" *ngIf="product.currentCount <= product.lowproduct">
-                <div class="low-product-label">LOW product</div>
-            </div>
-            <div class="moderate-product-label-wrapper"
-                *ngIf="product.currentCount <= product.moderateproduct && product.currentCount > product.lowproduct">
-                <div class="moderate-product-label">MODERATE product</div>
-            </div>
-            <div class="high-product-label-wrapper" *ngIf="product.currentCount > product.moderateproduct">
-                <div class="high-product-label">HIGH product</div>
-            </div>
             <img class="product-img" mat-card-image [src]="product.imageURL" alt="{{product.name}}">
             <mat-card-title>{{product.name}}</mat-card-title>
             <mat-card-subtitle>{{product.marketLocation}}</mat-card-subtitle>
@@ -43,20 +33,10 @@
     </div>
 </div>
 <div class="paginator-holder">
-    <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/product/create/step-one'" type="submit"
+    <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/products/create/step-one'" type="submit"
         class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New product</button>
     <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
     </mat-paginator>
     <button type="submit" class="general-button">View Event Log</button>
 </div>
-<p-confirmDialog #cd [style]="{width: '30vw'}">
-    <ng-template pTemplate="header">
-        <h3></h3>
-    </ng-template>
-
-    <ng-template pTemplate="footer">
-        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
-        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
-    </ng-template>
-</p-confirmDialog>

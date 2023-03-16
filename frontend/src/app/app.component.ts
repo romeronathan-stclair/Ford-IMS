@@ -31,6 +31,9 @@ export class AppComponent {
         if (event.url !== '/dashboard/stock/create/step-one' && event.url !== '/dashboard/stock/create/step-two' && event.url !== '/dashboard/stock/create/step-three') {
           this.sharedService.clearData('stock');
         }
+        if (event.url !== '/dashboard/products/create/step-one' && event.url !== '/dashboard/products/create/step-two' && event.url !== '/dashboard/products/create/step-three' && event.url !== '/dashboard/products/create/step-four') {
+          this.sharedService.clearData('product');
+        }
       }
     });
   }
