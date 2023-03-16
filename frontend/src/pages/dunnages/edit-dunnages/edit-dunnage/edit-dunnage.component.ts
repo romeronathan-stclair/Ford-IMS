@@ -47,7 +47,7 @@ export class EditDunnageComponent {
       await this.loadDepartments();
       this.route.params.subscribe(params => {
         this.dunnageId = params['id'];
-        this.loadStockData();
+        this.loadDunnageData();
       });
       console.log("DUNNAGE ID => " + this.dunnageId);
     }
@@ -68,7 +68,7 @@ export class EditDunnageComponent {
 
     }
 
-    loadStockData() {
+    loadDunnageData() {
       this.spinnerService.show();
       let query = "?dunnageId=" + this.dunnageId;
 

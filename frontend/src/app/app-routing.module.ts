@@ -45,6 +45,9 @@ import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit
 import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-router/edit-dunnage-router.component';
 import { ViewDunnageComponent } from 'src/pages/dunnages/view-dunnage/view-dunnage.component';
 import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.component';
+import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
+import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
+import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
 
 const routes: Routes = [
   {
@@ -179,11 +182,23 @@ const routes: Routes = [
             path: 'edit',
             data: { animation: 'Edit Stock Page' },
             component: EditStockComponent,
-            // children: [
-            //   {
-
-            //   }
-            // ],
+            children: [
+              {
+                path: 'info/:id',
+                data: { animation: 'Edit Stock Page' },
+                component: EditStockInfoComponent,
+              },
+              {
+                path: 'department-location/:id',
+                data: { animation: 'Edit Stock Page' },
+                component: EditStockDepartmentComponent,
+              },
+              {
+                path: 'image/:id',
+                data: { animation: 'Edit Stock Page' },
+                component: EditStockImageComponent,
+              }
+            ],
           },
           {
             path: 'view-info/:id',

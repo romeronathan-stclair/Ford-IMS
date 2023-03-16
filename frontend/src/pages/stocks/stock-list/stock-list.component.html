@@ -32,7 +32,7 @@
         <mat-card-title>{{stock.name}}</mat-card-title>
         <mat-card-subtitle>{{stock.marketLocation}}</mat-card-subtitle>
       <mat-card-actions>
-        <button [routerLink]="'/dashboard/stock/edit/info' + stock._id" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+        <button [routerLink]="'/dashboard/stock/edit/info/' + stock._id" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
         <button [routerLink]="'/dashboard/stock/view-info/' + stock._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
       </mat-card-actions>
     </mat-card>
