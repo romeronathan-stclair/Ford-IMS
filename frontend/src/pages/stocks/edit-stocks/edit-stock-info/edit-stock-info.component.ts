@@ -148,6 +148,61 @@ export class EditStockInfoComponent {
     }
 
     onSubmit() {
+      if (!this.stockForm.valid) {
+        this.displayValidationErrors = true;
+        this.spinnerService.hide();
+        return;
+      }
+
+      this.spinnerService.show();
+
+      let totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
+      let moderateStock = 0;
+
+      if (this.roughStockChecked === true) {
+        moderateStock = this.stockForm.value.lowStock * 2;
+      } else {
+        moderateStock = this.stockForm.value.lowStock + 2;
+      }
+
+      const stock = {
+        name: this.stockForm.value.name,
+        partNumber: this.stockForm.value.partNumber,
+        stockQtyPerTote: this.stockForm.value.stockQtyPerTote || null,
+        totesPerSkid: this.stockForm.value.totesPerSkid || null,
+        totalStockPerSkid: totalStock || this.stockForm.value.totalStockPerSkid ,
+        lowStock: this.stockForm.value.lowStock,
+        moderateStock: moderateStock,
+        roughStock: this.roughStockChecked,
+        isSubAssembly: this.subAssemblyChecked,
+        stockId: this.stockId
+      }
+
+      this.stockService.editStock(stock)
+      .subscribe({
+        next: (data: any) => {
+          this.spinnerService.hide();
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'success',
+            summary: `Success: `,
+            detail: `Dunnage data updated successfully.`,
+          });
+
+          this.router.navigate(['/dashboard/stock/list']);
+        },
+        error: (error: any) => {
+          this.spinnerService.hide();
+          console.log(error);
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'error',
+            summary: `Error: `,
+            detail: `Failed to update Stock data.`,
+          });
+          return;
+        }
+      });
 
     }
 

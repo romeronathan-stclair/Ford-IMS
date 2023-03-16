@@ -42,7 +42,7 @@ export class StockService {
 
   editStock(stock: any): Observable<any> {
     return this.http.put(`${this.endPoint}/stock`, stock, {
-      headers: this.baseHeaders,
+      headers: this.multiFormDataHeaders,
       observe: 'response',
       withCredentials: true
     });

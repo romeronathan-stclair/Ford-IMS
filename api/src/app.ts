@@ -137,7 +137,7 @@ router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productContro
 //stock routes
 router.post("/auth/stock", stockController.createStock);
 router.get("/auth/stock", authMiddleware.isAuthenticated, stockController.getStock);
-router.put("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.updateStock);
+router.put("/auth/stock", authMiddleware.isAuthenticated, stockController.updateStock);
 router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.deleteStock);
 
 //dunnage routes

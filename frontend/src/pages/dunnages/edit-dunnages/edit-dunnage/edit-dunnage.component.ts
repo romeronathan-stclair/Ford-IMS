@@ -163,7 +163,7 @@ export class EditDunnageComponent {
           this.messageService.add({
             severity: 'error',
             summary: `Error: `,
-            detail: `Failed to update department data.`,
+            detail: `Failed to update Dunnage data.`,
           });
           return;
         }

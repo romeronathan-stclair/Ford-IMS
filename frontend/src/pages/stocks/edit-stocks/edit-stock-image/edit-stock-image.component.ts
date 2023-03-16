@@ -99,7 +99,40 @@ export class EditStockImageComponent {
   }
 
   onSubmit() {
+    const formData = new FormData();
 
+    formData.append('stockId', this.stockId);
+
+    if (this.file) {
+      formData.append('file', this.file);
+    }
+
+    this.spinnerService.show();
+
+    this.stockService.editStock(formData)
+    .subscribe({
+      next: (data: any) => {
+        this.spinnerService.hide();
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'success',
+          summary: `Success: `,
+          detail: `Stock updated successfully.`,
+        });
+        this.router.navigate(['/dashboard/stock/edit/info/' + this.stockId]);
+      },
+      error: (error: any) => {
+        this.spinnerService.hide();
+        console.log(error);
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'error',
+          summary: `Error: `,
+          detail: `Failed to update Stock data.`,
+        });
+        return;
+      }
+    })
   }
 
 }

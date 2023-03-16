@@ -107,6 +107,45 @@ export class EditStockDepartmentComponent {
     }
 
     onSubmit() {
+      if (!this.stockForm.valid) {
+        this.displayValidationErrors = true;
+        this.spinnerService.hide();
+        return;
+      }
+
+      this.spinnerService.show();
+
+      const stock = {
+        marketLocation: this.stockForm.value.marketLocation,
+        departmentId: this.selectedDepartment._id,
+        stockId: this.stockId
+      }
+
+      this.stockService.editStock(stock)
+      .subscribe({
+        next: (data: any) => {
+          this.spinnerService.hide();
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'success',
+            summary: `Success: `,
+            detail: `Dunnage data updated successfully.`,
+          });
+
+          this.router.navigate(['/dashboard/stock/edit/info/' + this.stockId]);
+        },
+        error: (error: any) => {
+          this.spinnerService.hide();
+          console.log(error);
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'error',
+            summary: `Error: `,
+            detail: `Failed to update Stock data.`,
+          });
+          return;
+        }
+      });
 
     }
 }
