@@ -2,28 +2,28 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { DunnageService } from 'src/services/dunnage.service';
+import { StockService } from 'src/services/stock.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 
 @Component({
-  selector: 'app-edit-dunnage',
-  templateUrl: './edit-dunnage.component.html',
-  styleUrls: ['./edit-dunnage.component.scss']
+  selector: 'app-edit-stock-department',
+  templateUrl: './edit-stock-department.component.html',
+  styleUrls: ['./edit-stock-department.component.scss']
 })
-export class EditDunnageComponent {
+export class EditStockDepartmentComponent {
   public displayValidationErrors: boolean = false;
-  dunnageForm: FormGroup;
+  stockForm: FormGroup;
   activePlantId: any;
   departments: any[] = [];
   selectedDepartment: any;
-  dunnageId: string = '';
+  stockId: string = '';
   departmentId: string = '';
 
   constructor(
-    private dunnageService: DunnageService,
+    private stockService: StockService,
     private departmentService: DepartmentService,
     private formBuilder: FormBuilder,
     private sharedService: SharedService,
@@ -32,10 +32,7 @@ export class EditDunnageComponent {
     private spinnerService: SpinnerService,
     private authService: AuthService,
     private messageService: MessageService) {
-        this.dunnageForm = this.formBuilder.group({
-          name: new FormControl(''),
-          skidQuantity: new FormControl(''),
-          lowStock: new FormControl(''),
+        this.stockForm = this.formBuilder.group({
           marketLocation: new FormControl(''),
           department: new FormControl('', [Validators.required]),
         });
@@ -46,10 +43,9 @@ export class EditDunnageComponent {
       this.activePlantId = this.authService.user.activePlantId;
       await this.loadDepartments();
       this.route.params.subscribe(params => {
-        this.dunnageId = params['id'];
-        this.loadDunnageData();
+        this.stockId = params['id'];
+        this.loadStockData();
       });
-      console.log("DUNNAGE ID => " + this.dunnageId);
     }
 
     async loadDepartments() {
@@ -68,26 +64,21 @@ export class EditDunnageComponent {
 
     }
 
-    loadDunnageData() {
+    loadStockData() {
       this.spinnerService.show();
-      let query = "?dunnageId=" + this.dunnageId;
 
-      this.dunnageService.getDunnages(query)
+      let query = "?stockId=" + this.stockId;
+
+      this.stockService.getStocks(query)
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log(data.body.dunnages[0]);
           if (data) {
-            // populate the form controls with the department data
-            this.dunnageForm.patchValue({
-              name: data.body.dunnages[0].name,
-              skidQuantity: data.body.dunnages[0].skidQuantity,
-              lowStock: data.body.dunnages[0].lowStock,
-              marketLocation: data.body.dunnages[0].marketLocation,
+            this.stockForm.patchValue({
+              marketLocation: data.body.stocks[0].marketLocation,
             });
 
-            this.departmentId = data.body.dunnages[0].departmentId;
-            console.log("DEPARTMENT ID => " + this.departmentId);
+            this.departmentId = data.body.stocks[0].departmentId;
 
             for (let i = 0; i < this.departments.length; i++) {
               if (this.departments[i]._id === this.departmentId) {
@@ -107,7 +98,7 @@ export class EditDunnageComponent {
           this.messageService.add({
             severity: 'error',
             summary: `Error: `,
-            detail: `Failed to get dunnage data.`,
+            detail: `Failed to get stock data.`,
           });
           return;
         }
@@ -115,12 +106,8 @@ export class EditDunnageComponent {
 
     }
 
-    updateImage() {
-      this.router.navigate(['/dashboard/dunnage/edit/image/', this.dunnageId]);
-    }
-
     onSubmit() {
-      if (!this.dunnageForm.valid) {
+      if (!this.stockForm.valid) {
         this.displayValidationErrors = true;
         this.spinnerService.hide();
         return;
@@ -128,25 +115,16 @@ export class EditDunnageComponent {
 
       this.spinnerService.show();
 
-      let moderateStock = this.dunnageForm.value.lowStock * 2;
-
-      const dunnage = {
-        name: this.dunnageForm.value.name,
-        skidQuantity: this.dunnageForm.value.skidQuantity,
-        lowStock: this.dunnageForm.value.lowStock,
-        moderateStock: moderateStock,
-        marketLocation: this.dunnageForm.value.marketLocation,
+      const stock = {
+        marketLocation: this.stockForm.value.marketLocation,
         departmentId: this.selectedDepartment._id,
-        dunnageId: this.dunnageId
+        stockId: this.stockId
       }
 
-      this.sharedService.setData(dunnage);
-
-      this.dunnageService.editDunnage(dunnage)
+      this.stockService.editStock(stock)
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log(data);
           this.messageService.clear();
           this.messageService.add({
             severity: 'success',
@@ -154,7 +132,7 @@ export class EditDunnageComponent {
             detail: `Dunnage data updated successfully.`,
           });
 
-          this.router.navigate(['/dashboard/dunnage/list']);
+          this.router.navigate(['/dashboard/stock/edit/info/' + this.stockId]);
         },
         error: (error: any) => {
           this.spinnerService.hide();
@@ -163,13 +141,11 @@ export class EditDunnageComponent {
           this.messageService.add({
             severity: 'error',
             summary: `Error: `,
-            detail: `Failed to update Dunnage data.`,
+            detail: `Failed to update Stock data.`,
           });
           return;
         }
       });
 
-
     }
-
 }

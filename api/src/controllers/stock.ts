@@ -169,18 +169,9 @@ export const getStock = async (req: Request, res: Response) => {
 
 //update Stock
 export const updateStock = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
-    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
-    await check("partNumber", "partNumber is not valid").isLength({ min: 1 }).run(req);
-    await check("stockQtyPerTote", "stockQtyPerTote is not valid").isLength({ min: 1 }).run(req);
-    await check("totesPerSkid", "totesPerSkid is not valid").isLength({ min: 1 }).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
-    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
+    await check("stockId", "stockId is not valid").isLength({ min: 1 }).run(req);
 
-    console.log(req.params.id);
-
-    const stockId = req.params.id;
+    const stockId = req.body.stockId;
 
     if (stockId === undefined) {
         return res.status(500).json("Stock Id Required.");
@@ -205,6 +196,9 @@ export const updateStock = async (req: Request, res: Response) => {
     })) as DepartmentDocument;
 
 
+    if (!department) {
+        return res.status(500).json("Department not found");
+    }
 
     stock.name = req.body.name || stock.name;
     stock.partNumber = req.body.partNumber || stock.partNumber;
@@ -217,8 +211,8 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
 
-    if (req.body.files) {
-        const image = req.body.files.file;
+    if (req.files) {
+        const image = req.files.file;
 
         const imageRequest: ImageRequest = {
             itemId: stock._id.toString(),

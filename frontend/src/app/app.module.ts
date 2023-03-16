@@ -64,6 +64,11 @@ import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunn
 import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-image/edit-dunnage-image.component';
 import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-router/edit-dunnage-router.component';
 import { ViewDunnageComponent } from 'src/pages/dunnages/view-dunnage/view-dunnage.component';
+import { EditStockComponent } from 'src/pages/stocks/edit-stocks/edit-stock/edit-stock.component';
+import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.component';
+import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
+import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
+import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
 
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
@@ -71,6 +76,7 @@ import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-
 import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
 import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
 import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +124,12 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     EditDunnageComponent,
     EditDunnageImageComponent,
     EditDunnageRouterComponent,
-    ViewDunnageComponent
+    ViewDunnageComponent,
+    EditStockComponent,
+    ViewStockComponent,
+    EditStockInfoComponent,
+    EditStockDepartmentComponent,
+    EditStockImageComponent
   ],
   imports: [
     BrowserModule,

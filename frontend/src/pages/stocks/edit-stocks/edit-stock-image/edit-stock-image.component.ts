@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { DunnageService } from 'src/services/dunnage.service';
+import { StockService } from 'src/services/stock.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
@@ -9,17 +9,17 @@ import { DepartmentService } from 'src/services/department.service';
 import { AuthService } from 'src/services/auth.service';
 
 @Component({
-  selector: 'app-edit-dunnage-image',
-  templateUrl: './edit-dunnage-image.component.html',
-  styleUrls: ['./edit-dunnage-image.component.scss']
+  selector: 'app-edit-stock-image',
+  templateUrl: './edit-stock-image.component.html',
+  styleUrls: ['./edit-stock-image.component.scss']
 })
-export class EditDunnageImageComponent {
+export class EditStockImageComponent {
   public displayValidationErrors: boolean = false;
   public imageUrl: string = '';
   file: any;
   public showOverlay: boolean = false;
   public isImageUploaded: boolean = false;
-  dunnageId: string = '';
+  stockId: string = '';
 
   @ViewChild('fileInput', { static: true }) fileInput!: ElementRef;
 
@@ -27,7 +27,7 @@ export class EditDunnageImageComponent {
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService,
-    private dunnageService: DunnageService,
+    private stockService: StockService,
     private sharedService: SharedService,
     private spinnerService: SpinnerService,
     private formBuilder: FormBuilder,
@@ -38,8 +38,8 @@ export class EditDunnageImageComponent {
   async ngOnInit() {
     this.spinnerService.showHide();
     this.route.params.subscribe(params => {
-      this.dunnageId = params['id'];
-      this.loadDunnageData();
+      this.stockId = params['id'];
+      this.loadStockData();
     })
   }
 
@@ -69,17 +69,15 @@ export class EditDunnageImageComponent {
     fileInput.click();
   }
 
-  loadDunnageData() {
+  loadStockData() {
     this.spinnerService.show();
-    let query = "?dunnageId=" + this.dunnageId;
+    let query = "?stockId=" + this.stockId;
 
-    this.dunnageService.getDunnages(query)
+    this.stockService.getStocks(query)
     .subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        this.imageUrl = data.body.dunnages[0].imageURL;
-        console.log(this.imageUrl)
-        console.log(data.body.dunnages[0]);
+        this.imageUrl = data.body.stocks[0].imageURL;
       },
       error: (error: any) => {
         this.spinnerService.hide();
@@ -92,35 +90,36 @@ export class EditDunnageImageComponent {
         });
         return;
       }
-    });
+    })
 
   }
 
-  dunnageInfo() {
-    this.router.navigate(['/dashboard/dunnage/edit/info/' + this.dunnageId]);
+  stockInfo() {
+    this.router.navigate(['/dashboard/stock/edit/info/' + this.stockId]);
   }
 
   onSubmit() {
     const formData = new FormData();
 
-    formData.append('dunnageId', this.dunnageId);
-
+    formData.append('stockId', this.stockId);
 
     if (this.file) {
       formData.append('file', this.file);
     }
 
     this.spinnerService.show();
-    this.dunnageService.editDunnage(formData).subscribe({
+
+    this.stockService.editStock(formData)
+    .subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
         this.messageService.clear();
         this.messageService.add({
           severity: 'success',
           summary: `Success: `,
-          detail: `Dunnage updated successfully.`,
+          detail: `Stock updated successfully.`,
         });
-        this.router.navigate(['/dashboard/dunnage/edit/info/' + this.dunnageId]);
+        this.router.navigate(['/dashboard/stock/edit/info/' + this.stockId]);
       },
       error: (error: any) => {
         this.spinnerService.hide();
@@ -129,14 +128,11 @@ export class EditDunnageImageComponent {
         this.messageService.add({
           severity: 'error',
           summary: `Error: `,
-          detail: `Failed to update dunnage data.`,
+          detail: `Failed to update Stock data.`,
         });
         return;
       }
-    });
+    })
   }
-
-
-
 
 }

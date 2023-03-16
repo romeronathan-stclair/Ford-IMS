@@ -1,0 +1,112 @@
+@import "src/styles.scss";
+.holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    height: 70vh;
+    @include column-lg-break {
+        padding: 30px;
+    }
+}
+
+.button-holders {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.image-upload-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #000;
+  width: 40%;
+  height: 50%;
+  position: relative;
+}
+
+.image-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.image-upload-placeholder i {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.image-upload-text {
+  font-size: 18px;
+  text-align: center;
+}
+
+.image-upload-button {
+  margin-top: 16px;
+  font-size: 16px;
+  padding: 8px 16px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.image-upload-preview {
+  width: 100%;
+  height: 100%;
+}
+
+.file-input-wrapper {
+  position: absolute;
+  visibility: hidden;
+}
+
+.file-input-wrapper input[type="file"] {
+  visibility: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.replace-button {
+  padding: 8px 16px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.image-upload-container.overlay .image-overlay {
+  display: flex;
+}
+
+.image-upload-container.overlay .image-upload-preview {
+  filter: brightness(0.3);
+}
+
+.hover-active:hover .image-overlay {
+  display: flex;
+}
+
+.hover-active:hover .image-upload-preview {
+  filter: brightness(1);
+}
