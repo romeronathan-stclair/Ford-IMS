@@ -132,7 +132,85 @@ export class CreateProductStepFourComponent {
 
   }
 
-  onSubmit() {
+  submit() {
 
+    const formData = new FormData();
+
+    if (this.request.file) {
+      const file = this.imageUrlToFile(this.request.file);
+      console.log(file);
+      formData.append('file', file);
+    }
+
+    const createProductRequest = {
+      departmentId: this.request.product.department._id,
+      productId: this.request.product._id,
+      name: this.request.product.name,
+      partNumber: this.request.product.partNumber,
+      stocks: this.request.product.stocks ? this.request.product.stocks : [],
+      dunnages: this.request.product.dunnages ? this.request.product.dunnages : [],
+
+    } as any;
+
+    for (const key in createProductRequest) {
+      formData.append(key, createProductRequest[key]);
+    }
+
+
+    this.productService.createProduct(this.request).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.spinnerService.hide();
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product created successfully' });
+        this.router.navigate(['/dashboard/products/list']);
+      }, error: (error: any) => {
+        console.log(error);
+        this.spinnerService.hide();
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error creating product' });
+      }
+
+    });
+
+
+
+
+
+
+
+  }
+  // Function to convert imageUrl (base64 string) back to a File
+  imageUrlToFile(imageUrl: string, filename: string = ""): File {
+    // Remove data URL prefix (if present)
+    const base64 = imageUrl.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, '');
+
+    // Convert base64 string to ArrayBuffer
+    const arrayBuffer = this.base64ToArrayBuffer(base64);
+    const contentType = this.getContentTypeFromImageUrl(imageUrl);
+    // Create a Blob from the ArrayBuffer
+    const blob = new Blob([arrayBuffer], { type: contentType });
+
+    // Create a File object from the Blob
+    const file = new File([blob], filename, { type: contentType });
+
+    return file;
+  }
+
+
+  base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = window.atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+
+    return bytes.buffer;
+  }
+  getContentTypeFromImageUrl(imageUrl: string): string {
+    const contentTypeRegex = /data:([^;]+);/i;
+    const match = contentTypeRegex.exec(imageUrl);
+
+    return match ? match[1] : '';
   }
 }
