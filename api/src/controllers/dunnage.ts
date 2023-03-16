@@ -146,7 +146,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
     await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
 
-    const dunnageId = req.params.id;
+    const dunnageId = req.body.dunnageId;
 
     if (dunnageId === undefined) {
         return res.status(500).json("Dunnage Id required");

@@ -143,7 +143,7 @@ router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController
 //dunnage routes
 router.post("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.createDunnage);
 router.get("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.getDunnage);
-router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
+router.put("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
 // product dunnage routes

@@ -60,6 +60,7 @@ import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/creat
 import { CreateDunnageStepOneComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-one/create-dunnage-step-one.component';
 import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-two/create-dunnage-step-two.component';
 import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
+import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnage/edit-dunnage.component';
 
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
@@ -110,7 +111,8 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     CreateDunnageComponent,
     CreateDunnageStepOneComponent,
     CreateDunnageStepTwoComponent,
-    CreateDunnageSuccessComponent
+    CreateDunnageSuccessComponent,
+    EditDunnageComponent
   ],
   imports: [
     BrowserModule,
