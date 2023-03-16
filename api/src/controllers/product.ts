@@ -2,6 +2,8 @@ import { json, NextFunction, Request, Response } from "express";
 import { User, UserDocument, Department, DepartmentDocument, Event, Product, ProductDocument } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { Dunnage, DunnageDocument } from "../models/dunnage";
+import { ProductStock, ProductStockDocument } from "../models/productStock";
+import { ProductDunnage, ProductDunnageDocument } from "../models/productDunnage";
 import { check, validationResult } from "express-validator";
 import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
@@ -10,6 +12,8 @@ import { Types } from "mongoose";
 import { ImageRequest } from "../type/imageRequest";
 import { uploadImage } from "./image";
 import env from "../utils/env";
+import { createProductStock } from "./productStock";
+import { createProductDunnage } from "./productDunnage";
 
 //create Product
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -92,6 +96,43 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         product.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
+    if (req.body.stocks) {
+        const stocks = req.body.stocks;
+
+        for (const stock of stocks) {
+            const productStock: ProductStockDocument = new ProductStock({
+                productId: product._id,
+                stockId: stock._id,
+                departmentId: departmentId,
+                usePerProduct: stock.usePerProduct,
+                isDeleted: false
+            });
+
+            try {
+                const savedProductStock = await productStock.save();
+                console.log(`Saved product stock ${savedProductStock._id}`);
+              } catch (error) {
+                console.error(`Error saving product stock: ${error}`);
+              }
+        }
+    }
+
+    if (req.body.dunnage) {
+        const dunnage = req.body.dunnage;
+    
+        const newProductDunnage = new ProductDunnage({
+            productId: product._id,
+            dunnageId: dunnage._id,
+            departmentId: departmentId,
+            isDeleted: false,
+        });
+
+        try {
+            await newProductDunnage.save();
+        } catch (err) {
+            console.log("Error saving dunnage" + err);
+        }
+    }    
 
 
     try {

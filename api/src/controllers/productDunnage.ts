@@ -49,9 +49,11 @@ export const createProductDunnage = async (req: Request, res: Response) => {
 
     const newProductDunnage = new ProductDunnage({
         productId: req.body.productId,
+        departmentId: req.body.departmentId,
         dunnageId: req.body.dunnageId,
         isDeleted: false,
     });
+
     const response = {
         productDunnage: newProductDunnage,
         message: "ProductDunnage created successfully"
