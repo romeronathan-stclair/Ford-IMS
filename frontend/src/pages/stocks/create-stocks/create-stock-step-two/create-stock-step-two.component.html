@@ -7,8 +7,7 @@
           id="marketLocation-input" aria-describedby="marketLocationHelp" required />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
-        stockForm.controls['marketLocation'].dirty ||
-        stockForm.controls['marketLocation'].touched
+        stockForm.controls['marketLocation'].touched && !stockForm.controls['marketLocation'].dirty
       ">
           <span *ngIf="stockForm.controls['marketLocation'].hasError('required')">Market Location is required</span>
         </mat-error>
@@ -16,13 +15,12 @@
 
       <div>
         <div *ngIf="departments.length > 0" class="dropdown">
-          <p-dropdown formControlName="department" (onChange)="changeDepartment($event)" placeholder="Sort by Department"
+          <p-dropdown formControlName="department" (onChange)="changeDepartment($event)" placeholder="Select Department"
             optionLabel="departmentName" [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
         </div>
         <mat-error class="field-validation-error" *ngIf="
           displayValidationErrors ||
-          stockForm.controls['department'].dirty ||
-          stockForm.controls['department'].touched
+          stockForm.controls['department'].touched && !stockForm.controls['department'].dirty
         ">
           <span *ngIf="stockForm.controls['department'].hasError('required')">Department is required</span>
         </mat-error>

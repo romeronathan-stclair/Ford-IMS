@@ -1,11 +1,11 @@
+<h1 class="page-header">Edit Dunnage Information</h1>
 <div class="file-input-wrapper">
   <input type="file" #fileInput (change)="onFileSelected($event)">
   <button class="image-upload-button" (click)="onBrowseClick()">Browse</button>
 </div>
 
-<app-ford-container title="3. Upload Stock Image">
+<app-ford-container>
   <div class="holder">
-
     <div class="image-upload-container"
   (mouseover)="onImageHover(true)"
   (mouseleave)="onImageHover(false)"
@@ -25,9 +25,10 @@
     <button *ngIf="imageUrl" class="image-upload-button" (click)="onBrowseClick()">Change Image</button>
 
     <div class="button-holders">
-      <button type="button" [routerLink]="'/dashboard/stock/create/step-two'" class="submit-button">Back</button>
-      <button (click)="onSubmit()" class="submit-button">Create</button>
+      <button (click)="dunnageInfo()" class="submit-button">Back</button>
+      <button (click)="onSubmit()" class="submit-button">Update</button>
     </div>
 
   </div>
 </app-ford-container>
+

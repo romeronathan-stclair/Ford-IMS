@@ -1,0 +1,20 @@
+<h1 class="page-header">Dunnage Information</h1>
+<app-ford-container *ngIf="dunnage" title="{{dunnage.name}}">
+  <div class="holder">
+
+    <div class="card">
+      <img [src]="dunnage.imageURL" alt="{{dunnage.name}}">
+      <mat-card-title>Department: {{departmentName}}</mat-card-title>
+      <mat-card-title>Skid Quantity: {{dunnage.skidQuantity}}</mat-card-title>
+      <mat-card-title>Market Location: {{dunnage.marketLocation}}</mat-card-title>
+      <mat-card-title>Current Count: {{dunnage.currentCount}}</mat-card-title>
+
+      <div class="button-holders">
+        <button type="button" [routerLink]="'/dashboard/dunnage/list'" class="submit-button">Back</button>
+        <button type="submit" [routerLink]="'/dashboard/dunnage/edit/info/' + dunnageId" class="submit-button">Edit Dunnage</button>
+      </div>
+    </div>
+
+  </div>
+</app-ford-container>
+

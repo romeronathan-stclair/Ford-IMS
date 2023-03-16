@@ -10,6 +10,7 @@ export type DunnageDocument = Document & {
     currentCount?: number;
     lowStock: number;
     moderateStock: number;
+    marketLocation: string;
     imageURL: string;
     isDeleted: boolean;
 };
@@ -39,10 +40,18 @@ const dunnageSchema = new Schema<DunnageDocument>({
         type: Number,
         required: true,
     },
+    marketLocation: {
+        type: String,
+        required: true,
+    },
     isDeleted: {
         type: Boolean,
         required: true,
-    }
+    },
+    imageURL: {
+        type: String,
+        required: false,
+    },
 });
 
 

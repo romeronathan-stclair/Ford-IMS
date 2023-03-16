@@ -6,34 +6,33 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
-import { StockService } from 'src/services/stock.service';
-
+import { DunnageService } from 'src/services/dunnage.service';
 
 @Component({
-  selector: 'app-stock-list',
-  templateUrl: './stock-list.component.html',
-  styleUrls: ['./stock-list.component.scss']
+  selector: 'app-dunnage-list',
+  templateUrl: './dunnage-list.component.html',
+  styleUrls: ['./dunnage-list.component.scss']
 })
-export class StockListComponent {
+export class DunnageListComponent {
   currentPage = 0;
   length = 100;
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
   activePlantId: any;
-  stockForm: FormGroup;
+  dunnageForm: FormGroup;
   selectedDepartment: any;
   departments: any[] = [];
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  stocks: any[] = [];
+  dunnages: any[] = [];
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private departmentService: DepartmentService,
-    private stockService: StockService,
+    private dunnageService: DunnageService,
     private spinnerService: SpinnerService,
     private authService: AuthService) {
-    this.stockForm = new FormGroup({
+    this.dunnageForm = new FormGroup({
       departmentName: new FormControl(''),
     });
   }
@@ -63,30 +62,30 @@ export class StockListComponent {
 
           console.log(departmentIds);
 
-          let stockQuery = "?departmentId=" + departmentIds[1] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+          let dunnageQuery = "?departmentId=" + departmentIds[1] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-          this.stockService.getStocks(stockQuery)
-            .subscribe({
-              next: (data: any) => {
-                console.log(data);
-                this.spinnerService.hide();
-                this.stocks = data.body.stocks;
-                this.length = data.body.stockCount;
-                console.log(this.stocks);
-                this.dataSource = new MatTableDataSource(this.stocks);
+          this.dunnageService.getDunnages(dunnageQuery)
+          .subscribe({
+            next: (data: any) => {
+              console.log(data);
+              this.spinnerService.hide();
+              this.dunnages = data.body.dunnages;
+              this.length = data.body.dunnageCount;
+              console.log(this.dunnages);
+              this.dataSource = new MatTableDataSource(this.dunnages);
+            },
+            error: (error: any) => {
+              this.spinnerService.hide();
+            }
+          });
 
-              },
-              error: (error: any) => {
-                this.spinnerService.hide();
-              }
-            });
         },
         error: (error: any) => {
           console.log(error);
         }
       });
 
-      console.log(this.stocks);
+      console.log(this.dunnages);
   }
 
 
@@ -97,21 +96,21 @@ export class StockListComponent {
   }
 
   searchByName() {
-    const nameControl = this.stockForm.get('stockName');
+    const nameControl = this.dunnageForm.get('dunnageName');
 
     if (nameControl) {
       const name = nameControl.value;
 
       let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-      this.stockService.getStocks(query)
+      this.dunnageService.getDunnages(query)
       .subscribe({
-        next: (data) => {
-          this.length = data.body.stockCount;
-          this.stocks = data.body.stock;
-          this.dataSource = new MatTableDataSource(this.stocks);
+        next: (data: any) => {
+          this.length = data.body.dunnageCount;
+          this.dunnages = data.body.dunnages;
+          this.dataSource = new MatTableDataSource(this.dunnages);
         }
-      })
+      });
     }
   }
 
@@ -124,27 +123,25 @@ export class StockListComponent {
       this.loadData();
     }
     else {
-      let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-      console.log(stockQuery);
-      this.stockService.getStocks(stockQuery).subscribe({
+      let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
+      console.log(dunnageQuery);
+
+      this.dunnageService.getDunnages(dunnageQuery)
+      .subscribe({
         next: (data: any) => {
-          console.log(data);
+          console.log("DUNNAGE DATA => " + data);
           this.spinnerService.hide();
-          this.stocks = data.body.stocks;
-          this.length = data.body.stockCount;
-          this.dataSource = new MatTableDataSource(this.stocks);
-          console.log(this.stocks);
+          this.dunnages = data.body.dunnages;
+          this.length = data.body.dunnageCount;
+          this.dataSource = new MatTableDataSource(this.dunnages);
+          console.log(this.dunnages);
         },
         error: (error: any) => {
-          console.log(error);
           this.spinnerService.hide();
         }
       });
     }
   }
-
-
-
 
 
 }

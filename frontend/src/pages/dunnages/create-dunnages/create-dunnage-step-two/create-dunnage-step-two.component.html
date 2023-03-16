@@ -3,9 +3,8 @@
   <button class="image-upload-button" (click)="onBrowseClick()">Browse</button>
 </div>
 
-<app-ford-container title="3. Upload Stock Image">
+<app-ford-container title="2. Upload Dunnage Image">
   <div class="holder">
-
     <div class="image-upload-container"
   (mouseover)="onImageHover(true)"
   (mouseleave)="onImageHover(false)"
@@ -25,9 +24,10 @@
     <button *ngIf="imageUrl" class="image-upload-button" (click)="onBrowseClick()">Change Image</button>
 
     <div class="button-holders">
-      <button type="button" [routerLink]="'/dashboard/stock/create/step-two'" class="submit-button">Back</button>
+      <button type="button" [routerLink]="'/dashboard/dunnage/create/step-one'" class="submit-button">Back</button>
       <button (click)="onSubmit()" class="submit-button">Create</button>
     </div>
 
   </div>
 </app-ford-container>
+

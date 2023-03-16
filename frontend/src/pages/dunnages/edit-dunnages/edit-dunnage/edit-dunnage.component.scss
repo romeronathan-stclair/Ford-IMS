@@ -1,0 +1,32 @@
+@import "src/styles.scss";
+.holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    min-height: 70vh;
+    max-width: 100%;
+}
+.button-holders {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-self: center !important;
+    justify-self: center !important;
+}
+.container-holder {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.change-image-button {
+  width: 100%;
+}
