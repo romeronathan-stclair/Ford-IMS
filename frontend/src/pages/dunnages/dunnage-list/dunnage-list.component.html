@@ -33,7 +33,7 @@
         <mat-card-subtitle>{{dunnage.marketLocation}}</mat-card-subtitle>
       <mat-card-actions>
         <button [routerLink]="'/dashboard/dunnage/edit/info/' + dunnage._id" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
-        <button mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+        <button [routerLink]="'/dashboard/dunnage/view-info/' + dunnage._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -42,7 +42,8 @@ import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnage
 import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
 import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage/edit-dunnage.component';
 import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-image/edit-dunnage-image.component';
-import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnage-router/edit-dunnage-router.component';
+import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-router/edit-dunnage-router.component';
+import { ViewDunnageComponent } from 'src/pages/dunnages/view-dunnage/view-dunnage.component';
 
 const routes: Routes = [
   {
@@ -209,6 +210,11 @@ const routes: Routes = [
             path: 'list',
             data: { animation: 'Dunnage Page' },
             component: DunnageListComponent,
+          },
+          {
+            path: 'view-info/:id',
+            data: { animation: 'View Dunnage Page' },
+            component: ViewDunnageComponent
           },
           {
             path: 'edit',
