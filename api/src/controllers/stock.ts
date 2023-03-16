@@ -211,8 +211,8 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
 
-    if (req.body.files) {
-        const image = req.body.files.file;
+    if (req.files) {
+        const image = req.files.file;
 
         const imageRequest: ImageRequest = {
             itemId: stock._id.toString(),

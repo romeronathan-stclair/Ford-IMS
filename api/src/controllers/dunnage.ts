@@ -177,8 +177,8 @@ export const updateDunnage = async (req: Request, res: Response) => {
     dunnage.departmentId = req.body.departmentId || dunnage.departmentId;
     dunnage.marketLocation = req.body.marketLocation || dunnage.marketLocation;
 
-    if (req.body.files) {
-        const image = req.body.files.file;
+    if (req.files) {
+        const image = req.files.file;
 
         const imageRequest: ImageRequest = {
             itemId: dunnage._id.toString(),
