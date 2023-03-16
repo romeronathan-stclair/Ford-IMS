@@ -42,6 +42,7 @@ export class EditDunnageComponent {
     }
 
     async ngOnInit() {
+      this.spinnerService.showHide();
       this.activePlantId = this.authService.user.activePlantId;
       await this.loadDepartments();
       this.route.params.subscribe(params => {
@@ -114,6 +115,10 @@ export class EditDunnageComponent {
 
     }
 
+    updateImage() {
+      this.router.navigate(['/dashboard/dunnage/edit/image/', this.dunnageId]);
+    }
+
     onSubmit() {
       if (!this.dunnageForm.valid) {
         this.displayValidationErrors = true;
@@ -123,12 +128,15 @@ export class EditDunnageComponent {
 
       this.spinnerService.show();
 
+      let moderateStock = this.dunnageForm.value.lowStock * 2;
+
       const dunnage = {
         name: this.dunnageForm.value.name,
         skidQuantity: this.dunnageForm.value.skidQuantity,
         lowStock: this.dunnageForm.value.lowStock,
+        moderateStock: moderateStock,
         marketLocation: this.dunnageForm.value.marketLocation,
-        department: this.selectedDepartment._id,
+        departmentId: this.selectedDepartment._id,
         dunnageId: this.dunnageId
       }
 

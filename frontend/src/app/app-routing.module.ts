@@ -40,7 +40,9 @@ import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/creat
 import { CreateDunnageStepOneComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-one/create-dunnage-step-one.component';
 import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-two/create-dunnage-step-two.component';
 import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
-import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnage/edit-dunnage.component';
+import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage/edit-dunnage.component';
+import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-image/edit-dunnage-image.component';
+import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnage-router/edit-dunnage-router.component';
 
 const routes: Routes = [
   {
@@ -112,7 +114,6 @@ const routes: Routes = [
             path: 'edit/:id',
             data: { animation: 'Edit Plant Page' },
             component: EditPlantPageComponent
-
           }
         ]
       },
@@ -210,10 +211,22 @@ const routes: Routes = [
             component: DunnageListComponent,
           },
           {
-            path: 'edit/:id',
+            path: 'edit',
             data: { animation: 'Edit Dunnage Page' },
-            component: EditDunnageComponent
-          }
+            component: EditDunnageRouterComponent,
+            children: [
+              {
+                path: 'info/:id',
+                data: { animation: 'Edit Dunnage Page' },
+                component: EditDunnageComponent
+              },
+              {
+                path: 'image/:id',
+                data: { animation: 'Edit Dunnage Page' },
+                component: EditDunnageImageComponent
+              }
+            ]
+          },
         ],
       },
       {

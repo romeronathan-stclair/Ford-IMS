@@ -139,12 +139,7 @@ export const getDunnage = async (req: Request, res: Response) => {
 
 //update Dunnage
 export const updateDunnage = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
-    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
-    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
+    await check("dunnageId", "dunnageId is not valid").isLength({ min: 1 }).run(req);
 
     const dunnageId = req.body.dunnageId;
 

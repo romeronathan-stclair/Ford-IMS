@@ -43,7 +43,7 @@ export class DunnageService {
 
   editDunnage(dunnage: any): Observable<any> {
     return this.http.put(`${this.endPoint}/dunnage`, dunnage, {
-      headers: this.baseHeaders,
+      headers: this.multiFormDataHeaders,
       observe: 'response',
       withCredentials: true
     });
