@@ -54,6 +54,21 @@ import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/crea
 import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { DunnagesComponent } from 'src/pages/dunnages/dunnages/dunnages.component';
+import { DunnageListComponent } from 'src/pages/dunnages/dunnage-list/dunnage-list.component';
+import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage/create-dunnage.component';
+import { CreateDunnageStepOneComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-one/create-dunnage-step-one.component';
+import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-two/create-dunnage-step-two.component';
+import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
+import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage/edit-dunnage.component';
+import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-image/edit-dunnage-image.component';
+import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-router/edit-dunnage-router.component';
+import { ViewDunnageComponent } from 'src/pages/dunnages/view-dunnage/view-dunnage.component';
+import { EditStockComponent } from 'src/pages/stocks/edit-stocks/edit-stock/edit-stock.component';
+import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.component';
+import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
+import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
+import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
 
 import { PickListModule } from 'primeng/picklist';
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
@@ -116,7 +131,22 @@ import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dial
     CreateProductStepTwoComponent,
     CreateProductStepThreeComponent,
     CreateProductStepFourComponent,
-    UsePerDialogComponent
+    UsePerDialogComponent,
+    DunnagesComponent,
+    DunnageListComponent,
+    CreateDunnageComponent,
+    CreateDunnageStepOneComponent,
+    CreateDunnageStepTwoComponent,
+    CreateDunnageSuccessComponent,
+    EditDunnageComponent,
+    EditDunnageImageComponent,
+    EditDunnageRouterComponent,
+    ViewDunnageComponent,
+    EditStockComponent,
+    ViewStockComponent,
+    EditStockInfoComponent,
+    EditStockDepartmentComponent,
+    EditStockImageComponent
   ],
   imports: [
     BrowserModule,

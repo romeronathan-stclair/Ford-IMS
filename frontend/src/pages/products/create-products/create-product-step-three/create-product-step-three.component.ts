@@ -132,7 +132,9 @@ export class CreateProductStepThreeComponent {
 
   }
 
-  onSubmit() {
+  submit() {
+
+    this.router.navigate(['/dashboard/products/create/step-four']);
 
   }
 }

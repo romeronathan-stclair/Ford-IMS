@@ -1,5 +1,5 @@
 <div class="container-header">
-    <p>3. Assign Product to Stock</p>
+    <p>4. Assign Product to Dunnage</p>
 
     <img class="container-img" src="/assets/ford-logo.png" />
 
@@ -7,18 +7,18 @@
 <div class="table-holder">
     <div class="pick-list-holder">
         <p-pickList (onMoveToTarget)="openDialog($event)" (onMoveToSource)="moveBack($event)"
-            [showSourceControls]="false" [showTargetControls]="false" [source]="stocks" [target]="targetStocks"
-            sourceHeader="Stock List" targetHeader="Product Stock List" [dragdrop]="true" [responsive]="true"
+            [showSourceControls]="false" [showTargetControls]="false" [source]="dunnages" [target]="targetDunnages"
+            sourceHeader="Dunnage List" targetHeader="Product Dunnage List" [dragdrop]="true" [responsive]="true"
             [sourceStyle]="{'height':'400px'}" [targetStyle]="{'height':'400px'}" filterBy="name"
             sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
-            <ng-template let-stock pTemplate="item">
+            <ng-template let-dunnage pTemplate="item">
                 <div class="pick-list-item-holder">
                     <div class="pick-list-item">
                         <div>
-                            <img class="pick-list-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
+                            <img class="pick-list-img" mat-card-image [src]="dunnage.imageURL" alt="{{dunnage.name}}">
                         </div>
                         <div class="pick-list-list-detail">
-                            <h5 class="mb-2">{{stock.name}}</h5>
+                            <h5 class="mb-2">{{dunnage.name}}</h5>
                             <span class="pick-list-category">{{selectedDepartment.departmentName}}</span>
                         </div>
                     </div>
@@ -31,8 +31,8 @@
     <div class="button-holders">
 
 
-        <button type="button" [routerLink]="'/dashboard/products/create/step-two'" class="submit-button">Cancel</button>
-        <button type="submit" class="submit-button">Next</button>
+        <button type="button" [routerLink]="'/dashboard/products/create/step-three'" class="submit-button">Back</button>
+        <button type="submit" class="submit-button">Submit</button>
     </div>
 </div>
 

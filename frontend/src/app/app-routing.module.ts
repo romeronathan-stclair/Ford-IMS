@@ -24,7 +24,7 @@ import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/crea
 import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
 import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
 import { CreateStockComponent } from 'src/pages/stocks/create-stocks/create-stock/create-stock.component';
-import { EditStockComponent } from 'src/pages/stocks/edit-stock/edit-stock.component';
+import { EditStockComponent } from 'src/pages/stocks/edit-stocks/edit-stock/edit-stock.component';
 import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
 import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
 import { InviteOneUserStepOneComponent } from 'src/pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
@@ -41,6 +41,20 @@ import { CreateProductStepFourComponent } from 'src/pages/products/create-produc
 import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
 import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
 import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
+import { DunnagesComponent } from 'src/pages/dunnages/dunnages/dunnages.component';
+import { DunnageListComponent } from 'src/pages/dunnages/dunnage-list/dunnage-list.component';
+import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage/create-dunnage.component';
+import { CreateDunnageStepOneComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-one/create-dunnage-step-one.component';
+import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-two/create-dunnage-step-two.component';
+import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
+import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage/edit-dunnage.component';
+import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-image/edit-dunnage-image.component';
+import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-router/edit-dunnage-router.component';
+import { ViewDunnageComponent } from 'src/pages/dunnages/view-dunnage/view-dunnage.component';
+import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.component';
+import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
+import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
+import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
 
 const routes: Routes = [
   {
@@ -112,7 +126,6 @@ const routes: Routes = [
             path: 'edit/:id',
             data: { animation: 'Edit Plant Page' },
             component: EditPlantPageComponent
-
           }
         ]
       },
@@ -182,7 +195,7 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Plant Page' },
+            data: { animation: 'Create Stock Page' },
             component: CreateStockComponent,
             children: [
               {
@@ -209,12 +222,86 @@ const routes: Routes = [
             component: StockListComponent,
           },
           {
-            path: 'edit/:id',
+            path: 'edit',
             data: { animation: 'Edit Stock Page' },
-            component: EditStockComponent
-
-          }
+            component: EditStockComponent,
+            children: [
+              {
+                path: 'info/:id',
+                data: { animation: 'Edit Stock Page' },
+                component: EditStockInfoComponent,
+              },
+              {
+                path: 'department-location/:id',
+                data: { animation: 'Edit Stock Page' },
+                component: EditStockDepartmentComponent,
+              },
+              {
+                path: 'image/:id',
+                data: { animation: 'Edit Stock Page' },
+                component: EditStockImageComponent,
+              }
+            ],
+          },
+          {
+            path: 'view-info/:id',
+            data: { animation: 'View Stock Page' },
+            component: ViewStockComponent
+          },
         ]
+      },
+      {
+        path: 'dunnage',
+        data: { animation: 'Dunnage Page' },
+        component: DunnagesComponent,
+        children: [
+          {
+            path: 'create',
+            data: { animation: 'Create Stock Page' },
+            component: CreateDunnageComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CreateDunnageStepOneComponent,
+              },
+              {
+                path: 'step-two',
+                component: CreateDunnageStepTwoComponent,
+              },
+              {
+                path: 'success',
+                component: CreateDunnageSuccessComponent
+              },
+            ]
+          },
+          {
+            path: 'list',
+            data: { animation: 'Dunnage Page' },
+            component: DunnageListComponent,
+          },
+          {
+            path: 'view-info/:id',
+            data: { animation: 'View Dunnage Page' },
+            component: ViewDunnageComponent
+          },
+          {
+            path: 'edit',
+            data: { animation: 'Edit Dunnage Page' },
+            component: EditDunnageRouterComponent,
+            children: [
+              {
+                path: 'info/:id',
+                data: { animation: 'Edit Dunnage Page' },
+                component: EditDunnageComponent
+              },
+              {
+                path: 'image/:id',
+                data: { animation: 'Edit Dunnage Page' },
+                component: EditDunnageImageComponent
+              }
+            ]
+          },
+        ],
       },
       {
         path: 'users',

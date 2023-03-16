@@ -137,13 +137,13 @@ router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productContro
 //stock routes
 router.post("/auth/stock", stockController.createStock);
 router.get("/auth/stock", authMiddleware.isAuthenticated, stockController.getStock);
-router.put("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.updateStock);
+router.put("/auth/stock", authMiddleware.isAuthenticated, stockController.updateStock);
 router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.deleteStock);
 
 //dunnage routes
 router.post("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.createDunnage);
 router.get("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.getDunnage);
-router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
+router.put("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
 // product dunnage routes

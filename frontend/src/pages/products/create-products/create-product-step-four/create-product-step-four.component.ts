@@ -6,10 +6,10 @@ import { MessageService } from 'primeng/api';
 import { UsePerDialogComponent } from 'src/components/use-per-dialog/use-per-dialog.component';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { DunnageService } from 'src/services/dunnage.service';
 import { ProductService } from 'src/services/product.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
-import { StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-create-product-step-four',
@@ -24,8 +24,8 @@ export class CreateProductStepFourComponent {
   departments: any[] = [];
   selectedDepartment: any;
   activePlantId: any;
-  stocks: any[] = [];
-  targetStocks: any[] = [];
+  dunnages: any[] = [];
+  targetDunnages: any[] = [];
 
   constructor(
     private productService: ProductService,
@@ -36,7 +36,7 @@ export class CreateProductStepFourComponent {
     private departmentService: DepartmentService,
     private authService: AuthService,
     private messageService: MessageService,
-    private stockService: StockService,
+    private dunnageService: DunnageService,
     public dialog: MatDialog) {
 
     this.sharedService.setDataKey('product');
@@ -46,8 +46,8 @@ export class CreateProductStepFourComponent {
 
 
       console.log(this.request);
-      if (!this.request.product.stocks) {
-        this.request.product.stocks = [];
+      if (!this.request.product.dunnages) {
+        this.request.product.dunnages = [];
       }
     }
 
@@ -57,24 +57,24 @@ export class CreateProductStepFourComponent {
     this.spinnerService.showHide();
     this.activePlantId = this.authService.user.activePlantId;
 
-    await this.loadStocks();
+    await this.loaddunnages();
   }
 
-  loadStocks() {
-    let stockQuery = `?departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-    console.log(stockQuery);
-    this.stockService.getStocks(stockQuery).subscribe({
+  loaddunnages() {
+    let dunnageQuery = `?departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
+    console.log(dunnageQuery);
+    this.dunnageService.getDunnages(dunnageQuery).subscribe({
       next: (data: any) => {
         console.log(data);
         this.spinnerService.hide();
-        this.stocks = data.body.stocks;
-        if (this.request.product.stocks && this.request.product.stocks.length > 0) {
-          this.targetStocks = this.stocks.filter((stock: any) => {
-            return this.request.product.stocks.findIndex((targetStock: any) => targetStock._id === stock._id) !== -1;
+        this.dunnages = data.body.dunnages;
+        if (this.request.product.dunnages && this.request.product.dunnages.length > 0) {
+          this.targetDunnages = this.dunnages.filter((dunnage: any) => {
+            return this.request.product.dunnages.findIndex((targetdunnage: any) => targetdunnage._id === dunnage._id) !== -1;
           }
           );
-          this.stocks = this.stocks.filter((stock: any) => {
-            return this.targetStocks.findIndex((targetStock: any) => targetStock._id === stock._id) === -1;
+          this.dunnages = this.dunnages.filter((dunnage: any) => {
+            return this.targetDunnages.findIndex((targetdunnage: any) => targetdunnage._id === dunnage._id) === -1;
           }
           );
         }
@@ -90,8 +90,8 @@ export class CreateProductStepFourComponent {
 
   openDialog($event: any) {
 
-    const stock = $event.items[0];
-    console.log(stock);
+    const dunnage = $event.items[0];
+    console.log(dunnage);
 
 
 
@@ -100,7 +100,7 @@ export class CreateProductStepFourComponent {
     const dialogRef = this.dialog.open(UsePerDialogComponent, {
 
       data: {
-        title: 'Amount of stock used per product',
+        title: 'Amount of dunnage used per product',
       },
       autoFocus: false,
     });
@@ -108,14 +108,14 @@ export class CreateProductStepFourComponent {
       console.log(result);
 
       if (result) {
-        const productStock = {
-          _id: stock._id,
+        const productdunnage = {
+          _id: dunnage._id,
           usePer: result
         }
 
-        this.request.product.stocks.push(productStock);
+        this.request.product.dunnages.push(productdunnage);
         this.sharedService.setData(this.request);
-        console.log(productStock);
+        console.log(productdunnage);
       }
 
 
@@ -123,10 +123,10 @@ export class CreateProductStepFourComponent {
     });
   }
   moveBack($event: any) {
-    const stock = $event.items[0];
+    const dunnage = $event.items[0];
 
 
-    this.request.product.stocks = this.request.product.stocks.filter((productStock: any) => productStock._id !== stock._id);
+    this.request.product.dunnages = this.request.product.dunnages.filter((productdunnage: any) => productdunnage._id !== dunnage._id);
     this.sharedService.setData(this.request);
 
 

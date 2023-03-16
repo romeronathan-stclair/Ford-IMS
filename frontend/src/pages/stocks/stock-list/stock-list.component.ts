@@ -133,6 +133,7 @@ export class StockListComponent {
           this.stocks = data.body.stocks;
           this.length = data.body.stockCount;
           this.dataSource = new MatTableDataSource(this.stocks);
+          console.log(this.stocks);
         },
         error: (error: any) => {
           console.log(error);
