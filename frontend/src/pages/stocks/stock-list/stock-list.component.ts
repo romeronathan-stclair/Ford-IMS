@@ -63,7 +63,7 @@ export class StockListComponent {
 
           console.log(departmentIds);
 
-          let stockQuery = "?departmentId=" + departmentIds[1] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+          let stockQuery = "?departmentId=" + departmentIds[0] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
           this.stockService.getStocks(stockQuery)
             .subscribe({
