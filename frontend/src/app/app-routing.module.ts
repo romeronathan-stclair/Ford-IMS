@@ -48,6 +48,10 @@ import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.compo
 import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
 import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
 import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
+import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/cycle-check-list.component';
+import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
+import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
+import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-check.component';
 
 const routes: Routes = [
   {
@@ -299,7 +303,29 @@ const routes: Routes = [
             }
           ]
         }
-
+        ]
+      },
+      {
+        path: 'cycle-check',
+        data: { animation: 'Cycle Check Page' },
+        component: CycleCheckComponent,
+        children: [
+          {
+            path: 'create',
+            data: { animation: 'Create Cycle Check Page' },
+            component: CycleCheckRouterComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CycleCheckStepOneComponent
+              }
+            ],
+          },
+          {
+            path: 'list',
+            data: { animation: 'Cycle Check List Page' },
+            component: CycleCheckListComponent
+          }
         ]
       }
     ]

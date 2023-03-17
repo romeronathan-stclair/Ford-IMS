@@ -41,7 +41,7 @@
 <div class="paginator-holder">
   <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create/step-one'" type="submit"
       class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New Stock</button>
-  <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
+  <mat-paginator (page)="pageChanged($event)" #paginator [pageSize]="pageSize"
       aria-label="Select page of periodic elements" [length]="length">
   </mat-paginator>
   <button type="submit" class="general-button">View Event Log</button>

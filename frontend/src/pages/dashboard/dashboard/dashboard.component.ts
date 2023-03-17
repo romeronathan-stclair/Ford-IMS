@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Cycle Check',
         icon: 'fa-regular fa-clipboard',
-        routerLink: ['/about'],
+        routerLink: ['cycle-check/list'],
         position: SimpleSidebarPosition.top
       },
       {
