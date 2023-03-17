@@ -46,53 +46,59 @@ export class ProductListComponent {
 
   }
 
-  loadData() {
+  async loadData() {
     this.spinnerService.show();
+    await this.loadDepartments();
+    await this.loadProducts();
+    this.spinnerService.hide();
+  }
 
+  async loadDepartments() {
     let departmentQuery = "?plantId=" + this.activePlantId;
 
-    let departmentIds: string[] = [];
-    this.departmentService.getDepartments(departmentQuery)
-      .subscribe({
+    return new Promise<void>((resolve, reject) => {
+      this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
-          data.body.departments.forEach((department: any) => {
-            departmentIds.push(department._id);
-          });
           this.departments = data.body.departments;
-
-          console.log(departmentIds);
-
-          let productQuery = "?departmentId=" + departmentIds[0] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-
-          this.productService.getProducts(productQuery)
-            .subscribe({
-              next: (data: any) => {
-                console.log(data);
-                this.spinnerService.hide();
-                this.products = data.body.products;
-                this.length = data.body.productCount;
-                console.log(this.products);
-                this.dataSource = new MatTableDataSource(this.products);
-
-              },
-              error: (error: any) => {
-                this.spinnerService.hide();
-                console.log(error);
-              }
-            });
+          resolve();
         },
         error: (error: any) => {
-          console.log(error);
+          reject(error);
+
         }
       });
-
-    console.log(this.products);
+    });
   }
+
+  async loadProducts(query: string = '') {
+    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
+    let productQuery = `?departmentId=${selectedDepartmentId}&page=${this.currentPage}&pageSize=${this.pageSize}`;
+    if (query) {
+      productQuery += query;
+    }
+
+    return new Promise<void>((resolve, reject) => {
+      this.productService.getProducts(productQuery).subscribe({
+        next: (data: any) => {
+          console.log(data);
+          this.products = data.body.products;
+          this.length = data.body.productCount;
+          this.dataSource = new MatTableDataSource(this.products);
+          resolve();
+        },
+        error: (error: any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
 
 
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
+
     this.loadData();
   }
 
@@ -102,46 +108,13 @@ export class ProductListComponent {
     if (nameControl) {
       const name = nameControl.value;
 
-      let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+      let query = `&name=${name}`;
 
-      this.productService.getProducts(query)
-        .subscribe({
-          next: (data) => {
-            this.length = data.body.productCount;
-            this.products = data.body.product;
-            this.dataSource = new MatTableDataSource(this.products);
-          }
-        })
+      this.loadProducts(query);
     }
   }
 
   changeDepartment($event: any) {
-    console.log(this.selectedDepartment);
-
-    this.spinnerService.show();
-
-    if (this.selectedDepartment.departmentName == "All Departments") {
-      this.loadData();
-    }
-    else {
-      let productQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
-      console.log(productQuery);
-      this.productService.getProducts(productQuery).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.spinnerService.hide();
-          this.products = data.body.products;
-          this.length = data.body.productCount;
-          this.dataSource = new MatTableDataSource(this.products);
-        },
-        error: (error: any) => {
-          console.log(error);
-          this.spinnerService.hide();
-        }
-      });
-    }
+    this.loadData();
   }
-
-
-
 }

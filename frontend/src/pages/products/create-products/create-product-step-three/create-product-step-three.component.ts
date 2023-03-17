@@ -70,9 +70,11 @@ export class CreateProductStepThreeComponent {
         this.stocks = data.body.stocks;
         if (this.request.product.stocks && this.request.product.stocks.length > 0) {
           this.targetStocks = this.stocks.filter((stock: any) => {
-            return this.request.product.stocks.findIndex((targetStock: any) => targetStock._id === stock._id) !== -1;
+
+            return this.request.product.stocks.findIndex((targetStock: any) => targetStock.stockId === stock._id) !== -1;
           }
           );
+          console.log(this.targetStocks);
           this.stocks = this.stocks.filter((stock: any) => {
             return this.targetStocks.findIndex((targetStock: any) => targetStock._id === stock._id) === -1;
           }
@@ -109,13 +111,17 @@ export class CreateProductStepThreeComponent {
 
       if (result) {
         const productStock = {
-          _id: stock._id,
-          usePer: result
+          stockId: stock._id,
+          usePerProduct: result
         }
 
         this.request.product.stocks.push(productStock);
         this.sharedService.setData(this.request);
         console.log(productStock);
+      } else {
+        this.targetStocks = this.targetStocks.filter((stock: any) => stock._id !== $event.items[0]._id);
+        this.stocks.push($event.items[0]);
+        return;
       }
 
 
@@ -126,7 +132,7 @@ export class CreateProductStepThreeComponent {
     const stock = $event.items[0];
 
 
-    this.request.product.stocks = this.request.product.stocks.filter((productStock: any) => productStock._id !== stock._id);
+    this.request.product.stocks = this.request.product.stocks.filter((productStock: any) => productStock.stockId !== stock._id);
     this.sharedService.setData(this.request);
 
 

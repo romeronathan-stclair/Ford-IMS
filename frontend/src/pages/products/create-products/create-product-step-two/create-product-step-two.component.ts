@@ -41,8 +41,6 @@ export class CreateProductStepTwoComponent {
       return;
     } else {
       this.request = this.sharedService.getData();
-
-      this.file = this.request.file;
       this.imageUrl = this.request.file;
       console.log(this.request);
     }
@@ -95,7 +93,7 @@ export class CreateProductStepTwoComponent {
 
     this.spinnerService.showHide();
 
-    this.request.file = this.file;
+    this.request.file = this.imageUrl;
 
 
 

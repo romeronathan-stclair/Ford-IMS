@@ -6,7 +6,7 @@
 </div>
 <div class="table-holder">
     <div class="pick-list-holder">
-        <p-pickList (onMoveToTarget)="openDialog($event)" (onMoveToSource)="moveBack($event)"
+        <p-pickList (onMoveToTarget)="moveToTarget($event)" (onMoveToSource)="moveBack($event)"
             [showSourceControls]="false" [showTargetControls]="false" [source]="dunnages" [target]="targetDunnages"
             sourceHeader="Dunnage List" targetHeader="Product Dunnage List" [dragdrop]="true" [responsive]="true"
             [sourceStyle]="{'height':'400px'}" [targetStyle]="{'height':'400px'}" filterBy="name"

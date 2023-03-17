@@ -17,6 +17,8 @@ import { createProductDunnage } from "./productDunnage";
 
 //create Product
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+
+    req.body = JSON.parse(req.body.product);
     await check("name", "Name is required").isLength({ min: 1 }).run(req);
     await check("partNumber", "Part Number is required").isLength({ min: 1 }).run(req);
     await check("departmentId", "Department Id is required").isLength({ min: 1 }).run(req);
@@ -34,6 +36,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         _id: departmentId,
         isDeleted: false
     });
+
 
     if (!department) {
         return res.status(500).json("Department not found");
@@ -63,7 +66,8 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
 
     if (req.files) {
-        console.log(req.files)
+        console.log("HERE IS THE FILE" + JSON.stringify(req.files));
+
         const image = req.files.file;
 
         const imageRequest: ImageRequest = {
@@ -97,12 +101,16 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     }
 
     if (req.body.stocks) {
+
         const stocks = req.body.stocks;
 
+
+
         for (const stock of stocks) {
+
             const productStock: ProductStockDocument = new ProductStock({
                 productId: product._id,
-                stockId: stock._id,
+                stockId: stock.stockId,
                 departmentId: departmentId,
                 usePerProduct: stock.usePerProduct,
                 isDeleted: false
@@ -111,18 +119,18 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
             try {
                 const savedProductStock = await productStock.save();
                 console.log(`Saved product stock ${savedProductStock._id}`);
-              } catch (error) {
+            } catch (error) {
                 console.error(`Error saving product stock: ${error}`);
-              }
+            }
         }
     }
 
     if (req.body.dunnage) {
         const dunnage = req.body.dunnage;
-    
+        console.log(req.body.dunnage);
         const newProductDunnage = new ProductDunnage({
             productId: product._id,
-            dunnageId: dunnage._id,
+            dunnageId: dunnage.dunnageId,
             departmentId: departmentId,
             isDeleted: false,
         });
@@ -132,7 +140,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         } catch (err) {
             console.log("Error saving dunnage" + err);
         }
-    }    
+    }
 
 
     try {

@@ -44,6 +44,8 @@ export class CreateProductStepFourComponent {
       this.request = this.sharedService.getData();
       this.selectedDepartment = this.request.product.department;
 
+      console.log(this.request);
+
 
       console.log(this.request);
       if (!this.request.product.dunnages) {
@@ -57,10 +59,10 @@ export class CreateProductStepFourComponent {
     this.spinnerService.showHide();
     this.activePlantId = this.authService.user.activePlantId;
 
-    await this.loaddunnages();
+    await this.loadDunnages();
   }
 
-  loaddunnages() {
+  loadDunnages() {
     let dunnageQuery = `?departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
     console.log(dunnageQuery);
     this.dunnageService.getDunnages(dunnageQuery).subscribe({
@@ -70,11 +72,12 @@ export class CreateProductStepFourComponent {
         this.dunnages = data.body.dunnages;
         if (this.request.product.dunnages && this.request.product.dunnages.length > 0) {
           this.targetDunnages = this.dunnages.filter((dunnage: any) => {
-            return this.request.product.dunnages.findIndex((targetdunnage: any) => targetdunnage._id === dunnage._id) !== -1;
+            return this.request.product.dunnages.findIndex((targetDunnages: any) => targetDunnages.dunnageId === dunnage._id) !== -1;
           }
           );
+          console.log(this.targetDunnages);
           this.dunnages = this.dunnages.filter((dunnage: any) => {
-            return this.targetDunnages.findIndex((targetdunnage: any) => targetdunnage._id === dunnage._id) === -1;
+            return this.targetDunnages.findIndex((targetDunnages: any) => targetDunnages._id === dunnage._id) === -1;
           }
           );
         }
@@ -88,45 +91,40 @@ export class CreateProductStepFourComponent {
 
   }
 
-  openDialog($event: any) {
-
-    const dunnage = $event.items[0];
-    console.log(dunnage);
+  moveToTarget($event: any) {
 
 
-
-
-
-    const dialogRef = this.dialog.open(UsePerDialogComponent, {
-
-      data: {
-        title: 'Amount of dunnage used per product',
-      },
-      autoFocus: false,
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
-
-      if (result) {
-        const productdunnage = {
-          _id: dunnage._id,
-          usePer: result
-        }
-
-        this.request.product.dunnages.push(productdunnage);
-        this.sharedService.setData(this.request);
-        console.log(productdunnage);
-      }
+    if (this.request.product.dunnages.length > 0) {
+      this.messageService.clear();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'You can only add one dunnage' });
+      this.targetDunnages = this.targetDunnages.filter((dunnage: any) => dunnage._id !== $event.items[0]._id);
+      this.dunnages.push($event.items[0]);
+      return;
+    } else {
 
 
 
-    });
+      const dunnage = $event.items[0];
+      console.log(dunnage);
+
+
+
+
+      this.request.product.dunnages.push({
+        dunnageId: dunnage._id,
+      });
+
+      this.sharedService.setData(this.request);
+
+      console.log(this.request);
+    }
+
   }
   moveBack($event: any) {
     const dunnage = $event.items[0];
 
 
-    this.request.product.dunnages = this.request.product.dunnages.filter((productdunnage: any) => productdunnage._id !== dunnage._id);
+    this.request.product.dunnages = this.request.product.dunnages.filter((productDunnage: any) => productDunnage.dunnageId !== dunnage._id);
     this.sharedService.setData(this.request);
 
 
@@ -141,23 +139,22 @@ export class CreateProductStepFourComponent {
       console.log(file);
       formData.append('file', file);
     }
+    console.log(this.request.product);
 
     const createProductRequest = {
       departmentId: this.request.product.department._id,
-      productId: this.request.product._id,
       name: this.request.product.name,
+      dailyTarget: this.request.product.dailyTarget,
+      marketLocation: this.request.product.marketLocation,
       partNumber: this.request.product.partNumber,
-      stocks: this.request.product.stocks ? this.request.product.stocks : [],
-      dunnages: this.request.product.dunnages ? this.request.product.dunnages : [],
+      stocks: this.request.product.stocks ? this.request.product.stocks : null,
+      dunnage: this.request.product.dunnages.length > 0 ? this.request.product.dunnages[0] : null,
 
     } as any;
 
-    for (const key in createProductRequest) {
-      formData.append(key, createProductRequest[key]);
-    }
+    formData.append('product', JSON.stringify(createProductRequest));
 
-
-    this.productService.createProduct(this.request).subscribe({
+    this.productService.createProduct(formData).subscribe({
       next: (data: any) => {
         console.log(data);
         this.spinnerService.hide();
@@ -171,15 +168,9 @@ export class CreateProductStepFourComponent {
 
     });
 
-
-
-
-
-
-
   }
   // Function to convert imageUrl (base64 string) back to a File
-  imageUrlToFile(imageUrl: string, filename: string = ""): File {
+  imageUrlToFile(imageUrl: string, filename: string = "file"): File {
     // Remove data URL prefix (if present)
     const base64 = imageUrl.replace(/^data:image\/(png|jpg|jpeg|gif);base64,/, '');
 
