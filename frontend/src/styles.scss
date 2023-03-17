@@ -428,3 +428,89 @@ ng-deep .p-toast .p-toast-message .p-toast-message-content {
 .p-dropdown-item {
     padding: 15px;
 }
+// Pick List Styles
+.pick-list-item-holder {
+    padding: 10px;
+}
+.p-pick-list-filter-container {
+    width: 50% !important;
+    margin: 0 auto !important;
+}
+.p-picklist-filter-input {
+    width: 50% !important;
+
+    display: block;
+
+    margin: 10px auto 10px auto !important;
+}
+.p-picklist-filter-icon {
+    visibility: hidden !important;
+}
+
+.pick-list-holder {
+    margin: 30px;
+
+    width: 80%;
+}
+.p-picklist-buttons {
+    visibility: hidden;
+}
+.pick-list-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 7.5px;
+
+    img {
+        width: 75px;
+
+        margin-right: 1rem;
+    }
+
+    .pick-list-list-detail {
+        flex: 1 1 0;
+    }
+
+    .pick-list-list-action {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .pick-list-category-icon {
+        vertical-align: middle;
+        margin-right: 0.5rem;
+    }
+
+    .pick-list-category {
+        vertical-align: middle;
+        line-height: 1;
+    }
+}
+.p-picklist-title {
+    background-color: $darkGrey;
+    text-align: center;
+    padding: 20px;
+    border-bottom: $border;
+}
+.p-picklist-list-wrapper {
+    background-color: $grey;
+    border: $border;
+}
+@media screen and (max-width: 576px) {
+    .pick-list-item {
+        flex-wrap: wrap;
+
+        .image-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        img {
+            margin: 0 0 1rem 0;
+            width: 100px;
+        }
+    }
+}

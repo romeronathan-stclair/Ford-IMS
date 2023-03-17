@@ -43,7 +43,7 @@ import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-pl
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
 import { DropdownModule } from 'primeng/dropdown';
-import {DataViewModule} from 'primeng/dataview';
+import { DataViewModule } from 'primeng/dataview';
 import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
 import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
 import { CreateStockComponent } from 'src/pages/stocks/create-stocks/create-stock/create-stock.component';
@@ -51,7 +51,7 @@ import { CreateStockStepOneComponent } from 'src/pages/stocks/create-stocks/crea
 import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/create-stock-step-two/create-stock-step-two.component';
 import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
 import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { DunnagesComponent } from 'src/pages/dunnages/dunnages/dunnages.component';
@@ -70,12 +70,21 @@ import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-
 import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
 import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
 
+import { PickListModule } from 'primeng/picklist';
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
 import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
 import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
 import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
 import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
+import { ProductsComponent } from '../pages/products/products/products.component';
+import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
+import { CreateProductComponent } from '../pages/products/create-products/create-product/create-product.component';
+import { CreateProductStepFourComponent } from 'src/pages/products/create-products/create-product-step-four/create-product-step-four.component';
+import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
+import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
+import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
+import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dialog.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +124,14 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     InviteOneUserStepOneComponent,
     InviteOneUserStepTwoComponent,
     InviteOneUserStepThreeComponent,
+    ProductListComponent,
+    ProductsComponent,
+    CreateProductComponent,
+    CreateProductStepOneComponent,
+    CreateProductStepTwoComponent,
+    CreateProductStepThreeComponent,
+    CreateProductStepFourComponent,
+    UsePerDialogComponent,
     DunnagesComponent,
     DunnageListComponent,
     CreateDunnageComponent,
@@ -155,7 +172,9 @@ import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invi
     DataViewModule,
     MatSelectModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    PickListModule,
+
   ],
   providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]

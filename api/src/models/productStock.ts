@@ -4,8 +4,6 @@ import { Schema, Document, model } from "mongoose";
 
 export type ProductStockDocument = Document & {
     productId: string;
-    name: string;
-    partNumber: string;
     stockId: string;
     departmentId: string;
     usePerProduct: number;
@@ -15,14 +13,6 @@ export type ProductStockDocument = Document & {
 
 const productStockSchema = new Schema<ProductStockDocument>({
     productId: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    partNumber: {
         type: String,
         required: true,
     },
