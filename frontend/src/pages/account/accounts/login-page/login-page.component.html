@@ -1,5 +1,7 @@
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <div>
+<div class="holder">
+    <img src="/assets/ford-logo.png" />
+    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+        <div>
 
         <input formControlName="email" type="email" class="form-control" id="email-input" aria-describedby="emailHelp" placeholder="email@ford.com"
             required />
@@ -8,9 +10,9 @@
             userForm.controls['email'].dirty ||
             userForm.controls['email'].touched
           ">
-            <span *ngIf="userForm.controls['email'].hasError('required')">Email is required</span>
-        </mat-error>
-    </div>
+                <span *ngIf="userForm.controls['email'].hasError('required')">Email is required</span>
+            </mat-error>
+        </div>
 
     <div>
         <input formControlName="password" type="password" class="form-control" id="password-input" placeholder="password" required />
@@ -20,10 +22,10 @@
               userForm.controls['password'].dirty ||
               userForm.controls['password'].touched)
           ">
-            <span *ngIf="userForm.controls['password'].hasError('required')">Password is required</span>
-        </mat-error>
-    </div>
-    <button type="submit" class="submit-button">Login</button>
+                <span *ngIf="userForm.controls['password'].hasError('required')">Password is required</span>
+            </mat-error>
+        </div>
+        <button type="submit" class="submit-button">Login</button>
 
     <!-- <div class="button-holder">
 

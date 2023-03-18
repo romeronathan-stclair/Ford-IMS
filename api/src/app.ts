@@ -99,6 +99,7 @@ app.get("/health", (req, res) => {
 
 //user routes
 router.post("/auth/signup/dev", userController.signupUnsafe);
+router.post("/auth/signup", userController.signup);
 router.post("/auth/signin", userController.signin);
 router.get("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
@@ -109,6 +110,7 @@ router.post("/auth/reset", authMiddleware.isAuthenticated, userController.change
 router.put("/auth/user/active-plant", authMiddleware.isAuthenticated, userController.changeActivePlant);
 //invite routes
 router.post("/auth/invite", authMiddleware.isAuthenticated, inviteController.sendInvite);
+router.get("/auth/invite", inviteController.getInvite);
 //event routes
 router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEvents);
 

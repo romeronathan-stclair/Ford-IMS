@@ -78,8 +78,8 @@ export class AuthService {
         });
     }
 
-    signup(creds: String): Observable<any> {
-        return this.http.post<any>(`${this.endPoint}/signup/dev`, creds, {
+    signup(creds: any): Observable<any> {
+        return this.http.post<any>(`${this.endPoint}/signup`, creds, {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true,
@@ -113,6 +113,14 @@ export class AuthService {
 
     inviteUsers(request: any): Observable<any> {
         return this.http.post(`${this.endPoint}/invite`, request, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
+
+    getInvite(query: any): Observable<any> {
+        return this.http.get(`${this.endPoint}/invite` + query, {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true,

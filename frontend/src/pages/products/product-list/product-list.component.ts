@@ -39,7 +39,10 @@ export class ProductListComponent {
 
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    this.loadData();
+    console.log(this.activePlantId);
+    if (this.activePlantId != 0) {
+      this.loadData();
+    }
   }
 
   ngAfterViewInit() {
@@ -54,7 +57,7 @@ export class ProductListComponent {
   }
 
   async loadDepartments() {
-    let departmentQuery = "?plantId=" + this.activePlantId;
+    let departmentQuery = "?plantId=" + this.activePlantId + "&userId=" + this.authService.user._id;
 
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(departmentQuery).subscribe({

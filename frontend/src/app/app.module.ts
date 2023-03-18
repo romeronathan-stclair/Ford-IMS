@@ -77,14 +77,17 @@ import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-
 import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
 import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
 import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
-import { ProductsComponent } from '../pages/products/products/products.component';
-import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
-import { CreateProductComponent } from '../pages/products/create-products/create-product/create-product.component';
+import { SignupPageComponent } from '../pages/account/accounts/signup-page/signup-page.component';
+import { SignupStepOneComponent } from '../pages/account/accounts/signup-page/signup-step-one/signup-step-one.component';
+import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/signup-step-two/signup-step-two.component';
+import { UsePerDialogComponent } from 'src/components/use-per-dialog/use-per-dialog.component';
 import { CreateProductStepFourComponent } from 'src/pages/products/create-products/create-product-step-four/create-product-step-four.component';
 import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
 import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
 import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
-import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dialog.component';
+import { CreateProductComponent } from 'src/pages/products/create-products/create-product/create-product.component';
+import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
+import { ProductsComponent } from 'src/pages/products/products/products.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +127,9 @@ import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dial
     InviteOneUserStepOneComponent,
     InviteOneUserStepTwoComponent,
     InviteOneUserStepThreeComponent,
+    SignupPageComponent,
+    SignupStepOneComponent,
+    SignupStepTwoComponent,
     ProductListComponent,
     ProductsComponent,
     CreateProductComponent,

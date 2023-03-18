@@ -5,6 +5,9 @@ import { AuthNoGuard } from 'src/guards/auth.no.guard';
 import { AccountPageComponent } from 'src/pages/account/accounts/account-page/account-page.component';
 import { LoginPageComponent } from 'src/pages/account/accounts/login-page/login-page.component';
 import { SignoutPageComponent } from 'src/pages/account/accounts/signout-page/signout-page.component';
+import { SignupPageComponent } from 'src/pages/account/accounts/signup-page/signup-page.component';
+import { SignupStepOneComponent } from 'src/pages/account/accounts/signup-page/signup-step-one/signup-step-one.component';
+import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/signup-step-two/signup-step-two.component';
 import { DashboardComponent } from 'src/pages/dashboard/dashboard/dashboard.component';
 import { CreateDepartmentComponent } from 'src/pages/departments/create-department/create-department.component';
 import { DepartmentListComponent } from 'src/pages/departments/department-list/department-list.component';
@@ -67,7 +70,26 @@ const routes: Routes = [
         path: 'login',
         data: { animation: 'Login Page' },
         component: LoginPageComponent,
-      }
+      },
+      {
+        path: 'signup',
+        data: { animation: 'Signup Page' },
+        component: SignupPageComponent,
+        children: [
+          {
+            path: 'step-one/:id',
+            component: SignupStepOneComponent
+          },
+          {
+            path: 'step-one',
+            component: SignupStepOneComponent
+          },
+          {
+            path: 'step-two',
+            component: SignupStepTwoComponent
+          },
+        ]
+      },
     ],
   },
   {
