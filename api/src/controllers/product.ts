@@ -2,6 +2,8 @@ import { json, NextFunction, Request, Response } from "express";
 import { User, UserDocument, Department, DepartmentDocument, Event, Product, ProductDocument } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { Dunnage, DunnageDocument } from "../models/dunnage";
+import { ProductStock, ProductStockDocument } from "../models/productStock";
+import { ProductDunnage, ProductDunnageDocument } from "../models/productDunnage";
 import { check, validationResult } from "express-validator";
 import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
@@ -10,9 +12,13 @@ import { Types } from "mongoose";
 import { ImageRequest } from "../type/imageRequest";
 import { uploadImage } from "./image";
 import env from "../utils/env";
+import { createProductStock } from "./productStock";
+import { createProductDunnage } from "./productDunnage";
 
 //create Product
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
+
+    req.body = JSON.parse(req.body.product);
     await check("name", "Name is required").isLength({ min: 1 }).run(req);
     await check("partNumber", "Part Number is required").isLength({ min: 1 }).run(req);
     await check("departmentId", "Department Id is required").isLength({ min: 1 }).run(req);
@@ -30,6 +36,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         _id: departmentId,
         isDeleted: false
     });
+
 
     if (!department) {
         return res.status(500).json("Department not found");
@@ -59,7 +66,8 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
 
     if (req.files) {
-        console.log(req.files)
+        console.log("HERE IS THE FILE" + JSON.stringify(req.files));
+
         const image = req.files.file;
 
         const imageRequest: ImageRequest = {
@@ -92,6 +100,47 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         product.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
+    if (req.body.stocks) {
+
+        const stocks = req.body.stocks;
+
+
+
+        for (const stock of stocks) {
+
+            const productStock: ProductStockDocument = new ProductStock({
+                productId: product._id,
+                stockId: stock.stockId,
+                departmentId: departmentId,
+                usePerProduct: stock.usePerProduct,
+                isDeleted: false
+            });
+
+            try {
+                const savedProductStock = await productStock.save();
+                console.log(`Saved product stock ${savedProductStock._id}`);
+            } catch (error) {
+                console.error(`Error saving product stock: ${error}`);
+            }
+        }
+    }
+
+    if (req.body.dunnage) {
+        const dunnage = req.body.dunnage;
+        console.log(req.body.dunnage);
+        const newProductDunnage = new ProductDunnage({
+            productId: product._id,
+            dunnageId: dunnage.dunnageId,
+            departmentId: departmentId,
+            isDeleted: false,
+        });
+
+        try {
+            await newProductDunnage.save();
+        } catch (err) {
+            console.log("Error saving dunnage" + err);
+        }
+    }
 
 
     try {
@@ -111,6 +160,8 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     const page = getPage(req);
     const pageSize = getPageSize(req);
     const departmentId = req.query.departmentId;
+    const userId = req.query.userId;
+    const plantId = req.query.plantId;
     const productId = req.query.productId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const partNumber = req.query.partNumber;
@@ -119,8 +170,18 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
         isDeleted: false,
     }
 
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (user) {
+            const departmentIds = user.plants.map(plant => plant.departments.map(department => department));
+            query["departmentId"] = { $in: departmentIds };
+        }
+    }
     if (departmentId) {
         query["departmentId"] = departmentId;
+    }
+    if (plantId) {
+        query["plantId"] = plantId;
     }
 
     if (productId) {
@@ -128,20 +189,23 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     }
 
     if (name) {
-        query["name"] = name;
+        query["name"] = { $regex: name, $options: "i" };
     }
+
 
     if (partNumber) {
         query["partNumber"] = partNumber;
     }
 
     const products = await Product.find(query).skip(page * pageSize).limit(pageSize).exec();
+    const productCount = await Product.countDocuments(query).exec();
 
-    if (!products || products.length == 0) {
-        return res.status(500).json("No Products found");
+    let response = {
+        products: products,
+        productCount: productCount
     }
 
-    return res.status(200).json(products);
+    return res.status(200).json(response);
 };
 
 //update Product

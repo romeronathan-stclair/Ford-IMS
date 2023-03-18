@@ -96,8 +96,8 @@ export class CreatePlantAssignUsersComponent {
     let request = {
       assignments: this.selectedUsers,
       departments: this.request.departments,
-      plantName: this.request.plantName,
-      plantLocation: this.request.plantLocation,
+      plantName: this.request.plant.plantName,
+      plantLocation: this.request.plant.plantLocation,
     }
 
     console.log(request);
