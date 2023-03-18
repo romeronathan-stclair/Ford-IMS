@@ -160,6 +160,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     const page = getPage(req);
     const pageSize = getPageSize(req);
     const departmentId = req.query.departmentId;
+    const userId = req.query.userId;
     const plantId = req.query.plantId;
     const productId = req.query.productId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
@@ -169,6 +170,13 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
         isDeleted: false,
     }
 
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (user) {
+            const departmentIds = user.plants.map(plant => plant.departments.map(department => department));
+            query["departmentId"] = { $in: departmentIds };
+        }
+    }
     if (departmentId) {
         query["departmentId"] = departmentId;
     }
