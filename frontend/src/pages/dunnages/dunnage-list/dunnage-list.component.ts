@@ -62,8 +62,7 @@ export class DunnageListComponent {
 
           console.log(departmentIds);
 
-          let dunnageQuery = "?departmentId=" + departmentIds[1] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-
+          let dunnageQuery = "?departmentId=" + departmentIds[0] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
           this.dunnageService.getDunnages(dunnageQuery)
           .subscribe({
             next: (data: any) => {

@@ -1,0 +1,80 @@
+<app-ford-container title="1. Enter product Information">
+    <div class="holder">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+
+
+            <div>
+                <input placeholder="Product Name" formControlName="name" type="name" class="form-control"
+                    id="name-input" aria-describedby="nameHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+          displayValidationErrors ||
+          productForm.controls['name'].dirty ||
+          productForm.controls['name'].touched
+        ">
+                    <span *ngIf="productForm.controls['name'].hasError('required')">Product Name is required</span>
+                </mat-error>
+            </div>
+
+            <div>
+                <input placeholder="Part Number" formControlName="partNumber" type="partNumber" class="form-control"
+                    id="partNumber-input" aria-describedby="partNumberHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+          displayValidationErrors ||
+          productForm.controls['partNumber'].dirty ||
+          productForm.controls['partNumber'].touched
+        ">
+                    <span *ngIf="productForm.controls['partNumber'].hasError('required')">Part Number is required</span>
+                </mat-error>
+            </div>
+            <div>
+                <input placeholder="Market Location" formControlName="marketLocation" type="text" class="form-control"
+                    id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                  displayValidationErrors ||
+                  productForm.controls['marketLocation'].dirty ||
+                  productForm.controls['marketLocation'].touched
+                ">
+                    <span *ngIf="productForm.controls['marketLocation'].hasError('required')">Market Location is
+                        required</span>
+                </mat-error>
+            </div>
+
+            <div>
+                <input placeholder="Daily Target" formControlName="dailyTarget" type="number" class="form-control"
+                    id="dailyTarget-input" aria-describedby="dailyTargetHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                  displayValidationErrors ||
+                  productForm.controls['dailyTarget'].dirty ||
+                  productForm.controls['dailyTarget'].touched
+                ">
+                    <span *ngIf="productForm.controls['dailyTarget'].hasError('required')">Daily Target is
+                        required</span>
+                </mat-error>
+            </div>
+
+            <div *ngIf="departments.length > 0" class="dropdown">
+                <p-dropdown formControlName="department" (onChange)="changeDepartment($event)"
+                    placeholder="Sort by Department" optionLabel="departmentName" [options]="departments"
+                    [(ngModel)]="selectedDepartment"></p-dropdown>
+            </div>
+            <mat-error class="field-validation-error" *ngIf="
+            displayValidationErrors ||
+            productForm.controls['department'].dirty ||
+            productForm.controls['department'].touched
+          ">
+                <span *ngIf="productForm.controls['department'].hasError('required')">Department is required</span>
+            </mat-error>
+
+
+
+
+
+            <div class="button-holders">
+                <button type="button" [routerLink]="'/dashboard/products/list'" class="submit-button">Cancel</button>
+                <button type="submit" class="submit-button">Next</button>
+            </div>
+
+        </form>
+    </div>
+</app-ford-container>

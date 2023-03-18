@@ -66,11 +66,8 @@ export const createProductStock = async (req: Request, res: Response) => {
 
     const newProductStock: ProductStockDocument = new ProductStock({
         productId: req.body.productId,
-        name: req.body.name,
-        partNumber: req.body.partNumber,
         stockId: req.body.stockId,
         departmentId: req.body.departmentId,
-        dailyTarget: req.body.dailyTarget,
         usePerProduct: req.body.usePerProduct,
         isDeleted: false
     });

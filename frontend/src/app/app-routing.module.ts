@@ -34,6 +34,13 @@ import { InviteOneUserComponent } from 'src/pages/users/user-invite/invite-one/i
 import { InviteUsersComponent } from 'src/pages/users/user-invite/invite-users/invite-users.component';
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
+import { ProductsComponent } from 'src/pages/products/products/products.component';
+import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
+import { CreateProductComponent } from 'src/pages/products/create-products/create-product/create-product.component';
+import { CreateProductStepFourComponent } from 'src/pages/products/create-products/create-product-step-four/create-product-step-four.component';
+import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
+import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
+import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
 import { DunnagesComponent } from 'src/pages/dunnages/dunnages/dunnages.component';
 import { DunnageListComponent } from 'src/pages/dunnages/dunnage-list/dunnage-list.component';
 import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage/create-dunnage.component';
@@ -148,6 +155,42 @@ const routes: Routes = [
           }
         ]
 
+      },
+      {
+        path: 'products',
+        data: { animation: 'Products Page' },
+        component: ProductsComponent,
+        children: [
+          {
+            path: 'list',
+            data: { animation: 'Product List Page' },
+            component: ProductListComponent,
+          },
+          {
+            path: 'create',
+            data: { animation: 'Create Product Page' },
+            component: CreateProductComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CreateProductStepOneComponent,
+              },
+              {
+                path: 'step-two',
+                component: CreateProductStepTwoComponent,
+              },
+              {
+                path: 'step-three',
+                component: CreateProductStepThreeComponent,
+              },
+              {
+                path: 'step-four',
+                component: CreateProductStepFourComponent,
+              },
+            ]
+
+          }
+        ]
       },
       {
         path: 'stock',
