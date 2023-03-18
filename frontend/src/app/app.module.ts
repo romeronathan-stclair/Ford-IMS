@@ -43,6 +43,33 @@ import { EditPlantPageComponent } from 'src/pages/plants/edit-plant-page/edit-pl
 import { UserListComponent } from 'src/pages/users/user-list/user-list.component';
 import { UsersComponent } from 'src/pages/users/users/users.component';
 import { DropdownModule } from 'primeng/dropdown';
+import {DataViewModule} from 'primeng/dataview';
+import { StockListComponent } from 'src/pages/stocks/stock-list/stock-list.component';
+import { StocksComponent } from 'src/pages/stocks/stocks/stocks.component';
+import { CreateStockComponent } from 'src/pages/stocks/create-stocks/create-stock/create-stock.component';
+import { CreateStockStepOneComponent } from 'src/pages/stocks/create-stocks/create-stock-step-one/create-stock-step-one.component';
+import { CreateStockStepTwoComponent } from 'src/pages/stocks/create-stocks/create-stock-step-two/create-stock-step-two.component';
+import { CreateStockStepThreeComponent } from 'src/pages/stocks/create-stocks/create-stock-step-three/create-stock-step-three.component';
+import { CreateStockSuccessComponent } from 'src/pages/stocks/create-stocks/create-stock-success/create-stock-success.component';
+import {MatSelectModule} from '@angular/material/select';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { DunnagesComponent } from 'src/pages/dunnages/dunnages/dunnages.component';
+import { DunnageListComponent } from 'src/pages/dunnages/dunnage-list/dunnage-list.component';
+import { CreateDunnageComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage/create-dunnage.component';
+import { CreateDunnageStepOneComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-one/create-dunnage-step-one.component';
+import { CreateDunnageStepTwoComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-step-two/create-dunnage-step-two.component';
+import { CreateDunnageSuccessComponent } from 'src/pages/dunnages/create-dunnages/create-dunnage-success/create-dunnage-success.component';
+import { EditDunnageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage/edit-dunnage.component';
+import { EditDunnageImageComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-image/edit-dunnage-image.component';
+import { EditDunnageRouterComponent } from 'src/pages/dunnages/edit-dunnages/edit-dunnage-router/edit-dunnage-router.component';
+import { ViewDunnageComponent } from 'src/pages/dunnages/view-dunnage/view-dunnage.component';
+import { EditStockComponent } from 'src/pages/stocks/edit-stocks/edit-stock/edit-stock.component';
+import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.component';
+import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
+import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
+import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
+
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
 import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
@@ -78,6 +105,13 @@ import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/s
     EditDepartmentComponent,
     UsersComponent,
     UserListComponent,
+    StocksComponent,
+    StockListComponent,
+    CreateStockComponent,
+    CreateStockStepOneComponent,
+    CreateStockStepTwoComponent,
+    CreateStockStepThreeComponent,
+    CreateStockSuccessComponent,
     InviteUsersComponent,
     InviteOneUserComponent,
     InviteMultipleUsersComponent,
@@ -86,7 +120,22 @@ import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/s
     InviteOneUserStepThreeComponent,
     SignupPageComponent,
     SignupStepOneComponent,
-    SignupStepTwoComponent
+    SignupStepTwoComponent,
+    DunnagesComponent,
+    DunnageListComponent,
+    CreateDunnageComponent,
+    CreateDunnageStepOneComponent,
+    CreateDunnageStepTwoComponent,
+    CreateDunnageSuccessComponent,
+    EditDunnageComponent,
+    EditDunnageImageComponent,
+    EditDunnageRouterComponent,
+    ViewDunnageComponent,
+    EditStockComponent,
+    ViewStockComponent,
+    EditStockInfoComponent,
+    EditStockDepartmentComponent,
+    EditStockImageComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +157,11 @@ import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/s
     NgxSpinnerModule,
     ConfirmDialogModule,
     ToastModule,
-    DropdownModule
+    DropdownModule,
+    DataViewModule,
+    MatSelectModule,
+    MatCardModule,
+    MatButtonModule
   ],
   providers: [MessageService, SharedService, SpinnerService, ConfirmationService],
   bootstrap: [AppComponent]

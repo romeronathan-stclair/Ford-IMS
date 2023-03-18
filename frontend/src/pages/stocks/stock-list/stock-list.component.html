@@ -1,0 +1,58 @@
+<h1 class="page-header">Stock</h1>
+<div class="table-header">
+
+  <div *ngIf="departments.length > 0" class="dropdown">
+      <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
+          [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+  </div>
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <form [formGroup]="stockForm">
+        <input placeholder="Search by Name" formControlName="stockName" class="form-control" id="name-input"
+            required (input)="searchByName()" />
+    </form>
+
+</div>
+  <img src="/assets/ford-logo.png" />
+
+</div>
+<div class="table-holder">
+  <div class="card">
+    <mat-card *ngFor="let stock of stocks">
+      <div class="low-stock-label-wrapper" *ngIf="stock.currentCount <= stock.lowStock">
+        <div class="low-stock-label">LOW STOCK</div>
+      </div>
+      <div class="moderate-stock-label-wrapper" *ngIf="stock.currentCount <= stock.moderateStock && stock.currentCount > stock.lowStock">
+        <div class="moderate-stock-label">MODERATE STOCK</div>
+      </div>
+      <div class="high-stock-label-wrapper" *ngIf="stock.currentCount > stock.moderateStock">
+        <div class="high-stock-label">HIGH STOCK</div>
+      </div>
+      <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
+        <mat-card-title>{{stock.name}}</mat-card-title>
+        <mat-card-subtitle>{{stock.marketLocation}}</mat-card-subtitle>
+      <mat-card-actions>
+        <button [routerLink]="'/dashboard/stock/edit/info/' + stock._id" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+        <button [routerLink]="'/dashboard/stock/view-info/' + stock._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>
+<div class="paginator-holder">
+  <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create/step-one'" type="submit"
+      class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New Stock</button>
+  <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
+      aria-label="Select page of periodic elements" [length]="length">
+  </mat-paginator>
+  <button type="submit" class="general-button">View Event Log</button>
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+      <h3></h3>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+      <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>

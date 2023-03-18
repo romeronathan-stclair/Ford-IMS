@@ -3,9 +3,9 @@
     <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div>
 
-            <input formControlName="email" type="email" class="form-control" id="email-input"
-                aria-describedby="emailHelp" required />
-            <mat-error class="field-validation-error" *ngIf="
+        <input formControlName="email" type="email" class="form-control" id="email-input" aria-describedby="emailHelp" placeholder="email@ford.com"
+            required />
+        <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
             userForm.controls['email'].dirty ||
             userForm.controls['email'].touched
@@ -14,9 +14,9 @@
             </mat-error>
         </div>
 
-        <div>
-            <input formControlName="password" type="password" class="form-control" id="password-input" required />
-            <mat-error class="field-validation-error" *ngIf="
+    <div>
+        <input formControlName="password" type="password" class="form-control" id="password-input" placeholder="password" required />
+        <mat-error class="field-validation-error" *ngIf="
             userForm.controls['password'].errors &&
             (displayValidationErrors ||
               userForm.controls['password'].dirty ||
@@ -27,11 +27,10 @@
         </div>
         <button type="submit" class="submit-button">Login</button>
 
-        <!-- <div class="button-holder">
-      
+    <!-- <div class="button-holder">
+
         <a routerLink="/account/reset-password">Forgot Password?</a>
     </div> -->
 
-        <p-toast position="bottom-center"></p-toast>
-    </form>
-</div>
+    <p-toast position="bottom-center"></p-toast>
+</form>

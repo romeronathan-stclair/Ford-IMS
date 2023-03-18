@@ -17,10 +17,11 @@ export const createDunnage = async (req: Request, res: Response) => {
     await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
     await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
     await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
+
+    req.body = JSON.parse(req.body.dunnage);
 
     const departmentId = req.body.departmentId;
-
-    console.log(departmentId);
 
     const department = await Department.findById({
         _id: departmentId,
@@ -51,6 +52,7 @@ export const createDunnage = async (req: Request, res: Response) => {
         currentCount: 0,
         lowStock: req.body.lowStock,
         moderateStock: req.body.moderateStock,
+        marketLocation: req.body.marketLocation,
         isDeleted: false
     });
 
@@ -67,7 +69,7 @@ export const createDunnage = async (req: Request, res: Response) => {
             itemId: dunnage._id.toString(),
             plantId: plantId,
             departmentId: dunnage.departmentId,
-            modelType: ModelType.STOCK,
+            modelType: ModelType.DUNNAGE,
             image: image
         };
 
@@ -85,10 +87,10 @@ export const createDunnage = async (req: Request, res: Response) => {
                 catch (err) {
                     console.log(err);
                 }
-                return res.status(500).json("Error creating Stock");
+                return res.status(500).json("Error creating Dunnage");
             });
     } else {
-        dunnage.imageURL = env.app.apiUrl + "/images/defaultDunnage.png";
+        dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
     try {
@@ -104,7 +106,7 @@ export const createDunnage = async (req: Request, res: Response) => {
 export const getDunnage = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
-    const departmentId = req.query.departmentId as string;
+    const departmentId = req.query.departmentId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const dunnageId = req.query.dunnageId;
 
@@ -124,24 +126,22 @@ export const getDunnage = async (req: Request, res: Response) => {
         query["_id"] = new Types.ObjectId(dunnageId.toString());
     }
 
+    const dunnageCount = await Dunnage.countDocuments(query);
     const dunnages = await Dunnage.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-    if (!dunnages || dunnages.length === 0) {
-        return res.status(200).json("No Dunnage found");
+    let response = {
+        dunnages: dunnages,
+        count: dunnageCount
     }
 
-    return res.status(200).json(dunnages);
+    return res.status(200).json(response);
 };
 
 //update Dunnage
 export const updateDunnage = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
-    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("dunnageId", "dunnageId is not valid").isLength({ min: 1 }).run(req);
 
-    const dunnageId = req.params.id;
+    const dunnageId = req.body.dunnageId;
 
     if (dunnageId === undefined) {
         return res.status(500).json("Dunnage Id required");
@@ -175,6 +175,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     dunnage.lowStock = req.body.lowStock || dunnage.lowStock;
     dunnage.moderateStock = req.body.moderateStock || dunnage.moderateStock;
     dunnage.departmentId = req.body.departmentId || dunnage.departmentId;
+    dunnage.marketLocation = req.body.marketLocation || dunnage.marketLocation;
 
     if (req.files) {
         const image = req.files.file;

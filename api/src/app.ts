@@ -82,14 +82,14 @@ const corsOptions: CorsOptions = {
 const expressSession: RequestHandler = session(sessionOptions);
 connectMongoDB(env.db.fullUrl);
 configPassport();
-app.use(express.json());
 app.use(expressSession);
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors(corsOptions));
-app.use(bodyParser.urlencoded());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }))
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }))
+app.use(express.json());
 app.use(fileUpload());
 app.use(`/${env.app.prefix}`, router);
 
@@ -139,13 +139,13 @@ router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productContro
 //stock routes
 router.post("/auth/stock", stockController.createStock);
 router.get("/auth/stock", authMiddleware.isAuthenticated, stockController.getStock);
-router.put("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.updateStock);
+router.put("/auth/stock", authMiddleware.isAuthenticated, stockController.updateStock);
 router.delete("/auth/stock/:id", authMiddleware.isAuthenticated, stockController.deleteStock);
 
 //dunnage routes
 router.post("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.createDunnage);
 router.get("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.getDunnage);
-router.put("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
+router.put("/auth/dunnage", authMiddleware.isAuthenticated, dunnageController.updateDunnage);
 router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageController.deleteDunnage);
 
 // product dunnage routes
