@@ -3,6 +3,7 @@ import { AuthService } from 'src/services/auth.service';
 import { CycleCheckService } from 'src/services/cyclecheck.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cycle-check-step-one',
@@ -12,12 +13,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 export class CycleCheckStepOneComponent {
   activePlantId: string = '';
   cycleCheck: any;
+  confirm = false;
 
   constructor(
     private authService: AuthService,
     private cycleCheckService: CycleCheckService,
     private spinnerService: SpinnerService,
     private confirmationService: ConfirmationService,
+    private messageService: MessageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -63,8 +67,45 @@ export class CycleCheckStepOneComponent {
     });
   }
 
-  onSubmit() {
+  confirmCheck() {
+    this.confirm = true;
+  }
 
+  cancelCheck() {
+    this.confirm = false;
+  }
+
+  submitCount() {
+    this.spinnerService.show();
+
+    console.log(this.cycleCheck);
+    let request = {
+      cycleCheckList: this.cycleCheck
+    }
+
+    this.cycleCheckService.submitCycleCheck(request)
+    .subscribe({
+      next: (data: any) => {
+        this.spinnerService.hide();
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Cycle Check Submitted Successfully'
+        });
+        this.router.navigate(['/dashboard/cycle-check/list']);
+      },
+      error: (err: any) => {
+        this.spinnerService.hide();
+        console.log(err);
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error Submitting Cycle Check'
+        });
+      }
+    });
   }
 
 

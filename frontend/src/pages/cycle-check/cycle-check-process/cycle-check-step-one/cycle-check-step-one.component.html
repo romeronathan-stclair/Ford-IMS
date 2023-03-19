@@ -18,11 +18,12 @@
           <td>{{stock.marketLocation}}</td>
           <td>{{stock.partNumber}}</td>
           <td>
-            <div class="stepper">
+            <div *ngIf="!confirm" class="stepper">
               <button type="button" (click)="decrementCountStock(stock)">-1</button>
               <input type="number" [(ngModel)]="stock.currentCount" />
               <button type="button" (click)="incrementCountStock(stock)">+1</button>
             </div>
+            <span *ngIf="confirm">{{stock.currentCount}}</span>
           </td>
           <td>
             <button class="help-btn" type="button"></button>
@@ -37,11 +38,12 @@
           <td>{{dunnage.name}}</td>
           <td>{{dunnage.marketLocation}}</td>
           <td>
-            <div class="stepper">
+            <div *ngIf="!confirm" class="stepper">
               <button type="button" (click)="decrementCountDunnage(dunnage)">-1</button>
               <input type="number" [(ngModel)]="dunnage.currentCount" />
               <button type="button" (click)="incrementCountDunnage(dunnage)">+1</button>
             </div>
+            <span *ngIf="confirm">{{dunnage.currentCount}}</span>
           </td>
           <td>
             <button class="help-btn" type="button"></button>
@@ -53,8 +55,10 @@
   </div>
 </div>
 <div class="paginator-holder">
-  <button [routerLink]="'/dashboard/cycle-check/list'" type="submit" class="general-button first-button">Cancel</button>
-  <button (click)="onSubmit()" class="general-button">Submit Count</button>
+  <button *ngIf="!confirm" [routerLink]="'/dashboard/cycle-check/list'" type="submit" class="general-button first-button">Cancel</button>
+  <button *ngIf="!confirm" (click)="confirmCheck()" class="general-button">Submit Count</button>
+  <button *ngIf="confirm" (click)="cancelCheck()" class="general-button">Back</button>
+  <button *ngIf="confirm" (click)="submitCount()" class="general-button">Confirm Count</button>
 </div>
 <p-confirmDialog #cd [style]="{width: '30vw'}">
   <ng-template pTemplate="header">

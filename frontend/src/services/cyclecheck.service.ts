@@ -29,4 +29,12 @@ export class CycleCheckService {
     });
   }
 
+  submitCycleCheck(cycleCheckList: any): Observable<any> {
+    return this.http.post(`${this.endPoint}/cycle-check`, cycleCheckList, {
+      headers: this.baseHeaders,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
 }
