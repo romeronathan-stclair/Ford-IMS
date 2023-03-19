@@ -1,27 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { check, validationResult } from "express-validator";
-import passport, { use } from "passport";
 import {
-    User,
     UserDocument,
-    Invite,
-    PlantDocument,
-    Plant,
-    DepartmentDocument,
-    Department,
-    Event,
-    EventDocument,
 } from "../models";
-import passwordSchema from "../utils/passwordValidator";
-import { createRandomToken } from "../utils/randomGenerator";
 
-import bcrypt from "bcrypt";
 
-import logger from "../utils/logger";
-import { getPage, getPageSize } from "../utils/pagination";
-import { CrudType } from "../enums/crudType";
-import mongoose from "mongoose";
-import { ModelType } from "../enums/modelType";
 import { ProductDunnage, ProductDunnageDocument } from "../models/productDunnage";
 
 export const createProductDunnage = async (req: Request, res: Response) => {

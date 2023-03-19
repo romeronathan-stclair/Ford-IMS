@@ -210,21 +210,19 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
 //update Product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
-    await check("departmentId", "Department Id is required").isLength({ min: 1 }).run(req);
-    await check("productId", "Product Id is required").isLength({ min: 1 }).run(req);
-    await check("name", "Name is required").isLength({ min: 1 }).run(req);
-    await check("partNumber", "Part Number is required").isLength({ min: 1 }).run(req);
+    console.log("update product");
+
+    req.body = JSON.parse(req.body.product);
+
+
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log(errors.array());
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const productId = req.params.id;
-
-    if (productId === undefined) {
-        return res.status(500).json("Product Id is required");
-    }
+    const productId = req.body.productId;
 
     //find product by id
     const product: ProductDocument = (await Product.findOne({
@@ -253,6 +251,20 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     product.marketLocation = req.body.marketLocation || product.marketLocation;
     product.departmentId = req.body.departmentId || product.departmentId;
 
+    if (req.body.name) {
+        const p: ProductDocument = (await Product.findOne({
+            name: product.name,
+            isDeleted: false
+        })) as ProductDocument;
+
+        if (p) {
+            if (p._id.toString() !== product._id.toString()) {
+                return res.status(500).json("Product already exists with this name");
+            }
+        }
+    }
+
+
     if (req.files) {
         const image = req.files.file;
 
@@ -264,6 +276,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             image: image,
             oldImage: product.imageURL
         };
+        console.log(imageRequest);
 
         await uploadImage(imageRequest)
             .then((result: any) => {
@@ -273,19 +286,14 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             .catch((err: any) => {
                 console.log(err);
 
-                try {
-                    product.remove();
-                }
-                catch (err) {
-                    console.log(err);
-                }
-                return res.status(500).json("Error creating Product");
+
+                return res.status(500).json("Error Updating Product");
             });
     }
 
     try {
         await product.save();
-        return res.status(500).json("Product updated successfully");
+        return res.status(200).json("Product updated successfully");
     } catch (err) {
         return res.status(500).json("Error updating Product: " + err);
     }

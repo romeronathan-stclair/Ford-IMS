@@ -5,6 +5,7 @@ import path from 'path';
 
 import { ImageRequest } from '../type/imageRequest';
 import { Plant } from "../models";
+import env from "../utils/env";
 
 type MimeTypes = 'image/png' | 'image/jpeg' | 'image/jpg';
 
@@ -29,7 +30,7 @@ export const uploadImage = async (imageRequest: ImageRequest) => {
         const dirPath = getImagePath(imageRequest);
 
         // Check if the image is valid.
-        if (imageRequest.oldImage) {
+        if (imageRequest.oldImage && imageRequest.oldImage != env.app.apiUrl + "/images/defaultImage.png") {
             const publicPath = "public/";
             const imagePath = imageRequest.oldImage.split(publicPath)[1];
             const dirPath = path.join(__dirname, '..', '..', 'public', imagePath);

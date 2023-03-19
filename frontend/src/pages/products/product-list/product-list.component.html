@@ -26,7 +26,8 @@
             <mat-card-title>{{product.name}}</mat-card-title>
             <mat-card-subtitle>{{product.marketLocation}}</mat-card-subtitle>
             <mat-card-actions>
-                <button mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
+                <button [routerLink]="'/dashboard/products/edit/information/' + product._id " mat-mini-fab
+                    color="primary"><mat-icon>edit</mat-icon></button>
                 <button mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
             </mat-card-actions>
         </mat-card>

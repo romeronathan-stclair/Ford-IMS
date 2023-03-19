@@ -231,12 +231,6 @@ export const updateStock = async (req: Request, res: Response) => {
             .catch((err: any) => {
                 console.log(err);
 
-                try {
-                    stock.remove();
-                }
-                catch (err) {
-                    console.log(err);
-                }
                 return res.status(500).json("Error creating Stock");
             });
     }

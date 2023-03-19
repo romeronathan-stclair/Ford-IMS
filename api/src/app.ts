@@ -131,7 +131,7 @@ router.delete("/auth/department/:id", authMiddleware.isAuthenticated, department
 //product routes
 router.post("/auth/product", authMiddleware.isAuthenticated, productController.createProduct);
 router.get("/auth/product", authMiddleware.isAuthenticated, productController.getProduct);
-router.put("/auth/product/:id", authMiddleware.isAuthenticated, productController.updateProduct);
+router.put("/auth/product", authMiddleware.isAuthenticated, productController.updateProduct);
 router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productController.deleteProduct);
 
 //stock routes

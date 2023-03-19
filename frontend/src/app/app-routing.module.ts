@@ -55,6 +55,9 @@ import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.compo
 import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
 import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
 import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
+import { EditProductComponent } from 'src/pages/products/edit-product/edit-product.component';
+import { EditProductInformationComponent } from 'src/pages/products/edit-product/edit-product-information/edit-product-information.component';
+import { ChangeProductPictureComponent } from 'src/pages/products/edit-product/change-product-picture/change-product-picture.component';
 
 const routes: Routes = [
   {
@@ -183,6 +186,35 @@ const routes: Routes = [
                 path: 'step-four',
                 component: CreateProductStepFourComponent,
               },
+            ]
+
+          }, {
+            path: 'edit',
+            data: { animation: 'Edit Product Page' },
+            component: EditProductComponent,
+            children: [
+              {
+                path: 'information/:id',
+                data: { animation: 'Edit Product Page' },
+                component: EditProductInformationComponent,
+              },
+              {
+                path: 'reassign-stocks/:id',
+                data: { animation: 'Edit Product Page' },
+                component: CreateStockComponent,
+              },
+              {
+                path: 'reassign-dunnages/:id',
+                data: { animation: 'Edit Product Page' },
+                component: DunnagesComponent,
+              },
+              {
+                path: 'change-image/:id',
+
+                data: { animation: 'Edit Product Page' },
+                component: ChangeProductPictureComponent
+              }
+
             ]
 
           }

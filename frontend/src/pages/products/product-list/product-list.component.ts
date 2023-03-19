@@ -7,6 +7,7 @@ import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ProductService } from 'src/services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -31,6 +32,7 @@ export class ProductListComponent {
     private departmentService: DepartmentService,
     private productService: ProductService,
     private spinnerService: SpinnerService,
+    private router: Router,
     private authService: AuthService) {
     this.productForm = new FormGroup({
       productName: new FormControl(''),
@@ -120,4 +122,5 @@ export class ProductListComponent {
   changeDepartment($event: any) {
     this.loadData();
   }
+
 }

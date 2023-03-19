@@ -85,6 +85,12 @@ import { CreateProductStepOneComponent } from 'src/pages/products/create-product
 import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
 import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
 import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dialog.component';
+import { EditProductComponent } from '../pages/products/edit-product/edit-product.component';
+import { EditProductInformationComponent } from '../pages/products/edit-product/edit-product-information/edit-product-information.component';
+
+import { ChangeProductPictureComponent } from '../pages/products/edit-product/change-product-picture/change-product-picture.component';
+import { ReassignDunnageComponent } from 'src/pages/products/edit-product/reassign-dunnage/reassign-dunnage.component';
+import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign-stock/reassign-stock.component';
 
 @NgModule({
   declarations: [
@@ -146,7 +152,12 @@ import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dial
     ViewStockComponent,
     EditStockInfoComponent,
     EditStockDepartmentComponent,
-    EditStockImageComponent
+    EditStockImageComponent,
+    EditProductComponent,
+    EditProductInformationComponent,
+    ReassignStockComponent,
+    ReassignDunnageComponent,
+    ChangeProductPictureComponent
   ],
   imports: [
     BrowserModule,

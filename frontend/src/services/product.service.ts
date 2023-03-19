@@ -42,7 +42,7 @@ export class ProductService {
 
     editProduct(product: any): Observable<any> {
         return this.http.put(`${this.endPoint}/product`, product, {
-            headers: this.baseHeaders,
+            headers: this.multiFormDataHeaders,
             observe: 'response',
             withCredentials: true
         });
