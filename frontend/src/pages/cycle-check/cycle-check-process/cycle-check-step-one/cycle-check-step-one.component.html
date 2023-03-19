@@ -1,7 +1,68 @@
-<app-ford-container>
-  <div class="holder">
-
+<div class="table-header">
+  <thead>
+    <tr>
+      <th>Part Name</th>
+      <th>Market Location</th>
+      <th>Part Type</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+</div>
+<div class="table-holder">
+  <div *ngFor="let department of cycleCheck">
+    <table class="table">
+      <caption>{{department.departmentName}}: STOCK</caption>
+      <tbody>
+        <tr *ngFor="let stock of department.stockList">
+          <td>{{stock.name}}</td>
+          <td>{{stock.marketLocation}}</td>
+          <td>{{stock.partNumber}}</td>
+          <td>
+            <div class="stepper">
+              <button type="button" (click)="decrementCountStock(stock)">-1</button>
+              <input type="number" [(ngModel)]="stock.currentCount" />
+              <button type="button" (click)="incrementCountStock(stock)">+1</button>
+            </div>
+          </td>
+          <td>
+            <button class="help-btn" type="button"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <caption>{{department.departmentName}}: EMPTY DUNNAGE</caption>
+      <tbody>
+        <tr *ngFor="let dunnage of department.dunnage">
+          <td>{{dunnage.name}}</td>
+          <td>{{dunnage.marketLocation}}</td>
+          <td>
+            <div class="stepper">
+              <button type="button" (click)="decrementCountDunnage(dunnage)">-1</button>
+              <input type="number" [(ngModel)]="dunnage.currentCount" />
+              <button type="button" (click)="incrementCountDunnage(dunnage)">+1</button>
+            </div>
+          </td>
+          <td>
+            <button class="help-btn" type="button"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="spacer"></div>
   </div>
-</app-ford-container>
+</div>
+<div class="paginator-holder">
+  <button [routerLink]="'/dashboard/cycle-check/list'" type="submit" class="general-button first-button">Cancel</button>
+  <button (click)="onSubmit()" class="general-button">Submit Count</button>
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <h3></h3>
+  </ng-template>
 
-
+  <ng-template pTemplate="footer">
+    <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+    <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>

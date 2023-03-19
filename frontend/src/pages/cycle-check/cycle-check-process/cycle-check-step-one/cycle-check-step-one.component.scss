@@ -1,13 +1,124 @@
 @import "src/styles.scss";
-.holder {
+img {
+    width: 150px;
+}
+.table-holder {
+    min-height: 70vh;
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+}
+.table-header {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
-    height: 70vh;
+    padding-right: 50px;
+}
+.paginator-holder {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $grey !important;
+    border-bottom: 0.75px solid black;
+    border-right: 0.75px solid black;
+    border-left: 0.75px solid black;
     @include column-lg-break {
-        padding: 30px;
+        flex-direction: column;
+        gap: 20px;
     }
+}
+.mat-column-name {
+    width: 40%;
+    max-width: 40%;
+}
+i {
+    padding-right: 5.5px;
+}
+.first-button {
+    @include column-lg-break {
+        order: 1;
+    }
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 7.5px;
+}
+.fa-magnifying-glass {
+    padding-left: 7.5px;
+    color: $darkGrey;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  font-weight: bold;
+}
+
+td {
+  background-color: white;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.stepper button {
+  background-color: #47A8E5;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+}
+
+.stepper button:hover {
+  background-color: #133A7C;
+}
+
+.help-btn {
+  border: none;
+  background-color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.help-btn::before {
+  content: "?";
+  color: gray;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+input {
+  width: 30%;
+}
+
+caption {
+  text-align: left;
+  padding: 10px;
+  font-weight: bold;
+  background-color: #999;
+}
+
+.spacer {
+  margin-top: 20px;
 }
 

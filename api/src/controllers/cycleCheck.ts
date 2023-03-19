@@ -35,6 +35,7 @@ export const getCycleCheck = async (req: Request, res: Response) => {
 
         let stockList: StockDocument[] = (await Stock.find({
             departmentId: departmentId,
+            isSubAssembly: false,
             isDeleted: false
         })) as StockDocument[];
 
@@ -95,6 +96,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
             if (cycleCheck.stockList) {
                 const departmentStocks = await Stock.find({
                     departmentId: departmentId,
+                    isSubAssembly: false,
                     isDeleted: false
                 });
 
