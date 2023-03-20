@@ -89,7 +89,7 @@ export class EditProductInformationComponent {
 
     const formData = new FormData();
 
-    formData.append('name', JSON.stringify(this.product));
+    formData.append('product', JSON.stringify(this.product));
 
 
 
@@ -97,7 +97,7 @@ export class EditProductInformationComponent {
 
 
 
-    this.productService.editProduct(this.product).subscribe({
+    this.productService.editProduct(formData).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
         console.log(data);

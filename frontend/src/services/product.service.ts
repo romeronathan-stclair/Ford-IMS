@@ -47,5 +47,20 @@ export class ProductService {
             withCredentials: true
         });
     }
+    reassignProductStock(request: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/product/reassign-stock`, request, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
+
+    reassignProductDunnage(request: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/product/reassign-dunnage`, request, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
 
 }

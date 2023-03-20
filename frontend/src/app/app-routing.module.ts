@@ -58,6 +58,8 @@ import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock
 import { EditProductComponent } from 'src/pages/products/edit-product/edit-product.component';
 import { EditProductInformationComponent } from 'src/pages/products/edit-product/edit-product-information/edit-product-information.component';
 import { ChangeProductPictureComponent } from 'src/pages/products/edit-product/change-product-picture/change-product-picture.component';
+import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign-stock/reassign-stock.component';
+import { ReassignDunnageComponent } from 'src/pages/products/edit-product/reassign-dunnage/reassign-dunnage.component';
 
 const routes: Routes = [
   {
@@ -199,14 +201,14 @@ const routes: Routes = [
                 component: EditProductInformationComponent,
               },
               {
-                path: 'reassign-stocks/:id',
+                path: 'reassign-stock/:id',
                 data: { animation: 'Edit Product Page' },
-                component: CreateStockComponent,
+                component: ReassignStockComponent,
               },
               {
-                path: 'reassign-dunnages/:id',
+                path: 'reassign-dunnage/:id',
                 data: { animation: 'Edit Product Page' },
-                component: DunnagesComponent,
+                component: ReassignDunnageComponent,
               },
               {
                 path: 'change-image/:id',

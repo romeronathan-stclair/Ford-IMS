@@ -6,6 +6,7 @@ import {
 
 
 import { ProductDunnage, ProductDunnageDocument } from "../models/productDunnage";
+import { getPage, getPageSize } from "../utils/pagination";
 
 export const createProductDunnage = async (req: Request, res: Response) => {
     await check("productId", "productId is not valid")
@@ -83,3 +84,31 @@ export const deleteProductDunnage = async (req: Request, res: Response) => {
     }
 };
 
+export const getProductDunnage = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+    const productId = req.query.productId;
+
+    const query: any = {
+        isDeleted: false,
+    };
+
+    if (productId) {
+        query["productId"] = productId;
+    }
+    console.log(query);
+
+
+    const productDunnage = await ProductDunnage.find(
+        query
+    ).skip(page * pageSize).limit(pageSize).exec();
+    const count = await ProductDunnage.countDocuments(query);
+
+
+
+
+    return res.status(200).json({
+        productDunnage: productDunnage,
+        count: count
+    });
+}

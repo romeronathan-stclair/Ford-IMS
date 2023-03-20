@@ -130,6 +130,7 @@ export const getStock = async (req: Request, res: Response) => {
     const partNumber = req.query.partNumber;
     const stockId = req.query.stockId;
 
+
     const query: any = {
         isDeleted: false,
     };
