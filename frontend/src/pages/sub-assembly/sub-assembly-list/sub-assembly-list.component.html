@@ -1,4 +1,4 @@
-<h1 class="page-header">Cycle Check History</h1>
+<h1 class="page-header">Sub Assembly History</h1>
 <div class="table-header">
     <div>
 
@@ -9,11 +9,10 @@
 </div>
 <div class="table-holder">
 
-
 </div>
 <div class="paginator-holder">
-    <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/cycle-check/create/step-one'" type="submit"
-        class="general-button first-button">Start Cycle Count</button>
+    <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/sub-assembly/create/step-one'" type="submit"
+        class="general-button first-button">Start Sub Assembly Count</button>
     <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
     </mat-paginator>
@@ -32,4 +31,5 @@
         <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
     </ng-template>
 </p-confirmDialog>
+
 
