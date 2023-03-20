@@ -58,7 +58,6 @@ export class CycleCheckStepOneComponent {
       next: (data: any) => {
         this.spinnerService.hide();
         this.cycleCheck = data.body;
-        console.log(this.cycleCheck);
       },
       error: (err: any) => {
         this.spinnerService.hide();
@@ -68,11 +67,17 @@ export class CycleCheckStepOneComponent {
   }
 
   confirmCheck() {
+    this.spinnerService.showHide();
     this.confirm = true;
+    const scrollToTop = document.querySelector('.table-header');
+    scrollToTop?.scrollIntoView({ behavior: 'auto' });
   }
 
   cancelCheck() {
+    this.spinnerService.showHide();
     this.confirm = false;
+    const scrollToTop = document.querySelector('.table-header');
+    scrollToTop?.scrollIntoView({ behavior: 'auto' });
   }
 
   submitCount() {
