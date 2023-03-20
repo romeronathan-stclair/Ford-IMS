@@ -1,0 +1,35 @@
+@import "src/styles.scss";
+
+.holder {
+  min-width: 30vw;
+  max-width: 50vw;
+  min-height: 40vh;
+  max-height: 60vh;
+  overflow: hidden;
+}
+
+.container-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50px;
+}
+
+.content {
+  display: inline-block;
+  margin: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.button-holders {
+    display: inline-block;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+    margin: 0 auto;
+}
+
+img {
+  width: 30%;
+}

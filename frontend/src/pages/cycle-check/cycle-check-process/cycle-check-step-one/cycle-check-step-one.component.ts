@@ -4,6 +4,8 @@ import { CycleCheckService } from 'src/services/cyclecheck.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { HelpDialogComponent } from 'src/components/help-dialog/help-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-cycle-check-step-one',
@@ -21,7 +23,8 @@ export class CycleCheckStepOneComponent {
     private spinnerService: SpinnerService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +50,20 @@ export class CycleCheckStepOneComponent {
     if (dunnage.currentCount > 0) {
       dunnage.currentCount--;
     }
+  }
+
+  openHelpDialog(item: any) {
+    const helpItem = item;
+    console.log(helpItem);
+
+    const dialogRef = this.dialog.open(HelpDialogComponent, {
+      data: {
+        name: helpItem.name,
+        imageURL: helpItem.imageURL,
+        marketLocation: helpItem.marketLocation,
+        partNumber: helpItem.partNumber,
+      }
+    });
   }
 
   loadCycleCheck() {

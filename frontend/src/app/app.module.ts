@@ -73,7 +73,7 @@ import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-che
 import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/cycle-check-list.component';
 import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
 import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
-
+import { HelpDialogComponent } from 'src/components/help-dialog/help-dialog.component';
 import { PickListModule } from 'primeng/picklist';
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
 import { InviteOneUserComponent } from '../pages/users/user-invite/invite-one/invite-one-user/invite-one-user.component';
@@ -170,7 +170,8 @@ import { ProductsComponent } from 'src/pages/products/products/products.componen
     CycleCheckComponent,
     CycleCheckListComponent,
     CycleCheckRouterComponent,
-    CycleCheckStepOneComponent
+    CycleCheckStepOneComponent,
+    HelpDialogComponent
   ],
   imports: [
     BrowserModule,
