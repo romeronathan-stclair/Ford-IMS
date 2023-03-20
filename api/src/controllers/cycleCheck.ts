@@ -35,6 +35,7 @@ export const getCycleCheck = async (req: Request, res: Response) => {
 
         let stockList: StockDocument[] = (await Stock.find({
             departmentId: departmentId,
+            isSubAssembly: false,
             isDeleted: false
         })) as StockDocument[];
 
@@ -55,7 +56,7 @@ export const getCycleCheck = async (req: Request, res: Response) => {
 }
 
 export const submitCycleCheck = async (req: Request, res: Response) => {
-    await check("cycleCheckList", "stocks is not valid").isLength({ min: 1 }).run(req);
+    await check("cycleCheckList", "Cycle Check List is not valid").isLength({ min: 1 }).run(req);
 
     const user = req.user as UserDocument;
 
@@ -95,6 +96,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
             if (cycleCheck.stockList) {
                 const departmentStocks = await Stock.find({
                     departmentId: departmentId,
+                    isSubAssembly: false,
                     isDeleted: false
                 });
 

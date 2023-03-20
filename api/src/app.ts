@@ -167,7 +167,7 @@ router.get("/auth/forecast/department/:id", authMiddleware.isAuthenticated, fore
 
 // cycle check routes
 router.get("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.getCycleCheck);
-router.put("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.submitCycleCheck);
+router.post("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.submitCycleCheck);
 
 // production count routes
 router.post("/auth/production-count", authMiddleware.isAuthenticated, productionCountController.submitProductionCount);

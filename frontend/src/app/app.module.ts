@@ -69,6 +69,10 @@ import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.compo
 import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
 import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
 import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
+import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-check.component';
+import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/cycle-check-list.component';
+import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
+import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
 
 import { PickListModule } from 'primeng/picklist';
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
@@ -152,7 +156,11 @@ import { ProductsComponent } from 'src/pages/products/products/products.componen
     ViewStockComponent,
     EditStockInfoComponent,
     EditStockDepartmentComponent,
-    EditStockImageComponent
+    EditStockImageComponent,
+    CycleCheckComponent,
+    CycleCheckListComponent,
+    CycleCheckRouterComponent,
+    CycleCheckStepOneComponent
   ],
   imports: [
     BrowserModule,
