@@ -110,7 +110,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                     if (!matchedStock) {
                         return res.status(500).json("Stock does not exist");
                     }
-                    matchedStock.currentCount = stock.currentCount || 0;
+                    matchedStock.currentCount = stock.currentCount;
 
                     matchedStock.totalAvailableQty = stock.currentCount * matchedStock.totalStockPerSkid;
 
@@ -134,7 +134,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                     if (!matchedDunnage) {
                         return res.status(500).json("Dunnage does not match");
                     }
-                    matchedDunnage.currentCount = dunnage.currentCount || 0;
+                    matchedDunnage.currentCount = dunnage.currentCount;
 
 
                     dunnageSaveList.push(matchedDunnage);
