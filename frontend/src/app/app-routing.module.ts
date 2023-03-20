@@ -58,10 +58,16 @@ import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.compo
 import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
 import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
 import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
+import { EditProductComponent } from 'src/pages/products/edit-product/edit-product.component';
+import { EditProductInformationComponent } from 'src/pages/products/edit-product/edit-product-information/edit-product-information.component';
+import { ChangeProductPictureComponent } from 'src/pages/products/edit-product/change-product-picture/change-product-picture.component';
+import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign-stock/reassign-stock.component';
+import { ReassignDunnageComponent } from 'src/pages/products/edit-product/reassign-dunnage/reassign-dunnage.component';
 import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/cycle-check-list.component';
 import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
 import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
 import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-check.component';
+
 
 const routes: Routes = [
   {
@@ -209,6 +215,35 @@ const routes: Routes = [
                 path: 'step-four',
                 component: CreateProductStepFourComponent,
               },
+            ]
+
+          }, {
+            path: 'edit',
+            data: { animation: 'Edit Product Page' },
+            component: EditProductComponent,
+            children: [
+              {
+                path: 'information/:id',
+                data: { animation: 'Edit Product Page' },
+                component: EditProductInformationComponent,
+              },
+              {
+                path: 'reassign-stock/:id',
+                data: { animation: 'Edit Product Page' },
+                component: ReassignStockComponent,
+              },
+              {
+                path: 'reassign-dunnage/:id',
+                data: { animation: 'Edit Product Page' },
+                component: ReassignDunnageComponent,
+              },
+              {
+                path: 'change-image/:id',
+
+                data: { animation: 'Edit Product Page' },
+                component: ChangeProductPictureComponent
+              }
+
             ]
 
           }

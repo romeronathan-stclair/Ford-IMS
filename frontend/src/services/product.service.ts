@@ -42,6 +42,21 @@ export class ProductService {
 
     editProduct(product: any): Observable<any> {
         return this.http.put(`${this.endPoint}/product`, product, {
+            headers: this.multiFormDataHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
+    reassignProductStock(request: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/product/reassign-stock`, request, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
+
+    reassignProductDunnage(request: any): Observable<any> {
+        return this.http.post(`${this.endPoint}/product/reassign-dunnage`, request, {
             headers: this.baseHeaders,
             observe: 'response',
             withCredentials: true

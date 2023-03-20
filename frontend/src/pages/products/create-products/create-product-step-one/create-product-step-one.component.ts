@@ -91,7 +91,7 @@ export class CreateProductStepOneComponent {
   }
 
   onSubmit() {
-    if (!this.productForm.valid) {
+    if (!this.productForm.valid || this.selectedDepartment == null) {
       this.displayValidationErrors = true;
       this.spinnerService.hide();
       return;

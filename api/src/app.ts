@@ -133,9 +133,10 @@ router.delete("/auth/department/:id", authMiddleware.isAuthenticated, department
 //product routes
 router.post("/auth/product", authMiddleware.isAuthenticated, productController.createProduct);
 router.get("/auth/product", authMiddleware.isAuthenticated, productController.getProduct);
-router.put("/auth/product/:id", authMiddleware.isAuthenticated, productController.updateProduct);
+router.put("/auth/product", authMiddleware.isAuthenticated, productController.updateProduct);
 router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productController.deleteProduct);
-
+router.post("/auth/product/reassign-stock", authMiddleware.isAuthenticated, productController.reassignProductStock);
+router.post("/auth/product/reassign-dunnage", authMiddleware.isAuthenticated, productController.reassignProductDunnage);
 //stock routes
 router.post("/auth/stock", stockController.createStock);
 router.get("/auth/stock", authMiddleware.isAuthenticated, stockController.getStock);
@@ -151,12 +152,13 @@ router.delete("/auth/dunnage/:id", authMiddleware.isAuthenticated, dunnageContro
 // product dunnage routes
 router.post("/auth/product-dunnage", authMiddleware.isAuthenticated, productDunnageController.createProductDunnage);
 router.delete("/auth/product-dunnage/:id", authMiddleware.isAuthenticated, productDunnageController.deleteProductDunnage);
+router.get("/auth/product-dunnage", authMiddleware.isAuthenticated, productDunnageController.getProductDunnage);
 
 // product stock routes
 router.post("/auth/product-stock", authMiddleware.isAuthenticated, productStockController.createProductStock);
 router.delete("/auth/product-stock/:id", authMiddleware.isAuthenticated, productStockController.deleteProductStock);
 router.put("/auth/product-stock", authMiddleware.isAuthenticated, productStockController.changeUserPerProduct);
-
+router.get("/auth/product-stock", authMiddleware.isAuthenticated, productStockController.getProductStock);
 
 // forecast routes
 router.get("/auth/forecast/:id", authMiddleware.isAuthenticated, forecastController.getForecastProduct);

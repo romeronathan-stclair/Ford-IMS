@@ -130,6 +130,7 @@ export const getStock = async (req: Request, res: Response) => {
     const partNumber = req.query.partNumber;
     const stockId = req.query.stockId;
 
+
     const query: any = {
         isDeleted: false,
     };
@@ -231,12 +232,6 @@ export const updateStock = async (req: Request, res: Response) => {
             .catch((err: any) => {
                 console.log(err);
 
-                try {
-                    stock.remove();
-                }
-                catch (err) {
-                    console.log(err);
-                }
                 return res.status(500).json("Error creating Stock");
             });
     }

@@ -155,6 +155,105 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     return res.status(200).json(product);
 };
 
+// reassign product stock
+export const reassignProductStock = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.body.productId;
+    console.log("Product Id: " + productId);
+
+    const productStocks = await ProductStock.find({
+        productId: productId,
+        isDeleted: false
+    }).exec();
+
+
+    // Parse the incoming stocks
+    const incomingStocks = req.body.stocks;
+
+    console.log("Incoming stocks: " + JSON.stringify(productStocks));
+
+    // Iterate through the existing product stocks and delete the ones not in the incoming stocks
+    for (const existingStock of productStocks) {
+        const isIncoming = incomingStocks.some((incomingStock: any) => incomingStock._id === existingStock.stockId);
+        console.log("Is incoming: " + isIncoming);
+
+        if (!isIncoming) {
+            existingStock.isDeleted = true;
+            await existingStock.save();
+        }
+    }
+
+    // Iterate through the incoming stocks and add new ones if they don't already exist
+    for (const incomingStock of incomingStocks) {
+        const alreadyExists = productStocks.some(existingStock => existingStock.stockId === incomingStock.stockId);
+
+        if (!alreadyExists) {
+            const newProductStock = new ProductStock({
+                productId: productId,
+                stockId: incomingStock._id,
+                departmentId: incomingStock.departmentId, // Assuming departmentId is included in the incomingStock object
+                usePerProduct: incomingStock.usePerProduct,
+                isDeleted: false
+            });
+
+            try {
+                await newProductStock.save();
+            } catch (error) {
+                console.error(`Error saving new product stock: ${error}`);
+            }
+        }
+    }
+
+    return res.status(200).json({ message: 'Product stocks reassigned successfully.' });
+};
+// reassign product dunnage
+export const reassignProductDunnage = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.body.productId;
+    console.log("Product Id: " + productId);
+
+    const productDunnages = await ProductDunnage.find({
+        productId: productId,
+        isDeleted: false
+    }).exec();
+
+    // Parse the incoming dunnage array
+    const incomingDunnage = req.body.dunnage;
+
+    console.log("Incoming dunnage: " + JSON.stringify(productDunnages));
+
+    // Iterate through the existing product dunnages and delete the ones not in the incoming dunnage
+    for (const existingDunnage of productDunnages) {
+        const isIncoming = incomingDunnage.some((incomingDunnageItem: any) => incomingDunnageItem._id === existingDunnage.dunnageId);
+        console.log("Is incoming: " + isIncoming);
+
+        if (!isIncoming) {
+            existingDunnage.isDeleted = true;
+            await existingDunnage.save();
+        }
+    }
+
+    // Iterate through the incoming dunnage and add new ones if they don't already exist
+    for (const incomingDunnageItem of incomingDunnage) {
+        const alreadyExists = productDunnages.some(existingDunnage => existingDunnage.dunnageId === incomingDunnageItem._id);
+
+        if (!alreadyExists) {
+            const newProductDunnage = new ProductDunnage({
+                productId: productId,
+                dunnageId: incomingDunnageItem._id,
+                departmentId: incomingDunnageItem.departmentId, // Assuming departmentId is included in the incomingDunnageItem object
+                isDeleted: false
+            });
+
+            try {
+                await newProductDunnage.save();
+            } catch (error) {
+                console.error(`Error saving new product dunnage: ${error}`);
+            }
+        }
+    }
+
+    return res.status(200).json({ message: 'Product dunnage reassigned successfully.' });
+};
+
 //get Product
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
     const page = getPage(req);
@@ -210,21 +309,19 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
 //update Product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
-    await check("departmentId", "Department Id is required").isLength({ min: 1 }).run(req);
-    await check("productId", "Product Id is required").isLength({ min: 1 }).run(req);
-    await check("name", "Name is required").isLength({ min: 1 }).run(req);
-    await check("partNumber", "Part Number is required").isLength({ min: 1 }).run(req);
+    console.log("update product");
+
+    req.body = JSON.parse(req.body.product);
+
+
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+        console.log(errors.array());
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const productId = req.params.id;
-
-    if (productId === undefined) {
-        return res.status(500).json("Product Id is required");
-    }
+    const productId = req.body.productId;
 
     //find product by id
     const product: ProductDocument = (await Product.findOne({
@@ -253,6 +350,20 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     product.marketLocation = req.body.marketLocation || product.marketLocation;
     product.departmentId = req.body.departmentId || product.departmentId;
 
+    if (req.body.name) {
+        const p: ProductDocument = (await Product.findOne({
+            name: product.name,
+            isDeleted: false
+        })) as ProductDocument;
+
+        if (p) {
+            if (p._id.toString() !== product._id.toString()) {
+                return res.status(500).json("Product already exists with this name");
+            }
+        }
+    }
+
+
     if (req.files) {
         const image = req.files.file;
 
@@ -264,6 +375,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             image: image,
             oldImage: product.imageURL
         };
+        console.log(imageRequest);
 
         await uploadImage(imageRequest)
             .then((result: any) => {
@@ -273,19 +385,14 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             .catch((err: any) => {
                 console.log(err);
 
-                try {
-                    product.remove();
-                }
-                catch (err) {
-                    console.log(err);
-                }
-                return res.status(500).json("Error creating Product");
+
+                return res.status(500).json("Error Updating Product");
             });
     }
 
     try {
         await product.save();
-        return res.status(500).json("Product updated successfully");
+        return res.status(200).json("Product updated successfully");
     } catch (err) {
         return res.status(500).json("Error updating Product: " + err);
     }

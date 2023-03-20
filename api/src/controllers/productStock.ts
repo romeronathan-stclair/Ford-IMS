@@ -158,3 +158,29 @@ export const changeUserPerProduct = async (req: Request, res: Response, next: Ne
 
 
 }
+export const getProductStock = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+    const productId = req.query.productId;
+
+    const query: any = {
+        isDeleted: false,
+    };
+
+    if (productId) {
+        query["productId"] = productId;
+    }
+    console.log(query);
+
+
+    const productStocks = await ProductStock.find(
+        query
+    ).skip(page * pageSize).limit(pageSize).exec();
+    const count = await ProductStock.countDocuments(query);
+
+
+    return res.status(200).json({
+        productStocks: productStocks,
+        count: count
+    });
+}
