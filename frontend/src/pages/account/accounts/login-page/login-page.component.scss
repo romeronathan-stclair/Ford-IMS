@@ -7,7 +7,7 @@ form {
     gap: 15px;
 }
 .holder {
-    min-height: 65vh !important;
+    min-height: 40vh !important;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -31,4 +31,8 @@ input {
 .submit-button:hover {
     background-color: #47a8e5;
     border: 1px solid black;
+}
+
+img {
+  width: 300px;
 }

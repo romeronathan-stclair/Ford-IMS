@@ -49,7 +49,6 @@ export class CycleCheckStepOneComponent {
     }
   }
 
-
   loadCycleCheck() {
     this.spinnerService.show();
 
@@ -58,7 +57,11 @@ export class CycleCheckStepOneComponent {
       next: (data: any) => {
         this.spinnerService.hide();
         this.cycleCheck = data.body;
-        console.log(this.cycleCheck);
+
+        this.cycleCheck.forEach((department: any) => {
+          department.stockList.forEach((stock: any) => stock.currentCount = 0);
+          department.dunnage.forEach((dunnage: any) => dunnage.currentCount = 0);
+        });
       },
       error: (err: any) => {
         this.spinnerService.hide();
@@ -67,12 +70,51 @@ export class CycleCheckStepOneComponent {
     });
   }
 
+  validateInputs(): boolean {
+    let isValid = true;
+
+    this.cycleCheck.forEach((department: any) => {
+      department.stockList.forEach((stock: any) => {
+        if (stock.currentCount === null) {
+          isValid = false;
+          return;
+        }
+      });
+
+      department.dunnage.forEach((dunnage: any) => {
+        if (dunnage.currentCount === null) {
+          isValid = false;
+          return;
+        }
+      });
+    });
+
+    return isValid;
+  }
+
+
   confirmCheck() {
+    if (!this.validateInputs()) {
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please enter all the values'
+      });
+      return;
+    }
+
+    this.spinnerService.showHide();
     this.confirm = true;
+    const scrollToTop = document.querySelector('.table-header');
+    scrollToTop?.scrollIntoView({ behavior: 'auto' });
   }
 
   cancelCheck() {
+    this.spinnerService.showHide();
     this.confirm = false;
+    const scrollToTop = document.querySelector('.table-header');
+    scrollToTop?.scrollIntoView({ behavior: 'auto' });
   }
 
   submitCount() {

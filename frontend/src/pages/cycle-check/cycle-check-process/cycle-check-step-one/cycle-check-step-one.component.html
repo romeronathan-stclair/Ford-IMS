@@ -1,15 +1,15 @@
 <div class="table-header">
   <thead>
-    <tr>
-      <th>Part Name</th>
-      <th>Market Location</th>
-      <th>Part Type</th>
-      <th>Quantity</th>
-    </tr>
+    <th>Part Name</th>
+    <th>Market Location</th>
+    <th>Part Type</th>
+    <th>-1  Quantity  +1</th>
+    <th>Help</th>
   </thead>
 </div>
 <div class="table-holder">
   <div *ngFor="let department of cycleCheck">
+  <ng-container *ngIf="department.stockList.length || department.dunnage.length">
     <table class="table">
       <caption>{{department.departmentName}}: STOCK</caption>
       <tbody>
@@ -19,9 +19,9 @@
           <td>{{stock.partNumber}}</td>
           <td>
             <div *ngIf="!confirm" class="stepper">
-              <button type="button" (click)="decrementCountStock(stock)">-1</button>
-              <input type="number" [(ngModel)]="stock.currentCount" />
-              <button type="button" (click)="incrementCountStock(stock)">+1</button>
+              <button type="button" (click)="decrementCountStock(stock)">-</button>
+              <input id="stock-count" type="number" [(ngModel)]="stock.currentCount" />
+              <button type="button" (click)="incrementCountStock(stock)">+</button>
             </div>
             <span *ngIf="confirm">{{stock.currentCount}}</span>
           </td>
@@ -37,11 +37,12 @@
         <tr *ngFor="let dunnage of department.dunnage">
           <td>{{dunnage.name}}</td>
           <td>{{dunnage.marketLocation}}</td>
+          <td></td>
           <td>
             <div *ngIf="!confirm" class="stepper">
-              <button type="button" (click)="decrementCountDunnage(dunnage)">-1</button>
+              <button type="button" (click)="decrementCountDunnage(dunnage)">-</button>
               <input type="number" [(ngModel)]="dunnage.currentCount" />
-              <button type="button" (click)="incrementCountDunnage(dunnage)">+1</button>
+              <button type="button" (click)="incrementCountDunnage(dunnage)">+</button>
             </div>
             <span *ngIf="confirm">{{dunnage.currentCount}}</span>
           </td>
@@ -52,6 +53,7 @@
       </tbody>
     </table>
     <div class="spacer"></div>
+  </ng-container>
   </div>
 </div>
 <div class="paginator-holder">
