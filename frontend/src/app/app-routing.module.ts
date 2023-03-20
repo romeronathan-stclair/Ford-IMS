@@ -5,6 +5,9 @@ import { AuthNoGuard } from 'src/guards/auth.no.guard';
 import { AccountPageComponent } from 'src/pages/account/accounts/account-page/account-page.component';
 import { LoginPageComponent } from 'src/pages/account/accounts/login-page/login-page.component';
 import { SignoutPageComponent } from 'src/pages/account/accounts/signout-page/signout-page.component';
+import { SignupPageComponent } from 'src/pages/account/accounts/signup-page/signup-page.component';
+import { SignupStepOneComponent } from 'src/pages/account/accounts/signup-page/signup-step-one/signup-step-one.component';
+import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/signup-step-two/signup-step-two.component';
 import { DashboardComponent } from 'src/pages/dashboard/dashboard/dashboard.component';
 import { CreateDepartmentComponent } from 'src/pages/departments/create-department/create-department.component';
 import { DepartmentListComponent } from 'src/pages/departments/department-list/department-list.component';
@@ -60,6 +63,11 @@ import { EditProductInformationComponent } from 'src/pages/products/edit-product
 import { ChangeProductPictureComponent } from 'src/pages/products/edit-product/change-product-picture/change-product-picture.component';
 import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign-stock/reassign-stock.component';
 import { ReassignDunnageComponent } from 'src/pages/products/edit-product/reassign-dunnage/reassign-dunnage.component';
+import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/cycle-check-list.component';
+import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
+import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
+import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-check.component';
+
 
 const routes: Routes = [
   {
@@ -72,7 +80,26 @@ const routes: Routes = [
         path: 'login',
         data: { animation: 'Login Page' },
         component: LoginPageComponent,
-      }
+      },
+      {
+        path: 'signup',
+        data: { animation: 'Signup Page' },
+        component: SignupPageComponent,
+        children: [
+          {
+            path: 'step-one/:id',
+            component: SignupStepOneComponent
+          },
+          {
+            path: 'step-one',
+            component: SignupStepOneComponent
+          },
+          {
+            path: 'step-two',
+            component: SignupStepTwoComponent
+          },
+        ]
+      },
     ],
   },
   {
@@ -376,7 +403,29 @@ const routes: Routes = [
             }
           ]
         }
-
+        ]
+      },
+      {
+        path: 'cycle-check',
+        data: { animation: 'Cycle Check Page' },
+        component: CycleCheckComponent,
+        children: [
+          {
+            path: 'create',
+            data: { animation: 'Create Cycle Check Page' },
+            component: CycleCheckRouterComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: CycleCheckStepOneComponent
+              }
+            ],
+          },
+          {
+            path: 'list',
+            data: { animation: 'Cycle Check List Page' },
+            component: CycleCheckListComponent
+          }
         ]
       }
     ]

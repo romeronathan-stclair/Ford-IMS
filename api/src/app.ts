@@ -99,6 +99,7 @@ app.get("/health", (req, res) => {
 
 //user routes
 router.post("/auth/signup/dev", userController.signupUnsafe);
+router.post("/auth/signup", userController.signup);
 router.post("/auth/signin", userController.signin);
 router.get("/auth/signout", userController.logout);
 router.post("/auth/update", authMiddleware.isAuthenticated, userController.updateUser);
@@ -109,6 +110,7 @@ router.post("/auth/reset", authMiddleware.isAuthenticated, userController.change
 router.put("/auth/user/active-plant", authMiddleware.isAuthenticated, userController.changeActivePlant);
 //invite routes
 router.post("/auth/invite", authMiddleware.isAuthenticated, inviteController.sendInvite);
+router.get("/auth/invite", inviteController.getInvite);
 //event routes
 router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEvents);
 
@@ -167,7 +169,7 @@ router.get("/auth/forecast/department/:id", authMiddleware.isAuthenticated, fore
 
 // cycle check routes
 router.get("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.getCycleCheck);
-router.put("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.submitCycleCheck);
+router.post("/auth/cycle-check", authMiddleware.isAuthenticated, cycleCheckController.submitCycleCheck);
 
 // production count routes
 router.post("/auth/production-count", authMiddleware.isAuthenticated, productionCountController.submitProductionCount);

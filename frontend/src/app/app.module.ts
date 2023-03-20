@@ -69,6 +69,10 @@ import { ViewStockComponent } from 'src/pages/stocks/view-stock/view-stock.compo
 import { EditStockInfoComponent } from 'src/pages/stocks/edit-stocks/edit-stock-info/edit-stock-info.component';
 import { EditStockDepartmentComponent } from 'src/pages/stocks/edit-stocks/edit-stock-department/edit-stock-department.component';
 import { EditStockImageComponent } from 'src/pages/stocks/edit-stocks/edit-stock-image/edit-stock-image.component';
+import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-check.component';
+import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/cycle-check-list.component';
+import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
+import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
 
 import { PickListModule } from 'primeng/picklist';
 import { InviteUsersComponent } from '../pages/users/user-invite/invite-users/invite-users.component';
@@ -77,9 +81,10 @@ import { InviteMultipleUsersComponent } from '../pages/users/user-invite/invite-
 import { InviteOneUserStepOneComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-one/invite-one-user-step-one.component';
 import { InviteOneUserStepTwoComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-two/invite-one-user-step-two.component';
 import { InviteOneUserStepThreeComponent } from '../pages/users/user-invite/invite-one/invite-one-user-step-three/invite-one-user-step-three.component';
-import { ProductsComponent } from '../pages/products/products/products.component';
-import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
-import { CreateProductComponent } from '../pages/products/create-products/create-product/create-product.component';
+import { SignupPageComponent } from '../pages/account/accounts/signup-page/signup-page.component';
+import { SignupStepOneComponent } from '../pages/account/accounts/signup-page/signup-step-one/signup-step-one.component';
+import { SignupStepTwoComponent } from 'src/pages/account/accounts/signup-page/signup-step-two/signup-step-two.component';
+import { UsePerDialogComponent } from 'src/components/use-per-dialog/use-per-dialog.component';
 import { CreateProductStepFourComponent } from 'src/pages/products/create-products/create-product-step-four/create-product-step-four.component';
 import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
 import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
@@ -87,10 +92,12 @@ import { CreateProductStepTwoComponent } from 'src/pages/products/create-product
 import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dialog.component';
 import { EditProductComponent } from '../pages/products/edit-product/edit-product.component';
 import { EditProductInformationComponent } from '../pages/products/edit-product/edit-product-information/edit-product-information.component';
-
 import { ChangeProductPictureComponent } from '../pages/products/edit-product/change-product-picture/change-product-picture.component';
 import { ReassignDunnageComponent } from 'src/pages/products/edit-product/reassign-dunnage/reassign-dunnage.component';
 import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign-stock/reassign-stock.component';
+import { CreateProductComponent } from 'src/pages/products/create-products/create-product/create-product.component';
+import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
+import { ProductsComponent } from 'src/pages/products/products/products.component';
 
 @NgModule({
   declarations: [
@@ -130,6 +137,9 @@ import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign
     InviteOneUserStepOneComponent,
     InviteOneUserStepTwoComponent,
     InviteOneUserStepThreeComponent,
+    SignupPageComponent,
+    SignupStepOneComponent,
+    SignupStepTwoComponent,
     ProductListComponent,
     ProductsComponent,
     CreateProductComponent,
@@ -158,6 +168,10 @@ import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign
     ReassignStockComponent,
     ReassignDunnageComponent,
     ChangeProductPictureComponent
+    CycleCheckComponent,
+    CycleCheckListComponent,
+    CycleCheckRouterComponent,
+    CycleCheckStepOneComponent
   ],
   imports: [
     BrowserModule,

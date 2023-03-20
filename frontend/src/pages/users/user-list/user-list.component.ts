@@ -36,7 +36,6 @@ export class UserListComponent {
     private messageService: MessageService,
     private spinnerService: SpinnerService,
     private plantService: PlantService,
-
     private authService: AuthService,
     private departmentService: DepartmentService) {
     this.userForm = new FormGroup({
@@ -45,158 +44,78 @@ export class UserListComponent {
 
   }
   ngOnInit() {
-
-
     this.loadData();
-
-
   }
 
   ngAfterViewInit() {
-
-
     this.dataSource.paginator = this.paginator;
-    console.log(this.paginator);
-
   }
 
-  loadData() {
+  async loadData() {
     this.spinnerService.show();
+    await this.loadDepartments();
+    await this.loadUsers();
+    this.spinnerService.hide();
+  }
 
+  async loadDepartments() {
     let userId = this.authService.user._id;
-
     let query = "?plantId=" + this.authService.user.activePlantId;
 
-
-    this.departmentService.getDepartments(query).subscribe({
-      next: (data: any) => {
-        this.spinnerService.hide();
-
-        this.departments = [{ departmentName: "All Departments" }, ...data.body.departments];
-
-        console.log(this.departments.length);
-      },
-      error: (error: any) => {
-        this.spinnerService.hide();
-
-      },
+    return new Promise<void>((resolve, reject) => {
+      this.departmentService.getDepartments(query).subscribe({
+        next: (data: any) => {
+          this.departments = [{ departmentName: "All Departments" }, ...data.body.departments];
+          resolve();
+        },
+        error: (error: any) => {
+          reject(error);
+        },
+      });
     });
-
-
-    let userQuery = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&plantId=" + this.authService.user.activePlantId;
-
-
-
-    this.authService.getUsers(userQuery).subscribe({
-      next: (data: any) => {
-        this.spinnerService.hide();
-        console.log(data.body.users);
-        this.users = data.body.users;
-        this.length = data.body.userCount;
-        this.dataSource = new MatTableDataSource(this.users);
-      },
-      error: (error: any) => {
-        this.spinnerService.hide();
-        this.messageService.clear();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.error.message,
-        });
-      }
-
-    });
-
-
   }
+
+  async loadUsers(query: string = '') {
+    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
+    let userQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&plantId=${this.authService.user.activePlantId}&departmentId=${selectedDepartmentId}`;
+    if (query) {
+      userQuery += query;
+    }
+
+    return new Promise<void>((resolve, reject) => {
+      this.authService.getUsers(userQuery).subscribe({
+        next: (data: any) => {
+          this.users = data.body.users;
+          this.length = data.body.userCount;
+          this.dataSource = new MatTableDataSource(this.users);
+          resolve();
+        },
+        error: (error: any) => {
+          reject(error);
+        }
+      });
+    });
+  }
+
   pageChanged(event: PageEvent) {
-    console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadData();
   }
+  changeDepartment($event: any) {
+    this.loadUsers();
+  }
   searchByName() {
-
     const nameControl = this.userForm.get('name');
-
-    let query = "?plantId=" + this.authService.user.activePlantId;
+    let query = '';
 
     if (nameControl?.value != "") {
-      query += "&name=" + nameControl?.value;
+      query += `&name=${nameControl?.value}`;
     }
     if (this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments") {
-      query += "&departmentId=" + this.selectedDepartment._id;
-    }
-
-    this.authService.getUsers(query).subscribe({
-      next: (data: any) => {
-        this.spinnerService.hide();
-        this.users = data.body.users;
-        this.length = data.body.userCount;
-        this.dataSource = new MatTableDataSource(this.users);
-      },
-      error: (error: any) => {
-        this.spinnerService.hide();
-      }
-    });
-
-
-
-
-
-
-
-
-
-    this.authService.getUsers(query).subscribe({
-      next: (data: any) => {
-        this.users = data.body.users;
-        this.length = data.body.userCount;
-        this.dataSource = new MatTableDataSource(this.users);
-      },
-      error: (error: any) => {
-        this.messageService.clear();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: error.error.message,
-        });
-      }
-
-    });
-
-
-
-
-
-
-  }
-
-  changeDepartment($event: any) {
-    console.log(this.selectedDepartment);
-
-    this.spinnerService.show();
-
-    if (this.selectedDepartment.departmentName == "All Departments") {
-      this.loadData();
-    }
-    else {
-      let userQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-
-      this.authService.getUsers(userQuery).subscribe({
-        next: (data: any) => {
-          this.spinnerService.hide();
-          this.users = data.body.users;
-          this.length = data.body.userCount;
-          this.dataSource = new MatTableDataSource(this.users);
-        },
-        error: (error: any) => {
-          this.spinnerService.hide();
-        }
-      });
+      query += `&departmentId=${this.selectedDepartment._id}`;
     }
   }
-
   multipleDepartments(user: any) {
     console.log(user);
     let plant = user.plants.find((plant: any) => plant.plantId == this.authService.user.activePlantId);
@@ -209,6 +128,5 @@ export class UserListComponent {
       }
     }
   }
-
-
 }
+

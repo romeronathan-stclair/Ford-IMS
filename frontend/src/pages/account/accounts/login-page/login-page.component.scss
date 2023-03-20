@@ -2,9 +2,15 @@
 form {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 15px;
+}
+.holder {
+    min-height: 65vh !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 input {
     width: 300px;
@@ -23,6 +29,6 @@ input {
 }
 
 .submit-button:hover {
-    background-color: #47A8E5;
+    background-color: #47a8e5;
     border: 1px solid black;
 }
