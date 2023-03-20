@@ -89,7 +89,6 @@ import { CreateProductStepFourComponent } from 'src/pages/products/create-produc
 import { CreateProductStepOneComponent } from 'src/pages/products/create-products/create-product-step-one/create-product-step-one.component';
 import { CreateProductStepThreeComponent } from 'src/pages/products/create-products/create-product-step-three/create-product-step-three.component';
 import { CreateProductStepTwoComponent } from 'src/pages/products/create-products/create-product-step-two/create-product-step-two.component';
-import { UsePerDialogComponent } from '../components/use-per-dialog/use-per-dialog.component';
 import { EditProductComponent } from '../pages/products/edit-product/edit-product.component';
 import { EditProductInformationComponent } from '../pages/products/edit-product/edit-product-information/edit-product-information.component';
 import { ChangeProductPictureComponent } from '../pages/products/edit-product/change-product-picture/change-product-picture.component';
@@ -167,7 +166,7 @@ import { ProductsComponent } from 'src/pages/products/products/products.componen
     EditProductInformationComponent,
     ReassignStockComponent,
     ReassignDunnageComponent,
-    ChangeProductPictureComponent
+    ChangeProductPictureComponent,
     CycleCheckComponent,
     CycleCheckListComponent,
     CycleCheckRouterComponent,
