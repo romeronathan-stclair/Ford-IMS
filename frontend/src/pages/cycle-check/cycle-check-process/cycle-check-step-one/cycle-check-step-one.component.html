@@ -26,7 +26,7 @@
             <span *ngIf="confirm">{{stock.currentCount}}</span>
           </td>
           <td>
-            <button class="help-btn" type="button"></button>
+            <button class="help-btn" (click)="openHelpDialog(stock)"></button>
           </td>
         </tr>
       </tbody>
@@ -47,7 +47,7 @@
             <span *ngIf="confirm">{{dunnage.currentCount}}</span>
           </td>
           <td>
-            <button class="help-btn" type="button"></button>
+            <button class="help-btn" (click)="openHelpDialog(dunnage)"></button>
           </td>
         </tr>
       </tbody>
