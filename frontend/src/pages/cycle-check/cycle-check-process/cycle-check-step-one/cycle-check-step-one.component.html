@@ -9,6 +9,7 @@
 </div>
 <div class="table-holder">
   <div *ngFor="let department of cycleCheck">
+  <ng-container *ngIf="department.stockList.length || department.dunnage.length">
     <table class="table">
       <caption>{{department.departmentName}}: STOCK</caption>
       <tbody>
@@ -19,7 +20,7 @@
           <td>
             <div *ngIf="!confirm" class="stepper">
               <button type="button" (click)="decrementCountStock(stock)">-</button>
-              <input type="number" [(ngModel)]="stock.currentCount" />
+              <input id="stock-count" type="number" [(ngModel)]="stock.currentCount" />
               <button type="button" (click)="incrementCountStock(stock)">+</button>
             </div>
             <span *ngIf="confirm">{{stock.currentCount}}</span>
@@ -52,6 +53,7 @@
       </tbody>
     </table>
     <div class="spacer"></div>
+  </ng-container>
   </div>
 </div>
 <div class="paginator-holder">
