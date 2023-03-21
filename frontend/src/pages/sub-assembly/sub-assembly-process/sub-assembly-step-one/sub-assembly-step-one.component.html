@@ -1,1 +1,54 @@
-<p>sub-assembly-step-one works!</p>
+<div class="table-header">
+  <thead>
+    <th>Part Name</th>
+    <th>Market Location</th>
+    <th>Part Type</th>
+    <th>-1  Quantity  +1</th>
+    <th>Help</th>
+  </thead>
+</div>
+<div class="table-holder">
+  <div *ngFor="let department of subAssembly">
+  <ng-container *ngIf="department.stockList.length">
+    <table class="table">
+      <caption>{{department.departmentName}}: STOCK</caption>
+      <tbody>
+        <tr *ngFor="let stock of department.stockList">
+          <td>{{stock.name}}</td>
+          <td>{{stock.marketLocation}}</td>
+          <td>{{stock.partNumber}}</td>
+          <td>
+            <div *ngIf="!confirm" class="stepper">
+              <button type="button" (click)="decrementCountStock(stock)">-</button>
+              <input id="stock-count" type="number" [(ngModel)]="stock.currentCount" />
+              <button type="button" (click)="incrementCountStock(stock)">+</button>
+            </div>
+            <span *ngIf="confirm">{{stock.currentCount}}</span>
+          </td>
+          <td>
+            <button class="help-btn" (click)="openHelpDialog(stock)"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="spacer"></div>
+  </ng-container>
+  </div>
+</div>
+<div class="paginator-holder">
+  <button *ngIf="!confirm" [routerLink]="'/dashboard/sub-assembly/list'" type="submit" class="general-button first-button">Cancel</button>
+  <button *ngIf="!confirm" (click)="confirmCheck()" class="general-button">Submit Count</button>
+  <button *ngIf="confirm" (click)="cancelCheck()" class="general-button">Back</button>
+  <button *ngIf="confirm" (click)="submitCount()" class="general-button">Confirm Count</button>
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <h3></h3>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+    <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>
+
