@@ -97,6 +97,10 @@ import { ReassignStockComponent } from 'src/pages/products/edit-product/reassign
 import { CreateProductComponent } from 'src/pages/products/create-products/create-product/create-product.component';
 import { ProductListComponent } from 'src/pages/products/product-list/product-list.component';
 import { ProductsComponent } from 'src/pages/products/products/products.component';
+import { SubAssemblyComponent } from 'src/pages/sub-assembly/sub-assembly/sub-assembly.component';
+import { SubAssemblyListComponent } from 'src/pages/sub-assembly/sub-assembly-list/sub-assembly-list.component';
+import { SubAssemblyStepOneComponent } from 'src/pages/sub-assembly/sub-assembly-process/sub-assembly-step-one/sub-assembly-step-one.component';
+import { SubAssemblyRouterComponent } from 'src/pages/sub-assembly/sub-assembly-process/sub-assembly-router/sub-assembly-router.component';
 
 @NgModule({
   declarations: [
@@ -171,7 +175,11 @@ import { ProductsComponent } from 'src/pages/products/products/products.componen
     CycleCheckListComponent,
     CycleCheckRouterComponent,
     CycleCheckStepOneComponent,
-    HelpDialogComponent
+    HelpDialogComponent,
+    SubAssemblyComponent,
+    SubAssemblyListComponent,
+    SubAssemblyStepOneComponent,
+    SubAssemblyRouterComponent,
   ],
   imports: [
     BrowserModule,

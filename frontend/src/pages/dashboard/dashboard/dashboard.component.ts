@@ -57,7 +57,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Sub Assembly',
         icon: 'fa-solid fa-arrow-trend-up',
-        routerLink: ['/about'],
+        routerLink: ['sub-assembly/list'],
         position: SimpleSidebarPosition.top
       },
       {

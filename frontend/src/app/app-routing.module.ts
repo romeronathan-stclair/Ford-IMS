@@ -67,6 +67,10 @@ import { CycleCheckListComponent } from 'src/pages/cycle-check/cycle-check-list/
 import { CycleCheckStepOneComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-step-one/cycle-check-step-one.component';
 import { CycleCheckRouterComponent } from 'src/pages/cycle-check/cycle-check-process/cycle-check-router/cycle-check-router.component';
 import { CycleCheckComponent } from 'src/pages/cycle-check/cycle-check/cycle-check.component';
+import { SubAssemblyComponent } from 'src/pages/sub-assembly/sub-assembly/sub-assembly.component';
+import { SubAssemblyListComponent } from 'src/pages/sub-assembly/sub-assembly-list/sub-assembly-list.component';
+import { SubAssemblyStepOneComponent } from 'src/pages/sub-assembly/sub-assembly-process/sub-assembly-step-one/sub-assembly-step-one.component';
+import { SubAssemblyRouterComponent } from 'src/pages/sub-assembly/sub-assembly-process/sub-assembly-router/sub-assembly-router.component';
 
 
 const routes: Routes = [
@@ -425,6 +429,29 @@ const routes: Routes = [
             path: 'list',
             data: { animation: 'Cycle Check List Page' },
             component: CycleCheckListComponent
+          }
+        ]
+      },
+      {
+        path: 'sub-assembly',
+        data: { animation: 'Sub Assembly Page' },
+        component: SubAssemblyComponent,
+        children: [
+          {
+            path: 'create',
+            data: { animation: 'Create Sub Assembly Page' },
+            component: SubAssemblyRouterComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: SubAssemblyStepOneComponent
+              }
+            ],
+          },
+          {
+            path: 'list',
+            data: { animation: 'Sub Assembly List Page' },
+            component: SubAssemblyListComponent
           }
         ]
       }
