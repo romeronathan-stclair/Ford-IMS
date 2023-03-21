@@ -1,29 +1,30 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, Dunnage, DunnageDocument, ProductDunnage, UserDocument } from "../models";
+import { Department, DepartmentDocument, UserDocument } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { check, validationResult } from "express-validator";
-import { CycleCheckList } from "../type/CycleCheckList";
+import { SubAssemblyList } from "../type/SubAssemblyList";
 import { ForecastItem } from "../type/Forecast";
 import * as forecastService from "../services/forecastService";
 
-export const getCycleCheck = async (req: Request, res: Response) => {
+export const getSubAssembly = async (req: Request, res: Response) => {
     const user = req.user as UserDocument;
-    let cycleCheckList: CycleCheckList[] = [];
+    let subAssemblyList: SubAssemblyList[] = [];
 
     const plant = user.plants.find((plant) => {
         if (plant.isActive) {
             return plant
         }
     });
+
     if (!plant) {
         return res.status(500).json("No active plants");
     }
+
     const departmentIds = plant.departments.map((department) => {
         return department;
     });
 
     for (const departmentId of departmentIds) {
-
         const department: DepartmentDocument = (await Department.findOne({
             _id: departmentId,
             isDeleted: false
@@ -35,28 +36,24 @@ export const getCycleCheck = async (req: Request, res: Response) => {
 
         let stockList: StockDocument[] = (await Stock.find({
             departmentId: departmentId,
-            isSubAssembly: false,
+            isSubAssembly: true,
             isDeleted: false
         })) as StockDocument[];
 
-        let dunnage: DunnageDocument[] = (await Dunnage.find({
-            departmentId: departmentId,
-            isDeleted: false
-        })) as DunnageDocument[];
-
-        cycleCheckList.push({
+        subAssemblyList.push({
             departmentId: departmentId,
             departmentName: department.departmentName,
-            stockList: stockList,
-            dunnage: dunnage
-        })
+            stockList: stockList
+        });
 
     }
-    return res.status(200).json(cycleCheckList).end();
+
+    return res.status(200).json(subAssemblyList).end();
+
 };
 
-export const submitCycleCheck = async (req: Request, res: Response) => {
-    await check("cycleCheckList", "Cycle Check List is not valid").isLength({ min: 1 }).run(req);
+export const submitSubAssembly = async (req: Request, res: Response) => {
+    await check("subAssemblyList", "Sub Assembly List is not valid").isLength({ min: 1 }).run(req);
 
     const user = req.user as UserDocument;
 
@@ -68,39 +65,39 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
     if (!plant) {
         return res.status(500).json("No active plants");
     }
+
     const errors = validationResult(req);
 
     const stockSaveList = [];
-    const dunnageSaveList = [];
 
     if (!errors.isEmpty()) {
         return res.status(500).json(errors);
     }
 
-    const cycleCheckList = req.body.cycleCheckList;
+    const subAssemblyList = req.body.subAssemblyList;
 
     try {
-        for (const cycleCheck of cycleCheckList) {
+        for (const subAssembly of subAssemblyList) {
 
-            const departmentId = cycleCheck.departmentId;
+            const departmentId = subAssembly.departmentId;
 
-            const department = await Department.findById({
+            const department = await Department.findOne({
                 _id: departmentId,
-                isDeleted: false,
+                isDeleted: false
             });
 
             if (!department) {
                 return res.status(500).json("Department does not exist");
             }
 
-            if (cycleCheck.stockList) {
+            if (subAssembly.stockList) {
                 const departmentStocks = await Stock.find({
                     departmentId: departmentId,
-                    isSubAssembly: false,
+                    isSubAssembly: true,
                     isDeleted: false
                 });
 
-                const stockList = cycleCheck.stockList;
+                const stockList = subAssembly.stockList;
 
                 for (const stock of stockList) {
 
@@ -120,26 +117,6 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
 
                 }
             }
-
-            if (cycleCheck.dunnage) {
-                const departmentDunnage = await Dunnage.find({
-                    departmentId: departmentId,
-                    isDeleted: false
-                });
-                const dunnageList = cycleCheck.dunnage;
-                for (const dunnage of dunnageList) {
-                    const matchedDunnage = departmentDunnage.find((d: any) => {
-                        return d._id.toString() === dunnage._id.toString();
-                    });
-                    if (!matchedDunnage) {
-                        return res.status(500).json("Dunnage does not match");
-                    }
-                    matchedDunnage.currentCount = dunnage.currentCount;
-
-
-                    dunnageSaveList.push(matchedDunnage);
-                }
-            }
         }
     } catch (err) {
         return res.status(500).json(err);
@@ -151,20 +128,11 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                 await stock.save();
             }
         }
-        if (dunnageSaveList.length > 0) {
-            for (const dunnage of dunnageSaveList) {
-                await dunnage.save();
-            }
-        }
     } catch (err) {
         return res.status(500).json(err);
     } finally {
         const forecast = await forecastService.forecastPlant(plant.plantId);
-        return res.status(200).json("Cycle Check Submitted");
+        return res.status(200).json("Sub Assembly List Submitted");
     }
-
-
+    
 };
-
-
-
