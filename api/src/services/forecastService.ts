@@ -6,11 +6,13 @@ import { ForecastItem, ProductForecast } from "../type/Forecast";
 import util from "util";
 
 export const forecastDepartment = async (departmentId: string) => {
+
+
     const products = await Product.find({
         departmentId: departmentId,
         isDeleted: false
     });
-
+    console.log(departmentId);
     const productIds = products.map(product => product._id.toString());
 
     const promises = productIds.map(productId => forecastProduct(productId));
@@ -49,6 +51,7 @@ export const forecastPlant = async (plantId: string) => {
 }
 
 export const forecastProduct = async (productId: string) => {
+
     const product = await Product.findOne({
         _id: productId,
         isDeleted: false
@@ -97,6 +100,8 @@ export const forecastProduct = async (productId: string) => {
 
 
 
+
+    console.log("forecastProduct");
     await lowProductEntry(forecastItems);
 
 
@@ -329,8 +334,9 @@ export const dunnageForecast = async (
 };
 export const lowProductEntry = async (forecastItem: ForecastItem[]) => {
 
+    console.log("forecastLow" + forecastItem);
     for (const item of forecastItem) {
-        console.log(item);
+
         if (item.fiveShiftsBeforeShortage || item.lowThreshold ||
             item.belowDailyTarget) {
             await redisClient.set(item.productId, "true");

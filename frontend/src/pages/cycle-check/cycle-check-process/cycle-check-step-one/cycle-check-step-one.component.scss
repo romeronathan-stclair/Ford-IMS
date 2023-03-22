@@ -1,53 +1,53 @@
 @import "src/styles.scss";
 img {
-    width: 150px;
+  width: 150px;
 }
 .table-holder {
-    min-height: 70vh;
-    background-color: $lightGrey !important;
-    width: 100%;
-    border: $border;
+  min-height: 70vh;
+  background-color: $lightGrey !important;
+  width: 100%;
+  border: $border;
 }
 .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .paginator-holder {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $grey !important;
-    border-bottom: 0.75px solid black;
-    border-right: 0.75px solid black;
-    border-left: 0.75px solid black;
-    @include column-lg-break {
-        flex-direction: column;
-        gap: 20px;
-    }
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $grey !important;
+  border-bottom: 0.75px solid black;
+  border-right: 0.75px solid black;
+  border-left: 0.75px solid black;
+  @include column-lg-break {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 .mat-column-name {
-    width: 40%;
-    max-width: 40%;
+  width: 40%;
+  max-width: 40%;
 }
 i {
-    padding-right: 5.5px;
+  padding-right: 5.5px;
 }
 .first-button {
-    @include column-lg-break {
-        order: 1;
-    }
+  @include column-lg-break {
+    order: 1;
+  }
 }
 .search-bar {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border-radius: 7.5px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 7.5px;
 }
 .fa-magnifying-glass {
-    padding-left: 7.5px;
-    color: $darkGrey;
+  padding-left: 7.5px;
+  color: $darkGrey;
 }
 
 .table {
@@ -63,14 +63,18 @@ thead {
   width: 100%;
 }
 
-th, td {
+th,
+td {
   flex: 1;
   padding: 10px;
   text-align: left;
 }
 
 //the 4th and 5th th and td should be text-align: center
-th:nth-child(4), td:nth-child(4), th:nth-child(5), td:nth-child(5) {
+th:nth-child(4),
+td:nth-child(4),
+th:nth-child(5),
+td:nth-child(5) {
   text-align: center;
 }
 
@@ -90,21 +94,22 @@ td {
 }
 
 .stepper button {
-  background-color: #47A8E5;
+  background-color: #47a8e5;
   color: white;
   border: none;
   border-radius: 5px;
   width: 36px;
   height: 36px;
   font-size: 26px;
+  cursor: pointer;
 }
 
 .stepper button:hover {
-  background-color: #133A7C;
+  background-color: #133a7c;
 }
 
 .help-btn {
-  border: 3px solid rgba(0, 0, 0, .5);
+  border: 3px solid rgba(0, 0, 0, 0.5);
   background-color: transparent;
   border-radius: 50%;
   width: 36px;
@@ -112,18 +117,18 @@ td {
 }
 
 .help-btn:hover {
-  border: 3px solid rgba(0, 0, 0, .5);
+  border: 3px solid rgba(0, 0, 0, 0.5);
   background-color: transparent;
   border-radius: 50%;
   width: 36px;
   height: 36px;
   //box shadow
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, .5);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 }
 
 .help-btn::before {
   content: "?";
-  color: rgba(0, 0, 0, .6);
+  color: rgba(0, 0, 0, 0.6);
   font-size: 26px;
   font-weight: bold;
 }
@@ -135,11 +140,11 @@ input {
 
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 input[type="number"] {
-    -moz-appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 caption {
@@ -152,4 +157,3 @@ caption {
 .spacer {
   height: 20px;
 }
-
