@@ -76,8 +76,8 @@ export class CycleCheckStepOneComponent {
         this.cycleCheck = data.body;
 
         this.cycleCheck.forEach((department: any) => {
-          department.stockList.forEach((stock: any) => stock.currentCount = 0);
-          department.dunnage.forEach((dunnage: any) => dunnage.currentCount = 0);
+          department.stockList.forEach((stock: any) => stock.currentCount = null);
+          department.dunnage.forEach((dunnage: any) => dunnage.currentCount = null);
         });
       },
       error: (err: any) => {

@@ -76,7 +76,7 @@ export class SubAssemblyStepOneComponent {
         this.subAssembly = data.body;
 
         this.subAssembly.forEach((department: any) => {
-          department.stockList.forEach((stock: any) => stock.currentCount= 0);
+          department.stockList.forEach((stock: any) => stock.currentCount = null);
         });
       },
       error: (err: any) => {
