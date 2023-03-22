@@ -39,10 +39,32 @@ export class DunnageListComponent {
 
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    this.loadData();
+    this.loadDepartments();
   }
 
   ngAfterViewInit() {
+
+  }
+
+  loadDepartments() {
+    this.spinnerService.show();
+
+    let departmentQuery = "?plantId=" + this.activePlantId;
+
+    let departmentIds: string[] = [];
+    this.departmentService.getDepartments(departmentQuery)
+      .subscribe({
+        next: (data: any) => {
+          data.body.departments.forEach((department: any) => {
+            departmentIds.push(department._id);
+          });
+          this.departments = data.body.departments;
+          this.spinnerService.hide();
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
 
   }
 
@@ -62,7 +84,7 @@ export class DunnageListComponent {
 
           console.log(departmentIds);
 
-          let dunnageQuery = "?departmentId=" + departmentIds[0] + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+          let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
           this.dunnageService.getDunnages(dunnageQuery)
           .subscribe({
             next: (data: any) => {
