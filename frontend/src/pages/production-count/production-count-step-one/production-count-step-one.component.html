@@ -1,0 +1,27 @@
+<app-ford-container title="1. Choose products to count production for.">
+    <div class="holder">
+        <div *ngIf="departments.length > 0" class="dropdown">
+            <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department"
+                optionLabel="departmentName" [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+        </div>
+        <div class="inner-holder">
+            <h2>Products</h2>
+            <div class="product-holder">
+                <div *ngFor="let product of products" class="product-item">
+                    <mat-checkbox [(ngModel)]="product.checked" class="mat-icon" color="#47a8e5"
+                        (change)="onCheckboxChange($event, product)"></mat-checkbox>
+                    <h3>{{product.name}}</h3>
+                </div>
+                <div *ngIf="products.length == 0" class="form-text mb-3">
+                    There are currently no products in this department.
+                </div>
+            </div>
+        </div>
+        <div class="button-holder">
+            <button type="button" [routerLink]="'/dashboard/production-count/list'" class="submit-button">Back</button>
+
+            <button type="button" (click)="onSubmit()" class="submit-button">Next</button>
+
+        </div>
+    </div>
+</app-ford-container>

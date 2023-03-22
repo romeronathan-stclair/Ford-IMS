@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Production Count',
         icon: 'fa-regular fa-circle-check',
-        routerLink: ['/about'],
+        routerLink: ['production-count/list'],
         position: SimpleSidebarPosition.top,
         class: 'hello'
       },

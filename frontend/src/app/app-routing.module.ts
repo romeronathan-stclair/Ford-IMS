@@ -71,6 +71,11 @@ import { SubAssemblyComponent } from 'src/pages/sub-assembly/sub-assembly/sub-as
 import { SubAssemblyListComponent } from 'src/pages/sub-assembly/sub-assembly-list/sub-assembly-list.component';
 import { SubAssemblyStepOneComponent } from 'src/pages/sub-assembly/sub-assembly-process/sub-assembly-step-one/sub-assembly-step-one.component';
 import { SubAssemblyRouterComponent } from 'src/pages/sub-assembly/sub-assembly-process/sub-assembly-router/sub-assembly-router.component';
+import { ProductionCountComponent } from 'src/pages/production-count/production-count/production-count.component';
+import { ProductionCountCreateComponent } from 'src/pages/production-count/production-count-create/production-count-create.component';
+import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
+import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
+import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
 
 
 const routes: Routes = [
@@ -453,6 +458,33 @@ const routes: Routes = [
             data: { animation: 'Sub Assembly List Page' },
             component: SubAssemblyListComponent
           }
+        ]
+      },
+      {
+        path: 'production-count',
+        data: { animation: 'Production Count Page' },
+        component: ProductionCountComponent,
+        children: [
+          {
+            path: 'list',
+            data: { animation: 'Cycle Check List Page' },
+            component: ProductionCountListComponent
+          },
+          {
+            path: 'create',
+            data: { animation: 'Create Cycle Check Page' },
+            component: ProductionCountCreateComponent,
+            children: [
+              {
+                path: 'step-one',
+                component: ProductionCountStepOneComponent
+              },
+              {
+                path: 'step-two',
+                component: ProductionCountStepTwoComponent
+              }
+            ],
+          },
         ]
       }
     ]

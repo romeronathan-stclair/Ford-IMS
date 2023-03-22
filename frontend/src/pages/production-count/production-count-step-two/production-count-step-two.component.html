@@ -1,0 +1,42 @@
+<div class="table-header">
+</div>
+<div class="table-holder">
+    <div *ngFor="let department of productionCountRequest?.productionCountRequest">
+        <ng-container *ngIf="department.productList && department.productList.length > 0">
+            <table class="table">
+                <caption>{{department.departmentName}}: Products</caption>
+                <tbody>
+                    <tr *ngFor="let product of department.productList">
+                        <td>{{product.name}}</td>
+                        <td>{{product.marketLocation}}</td>
+                        <td>{{product.partNumber}}</td>
+                        <td>
+                            <div *ngIf="!confirm" class="stepper">
+                                <button type="button" (click)="decrementProductQty(product)">-</button>
+                                <input id="stock-count" type="number" [(ngModel)]="product.productQtyBuilt" />
+                                <button type="button" (click)="incrementProductQty(product)">+</button>
+                            </div>
+                            <span *ngIf="confirm">{{product.productQtyBuilt}}</span>
+                        </td>
+                        <td>
+                            <button class="help-btn" (click)="openHelpDialog(product)"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="spacer"></div>
+        </ng-container>
+    </div>
+</div>
+<div class="paginator-holder">
+
+
+    <button *ngIf="!confirm" [routerLink]="'/dashboard/production-count/create/step-one'"
+        class="general-button">Back</button>
+    <button *ngIf="!confirm" (click)="confirmCount()" class="general-button">Submit Count</button>
+
+    <button *ngIf="confirm" (click)="cancelCount()" type="button" class="general-button first-button">Cancel</button>
+    <button *ngIf="confirm" (click)="submitCount()" class="general-button">Confirm Count</button>
+
+</div>
