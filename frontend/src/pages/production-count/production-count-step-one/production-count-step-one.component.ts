@@ -195,5 +195,7 @@ export class ProductionCountStepOneComponent {
 
       }
     }
+    this.spinnerService.hide();
   }
+
 }

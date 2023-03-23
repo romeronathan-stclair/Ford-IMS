@@ -4,6 +4,8 @@ export enum ModelType {
     PRODUCT = "Product",
     STOCK = "Stock",
     DUNNAGE = "Dunnage",
-    USER = "User"
-
+    USER = "User",
+    CYCLECHECK = "CycleCheck",
+    SUBASSEMBLY = "Sub Assembly",
+    PRODUCTIONCOUNT = "Production Count",
 }
