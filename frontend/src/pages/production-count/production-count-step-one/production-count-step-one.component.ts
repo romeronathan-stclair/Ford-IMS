@@ -110,6 +110,7 @@ export class ProductionCountStepOneComponent {
       });
     }
     this.selectedProducts.push(product);
+    console.log(this.selectedProducts);
 
     this.sharedService.setData(this.request);
   }
@@ -194,6 +195,7 @@ export class ProductionCountStepOneComponent {
         break;
 
       }
+      this.spinnerService.hide();
     }
   }
 }

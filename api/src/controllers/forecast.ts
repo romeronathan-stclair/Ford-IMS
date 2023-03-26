@@ -42,12 +42,21 @@ export const getPlantLowForecasts = async (req: Request, res: Response) => {
 
     const results = await Promise.all(promises);
 
+    let count = 0;
+    results.forEach((result: any) => {
+        count += result.productForecastItems.length
+    });
+
     let response = {
-        plantLowForecasts: results
+        plantLowForecasts: results,
+        lowProductsCount: count
     }
+
     return res.status(200).json(response);
 
 }
+
+
 export const departmentLowForecasts = async (req: Request, res: Response) => {
     if (!req.params.id) {
         return res.status(400).send("No department id provided");

@@ -14,6 +14,7 @@ import { uploadImage } from "./image";
 import env from "../utils/env";
 import { createProductStock } from "./productStock";
 import { createProductDunnage } from "./productDunnage";
+import * as forecastService from "../services/forecastService";
 
 //create Product
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -202,8 +203,13 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
             }
         }
     }
+    try {
+        forecastService.forecastProduct(productId);
+        return res.status(200).json({ message: 'Product stocks reassigned successfully.' });
+    } catch (error) {
+        console.error(`Error forecasting product: ${error}`);
+    }
 
-    return res.status(200).json({ message: 'Product stocks reassigned successfully.' });
 };
 // reassign product dunnage
 export const reassignProductDunnage = async (req: Request, res: Response, next: NextFunction) => {
@@ -246,13 +252,18 @@ export const reassignProductDunnage = async (req: Request, res: Response, next: 
             try {
                 await newProductDunnage.save();
             } catch (error) {
-                console.error(`Error saving new product dunnage: ${error}`);
+                return res.status(500).json({ message: 'Error saving new product dunnage.' });
             }
         }
     }
+    try {
+        forecastService.forecastProduct(productId);
+        return res.status(200).json({ message: 'Product dunnage reassigned successfully.' });
+    } catch (error) {
+        return res.status(200).json({ message: 'Product dunnage assigned successfully but error forecasting product.' });
+    }
+}
 
-    return res.status(200).json({ message: 'Product dunnage reassigned successfully.' });
-};
 
 //get Product
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {

@@ -123,6 +123,7 @@ export class ProductionCountStepTwoComponent {
             detail: 'Production Count Submitted Successfully'
           });
           console.log(data);
+          this.sharedService.refreshDashboardForecast(true);
           this.router.navigate(['/dashboard/production-count/list']);
         },
         error: (err: any) => {

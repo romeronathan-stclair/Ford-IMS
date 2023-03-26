@@ -4,6 +4,8 @@
   *******************/
 
 $darkBlue: #133a7c;
+$lightRed: #f7cfd3;
+$crimson: #bc4c46;
 $blue: #2a6bac;
 $lightBlue: #47a8e5;
 $darkGrey: #999999;
@@ -168,6 +170,25 @@ body {
 }
 .sidebar-container lib-sidebar-item .menu-item {
     padding: 7px;
+    font-weight: 400;
+}
+.sidebar-container lib-sidebar-item .forecast {
+    padding-bottom: 0;
+    height: 33px !important;
+    background-color: transparent !important;
+}
+.sidebar-container lib-sidebar-item .forecast-tag {
+    padding-bottom: 0;
+    background-color: $lightRed !important;
+    text-decoration: none;
+    color: $crimson;
+    text-align: center;
+    font-size: 1rem;
+}
+.sidebar-container .forecast-holder {
+    display: flex !important;
+    flex-direction: column;
+    background-color: red !important;
     font-weight: 400;
 }
 .sidebar-container a .menu-icon-pointer {

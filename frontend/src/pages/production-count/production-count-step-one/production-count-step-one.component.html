@@ -20,7 +20,8 @@
         <div class="button-holder">
             <button type="button" [routerLink]="'/dashboard/production-count/list'" class="submit-button">Back</button>
 
-            <button type="button" (click)="onSubmit()" class="submit-button">Next</button>
+            <button [disabled]="selectedProducts.length == 0" type="button" (click)="onSubmit()"
+                class="submit-button">Next</button>
 
         </div>
     </div>

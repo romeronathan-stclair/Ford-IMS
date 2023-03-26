@@ -7,6 +7,7 @@ import util from "util";
 
 export const forecastDepartment = async (departmentId: string) => {
 
+    console.log("In HEre");
 
     const products = await Product.find({
         departmentId: departmentId,
@@ -127,6 +128,8 @@ export const stockForecast = async (
             productId: productId,
             isDeleted: false
         });
+
+        console.log("RIGHT HERE" + productId);
 
         if (productStocks.length > 0) {
 
@@ -339,6 +342,7 @@ export const lowProductEntry = async (forecastItem: ForecastItem[]) => {
 
         if (item.fiveShiftsBeforeShortage || item.lowThreshold ||
             item.belowDailyTarget) {
+            console.log("forecastLow" + JSON.stringify(item));
             await redisClient.set(item.productId, "true");
         } else {
             await redisClient.set(item.productId, "false");

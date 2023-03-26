@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
+import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 
 @Component({
@@ -40,7 +41,10 @@ export class PlantListComponent {
   ];
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
+    private spinnerService: SpinnerService,
+    private plantService: PlantService,
+    private authService: AuthService,
+    private sharedService: SharedService) { }
   ngOnInit() {
     this.loadData();
 
@@ -100,7 +104,8 @@ export class PlantListComponent {
           next: (data: any) => {
             this.spinnerService.hide();
             this.activePlantId = plantId;
-
+            this.sharedService.refreshDashboardForecast(true);
+            this.messageService.clear();
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Plant is now active' });
           },
           error: (error: any) => {

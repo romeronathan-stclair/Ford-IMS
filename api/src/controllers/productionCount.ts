@@ -72,7 +72,8 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                             isDeleted: false
                         })) as StockDocument;
                         if (stock) {
-                            stock.totalAvailableQty = stock.totalAvailableQty - stockUsed;
+                            // Dont let it go below 0 
+                            stock.totalAvailableQty = Math.max(stock.totalAvailableQty - stockUsed, 0);
                         }
 
                         stockSaveList.push(stock);
