@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       {
         name: 'Forecast',
         icon: 'fa-solid fa-arrow-trend-up',
-        routerLink: ['/about'],
+        routerLink: ['forecast/list'],
         position: SimpleSidebarPosition.top,
       },
       {
@@ -116,8 +116,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       closeAfterClick: false
 
     });
-
-
 
     this.updateForecast();
 

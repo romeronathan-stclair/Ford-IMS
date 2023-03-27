@@ -1,0 +1,103 @@
+<h1 class="page-header">Forecasting</h1>
+<div class="table-header">
+    <div *ngIf="departments.length > 0" class="dropdown">
+        <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
+            [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+    </div>
+
+    <img src="/assets/ford-logo.png" />
+
+</div>
+<div class="table-holder">
+    <div class="table-holder">
+
+
+        <div *ngIf="dataSource.data.length == 0" class="form-text mb-3">
+            There are currently no forecasts to display.
+        </div>
+        <table *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource"
+            class="mat-elevation-z0 demo-table">
+
+            <ng-container matColumnDef="productName">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let forecast">
+                    <div class="forecast-info">
+                        <h2>{{ forecast.name }}</h2>
+
+                    </div>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="departmentName">
+                <th mat-header-cell *matHeaderCellDef>Departments</th>
+                <td mat-cell *matCellDef="let forecast">
+                    <h2> {{forecast.departmentName}}</h2>
+
+                </td>
+            </ng-container>
+
+
+
+            <ng-container matColumnDef="health">
+                <th mat-header-cell *matHeaderCellDef>Health</th>
+                <td mat-cell *matCellDef="let forecast">
+                    <div class="forecast-health-holder">
+
+
+                        <div [class]="getHealthClass(forecast)" class="forecast-label">
+                            <h2> {{ getHealthLabel(forecast) }}</h2>
+                        </div>
+                    </div>
+
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="stockItemsLow">
+                <th mat-header-cell *matHeaderCellDef>Stock Items Low</th>
+                <td mat-cell *matCellDef="let forecast">
+                    <h2 style="text-align: center;"> {{forecast.stockForecast.lowStockCount || 0}}</h2>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="dunnageItemsLow">
+                <th mat-header-cell *matHeaderCellDef>Dunnage Items Low</th>
+                <td mat-cell *matCellDef="let forecast">
+                    <h2 style="text-align: center;"> {{forecast.dunnageForecast.lowStockCount || 0}}</h2>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="viewForecast">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let forecast">
+                    <button type="submit" class="general-button">View Forecast</button>
+                </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+
+    </div>
+</div>
+<div class="paginator-holder">
+
+    <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
+        aria-label="Select page of periodic elements" [length]="length">
+    </mat-paginator>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+    <ng-template pTemplate="header">
+        <h3></h3>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+    </ng-template>
+</p-confirmDialog>

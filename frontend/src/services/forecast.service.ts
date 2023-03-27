@@ -30,4 +30,13 @@ export class ForecastService {
         });
     }
 
+    getForecast(query: string): Observable<any> {
+
+        return this.http.get(`${this.endPoint}/forecast${query}`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
+
 }

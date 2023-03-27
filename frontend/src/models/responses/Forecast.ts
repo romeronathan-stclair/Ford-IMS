@@ -1,6 +1,6 @@
-import { ModelType } from "../enums/modelType";
 
-export type ForecastItem = {
+
+export interface ForecastItem {
     stockId: string;
     productId: string;
     name: string;
@@ -18,18 +18,18 @@ export type ForecastItem = {
     shiftsBeforeShortage?: number;
     hoursBeforeShortage?: number;
     fiveShiftsBeforeShortage?: boolean;
-    modelType?: ModelType;
+    modelType?: string;
 }
-export type DepartmentForecast = {
+
+export interface DepartmentForecast {
     departmentId: string;
     name: string;
     forecastedProducts: ProductForecast[];
 }
 
-export type ProductForecast = {
+export interface ProductForecast {
     productId: string;
     name: string;
-    departmentName: string;
     stockForecast?: {
         forecastedStockItems: ForecastItem[];
         lowestStockItem: ForecastItem;

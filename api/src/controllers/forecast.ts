@@ -6,6 +6,7 @@ import { ModelType } from "../enums/modelType";
 import util from "util";
 import { redisClient } from "../app";
 import * as forecastService from "../services/forecastService";
+import { getPage, getPageSize } from "../utils/pagination";
 
 
 
@@ -84,24 +85,26 @@ export const getDepartmentForecasts = async (req: Request, res: Response) => {
 
 
 
-export const forecastAll = async (req: Request, res: Response) => {
+export const getForecasts = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+    const departmentId = req.query.departmentId;
+    const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
+    const partNumber = req.query.partNumber;
+    const plantId = req.query.plantId;
 
 
-    const plants = await Plant.find({
-        isDeleted: false
-    });
+    if (departmentId) {
 
-    const plantIds = plants.map(plant => plant._id.toString());
+        const departmentForecasts = await forecastService.getDepartmentForecasts(departmentId.toString(), page, pageSize);
+        return res.status(200).send(departmentForecasts);
+    }
+    if (plantId) {
+        const plantForecasts = await forecastService.getPlantForecasts(plantId.toString(), page, pageSize);
 
-    const promises = plantIds.map(plantId => forecastService.forecastPlant(plantId));
-
-
-    const results = await Promise.all(promises);
-
-    let response = {
-        plantForecasts: results
+        return res.status(200).send(plantForecasts);
     }
 
-    return res.status(200).json(response);
+
 
 }

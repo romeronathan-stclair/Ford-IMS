@@ -76,6 +76,8 @@ import { ProductionCountCreateComponent } from 'src/pages/production-count/produ
 import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
 import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
 import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
+import { ForecastListComponent } from 'src/pages/forecast/forecast-list/forecast-list.component';
+import { ForecastComponent } from 'src/pages/forecast/forecast/forecast.component';
 
 
 const routes: Routes = [
@@ -486,6 +488,15 @@ const routes: Routes = [
             ],
           },
         ]
+      },
+      {
+        path: 'forecast',
+        component: ForecastComponent,
+        children: [{
+          path: 'list',
+          component: ForecastListComponent
+
+        }]
       }
     ]
   },

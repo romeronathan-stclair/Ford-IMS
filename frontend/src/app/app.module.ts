@@ -107,6 +107,9 @@ import { ProductionCountListComponent } from '../pages/production-count/producti
 import { ProductionCountCreateComponent } from '../pages/production-count/production-count-create/production-count-create.component';
 import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
 import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
+import { ForecastComponent } from '../pages/forecast/forecast/forecast.component';
+import { ForecastListComponent } from 'src/pages/forecast/forecast-list/forecast-list.component';
+
 
 @NgModule({
   declarations: [
@@ -191,6 +194,8 @@ import { ProductionCountStepTwoComponent } from 'src/pages/production-count/prod
     ProductionCountStepOneComponent,
     ProductionCountStepTwoComponent,
     ProductionCountCreateComponent,
+    ForecastComponent,
+    ForecastListComponent,
   ],
   imports: [
     BrowserModule,
