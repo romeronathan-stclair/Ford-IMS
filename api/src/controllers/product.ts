@@ -145,7 +145,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.CREATE,
         modelType: ModelType.PRODUCT,
@@ -410,7 +410,7 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.PRODUCT,
@@ -463,7 +463,7 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.DELETE,
         modelType: ModelType.PRODUCT,

@@ -98,7 +98,7 @@ export const createDunnage = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.CREATE,
         modelType: ModelType.DUNNAGE,
@@ -229,7 +229,7 @@ export const updateDunnage = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.DUNNAGE,
@@ -284,7 +284,7 @@ export const deleteDunnage = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.DELETE,
         modelType: ModelType.STOCK,

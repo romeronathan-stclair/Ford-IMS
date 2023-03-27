@@ -114,7 +114,7 @@ export const createStock = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.CREATE,
         modelType: ModelType.STOCK,
@@ -259,7 +259,7 @@ export const updateStock = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.STOCK,
@@ -315,7 +315,7 @@ export const deleteStock = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.DELETE,
         modelType: ModelType.DUNNAGE,

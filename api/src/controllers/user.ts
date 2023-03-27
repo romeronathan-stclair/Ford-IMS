@@ -190,7 +190,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const event = new Event({
         plantId: plantId,
         departmentId: departmentId,
-        eventDate: new Date().toISOString(),
+        eventDate: new Date().toDateString(),
         userId: user._id.toString(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.USER,

@@ -26,6 +26,7 @@ export class EventLogComponent {
   plant = '';
   department = '';
   date = '';
+  events: any;
 
   constructor(
     private authService: AuthService,
@@ -43,6 +44,7 @@ export class EventLogComponent {
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.modelType = params['modelType'];
+      this.modelType = this.modelType.charAt(0).toUpperCase() + this.modelType.slice(1);
       this.loadEvents();
     });
   }
@@ -56,6 +58,7 @@ export class EventLogComponent {
       .subscribe({
         next: (data: any) => {
           console.log(data);
+          this.events = data.body;
           this.spinnerService.hide();
         },
         error: (error: any) => {

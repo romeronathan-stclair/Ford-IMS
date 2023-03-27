@@ -67,7 +67,7 @@ export const createDepartment = async (req: Request, res: Response) => {
         const event = new Event({
             plantId: newDepartment.plantId,
             departmentId: newDepartment._id.valueOf(),
-            eventDate: new Date().toISOString(),
+            eventDate: new Date().toDateString(),
             userId: user._id.valueOf(),
             operationType: CrudType.CREATE,
             modelType: ModelType.DEPARTMENT,

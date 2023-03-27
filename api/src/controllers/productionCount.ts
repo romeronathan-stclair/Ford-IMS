@@ -14,7 +14,8 @@ import {
     Stock,
     StockDocument,
 } from "../models";
-
+import { ModelType } from "../enums/modelType";
+import { CrudType } from "../enums/crudType";
 import * as forecastService from "../services/forecastService";
 
 import { ProductStock, ProductStockDocument } from "../models/productStock";
@@ -98,6 +99,32 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 }
             }
 
+            const department = await Department.findById({
+                _id: departmentIds[0],
+                isDeleted: false,
+            });
+        
+            if (!department) {
+                return res.status(500).json("Department does not exist");
+            }
+
+            const plantId = department.plantId;
+
+            const user = req.user as UserDocument;
+
+            const event = new Event({
+                plantId: plantId,
+                departmentId: departmentIds[0],
+                eventDate: new Date().toDateString(),
+                userId: user._id.toString(),
+                operationType: CrudType.CREATE,
+                modelType: ModelType.SUBASSEMBLY,
+                userName: user.name,
+                userEmailAddress: user.email,
+                itemId: ''
+            });
+    
+            event.save();
 
         } catch (e) {
             return res.status(500).json(e);

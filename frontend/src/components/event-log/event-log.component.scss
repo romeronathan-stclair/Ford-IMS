@@ -51,6 +51,28 @@ i {
     }
 }
 
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
 
+thead {
+  background-color: #999;
+}
 
+th,
+td {
+  flex: 1;
+  padding: 10px;
+  text-align: left;
+}
+
+tr {
+  border: solid black 1px;
+}
+
+td {
+  background-color: rgb(217, 217, 217);
+}
 
