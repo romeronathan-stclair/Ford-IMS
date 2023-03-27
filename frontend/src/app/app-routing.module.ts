@@ -76,6 +76,7 @@ import { ProductionCountCreateComponent } from 'src/pages/production-count/produ
 import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
 import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
 import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
+import { EventLogComponent } from 'src/components/event-log/event-log.component';
 
 
 const routes: Routes = [
@@ -486,6 +487,15 @@ const routes: Routes = [
             ],
           },
         ]
+      },
+      {
+        path: 'event',
+        data: { animation: 'Event Page' },
+        children: [{
+          path: 'list/:modelType',
+          data: { animation: 'Event List Page' },
+          component: EventLogComponent
+        }]
       }
     ]
   },

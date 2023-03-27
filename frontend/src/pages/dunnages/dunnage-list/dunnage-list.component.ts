@@ -7,6 +7,7 @@ import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { DunnageService } from 'src/services/dunnage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dunnage-list',
@@ -31,7 +32,8 @@ export class DunnageListComponent {
     private departmentService: DepartmentService,
     private dunnageService: DunnageService,
     private spinnerService: SpinnerService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
     this.dunnageForm = new FormGroup({
       departmentName: new FormControl(''),
     });
@@ -164,5 +166,8 @@ export class DunnageListComponent {
     }
   }
 
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/dunnage']);
+  }
 
 }

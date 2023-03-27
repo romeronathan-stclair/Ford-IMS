@@ -90,41 +90,26 @@ export const createDunnage = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Dunnage");
             });
 
-            const event = new Event({
-                plantId: plantId,
-                departmentId: departmentId,
-                eventDate: new Date().toISOString(),
-                userId: user._id.toString(),
-                operationType: CrudType.CREATE,
-                modelType: ModelType.DUNNAGE,
-                userName: user.name,
-                userEmailAddress: user.email,
-                itemId: dunnage._id.valueOf()
-            });
-
-            await event.save();
-
     } else {
         dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
 
-        const event = new Event({
-            plantId: plantId,
-            departmentId: departmentId,
-            eventDate: new Date().toISOString(),
-            userId: user._id.toString(),
-            operationType: CrudType.CREATE,
-            modelType: ModelType.DUNNAGE,
-            userName: user.name,
-            userEmailAddress: user.email,
-            itemId: dunnage._id.valueOf()
-        });
-
-        await event.save();
-
     }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toISOString(),
+        userId: user._id.toString(),
+        operationType: CrudType.CREATE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf()
+    });
 
     try {
         dunnage.save();
+        await event.save();
     } catch (err) {
         return res.status(500).json("Error creating Dunnage");
     }
@@ -239,25 +224,24 @@ export const updateDunnage = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Stock");
             });
 
-            const event = new Event({
-                plantId: plantId,
-                departmentId: departmentId,
-                eventDate: new Date().toISOString(),
-                userId: user._id.toString(),
-                operationType: CrudType.UPDATE,
-                modelType: ModelType.DUNNAGE,
-                userName: user.name,
-                userEmailAddress: user.email,
-                itemId: dunnage._id.valueOf()
-            });
-
-            await event.save();
-
     }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toISOString(),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf()
+    });
 
     //save Dunnage
     try {
         await dunnage.save();
+        await event.save();
         return res.status(200).json("Dunnage updated successfully");
     } catch (err) {
         return res.status(500).json("Error updating Dunnage");

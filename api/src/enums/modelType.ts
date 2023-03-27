@@ -5,7 +5,7 @@ export enum ModelType {
     STOCK = "Stock",
     DUNNAGE = "Dunnage",
     USER = "User",
-    CYCLECHECK = "CycleCheck",
-    SUBASSEMBLY = "Sub Assembly",
-    PRODUCTIONCOUNT = "Production Count",
+    CYCLECHECK = "Cycle-check",
+    SUBASSEMBLY = "Sub-assembly",
+    PRODUCTIONCOUNT = "Production-count",
 }

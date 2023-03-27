@@ -60,7 +60,7 @@ export const createPlant = async (
         await newPlant.save();
 
         const event: EventDocument = new Event({
-            itemType: ModelType.PLANT,
+            modelType: ModelType.PLANT,
             plantId: newPlant._id.valueOf(),
             userId: user._id.valueOf(),
             operationType: CrudType.CREATE,
@@ -105,7 +105,7 @@ export const createPlant = async (
                     eventDate: new Date().toDateString(),
                     userId: user._id.valueOf(),
                     operationType: CrudType.CREATE,
-                    itemType: ModelType.DEPARTMENT,
+                    modelType: ModelType.DEPARTMENT,
                     userName: user.name,
                     plantId: newPlant._id.valueOf(),
                     userEmailAddress: user.email,
@@ -315,7 +315,7 @@ export const updatePlant = async (req: Request, res: Response) => {
         eventDate: new Date().toDateString(),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
-        itemType: ModelType.PLANT,
+        modelType: ModelType.PLANT,
         userName: user.name,
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
@@ -358,7 +358,7 @@ export const deletePlant = async (req: Request, res: Response) => {
         eventDate: new Date().toDateString(),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
-        itemType: ModelType.PLANT,
+        modelType: ModelType.PLANT,
         userName: user.name,
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,

@@ -6,7 +6,7 @@ export type EventDocument = Document & {
   eventDate: string;
   userId: string;
   operationType: string;
-  itemType: string;
+  modelType: string;
   userName: string;
   userEmailAddress: string;
   itemId: string;
@@ -34,7 +34,7 @@ const EventSchema = new Schema<EventDocument>(
       type: String,
       required: true,
     },
-    itemType: {
+    modelType: {
       type: String,
       required: true,
     },

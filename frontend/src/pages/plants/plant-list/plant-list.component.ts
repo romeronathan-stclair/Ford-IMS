@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-plant-list',
@@ -40,7 +41,11 @@ export class PlantListComponent {
   ];
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private spinnerService: SpinnerService, private plantService: PlantService, private authService: AuthService) { }
+    private spinnerService: SpinnerService,
+    private plantService: PlantService,
+    private authService: AuthService,
+    private router: Router
+    ) { }
   ngOnInit() {
     this.loadData();
 
@@ -121,7 +126,9 @@ export class PlantListComponent {
     });
   }
 
-
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/plant']);
+  }
 
 
 }

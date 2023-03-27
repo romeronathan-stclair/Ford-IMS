@@ -107,40 +107,27 @@ export const createStock = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Stock");
             });
 
-            const event = new Event({
-                plantId: plantId,
-                departmentId: departmentId,
-                eventDate: new Date().toISOString(),
-                userId: user._id.toString(),
-                operationType: CrudType.CREATE,
-                modelType: ModelType.STOCK,
-                userName: user.name,
-                userEmailAddress: user.email,
-                itemId: stock._id.valueOf()
-            });
-
-            await event.save();
-
     } else {
         stock.imageURL = env.app.apiUrl + "/images/defaultImage.png";
-
-        const event = new Event({
-            plantId: plantId,
-            departmentId: departmentId,
-            eventDate: new Date().toISOString(),
-            userId: user._id.toString(),
-            operationType: CrudType.CREATE,
-            modelType: ModelType.STOCK,
-            userName: user.name,
-            userEmailAddress: user.email,
-            itemId: stock._id.valueOf()
-        });
-
-        await event.save();
     }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toISOString(),
+        userId: user._id.toString(),
+        operationType: CrudType.CREATE,
+        modelType: ModelType.STOCK,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: stock._id.valueOf()
+    });
+
+    console.log(event);
 
     try {
         stock.save();
+        event.save();
     }
     catch (err) {
         stock.remove();
@@ -267,26 +254,24 @@ export const updateStock = async (req: Request, res: Response) => {
                 return res.status(500).json("Error creating Stock");
             });
 
-            const event = new Event({
-                plantId: plantId,
-                departmentId: departmentId,
-                eventDate: new Date().toISOString(),
-                userId: user._id.toString(),
-                operationType: CrudType.UPDATE,
-                modelType: ModelType.STOCK,
-                userName: user.name,
-                userEmailAddress: user.email,
-                itemId: stock._id.valueOf()
-            });
-
-            await event.save();
     }
 
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toISOString(),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.STOCK,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: stock._id.valueOf()
+    });
 
 
     //save Updated Stock
     try {
-        await stock.save();
+        await event.save();
         return res.status(200).json("Stock updated successfully");
     }
     catch (err) {

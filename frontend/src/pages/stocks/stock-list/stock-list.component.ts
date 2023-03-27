@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
@@ -32,7 +33,8 @@ export class StockListComponent {
     private departmentService: DepartmentService,
     private stockService: StockService,
     private spinnerService: SpinnerService,
-    private authService: AuthService) {
+    private authService: AuthService,
+    private router: Router) {
     this.stockForm = new FormGroup({
       departmentName: new FormControl(''),
     });
@@ -167,7 +169,9 @@ export class StockListComponent {
   }
 
 
-
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/stock']);
+  }
 
 
 }

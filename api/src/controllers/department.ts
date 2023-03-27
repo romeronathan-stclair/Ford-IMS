@@ -70,7 +70,7 @@ export const createDepartment = async (req: Request, res: Response) => {
             eventDate: new Date().toISOString(),
             userId: user._id.valueOf(),
             operationType: CrudType.CREATE,
-            itemType: ModelType.DEPARTMENT,
+            modelType: ModelType.DEPARTMENT,
             userName: user.name,
             userEmailAddress: user.email,
             itemId: newDepartment._id.valueOf()
@@ -189,7 +189,7 @@ export const updateDepartment = async (req: Request, res: Response) => {
         eventDate: new Date().toDateString(),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
-        itemType: ModelType.DEPARTMENT,
+        modelType: ModelType.DEPARTMENT,
         userName: user.name,
         userEmailAddress: user.email,
         itemId: department._id.valueOf()
@@ -242,7 +242,7 @@ export const deleteDepartment = async (req: Request, res: Response) => {
         eventDate: new Date().toDateString(),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
-        itemType: ModelType.DEPARTMENT,
+        modelType: ModelType.DEPARTMENT,
         userName: user.name,
         userEmailAddress: user.email,
         itemId: department._id.valueOf()

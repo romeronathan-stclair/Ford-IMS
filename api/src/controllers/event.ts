@@ -12,7 +12,8 @@ export const getEvents = async (req: Request, res: Response) => {
   const plantId = req.query.plantId;
   const departmentId = req.query.departmentId;
   const userId = req.query.userId;
-  const operation = req.query.operation;
+  const operationType = req.query.operationType;
+  const modelType = req.query.modelType;
   const date = req.query.eventDate;
   const query: any = {
     isDeleted: false,
@@ -33,9 +34,14 @@ export const getEvents = async (req: Request, res: Response) => {
     console.log(userId);
   }
 
-  if (operation) {
-    query["operationType"] = operation;
-    console.log(operation);
+  if (operationType) {
+    let word = operationType.toString();
+    query["operationType"] = word.charAt(0).toUpperCase() + word.slice(1)
+  }
+
+  if (modelType) {
+    let word = modelType.toString();
+    query["modelType"] = word.charAt(0).toUpperCase() + word.slice(1);
   }
 
   if (date) {
