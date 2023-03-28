@@ -253,4 +253,8 @@ export class EventLogComponent {
     this.location.back();
   }
 
+  viewEventInfo($event: any) {
+    this.router.navigate(['/dashboard/event/list/' + this.modelType + '/' + $event]);
+  }
+
 }

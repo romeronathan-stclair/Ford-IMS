@@ -108,6 +108,7 @@ import { ProductionCountCreateComponent } from '../pages/production-count/produc
 import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
 import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
+import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 
 @NgModule({
   declarations: [
@@ -192,7 +193,8 @@ import { EventLogComponent } from 'src/components/event-log/event-log.component'
     ProductionCountStepOneComponent,
     ProductionCountStepTwoComponent,
     ProductionCountCreateComponent,
-    EventLogComponent
+    EventLogComponent,
+    EventInfoComponent
   ],
   imports: [
     BrowserModule,

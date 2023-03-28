@@ -36,7 +36,7 @@
         <td>{{event.eventDate}}</td>
         <td>{{event.eventTime}}</td>
         <td>
-          <button type="submit" class="general-button">More Info</button>
+          <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
         </td>
       </tr>
     </tbody>

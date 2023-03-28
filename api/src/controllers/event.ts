@@ -14,6 +14,7 @@ export const getEvents = async (req: Request, res: Response) => {
   const userId = req.query.userId;
   const operationType = req.query.operationType;
   const modelType = req.query.modelType;
+  const itemId = req.query.itemId;
   const date = req.query.eventDate;
   const query: any = {
     isDeleted: false,
@@ -42,6 +43,11 @@ export const getEvents = async (req: Request, res: Response) => {
   if (modelType) {
     let word = modelType.toString();
     query["modelType"] = word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  if (itemId) {
+    query["itemId"] = itemId;
+    console.log(itemId);
   }
 
   if (date) {
