@@ -29,10 +29,6 @@ export const submitProductionCount = async (req: Request, res: Response) => {
         return res.status(500).json(errors);
     }
 
-    let departmentIds: string[] = [];
-
-
-
     let stockSaveList: StockDocument[] = [];
 
     const request = req.body.productionCountRequest;
@@ -99,42 +95,42 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 }
             }
 
-            const department = await Department.findById({
-                _id: departmentIds[0],
-                isDeleted: false,
-            });
-        
-            if (!department) {
-                return res.status(500).json("Department does not exist");
-            }
-
-            const plantId = department.plantId;
-
-            const user = req.user as UserDocument;
-
-            const event = new Event({
-                plantId: plantId,
-                departmentId: departmentIds[0],
-                eventDate: new Date().toDateString(),
-                eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
-                userId: user._id.toString(),
-                operationType: CrudType.CREATE,
-                modelType: ModelType.SUBASSEMBLY,
-                userName: user.name,
-                userEmailAddress: user.email,
-                itemId: '',
-                itemName: 'Production Count',
-            });
-    
-            event.save();
-
         } catch (e) {
             return res.status(500).json(e);
 
         } finally {
+            const user = req.user as UserDocument;
+
+            const plant = user.plants.find((plant) => {
+                if (plant.isActive) {
+                    return plant
+                }
+            });
+            if (!plant) {
+                return res.status(500).json("No active plants");
+            }
+
+            const event = new Event({
+                plantId: plant.plantId,
+                eventDate: new Date().toDateString(),
+                eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+                userId: user._id.toString(),
+                operationType: CrudType.CREATE,
+                modelType: ModelType.PRODUCTIONCOUNT,
+                userName: user.name,
+                userEmailAddress: user.email,
+                itemId: new Date().toDateString(),
+                itemName: 'Production Count',
+            });
+
+            console.log(event);
+
+            event.save();
+
             return res.status(200).json("Submitted production count.");
         }
     } catch (e) {
+        console.log("ERROR => " + e);
         return res.status(500).json(e);
     }
 

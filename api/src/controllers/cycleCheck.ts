@@ -161,7 +161,6 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
 
         const event = new Event({
             plantId: plant.plantId,
-            departmentId: plant.departments[0],
             eventDate: new Date().toDateString(),
             eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
             userId: user._id.toString(),
@@ -169,7 +168,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
             modelType: ModelType.CYCLECHECK,
             userName: user.name,
             userEmailAddress: user.email,
-            itemId: '',
+            itemId: new Date().toDateString(),
             itemName: 'Cycle Check',
         });
 
