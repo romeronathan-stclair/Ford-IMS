@@ -135,6 +135,7 @@ export const submitSubAssembly = async (req: Request, res: Response) => {
             plantId: plant.plantId,
             departmentId: plant.departments[0],
             eventDate: new Date().toDateString(),
+            eventTime: new Date().toTimeString(),
             userId: user._id.toString(),
             operationType: CrudType.CREATE,
             modelType: ModelType.SUBASSEMBLY,

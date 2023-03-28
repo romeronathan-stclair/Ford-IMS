@@ -68,6 +68,7 @@ export const createPlant = async (
             itemId: newPlant._id.valueOf(),
             userEmailAddress: user.email,
             eventDate: new Date().toDateString(),
+            eventTime: new Date().toTimeString(),
             itemName: newPlant.plantName,
         }) as EventDocument;
 
@@ -104,6 +105,7 @@ export const createPlant = async (
 
                 const event: EventDocument = new Event({
                     eventDate: new Date().toDateString(),
+                    eventTime: new Date().toTimeString(),
                     userId: user._id.valueOf(),
                     operationType: CrudType.CREATE,
                     modelType: ModelType.DEPARTMENT,
@@ -112,6 +114,7 @@ export const createPlant = async (
                     userEmailAddress: user.email,
                     itemId: newDepartment._id.valueOf(),
                     itemName: newDepartment.departmentName,
+                    departmentId: newDepartment._id.valueOf(),
                 }) as EventDocument;
 
                 eventList.push(event);
@@ -315,6 +318,7 @@ export const updatePlant = async (req: Request, res: Response) => {
     plant.plantLocation = req.body.plantLocation;
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toTimeString(),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.PLANT,
@@ -359,6 +363,7 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toTimeString(),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
         modelType: ModelType.PLANT,

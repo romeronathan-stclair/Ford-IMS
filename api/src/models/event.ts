@@ -4,6 +4,7 @@ export type EventDocument = Document & {
   plantId: string;
   departmentId: string;
   eventDate: string;
+  eventTime: string;
   userId: string;
   operationType: string;
   modelType: string;
@@ -24,6 +25,10 @@ const EventSchema = new Schema<EventDocument>(
       required: false,
     },
     eventDate: {
+      type: String,
+      required: true,
+    },
+    eventTime: {
       type: String,
       required: true,
     },
