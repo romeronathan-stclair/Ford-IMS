@@ -151,7 +151,8 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         modelType: ModelType.PRODUCT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: product._id.valueOf()
+        itemId: product._id.valueOf(),
+        itemName: product.name,
     });
 
 
@@ -416,7 +417,8 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
         modelType: ModelType.PRODUCT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: product._id.valueOf()
+        itemId: product._id.valueOf(),
+        itemName: product.name,
     });
 
     try {
@@ -469,7 +471,8 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
         modelType: ModelType.PRODUCT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: product._id.valueOf()
+        itemId: product._id.valueOf(),
+        itemName: product.name
     });
 
     //save delete product

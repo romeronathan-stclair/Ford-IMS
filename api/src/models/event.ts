@@ -10,6 +10,7 @@ export type EventDocument = Document & {
   userName: string;
   userEmailAddress: string;
   itemId: string;
+  itemName: string;
 };
 
 const EventSchema = new Schema<EventDocument>(
@@ -50,6 +51,10 @@ const EventSchema = new Schema<EventDocument>(
       type: String,
       required: true,
     },
+    itemName: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );

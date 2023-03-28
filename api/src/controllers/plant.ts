@@ -68,6 +68,7 @@ export const createPlant = async (
             itemId: newPlant._id.valueOf(),
             userEmailAddress: user.email,
             eventDate: new Date().toDateString(),
+            itemName: newPlant.plantName,
         }) as EventDocument;
 
         eventList.push(event);
@@ -110,6 +111,7 @@ export const createPlant = async (
                     plantId: newPlant._id.valueOf(),
                     userEmailAddress: user.email,
                     itemId: newDepartment._id.valueOf(),
+                    itemName: newDepartment.departmentName,
                 }) as EventDocument;
 
                 eventList.push(event);
@@ -320,6 +322,7 @@ export const updatePlant = async (req: Request, res: Response) => {
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
+        itemName: plant.plantName,
     }) as EventDocument;
 
     console.log("HERE");
@@ -363,6 +366,7 @@ export const deletePlant = async (req: Request, res: Response) => {
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
+        itemName: plant.plantName,
     }) as EventDocument;
 
     try {

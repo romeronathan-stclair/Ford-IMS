@@ -168,7 +168,8 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
             modelType: ModelType.CYCLECHECK,
             userName: user.name,
             userEmailAddress: user.email,
-            itemId: ''
+            itemId: '',
+            itemName: 'Cycle Check',
         });
 
         event.save();

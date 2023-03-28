@@ -120,7 +120,8 @@ export const createStock = async (req: Request, res: Response) => {
         modelType: ModelType.STOCK,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: stock._id.valueOf()
+        itemId: stock._id.valueOf(),
+        itemName: stock.name,
     });
 
     console.log(event);
@@ -265,7 +266,8 @@ export const updateStock = async (req: Request, res: Response) => {
         modelType: ModelType.STOCK,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: stock._id.valueOf()
+        itemId: stock._id.valueOf(),
+        itemName: stock.name
     });
 
 
@@ -321,7 +323,8 @@ export const deleteStock = async (req: Request, res: Response) => {
         modelType: ModelType.DUNNAGE,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: stock._id.valueOf()
+        itemId: stock._id.valueOf(),
+        itemName: stock.name
     });
 
     //save Deleted Stock

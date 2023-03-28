@@ -104,7 +104,8 @@ export const createDunnage = async (req: Request, res: Response) => {
         modelType: ModelType.DUNNAGE,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: dunnage._id.valueOf()
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name,
     });
 
     try {
@@ -235,7 +236,8 @@ export const updateDunnage = async (req: Request, res: Response) => {
         modelType: ModelType.DUNNAGE,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: dunnage._id.valueOf()
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name
     });
 
     //save Dunnage
@@ -290,7 +292,8 @@ export const deleteDunnage = async (req: Request, res: Response) => {
         modelType: ModelType.STOCK,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: dunnage._id.valueOf()
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name
     });
 
     // save Dunnage

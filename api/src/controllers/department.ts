@@ -73,7 +73,8 @@ export const createDepartment = async (req: Request, res: Response) => {
             modelType: ModelType.DEPARTMENT,
             userName: user.name,
             userEmailAddress: user.email,
-            itemId: newDepartment._id.valueOf()
+            itemId: newDepartment._id.valueOf(),
+            itemName: newDepartment.departmentName
         });
 
         await event.save();
@@ -192,7 +193,8 @@ export const updateDepartment = async (req: Request, res: Response) => {
         modelType: ModelType.DEPARTMENT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: department._id.valueOf()
+        itemId: department._id.valueOf(),
+        itemName: department.departmentName
     });
 
     //save Department
@@ -245,7 +247,8 @@ export const deleteDepartment = async (req: Request, res: Response) => {
         modelType: ModelType.DEPARTMENT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: department._id.valueOf()
+        itemId: department._id.valueOf(),
+        itemName: department.departmentName
     });
 
     // save Department
