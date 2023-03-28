@@ -32,9 +32,10 @@ export class EventLogComponent {
   departments: any[] = [];
   selectedDepartment: any = '';
   operations = [
-      { operationName: 'Create'},
-      { operationName: 'Update'},
-      { operationName: 'Delete'}
+      { operationName: 'All', operationValue: ''},
+      { operationName: 'Create', operationValue: 'Create'},
+      { operationName: 'Update', operationValue: 'Update'},
+      { operationName: 'Delete', operationValue: 'Delete'}
     ];
   selectedOperation: any = '';
   selectedDate: any;
@@ -67,13 +68,15 @@ export class EventLogComponent {
   loadEvents() {
     this.spinnerService.show();
 
-    let eventQuery = "?modelType=" + this.modelType;
+    let eventQuery = "?modelType=" + this.modelType + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
           console.log(data);
-          this.events = data.body;
+          this.events = data.body.events;
+          this.events.reverse();
+          this.length = data.body.eventCount;
           this.spinnerService.hide();
         },
         error: (error: any) => {
@@ -127,24 +130,21 @@ export class EventLogComponent {
     let eventQuery = '';
 
     if (this.selectedDepartment === '' && this.operationType === '') {
-      console.log('1')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize
     } else if (this.selectedDepartment === '' && this.operationType !== '') {
-      console.log('2')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else if (this.selectedDepartment !== '' && this.operationType === '') {
-      console.log('3')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else {
-      console.log('4')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     }
 
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
-          this.events = data.body;
+          this.events = data.body.events;
+          this.events.reverse();
+          this.length = data.body.eventCount;
           this.spinnerService.hide();
         },
         error: (error: any) => {
@@ -159,24 +159,21 @@ export class EventLogComponent {
     let eventQuery = '';
 
     if (this.selectedPlant === '' && this.operationType === '') {
-      console.log('1')
-      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id
+      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else if (this.selectedPlant === '' && this.operationType !== '') {
-      console.log('2')
-      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else if (this.selectedPlant !== '' && this.operationType === '') {
-      console.log('3')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else {
-      console.log('4')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     }
 
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
-          this.events = data.body;
+          this.events = data.body.events;
+          this.events.reverse();
+          this.length = data.body.eventCount;
           this.spinnerService.hide();
         },
         error: (error: any) => {
@@ -190,24 +187,22 @@ export class EventLogComponent {
     let eventQuery = '';
 
     if (this.selectedPlant === '' && this.selectedDepartment === '') {
-      console.log('1')
-      eventQuery = "?modelType=" + this.modelType + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+      console.log(eventQuery);
     } else if (this.selectedPlant === '' && this.selectedDepartment !== '') {
-      console.log('2')
-      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else if (this.selectedPlant !== '' && this.selectedDepartment === '') {
-      console.log('3')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     } else {
-      console.log('4')
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
     }
 
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
-          this.events = data.body;
+          this.events = data.body.events;
+          this.events.reverse();
+          this.length = data.body.eventCount;
           this.spinnerService.hide();
         },
         error: (error: any) => {
@@ -218,8 +213,40 @@ export class EventLogComponent {
   }
 
   pageChanged(event: PageEvent) {
+    this.spinnerService.show();
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
+
+    let eventQuery = '';
+
+    if (this.selectedPlant === '' && this.selectedDepartment === '' && this.operationType === '') {
+      eventQuery = "?modelType=" + this.modelType + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else if (this.selectedPlant === '' && this.selectedDepartment === '' && this.operationType !== '') {
+      eventQuery = "?modelType=" + this.modelType + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else if (this.selectedPlant === '' && this.selectedDepartment !== '' && this.operationType === '') {
+      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else if (this.selectedPlant === '' && this.selectedDepartment !== '' && this.operationType !== '') {
+      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else if (this.selectedPlant !== '' && this.selectedDepartment === '' && this.operationType === '') {
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else if (this.selectedPlant !== '' && this.selectedDepartment === '' && this.operationType !== '') {
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else if (this.selectedPlant !== '' && this.selectedDepartment !== '' && this.operationType === '') {
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    } else {
+      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    }
+
+    this.eventService.getEvents(eventQuery)
+      .subscribe({
+        next: (data: any) => {
+          this.events = data.body.events;
+          this.events.reverse();
+          this.length = data.body.eventCount;
+          this.spinnerService.hide();
+        }
+      });
+
   }
 
   backPage() {

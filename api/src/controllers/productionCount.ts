@@ -116,7 +116,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 plantId: plantId,
                 departmentId: departmentIds[0],
                 eventDate: new Date().toDateString(),
-                eventTime: new Date().toTimeString(),
+                eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
                 userId: user._id.toString(),
                 operationType: CrudType.CREATE,
                 modelType: ModelType.SUBASSEMBLY,

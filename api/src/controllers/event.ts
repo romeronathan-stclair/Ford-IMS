@@ -49,12 +49,23 @@ export const getEvents = async (req: Request, res: Response) => {
     console.log(date);
   }
 
+  const eventCount = await Event.countDocuments(query);
   const events = await Event.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-  if (!events || events.length === 0) {
-    return res.status(500).json("No events found");
+  let response = {
+    events: events,
+    eventCount: eventCount,
   }
 
-  return res.json(events);
+  if (!events || events.length === 0) {
+    let response = {
+      events: [],
+      eventCount: 0,
+    }
+
+    return res.json(response);
+  }
+
+  return res.json(response);
 };
 

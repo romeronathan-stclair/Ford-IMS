@@ -1,17 +1,17 @@
 <h1 class="page-header">Event Log</h1>
 <div class="table-header">
-  <div *ngIf="plants.length > 1 && modelType === 'Plant'" class="dropdown">
-    <p-dropdown (onChange)="changePlant($event)" placeholder="Sort by Plant" optionLabel="plantName"
+  <div *ngIf="plants.length > 2 && modelType === 'Plant'" class="dropdown">
+    <p-dropdown (onChange)="changePlant($event)" optionLabel="plantName"
     [options]="plants" [(ngModel)]="selectedPlant"></p-dropdown>
   </div>
 
-  <div *ngIf="departments.length > 1 && modelType !== 'Plant'" class="dropdown">
-      <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
+  <div *ngIf="departments.length > 2 && modelType !== 'Plant'" class="dropdown">
+      <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName"
       [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
   </div>
 
   <div class="dropdown">
-    <p-dropdown (onChange)="changeOperation($event)" placeholder="Sort by Operation" optionLabel="operationName" optionValue="operationName"
+    <p-dropdown (onChange)="changeOperation($event)" optionLabel="operationName" optionValue="operationValue"
     [options]="operations" [(ngModel)]="selectedOperation"></p-dropdown>
   </div>
 
@@ -34,7 +34,7 @@
         <td>{{event.operationType}}</td>
         <td>{{event.userName}}</td>
         <td>{{event.eventDate}}</td>
-        <th>{{event.eventTime}}</th>
+        <td>{{event.eventTime}}</td>
         <td>
           <button type="submit" class="general-button">More Info</button>
         </td>

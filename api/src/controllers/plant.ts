@@ -68,7 +68,7 @@ export const createPlant = async (
             itemId: newPlant._id.valueOf(),
             userEmailAddress: user.email,
             eventDate: new Date().toDateString(),
-            eventTime: new Date().toTimeString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
             itemName: newPlant.plantName,
         }) as EventDocument;
 
@@ -105,7 +105,7 @@ export const createPlant = async (
 
                 const event: EventDocument = new Event({
                     eventDate: new Date().toDateString(),
-                    eventTime: new Date().toTimeString(),
+                    eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
                     userId: user._id.valueOf(),
                     operationType: CrudType.CREATE,
                     modelType: ModelType.DEPARTMENT,
@@ -318,7 +318,7 @@ export const updatePlant = async (req: Request, res: Response) => {
     plant.plantLocation = req.body.plantLocation;
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
-        eventTime: new Date().toTimeString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.PLANT,
@@ -363,7 +363,7 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
-        eventTime: new Date().toTimeString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
         modelType: ModelType.PLANT,
