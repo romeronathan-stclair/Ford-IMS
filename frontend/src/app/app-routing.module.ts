@@ -78,6 +78,7 @@ import { ProductionCountStepTwoComponent } from 'src/pages/production-count/prod
 import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
+import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -512,7 +513,11 @@ const routes: Routes = [
     data: { animation: 'Signout Page' },
     component: SignoutPageComponent
   },
-
+  {
+    path: '**',
+    data: { animation: 'Page Not Found' },
+    component: PageNotFoundComponent,
+  },
 
 ];
 

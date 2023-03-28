@@ -1,0 +1,34 @@
+@import "src/styles.scss";
+
+.table-header img {
+    width: 150px;
+}
+.table-holder {
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+h1 {
+  font-size: 128px;
+}
+
+h2 {
+  font-size: 56px;
+}
+
+h3 {
+  font-size: 24px;
+}
