@@ -26,3 +26,8 @@ form {
     flex-direction: column;
     width: 100%;
 }
+
+mat-error {
+  color: #f44336;
+  font-size: 12px;
+}

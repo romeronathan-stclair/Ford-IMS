@@ -10,7 +10,7 @@
                 plantForm.controls['plantName'].dirty ||
                 plantForm.controls['plantName'].touched
               ">
-                    <span *ngIf="plantForm.controls['plantName'].hasError('required')">plantName is required</span>
+                    <span *ngIf="plantForm.controls['plantName'].hasError('required')">Plant Name is required</span>
                 </mat-error>
             </div>
 
@@ -23,7 +23,7 @@
                   plantForm.controls['plantLocation'].dirty ||
                   plantForm.controls['plantLocation'].touched)
               ">
-                    <span *ngIf="plantForm.controls['plantLocation'].hasError('required')">plantLocation is
+                    <span *ngIf="plantForm.controls['plantLocation'].hasError('required')">Plant Location is
                         required</span>
                 </mat-error>
             </div>
@@ -34,7 +34,7 @@
                 <button type="submit" class="submit-button">Next</button>
             </div>
             <!-- <div class="button-holder">
-          
+
             <a routerLink="/account/reset-plantLocation">Forgot plantLocation?</a>
         </div> -->
 
