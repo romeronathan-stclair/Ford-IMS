@@ -59,25 +59,21 @@ export class InviteOneUserStepOneComponent {
 
   }
   onSubmit() {
-    this.spinnerService.show();
     if (!this.userForm.valid) {
       this.displayValidationErrors = true;
       this.spinnerService.hide();
       return;
     }
-    this.spinnerService.hide();
+    this.spinnerService.show();
 
     this.request.fullName = this.userForm.value.fullName;
     this.request.email = this.userForm.value.email;
     this.request.adminType = this.userForm.value.adminType;
 
+    this.spinnerService.hide();
     this.sharedService.setData(this.request).then(() => {
       this.router.navigate(["/dashboard/users/invite/invite-one-user/step-two"]);
     });
-
-
-
-
   }
 
   changeRole($event: any) {

@@ -10,7 +10,7 @@
                 userForm.controls['fullName'].dirty ||
                 userForm.controls['fullName'].touched
               ">
-                    <span *ngIf="userForm.controls['fullName'].hasError('required')">fullName is required</span>
+                    <span *ngIf="userForm.controls['fullName'].hasError('required')">Full Name is required</span>
                 </mat-error>
             </div>
 
@@ -23,7 +23,7 @@
                   userForm.controls['email'].dirty ||
                   userForm.controls['email'].touched)
               ">
-                    <span *ngIf="userForm.controls['email'].hasError('required')">email is
+                    <span *ngIf="userForm.controls['email'].hasError('required')">Email is
                         required</span>
                 </mat-error>
             </div>
@@ -40,7 +40,7 @@
             </div>
             <button type="submit" class="submit-button invite-multiple">Invite Multiple Users</button>
             <!-- <div class="button-holder">
-          
+
             <a routerLink="/account/reset-email">Forgot email?</a>
         </div> -->
 
