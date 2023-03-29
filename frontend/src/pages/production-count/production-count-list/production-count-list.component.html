@@ -8,7 +8,26 @@
 
 </div>
 <div class="table-holder">
-
+  <table class="table">
+    <thead>
+      <th>Production Count</th>
+      <th>User</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{event.itemName}}</td>
+        <td>{{event.userName}}</td>
+        <td>{{event.eventDate}}</td>
+        <td>{{event.eventTime}}</td>
+        <td>
+          <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 <div class="paginator-holder">
     <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/production-count/create/step-one'" type="submit"

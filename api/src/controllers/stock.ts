@@ -1,5 +1,5 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, UserDocument } from "../models";
+import { Department, DepartmentDocument, UserDocument, Event } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -106,12 +106,30 @@ export const createStock = async (req: Request, res: Response) => {
                 }
                 return res.status(500).json("Error creating Stock");
             });
+
     } else {
         stock.imageURL = env.app.apiUrl + "/images/defaultImage.png";
     }
 
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.CREATE,
+        modelType: ModelType.STOCK,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: stock._id.valueOf(),
+        itemName: stock.name,
+    });
+
+    console.log(event);
+
     try {
         stock.save();
+        event.save();
     }
     catch (err) {
         stock.remove();
@@ -201,6 +219,9 @@ export const updateStock = async (req: Request, res: Response) => {
         return res.status(500).json("Department not found");
     }
 
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
     stock.name = req.body.name || stock.name;
     stock.partNumber = req.body.partNumber || stock.partNumber;
     stock.stockQtyPerTote = req.body.stockQtyPerTote || stock.stockQtyPerTote;
@@ -234,13 +255,27 @@ export const updateStock = async (req: Request, res: Response) => {
 
                 return res.status(500).json("Error creating Stock");
             });
+
     }
 
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.STOCK,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: stock._id.valueOf(),
+        itemName: stock.name
+    });
 
 
     //save Updated Stock
     try {
-        await stock.save();
+        await event.save();
         return res.status(200).json("Stock updated successfully");
     }
     catch (err) {
@@ -266,9 +301,39 @@ export const deleteStock = async (req: Request, res: Response) => {
     //delete Stock
     stock.isDeleted = true;
 
+    const departmentId = stock.departmentId;
+
+    const department = (await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    })) as DepartmentDocument;
+
+
+    if (!department) {
+        return res.status(500).json("Department not found");
+    }
+
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.DELETE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: stock._id.valueOf(),
+        itemName: stock.name
+    });
+
     //save Deleted Stock
     try {
         await stock.save();
+        await event.save();
         return res.status(200).json("Stock deleted successfully");
     }
     catch (err) {

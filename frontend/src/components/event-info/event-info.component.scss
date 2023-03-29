@@ -1,5 +1,5 @@
 @import "src/styles.scss";
-img {
+.table-header img {
     width: 150px;
 }
 .table-holder {
@@ -7,12 +7,16 @@ img {
     background-color: $lightGrey !important;
     width: 100%;
     border: $border;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-right: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50px;
+  padding-left: 50px;
 }
 .paginator-holder {
     padding: 10px;
@@ -37,6 +41,7 @@ mat-paginator {
     }
 }
 .mat-column-name {
+    display: inline-flex;
     width: 40%;
     max-width: 40%;
 }
@@ -48,38 +53,13 @@ i {
         order: 1;
     }
 }
-.search-bar {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border-radius: 7.5px;
-}
-.fa-magnifying-glass {
-    padding-left: 7.5px;
-    color: $darkGrey;
-}
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-}
-
-thead {
-  background-color: #999;
-}
-
-th,
-td {
-  flex: 1;
-  padding: 10px;
-  text-align: left;
-}
-
-tr {
-  border: solid black 1px;
-}
-
-td {
-  background-color: rgb(217, 217, 217);
+.event-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  font-size: 24px;
 }

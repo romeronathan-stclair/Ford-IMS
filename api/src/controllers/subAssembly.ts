@@ -1,5 +1,7 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, UserDocument } from "../models";
+import { Department, DepartmentDocument, UserDocument, Event } from "../models";
+import { ModelType } from "../enums/modelType";
+import { CrudType } from "../enums/crudType";
 import { Stock, StockDocument } from "../models/stock";
 import { check, validationResult } from "express-validator";
 import { SubAssemblyList } from "../type/SubAssemblyList";
@@ -128,6 +130,24 @@ export const submitSubAssembly = async (req: Request, res: Response) => {
                 await stock.save();
             }
         }
+
+        const event = new Event({
+            plantId: plant.plantId,
+            departmentId: plant.departments[0],
+            eventDate: new Date().toDateString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+            userId: user._id.toString(),
+            operationType: CrudType.CREATE,
+            modelType: ModelType.SUBASSEMBLY,
+            userName: user.name,
+            userEmailAddress: user.email,
+            itemId: new Date().toDateString(),
+            itemName: 'Sub Assembly'
+        });
+
+        event.save();
+
+
     } catch (err) {
         return res.status(500).json(err);
     } finally {

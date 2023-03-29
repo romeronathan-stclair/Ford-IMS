@@ -108,6 +108,7 @@ export class CreateStockStepOneComponent {
       let totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
       let moderateStock = 0;
 
+      //TODO Check Math
       if (this.roughStockChecked === true) {
         moderateStock = this.stockForm.value.lowStock * 2;
       } else {

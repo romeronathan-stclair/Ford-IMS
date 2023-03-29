@@ -76,6 +76,9 @@ import { ProductionCountCreateComponent } from 'src/pages/production-count/produ
 import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
 import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
 import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
+import { EventLogComponent } from 'src/components/event-log/event-log.component';
+import { EventInfoComponent } from 'src/components/event-info/event-info.component';
+import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
 
 
 const routes: Routes = [
@@ -486,6 +489,22 @@ const routes: Routes = [
             ],
           },
         ]
+      },
+      {
+        path: 'event',
+        data: { animation: 'Event Page' },
+        children: [
+            {
+            path: 'list/:modelType',
+            data: { animation: 'Event List Page' },
+            component: EventLogComponent
+          },
+          {
+            path: 'list/:modelType/:itemId',
+            data: { animation: 'Event Info Page' },
+            component: EventInfoComponent
+          }
+        ]
       }
     ]
   },
@@ -494,7 +513,11 @@ const routes: Routes = [
     data: { animation: 'Signout Page' },
     component: SignoutPageComponent
   },
-
+  {
+    path: '**',
+    data: { animation: 'Page Not Found' },
+    component: PageNotFoundComponent,
+  },
 
 ];
 

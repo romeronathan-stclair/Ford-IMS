@@ -84,6 +84,7 @@ export class CreateDunnageStepOneComponent {
 
       this.spinnerService.show();
 
+      //TODO Check Math
       let moderateStock = this.dunnageForm.value.lowStock * 2;
 
       const dunnage = {

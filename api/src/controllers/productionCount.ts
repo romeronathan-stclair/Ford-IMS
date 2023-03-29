@@ -14,7 +14,8 @@ import {
     Stock,
     StockDocument,
 } from "../models";
-
+import { ModelType } from "../enums/modelType";
+import { CrudType } from "../enums/crudType";
 import * as forecastService from "../services/forecastService";
 
 import { ProductStock, ProductStockDocument } from "../models/productStock";
@@ -27,10 +28,6 @@ export const submitProductionCount = async (req: Request, res: Response) => {
     if (!errors.isEmpty()) {
         return res.status(500).json(errors);
     }
-
-    let departmentIds: string[] = [];
-
-
 
     let stockSaveList: StockDocument[] = [];
 
@@ -98,14 +95,42 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 }
             }
 
-
         } catch (e) {
             return res.status(500).json(e);
 
         } finally {
+            const user = req.user as UserDocument;
+
+            const plant = user.plants.find((plant) => {
+                if (plant.isActive) {
+                    return plant
+                }
+            });
+            if (!plant) {
+                return res.status(500).json("No active plants");
+            }
+
+            const event = new Event({
+                plantId: plant.plantId,
+                eventDate: new Date().toDateString(),
+                eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+                userId: user._id.toString(),
+                operationType: CrudType.CREATE,
+                modelType: ModelType.PRODUCTIONCOUNT,
+                userName: user.name,
+                userEmailAddress: user.email,
+                itemId: new Date().toDateString(),
+                itemName: 'Production Count',
+            });
+
+            console.log(event);
+
+            event.save();
+
             return res.status(200).json("Submitted production count.");
         }
     } catch (e) {
+        console.log("ERROR => " + e);
         return res.status(500).json(e);
     }
 

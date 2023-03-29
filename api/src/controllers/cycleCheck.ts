@@ -1,6 +1,8 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, Dunnage, DunnageDocument, ProductDunnage, UserDocument } from "../models";
+import { Department, DepartmentDocument, Dunnage, DunnageDocument, ProductDunnage, UserDocument, Event } from "../models";
 import { Stock, StockDocument } from "../models/stock";
+import { ModelType } from "../enums/modelType";
+import { CrudType } from "../enums/crudType";
 import { check, validationResult } from "express-validator";
 import { CycleCheckList } from "../type/CycleCheckList";
 import { ForecastItem } from "../type/Forecast";
@@ -156,6 +158,22 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                 await dunnage.save();
             }
         }
+
+        const event = new Event({
+            plantId: plant.plantId,
+            eventDate: new Date().toDateString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+            userId: user._id.toString(),
+            operationType: CrudType.CREATE,
+            modelType: ModelType.CYCLECHECK,
+            userName: user.name,
+            userEmailAddress: user.email,
+            itemId: new Date().toDateString(),
+            itemName: 'Cycle Check',
+        });
+
+        event.save();
+
     } catch (err) {
         return res.status(500).json(err);
     } finally {

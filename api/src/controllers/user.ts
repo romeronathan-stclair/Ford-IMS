@@ -1,10 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { check, validationResult } from "express-validator";
 import passport from "passport";
-import { User, UserDocument, Invite } from "../models";
+import { User, UserDocument, Invite, Event } from "../models";
 import passwordSchema from "../utils/passwordValidator";
 import bcrypt from "bcrypt";
 import { ModelType } from "../enums/modelType";
+import { CrudType } from "../enums/crudType";
 import { ImageRequest } from "../type/imageRequest";
 import env from "../utils/env";
 import { getPage, getPageSize } from "../utils/pagination";
@@ -183,11 +184,24 @@ export const updateUser = async (req: Request, res: Response) => {
 
     user.name = name || user.name;
     user.email = email || user.email;
+    const plantId = user.plants[0].plantId;
+    const departmentId = user.plants[0].departments[0];
 
-
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.USER,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: user._id.valueOf()
+    });
 
     try {
         await user.save();
+        await event.save();
         res.json(user);
     } catch (err) {
         return res.status(500).json({ err });

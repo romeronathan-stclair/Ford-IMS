@@ -60,7 +60,7 @@ export const createPlant = async (
         await newPlant.save();
 
         const event: EventDocument = new Event({
-            itemType: ModelType.PLANT,
+            modelType: ModelType.PLANT,
             plantId: newPlant._id.valueOf(),
             userId: user._id.valueOf(),
             operationType: CrudType.CREATE,
@@ -68,6 +68,8 @@ export const createPlant = async (
             itemId: newPlant._id.valueOf(),
             userEmailAddress: user.email,
             eventDate: new Date().toDateString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+            itemName: newPlant.plantName,
         }) as EventDocument;
 
         eventList.push(event);
@@ -103,13 +105,16 @@ export const createPlant = async (
 
                 const event: EventDocument = new Event({
                     eventDate: new Date().toDateString(),
+                    eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
                     userId: user._id.valueOf(),
                     operationType: CrudType.CREATE,
-                    itemType: ModelType.DEPARTMENT,
+                    modelType: ModelType.DEPARTMENT,
                     userName: user.name,
                     plantId: newPlant._id.valueOf(),
                     userEmailAddress: user.email,
                     itemId: newDepartment._id.valueOf(),
+                    itemName: newDepartment.departmentName,
+                    departmentId: newDepartment._id.valueOf(),
                 }) as EventDocument;
 
                 eventList.push(event);
@@ -313,13 +318,15 @@ export const updatePlant = async (req: Request, res: Response) => {
     plant.plantLocation = req.body.plantLocation;
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
-        itemType: ModelType.PLANT,
+        modelType: ModelType.PLANT,
         userName: user.name,
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
+        itemName: plant.plantName,
     }) as EventDocument;
 
     console.log("HERE");
@@ -356,13 +363,15 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
-        itemType: ModelType.PLANT,
+        modelType: ModelType.PLANT,
         userName: user.name,
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
+        itemName: plant.plantName,
     }) as EventDocument;
 
     try {

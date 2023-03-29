@@ -123,4 +123,8 @@ export class ProductListComponent {
     this.loadData();
   }
 
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/product']);
+  }
+
 }

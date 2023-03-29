@@ -12,7 +12,9 @@ export const getEvents = async (req: Request, res: Response) => {
   const plantId = req.query.plantId;
   const departmentId = req.query.departmentId;
   const userId = req.query.userId;
-  const operation = req.query.operation;
+  const operationType = req.query.operationType;
+  const modelType = req.query.modelType;
+  const itemId = req.query.itemId;
   const date = req.query.eventDate;
   const query: any = {
     isDeleted: false,
@@ -33,9 +35,19 @@ export const getEvents = async (req: Request, res: Response) => {
     console.log(userId);
   }
 
-  if (operation) {
-    query["operationType"] = operation;
-    console.log(operation);
+  if (operationType) {
+    let word = operationType.toString();
+    query["operationType"] = word.charAt(0).toUpperCase() + word.slice(1)
+  }
+
+  if (modelType) {
+    let word = modelType.toString();
+    query["modelType"] = word.charAt(0).toUpperCase() + word.slice(1);
+  }
+
+  if (itemId) {
+    query["itemId"] = itemId;
+    console.log(itemId);
   }
 
   if (date) {
@@ -43,12 +55,23 @@ export const getEvents = async (req: Request, res: Response) => {
     console.log(date);
   }
 
+  const eventCount = await Event.countDocuments(query);
   const events = await Event.find(query).skip(page * pageSize).limit(pageSize).exec();
 
-  if (!events || events.length === 0) {
-    return res.status(500).json("No events found");
+  let response = {
+    events: events,
+    eventCount: eventCount,
   }
 
-  return res.json(events);
+  if (!events || events.length === 0) {
+    let response = {
+      events: [],
+      eventCount: 0,
+    }
+
+    return res.json(response);
+  }
+
+  return res.json(response);
 };
 

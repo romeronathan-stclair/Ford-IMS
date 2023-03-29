@@ -142,9 +142,24 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         }
     }
 
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.CREATE,
+        modelType: ModelType.PRODUCT,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: product._id.valueOf(),
+        itemName: product.name,
+    });
+
 
     try {
         product.save();
+        await event.save();
     }
     catch (err) {
         product.remove();
@@ -179,6 +194,7 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
         if (!isIncoming) {
             existingStock.isDeleted = true;
             await existingStock.save();
+            
         }
     }
 
@@ -344,6 +360,9 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
         return res.status(500).json("Department not found");
     }
 
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
     product.name = req.body.name || product.name;
     product.partNumber = req.body.partNumber || product.partNumber;
     product.dailyTarget = req.body.dailyTarget || product.dailyTarget;
@@ -390,8 +409,23 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             });
     }
 
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.PRODUCT,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: product._id.valueOf(),
+        itemName: product.name,
+    });
+
     try {
         await product.save();
+        await event.save();
         return res.status(200).json("Product updated successfully");
     } catch (err) {
         return res.status(500).json("Error updating Product: " + err);
@@ -416,9 +450,38 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
     //delete product
     product.isDeleted = true;
 
+    const departmentId = product.departmentId;
+
+    const department = (await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    })) as DepartmentDocument;
+
+    if (!department) {
+        return res.status(500).json("Department not found");
+    }
+
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.DELETE,
+        modelType: ModelType.PRODUCT,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: product._id.valueOf(),
+        itemName: product.name
+    });
+
     //save delete product
     try {
         await product.save();
+        await event.save();
         return res.status(200).json("Product deleted successfully");
     } catch (err) {
         return res.status(500).json("Error deleting Product: " + err);
