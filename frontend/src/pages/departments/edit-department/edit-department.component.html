@@ -11,7 +11,7 @@
             departmentForm.controls['departmentName'].dirty ||
             departmentForm.controls['departmentName'].touched
           ">
-                    <span *ngIf="departmentForm.controls['departmentName'].hasError('required')">departmentName is
+                    <span *ngIf="departmentForm.controls['departmentName'].hasError('required')">Department Name is
                         required</span>
                 </mat-error>
             </div>
@@ -21,10 +21,10 @@
 
 
                 <button type="button" [routerLink]="'/dashboard/departments/list'" class="submit-button">Cancel</button>
-                <button type="submit" class="submit-button">Submit</button>
+                <button type="submit" class="submit-button">Update</button>
             </div>
             <!-- <div class="button-holder">
-      
+
         <a routerLink="/account/reset-departmentLocation">Forgot departmentLocation?</a>
     </div> -->
 

@@ -53,10 +53,6 @@ export class DepartmentListComponent {
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
     this.loadData();
-
-
-
-
   }
 
   ngAfterViewInit() {
