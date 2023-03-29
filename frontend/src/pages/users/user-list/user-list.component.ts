@@ -65,7 +65,7 @@ export class UserListComponent {
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(query).subscribe({
         next: (data: any) => {
-          this.departments = [{ departmentName: "All Departments" }, ...data.body.departments];
+          this.departments = [{_id: '', departmentName: "All Departments" }, ...data.body.departments];
           resolve();
         },
         error: (error: any) => {
@@ -76,7 +76,7 @@ export class UserListComponent {
   }
 
   async loadUsers(query: string = '') {
-    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
+    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : '';
     let userQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&plantId=${this.authService.user.activePlantId}&departmentId=${selectedDepartmentId}`;
     if (query) {
       userQuery += query;
@@ -115,9 +115,10 @@ export class UserListComponent {
     if (this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments") {
       query += `&departmentId=${this.selectedDepartment._id}`;
     }
+
+    this.loadUsers(query);
   }
   multipleDepartments(user: any) {
-    console.log(user);
     let plant = user.plants.find((plant: any) => plant.plantId == this.authService.user.activePlantId);
     if (plant) {
       if (plant.departments.length == 1) {

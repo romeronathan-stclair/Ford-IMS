@@ -2,7 +2,7 @@
 <div class="table-header">
 
     <div *ngIf="departments.length > 0" class="dropdown">
-        <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
+        <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName"
             [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
     </div>
     <div class="search-bar">
