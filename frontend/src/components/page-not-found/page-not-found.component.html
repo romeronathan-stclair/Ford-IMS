@@ -1,12 +1,17 @@
-<div class="table-header">
-  <div></div>
-  <img src="/assets/ford-logo.png" />
+<div class="logout-page">
+  <div class="logout-page__content">
+      <div class="logout-page__content__header">
+          <img src="/assets/ford-logo.png" />
+      </div>
 
-</div>
-<div class="table-holder">
-  <h1>404</h1>
-  <h2>Page not found</h2>
-  <h3>Sorry, but the requested page is not found.</h3>
-  <button (click)="goBack()" class="general-button">Go Back</button>
+      <div class="logout-page__content__body">
+          <h2>404</h2>
+          <p>Sorry, but the requested page is not found.</p>
+          <a (click)="goBack()">Back</a>
+
+          <p>Redirecting to login in {{timer}} </p>
+      </div>
+
+  </div>
 </div>
 

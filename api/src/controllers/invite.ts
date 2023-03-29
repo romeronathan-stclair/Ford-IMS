@@ -1,4 +1,4 @@
-import { User, Invite, UserDocument, InviteDocument, Plant, Department } from "../models";
+import { User, Invite, UserDocument, InviteDocument, Plant, Department, Event } from "../models";
 import { check, validationResult } from "express-validator";
 import { Request, Response } from "express";
 import { createRandomToken } from "../utils/randomGenerator";
@@ -6,6 +6,8 @@ import { Charset } from "../enums/charset";
 import { addToEmailQueue } from "../config/bull";
 import { EmailEvent } from "../enums/email";
 import { CreateEmailProps, BullEmailQueueProps } from "../type/Email";
+import { ModelType } from "../enums/modelType";
+import { CrudType } from "../enums/crudType";
 
 export const sendInvite = async (req: Request, res: Response) => {
     await check("invites", "Invites are not valid").run(req);
@@ -104,9 +106,25 @@ export const sendInvite = async (req: Request, res: Response) => {
         addToEmailQueue(bullQueuePropsClient);
 
 
+        const event = new Event({
+            plantId: plants[0].plantId,
+            eventDate: new Date().toDateString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+            userId: user._id.toString(),
+            operationType: CrudType.UPDATE,
+            modelType: ModelType.USER,
+            userName: user.name,
+            userEmailAddress: user.email,
+            itemId: user._id.valueOf(),
+            itemName: 'Inviting New User',
+        });
+
+        console.log(event);
 
 
         try {
+            console.log("MADE IT HERE");
+            event.save();
             await newInviteLink.save();
 
         } catch (err) {

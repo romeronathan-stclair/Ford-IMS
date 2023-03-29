@@ -7,6 +7,7 @@ import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -37,7 +38,8 @@ export class UserListComponent {
     private spinnerService: SpinnerService,
     private plantService: PlantService,
     private authService: AuthService,
-    private departmentService: DepartmentService) {
+    private departmentService: DepartmentService,
+    private router: Router) {
     this.userForm = new FormGroup({
       name: new FormControl(''),
     });
@@ -95,6 +97,10 @@ export class UserListComponent {
         }
       });
     });
+  }
+
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/user']);
   }
 
   pageChanged(event: PageEvent) {

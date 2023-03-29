@@ -1,34 +1,22 @@
-@import "src/styles.scss";
-
-.table-header img {
-    width: 150px;
-}
-.table-holder {
-    background-color: $lightGrey !important;
-    width: 100%;
-    border: $border;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 90vh;
-}
-.table-header {
+.logout-page {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding-right: 50px;
-  padding-left: 50px;
+  height: 100vh;
+  text-align: center;
+}
+img {
+  width: 200px;
 }
 
-h1 {
-  font-size: 128px;
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
-h2 {
-  font-size: 56px;
-}
-
-h3 {
-  font-size: 24px;
+a:hover {
+  color: darkblue;
+  text-decoration: underline;
 }
