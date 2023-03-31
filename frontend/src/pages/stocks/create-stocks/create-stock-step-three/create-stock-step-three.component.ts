@@ -74,10 +74,6 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    //check if an image exists before moving on
-    if (!this.imageUrl) {
-      return
-    }
 
     this.spinnerService.show();
 
@@ -102,6 +98,12 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
 
     this.stockService.createStock(formData).subscribe({
       next: (response) => {
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Stock created successfully',
+        });
         this.spinnerService.hide();
         this.router.navigate(['/dashboard/stock/create/success']);
       },

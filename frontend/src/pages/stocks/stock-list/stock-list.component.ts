@@ -36,7 +36,7 @@ export class StockListComponent {
     private authService: AuthService,
     private router: Router) {
     this.stockForm = new FormGroup({
-      departmentName: new FormControl(''),
+      stockName: new FormControl(''),
     });
   }
 
@@ -127,9 +127,9 @@ export class StockListComponent {
 
     // if (nameControl) {
     //   const name = nameControl.value;
-
-    //   let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-
+    //   console.log(name);
+    //   let query = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&name=" + name + "&departmentId=" + this.selectedDepartment._id;
+    //   console.log(query);
     //   this.stockService.getStocks(query)
     //   .subscribe({
     //     next: (data) => {

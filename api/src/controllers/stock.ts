@@ -108,7 +108,7 @@ export const createStock = async (req: Request, res: Response) => {
             });
 
     } else {
-        stock.imageURL = env.app.apiUrl + "/images/defaultImage.png";
+        stock.imageURL = env.app.apiUrl + "/public/images/defaultImage.png";
     }
 
     const event = new Event({
@@ -124,8 +124,6 @@ export const createStock = async (req: Request, res: Response) => {
         itemId: stock._id.valueOf(),
         itemName: stock.name,
     });
-
-    console.log(event);
 
     try {
         stock.save();
@@ -155,7 +153,6 @@ export const getStock = async (req: Request, res: Response) => {
 
     if (departmentId) {
         query["departmentId"] = departmentId;
-        console.log(departmentId);
     }
 
     if (name) {
@@ -165,13 +162,13 @@ export const getStock = async (req: Request, res: Response) => {
 
     if (partNumber) {
         query["partNumber"] = partNumber;
-        console.log(partNumber);
     }
 
     if (stockId) {
         query["_id"] = new Types.ObjectId(stockId.toString());
     }
 
+    console.log(query);
     const stockCount = await Stock.countDocuments(query);
     const stocks = await Stock.find(query).skip(page * pageSize).limit(pageSize).exec();
 
