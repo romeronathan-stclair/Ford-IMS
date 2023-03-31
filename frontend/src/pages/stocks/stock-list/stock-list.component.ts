@@ -40,17 +40,17 @@ export class StockListComponent {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    this.loadDepartments();
-    this.loadData();
+    await this.loadDepartments();
+    await this.loadData();
   }
 
   ngAfterViewInit() {
 
   }
 
-  loadDepartments() {
+  async loadDepartments() {
     this.spinnerService.show();
 
     let departmentQuery = "?plantId=" + this.activePlantId;
@@ -72,7 +72,7 @@ export class StockListComponent {
 
   }
 
-  loadData() {
+  async loadData() {
     this.spinnerService.show();
 
     let departmentQuery = "?plantId=" + this.activePlantId;

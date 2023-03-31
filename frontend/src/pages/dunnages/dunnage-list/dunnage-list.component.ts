@@ -35,20 +35,21 @@ export class DunnageListComponent {
     private authService: AuthService,
     private router: Router) {
     this.dunnageForm = new FormGroup({
-      departmentName: new FormControl(''),
+      dunnageName: new FormControl(''),
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    this.loadDepartments();
+    await this.loadDepartments();
+    await this.loadData();
   }
 
   ngAfterViewInit() {
 
   }
 
-  loadDepartments() {
+  async loadDepartments() {
     this.spinnerService.show();
 
     let departmentQuery = "?plantId=" + this.activePlantId;
@@ -70,7 +71,7 @@ export class DunnageListComponent {
 
   }
 
-  loadData() {
+  async loadData() {
     this.spinnerService.show();
 
     let departmentQuery = "?plantId=" + this.activePlantId;
@@ -83,7 +84,7 @@ export class DunnageListComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-
+          this.length = data.body.departmentCount;
           console.log(departmentIds);
 
           let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
@@ -119,22 +120,22 @@ export class DunnageListComponent {
   }
 
   searchByName() {
-    const nameControl = this.dunnageForm.get('dunnageName');
+    // const nameControl = this.dunnageForm.get('dunnageName');
 
-    if (nameControl) {
-      const name = nameControl.value;
+    // if (nameControl) {
+    //   const name = nameControl.value;
 
-      let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    //   let query = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&name=" + name;
 
-      this.dunnageService.getDunnages(query)
-      .subscribe({
-        next: (data: any) => {
-          this.length = data.body.dunnageCount;
-          this.dunnages = data.body.dunnages;
-          this.dataSource = new MatTableDataSource(this.dunnages);
-        }
-      });
-    }
+    //   this.dunnageService.getDunnages(query)
+    //   .subscribe({
+    //     next: (data: any) => {
+    //       this.length = data.body.dunnageCount;
+    //       this.dunnages = data.body.dunnages;
+    //       this.dataSource = new MatTableDataSource(this.dunnages);
+    //     }
+    //   });
+    // }
   }
 
   changeDepartment($event: any) {
