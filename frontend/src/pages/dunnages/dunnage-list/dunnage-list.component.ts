@@ -87,7 +87,14 @@ export class DunnageListComponent {
           this.length = data.body.departmentCount;
           console.log(departmentIds);
 
-          let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
+          let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
+
+          if (this.selectedDepartment) {
+            dunnageQuery += `&departmentId=${this.selectedDepartment._id}`;
+          } else {
+            dunnageQuery += `&departmentId=${departmentIds[0]}`;
+          }
+
           this.dunnageService.getDunnages(dunnageQuery)
           .subscribe({
             next: (data: any) => {

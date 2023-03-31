@@ -88,7 +88,14 @@ export class StockListComponent {
 
           console.log(departmentIds);
 
-          let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
+          let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
+
+          if (this.selectedDepartment) {
+            stockQuery += `&departmentId=${this.selectedDepartment._id}`;
+          } else {
+            stockQuery += `&departmentId=${departmentIds[0]}`;
+          }
+
           console.log(stockQuery);
 
           this.stockService.getStocks(stockQuery)

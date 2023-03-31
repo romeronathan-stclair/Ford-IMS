@@ -20,6 +20,7 @@ export class EditStockImageComponent {
   public showOverlay: boolean = false;
   public isImageUploaded: boolean = false;
   stockId: string = '';
+  stock: any;
 
   @ViewChild('fileInput', { static: true }) fileInput!: ElementRef;
 
@@ -78,6 +79,7 @@ export class EditStockImageComponent {
       next: (data: any) => {
         this.spinnerService.hide();
         this.imageUrl = data.body.stocks[0].imageURL;
+        this.stock = data.body.stocks[0];
       },
       error: (error: any) => {
         this.spinnerService.hide();
@@ -99,15 +101,12 @@ export class EditStockImageComponent {
   }
 
   onSubmit() {
+    this.spinnerService.show();
+
     const formData = new FormData();
 
     formData.append('stockId', this.stockId);
-
-    if (this.file) {
-      formData.append('file', this.file);
-    }
-
-    this.spinnerService.show();
+    formData.append('file', this.file);
 
     this.stockService.editStock(formData)
     .subscribe({

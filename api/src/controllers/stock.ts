@@ -221,14 +221,17 @@ export const updateStock = async (req: Request, res: Response) => {
 
     stock.name = req.body.name || stock.name;
     stock.partNumber = req.body.partNumber || stock.partNumber;
-    stock.stockQtyPerTote = req.body.stockQtyPerTote || stock.stockQtyPerTote;
-    stock.totesPerSkid = req.body.totesPerSkid || stock.totesPerSkid;
+    stock.stockQtyPerTote = req.body.stockQtyPerTote;
+    stock.totesPerSkid = req.body.totesPerSkid;
+    stock.totalStockPerSkid = req.body.totalStockPerSkid;
     stock.lowStock = req.body.lowStock || stock.lowStock;
     stock.moderateStock = req.body.moderateStock || stock.moderateStock;
     stock.marketLocation = req.body.marketLocation || stock.marketLocation;
-    stock.roughStock = req.body.roughStock || stock.roughStock;
-    stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
+    stock.roughStock = req.body.roughStock;
+    stock.isSubAssembly = req.body.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
+
+    console.log(stock);
 
     if (req.files) {
         const image = req.files.file;
@@ -250,7 +253,7 @@ export const updateStock = async (req: Request, res: Response) => {
             .catch((err: any) => {
                 console.log(err);
 
-                return res.status(500).json("Error creating Stock");
+                return res.status(500).json("Error updating Stock");
             });
 
     }
@@ -272,6 +275,7 @@ export const updateStock = async (req: Request, res: Response) => {
 
     //save Updated Stock
     try {
+        await stock.save();
         await event.save();
         return res.status(200).json("Stock updated successfully");
     }

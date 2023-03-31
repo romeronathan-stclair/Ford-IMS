@@ -61,6 +61,7 @@ export class EditStockInfoComponent {
         next: (data: any) => {
           this.spinnerService.hide();
           if (data) {
+            console.log(data.body.stocks[0]);
             this.stockForm.patchValue({
               name: data.body.stocks[0].name,
               partNumber: data.body.stocks[0].partNumber,
@@ -69,6 +70,9 @@ export class EditStockInfoComponent {
               totalStockPerSkid: data.body.stocks[0].totalStockPerSkid,
               lowStock: data.body.stocks[0].lowStock,
             });
+
+            console.log(data.body.stocks[0].roughStock);
+            console.log(data.body.stocks[0].isSubAssembly);
 
             if (data.body.stocks[0].roughStock) {
               this.roughStockChecked = true;
@@ -80,7 +84,7 @@ export class EditStockInfoComponent {
               this.stockForm.controls['totesPerSkid'].setValidators(null);
               this.stockForm.get('roughStock')?.setValue(true);
               this.stockForm.get('subAssembly')?.setValue(false);
-            } else if (data.body.stocks[0].subAssembly) {
+            } else if (data.body.stocks[0].isSubAssembly) {
               this.stockForm.controls['stockQtyPerTote'].enable();
               this.stockForm.controls['totesPerSkid'].enable();
               this.stockForm.controls['stockQtyPerTote'].setValidators([Validators.required]);
@@ -156,13 +160,16 @@ export class EditStockInfoComponent {
 
       this.spinnerService.show();
 
-      let totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
+      let totalStock = 0;
       let moderateStock = 0;
 
       if (this.roughStockChecked === true) {
         moderateStock = this.stockForm.value.lowStock * 2;
+        this.stockForm.value.stockQtyPerTote = null;
+        this.stockForm.value.totesPerSkid = null;
       } else {
         moderateStock = this.stockForm.value.lowStock + 2;
+        totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
       }
 
       const stock = {
@@ -177,6 +184,8 @@ export class EditStockInfoComponent {
         isSubAssembly: this.subAssemblyChecked,
         stockId: this.stockId
       }
+
+      console.log(stock);
 
       this.stockService.editStock(stock)
       .subscribe({
