@@ -43,6 +43,7 @@ export class StockListComponent {
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
     this.loadDepartments();
+    this.loadData();
   }
 
   ngAfterViewInit() {
@@ -122,22 +123,22 @@ export class StockListComponent {
   }
 
   searchByName() {
-    const nameControl = this.stockForm.get('stockName');
+    // const nameControl = this.stockForm.get('stockName');
 
-    if (nameControl) {
-      const name = nameControl.value;
+    // if (nameControl) {
+    //   const name = nameControl.value;
 
-      let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    //   let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-      this.stockService.getStocks(query)
-      .subscribe({
-        next: (data) => {
-          this.length = data.body.stockCount;
-          this.stocks = data.body.stock;
-          this.dataSource = new MatTableDataSource(this.stocks);
-        }
-      })
-    }
+    //   this.stockService.getStocks(query)
+    //   .subscribe({
+    //     next: (data) => {
+    //       this.length = data.body.stockCount;
+    //       this.stocks = data.body.stock;
+    //       this.dataSource = new MatTableDataSource(this.stocks);
+    //     }
+    //   })
+    // }
   }
 
   changeDepartment($event: any) {

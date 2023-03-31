@@ -159,7 +159,7 @@ export const getStock = async (req: Request, res: Response) => {
     }
 
     if (name) {
-        query["name"] = name;
+        query["name"] = { $regex: name, $options: "i" };
         console.log(name);
     }
 
