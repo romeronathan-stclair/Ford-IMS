@@ -43,33 +43,10 @@ export class StockListComponent {
 
   async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    await this.loadDepartments();
     await this.loadData();
   }
 
   ngAfterViewInit() {
-
-  }
-
-  async loadDepartments() {
-    this.spinnerService.show();
-
-    let departmentQuery = "?plantId=" + this.activePlantId;
-
-    let departmentIds: string[] = [];
-    this.departmentService.getDepartments(departmentQuery)
-      .subscribe({
-        next: (data: any) => {
-          data.body.departments.forEach((department: any) => {
-            departmentIds.push(department._id);
-          });
-          this.departments = data.body.departments;
-          this.spinnerService.hide();
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      });
 
   }
 
@@ -86,16 +63,11 @@ export class StockListComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
+          this.departments.unshift({ _id: '', departmentName: 'All Departments' });
 
           console.log(departmentIds);
 
           let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
-
-          if (this.selectedDepartment) {
-            stockQuery += `&departmentId=${this.selectedDepartment._id}`;
-          } else {
-            stockQuery += `&departmentId=${departmentIds[0]}`;
-          }
 
           console.log(stockQuery);
 

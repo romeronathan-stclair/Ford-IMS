@@ -66,6 +66,7 @@ export class ProductListComponent {
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
           this.departments = data.body.departments;
+          this.departments.unshift({ _id: '', departmentName: 'All Departments' });
           resolve();
         },
         error: (error: any) => {
