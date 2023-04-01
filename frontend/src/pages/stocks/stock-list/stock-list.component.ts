@@ -13,7 +13,8 @@ import { StockService } from 'src/services/stock.service';
 @Component({
   selector: 'app-stock-list',
   templateUrl: './stock-list.component.html',
-  styleUrls: ['./stock-list.component.scss']
+  styleUrls: ['./stock-list.component.scss'],
+  providers: [StockService, ConfirmationService]
 })
 export class StockListComponent {
   currentPage = 0;
@@ -174,6 +175,40 @@ export class StockListComponent {
         }
       });
     }
+  }
+
+  deleteStock(stockId: any) {
+    this.confirmationService.confirm({
+
+      message: 'Are you sure that you want to delete this stock?',
+      accept: () => {
+        this.spinnerService.show();
+
+        this.stockService.deleteStock(stockId)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Stock deleted successfully'
+           });
+            this.loadData();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to delete stock'
+           });
+          }
+        });
+      },
+      reject: () => {
+        //reject action
+      }
+    });
   }
 
 

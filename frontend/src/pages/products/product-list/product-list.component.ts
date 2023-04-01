@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
+  providers: [ProductService, ConfirmationService]
 })
 export class ProductListComponent {
   currentPage = 0;
@@ -98,8 +99,6 @@ export class ProductListComponent {
     });
   }
 
-
-
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
@@ -121,6 +120,40 @@ export class ProductListComponent {
 
   changeDepartment($event: any) {
     this.loadData();
+  }
+
+  deleteProduct(productId: any) {
+    this.confirmationService.confirm({
+
+      message: 'Are you sure that you want to delete this product?',
+      accept: () => {
+        this.spinnerService.show();
+
+        this.productService.deleteProduct(productId)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Product deleted successfully'
+            });
+            this.loadData();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error deleting product'
+            });
+          }
+        });
+      },
+      reject: () => {
+        //reject action
+      }
+    });
   }
 
   viewEventLog() {

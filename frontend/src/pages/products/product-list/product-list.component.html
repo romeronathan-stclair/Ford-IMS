@@ -29,6 +29,7 @@
                 <button [routerLink]="'/dashboard/products/edit/information/' + product._id " mat-mini-fab
                     color="primary"><mat-icon>edit</mat-icon></button>
                 <button mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+                <button mat-mini-fab color="warn" (click)="deleteProduct(product._id)"><mat-icon>delete</mat-icon></button>
             </mat-card-actions>
         </mat-card>
     </div>
@@ -41,3 +42,13 @@
     </mat-paginator>
     <button (click)="viewEventLog()" class="general-button">View Event Log</button>
 </div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+      <h3></h3>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+      <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>

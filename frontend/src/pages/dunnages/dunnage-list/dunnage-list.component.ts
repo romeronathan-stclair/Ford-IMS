@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-dunnage-list',
   templateUrl: './dunnage-list.component.html',
-  styleUrls: ['./dunnage-list.component.scss']
+  styleUrls: ['./dunnage-list.component.scss'],
+  providers: [DunnageService, ConfirmationService]
 })
 export class DunnageListComponent {
   currentPage = 0;
@@ -172,6 +173,40 @@ export class DunnageListComponent {
         }
       });
     }
+  }
+
+  deleteDunnage(dunnageId: any) {
+    this.confirmationService.confirm({
+
+      message: 'Are you sure that you want to delete this product?',
+      accept: () => {
+        this.spinnerService.show();
+
+        this.dunnageService.deleteDunnage(dunnageId)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity:'success',
+              summary: 'Success',
+              detail: 'Dunnage deleted successfully'
+            });
+            this.loadData();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity:'error',
+              summary: 'Error',
+              detail: 'Dunnage could not be deleted'
+            });
+          }
+        })
+      },
+      reject: () => {
+        //reject action
+      }
+    });
   }
 
   viewEventLog() {

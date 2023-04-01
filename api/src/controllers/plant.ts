@@ -44,6 +44,7 @@ export const createPlant = async (
 
     const plant: PlantDocument = (await Plant.findOne({
         plantName: req.body.plantName,
+        isDeleted: false,
     })) as PlantDocument;
     const user: UserDocument = req.user as UserDocument;
 
