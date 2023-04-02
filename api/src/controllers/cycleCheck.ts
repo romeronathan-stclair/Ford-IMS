@@ -24,7 +24,21 @@ export const getCycleCheck = async (req: Request, res: Response) => {
         return department;
     });
 
+    const validDepartmentIds = [];
+
     for (const departmentId of departmentIds) {
+
+        const department: DepartmentDocument = (await Department.findOne({
+            _id: departmentId,
+            isDeleted: false
+        })) as DepartmentDocument;
+
+        if (department && !department.isDeleted) {
+            validDepartmentIds.push(departmentId);
+        }
+    }
+
+    for (const departmentId of validDepartmentIds) {
 
         const department: DepartmentDocument = (await Department.findOne({
             _id: departmentId,

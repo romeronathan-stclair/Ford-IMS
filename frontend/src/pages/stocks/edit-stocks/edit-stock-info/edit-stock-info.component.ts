@@ -7,6 +7,7 @@ import { StockService } from 'src/services/stock.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-stock-info',
@@ -29,7 +30,9 @@ export class EditStockInfoComponent {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private authService: AuthService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private location: Location
+    ) {
         this.stockForm = this.formBuilder.group({
           name: new FormControl(''),
           partNumber: new FormControl(''),
@@ -213,6 +216,10 @@ export class EditStockInfoComponent {
         }
       });
 
+    }
+
+    backButton() {
+      this.location.back();
     }
 
 }

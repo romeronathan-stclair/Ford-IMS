@@ -26,7 +26,21 @@ export const getSubAssembly = async (req: Request, res: Response) => {
         return department;
     });
 
+    const validDepartmentIds = [];
+
     for (const departmentId of departmentIds) {
+
+        const department: DepartmentDocument = (await Department.findOne({
+            _id: departmentId,
+            isDeleted: false
+        })) as DepartmentDocument;
+
+        if (department && !department.isDeleted) {
+            validDepartmentIds.push(departmentId);
+        }
+    }
+
+    for (const departmentId of validDepartmentIds) {
         const department: DepartmentDocument = (await Department.findOne({
             _id: departmentId,
             isDeleted: false
@@ -131,9 +145,23 @@ export const submitSubAssembly = async (req: Request, res: Response) => {
             }
         }
 
+        const validDepartmentIds = [];
+
+        for (const departmentId of plant.departments) {
+
+            const department: DepartmentDocument = (await Department.findOne({
+                _id: departmentId,
+                isDeleted: false
+            })) as DepartmentDocument;
+
+            if (department && !department.isDeleted) {
+                validDepartmentIds.push(departmentId);
+            }
+        }
+
         const event = new Event({
             plantId: plant.plantId,
-            departmentId: plant.departments[0],
+            departmentId: JSON.stringify(validDepartmentIds),
             eventDate: new Date().toDateString(),
             eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
             userId: user._id.toString(),

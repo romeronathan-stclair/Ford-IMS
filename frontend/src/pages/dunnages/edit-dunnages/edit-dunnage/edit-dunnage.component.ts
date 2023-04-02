@@ -7,6 +7,7 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-dunnage',
@@ -31,7 +32,9 @@ export class EditDunnageComponent {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private authService: AuthService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private location: Location
+    ) {
         this.dunnageForm = this.formBuilder.group({
           name: new FormControl(''),
           skidQuantity: new FormControl(''),
@@ -170,6 +173,10 @@ export class EditDunnageComponent {
       });
 
 
+    }
+
+    backButton() {
+      this.location.back();
     }
 
 }
