@@ -4,6 +4,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Department } from 'src/models/department';
+import { Stock } from 'src/models/stock';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
@@ -22,12 +24,12 @@ export class StockListComponent {
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
   stockForm: FormGroup;
-  selectedDepartment: any;
-  departments: any[] = [];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  stocks: any[] = [];
+  selectedDepartment: Department = {} as Department;
+  departments: Department[] = [];
+  dataSource: MatTableDataSource<Stock> = new MatTableDataSource();
+  stocks: Stock[] = [];
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -63,7 +65,7 @@ export class StockListComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-          this.departments.unshift({ _id: '', departmentName: 'All Departments' });
+          this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
 
           console.log(departmentIds);
 

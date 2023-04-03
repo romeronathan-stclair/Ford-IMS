@@ -10,6 +10,9 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from 'src/services/event.service';
 import { Location } from '@angular/common';
+import { Event } from 'src/models/event';
+import { Plant } from 'src/models/plant';
+import { Department } from 'src/models/department';
 
 
 @Component({
@@ -21,15 +24,15 @@ export class EventLogComponent {
   currentPage = 0;
   length = 100;
   pageSize = 10;
-  activePlantId: any;
+  activePlantId: string = '';
   modelType = '';
   operationType = '';
   plant = '';
   department = '';
   date = '';
-  plants: any[] = [];
+  plants: Plant[] = [];
   selectedPlant: any = '';
-  departments: any[] = [];
+  departments: Department[] = [];
   selectedDepartment: any = '';
   operations = [
       { operationName: 'All', operationValue: ''},
@@ -38,8 +41,7 @@ export class EventLogComponent {
       { operationName: 'Delete', operationValue: 'Delete'}
     ];
   selectedOperation: any = '';
-  selectedDate: any;
-  events: any;
+  events: Event[] = [];
 
   constructor(
     private authService: AuthService,
@@ -101,7 +103,7 @@ export class EventLogComponent {
           plantIds.push(plant._id);
         });
         this.plants = data.body.plants;
-        this.plants.unshift({_id: '', plantName: 'All Plants' });
+        this.plants.unshift({_id: '', plantName: 'All Plants', plantId: '', departments: [] });
         console.log(this.plants);
       },
       error: (error: any) => {
@@ -122,7 +124,7 @@ export class EventLogComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-          this.departments.unshift({_id: '', departmentName: 'All Departments' });
+          this.departments.unshift({_id: '', departmentName: 'All Departments', plantId : '', isDeleted: false });
         },
         error: (error: any) => {
           console.log(error);

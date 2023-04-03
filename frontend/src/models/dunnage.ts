@@ -1,4 +1,5 @@
 export interface Dunnage {
+  _id?: string;
   departmentId: string;
   name: string;
   skidQuantity: number;

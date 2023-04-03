@@ -8,6 +8,8 @@ import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ProductService } from 'src/services/product.service';
 import { Router } from '@angular/router';
+import { Product } from 'src/models/product';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-product-list',
@@ -21,12 +23,12 @@ export class ProductListComponent {
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string  = '';
   productForm: FormGroup;
   selectedDepartment: any;
-  departments: any[] = [];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  products: any[] = [];
+  departments: Department[] = [];
+  dataSource: MatTableDataSource<Product> = new MatTableDataSource();
+  products: Product[] = [];
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -43,7 +45,7 @@ export class ProductListComponent {
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
     console.log(this.activePlantId);
-    if (this.activePlantId != 0) {
+    if (this.activePlantId != '') {
       this.loadData();
     }
   }
@@ -66,7 +68,7 @@ export class ProductListComponent {
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
           this.departments = data.body.departments;
-          this.departments.unshift({ _id: '', departmentName: 'All Departments' });
+          this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
           resolve();
         },
         error: (error: any) => {

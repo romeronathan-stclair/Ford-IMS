@@ -8,6 +8,8 @@ import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { Router } from '@angular/router';
+import { Department } from 'src/models/department';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-user-list',
@@ -20,12 +22,12 @@ export class UserListComponent {
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
-  selectedDepartment: any;
+  activePlantId: string = '';
+  selectedDepartment: Department = {} as Department;
   userForm: FormGroup;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   departments: any[] = [];
-  users: any[] = [];
+  users: User[] = [];
   displayedColumns: string[] = [
     "name",
     "departments",
@@ -56,12 +58,12 @@ export class UserListComponent {
   async loadData() {
     this.spinnerService.show();
     await this.loadDepartments();
+    this.selectedDepartment = this.departments[0];
     await this.loadUsers();
     this.spinnerService.hide();
   }
 
   async loadDepartments() {
-    let userId = this.authService.user._id;
     let query = "?plantId=" + this.authService.user.activePlantId;
 
     return new Promise<void>((resolve, reject) => {

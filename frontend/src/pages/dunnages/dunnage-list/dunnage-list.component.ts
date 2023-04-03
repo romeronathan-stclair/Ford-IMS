@@ -8,6 +8,8 @@ import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { DunnageService } from 'src/services/dunnage.service';
 import { Router } from '@angular/router';
+import { Dunnage } from 'src/models/dunnage';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-dunnage-list',
@@ -21,11 +23,11 @@ export class DunnageListComponent {
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
   dunnageForm: FormGroup;
-  selectedDepartment: any;
-  departments: any[] = [];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
+  selectedDepartment: Department = {} as Department;
+  departments: Department[] = [];
+  dataSource: MatTableDataSource<Dunnage> = new MatTableDataSource();
   dunnages: any[] = [];
 
   constructor(private confirmationService: ConfirmationService,
@@ -62,7 +64,7 @@ export class DunnageListComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-          this.departments.unshift({ _id: "", departmentName: "All Departments" });
+          this.departments.unshift({ _id: "", departmentName: "All Departments", plantId: "", isDeleted: false});
           console.log(departmentIds);
 
           let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;

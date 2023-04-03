@@ -7,6 +7,8 @@ import { AuthService } from 'src/services/auth.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { EventService } from 'src/services/event.service';
 import { Router } from '@angular/router';
+import { Event } from 'src/models/event';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-cycle-check-list',
@@ -19,9 +21,9 @@ export class CycleCheckListComponent {
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
-  departments: any[] = [];
-  events: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  events: Event[] = [];
 
   constructor(
     private confirmationService: ConfirmationService,

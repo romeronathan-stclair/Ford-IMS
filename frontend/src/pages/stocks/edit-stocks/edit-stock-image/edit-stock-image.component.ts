@@ -7,6 +7,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { DepartmentService } from 'src/services/department.service';
 import { AuthService } from 'src/services/auth.service';
+import { Stock } from 'src/models/stock';
 
 @Component({
   selector: 'app-edit-stock-image',
@@ -20,7 +21,7 @@ export class EditStockImageComponent {
   public showOverlay: boolean = false;
   public isImageUploaded: boolean = false;
   stockId: string = '';
-  stock: any;
+  stock: Stock = {} as Stock;
 
   @ViewChild('fileInput', { static: true }) fileInput!: ElementRef;
 

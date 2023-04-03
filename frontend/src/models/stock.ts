@@ -1,4 +1,5 @@
 export interface Stock {
+  _id?: string;
   departmentId: string;
   name: string;
   partNumber: string;

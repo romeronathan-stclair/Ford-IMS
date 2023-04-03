@@ -63,7 +63,7 @@
           <button type="button" class="submit-button change-image-button" (click)="updateImage()">Update Image</button>
 
             <div class="button-holders">
-                <button type="button" (click)="backButton()" class="submit-button">Cancel</button>
+                <button type="button" [routerLink]="'/dashboard/dunnage/list'" class="submit-button">Cancel</button>
                 <button type="submit" class="submit-button">Update</button>
             </div>
 

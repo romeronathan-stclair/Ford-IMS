@@ -4,6 +4,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Department } from 'src/models/department';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
@@ -20,10 +21,10 @@ export class DepartmentListComponent {
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
   departmentForm: FormGroup;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  departments: any[] = [];
+  departments: Department[] = [];
   displayedColumns: string[] = [
     "name",
 

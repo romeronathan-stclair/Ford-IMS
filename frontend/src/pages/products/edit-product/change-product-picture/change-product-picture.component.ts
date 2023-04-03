@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Product } from 'src/models/product';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { ProductService } from 'src/services/product.service';
@@ -16,10 +17,10 @@ import { StockService } from 'src/services/stock.service';
 })
 export class ChangeProductPictureComponent {
   public displayValidationErrors: boolean = false;
-  product: any;
+  product: Product = {} as Product;
   public imageUrl: string = '';
   file: any;
-  productId: any;
+  productId: string = '';
   public showOverlay: boolean = false;
   public isImageUploaded: boolean = false;
 

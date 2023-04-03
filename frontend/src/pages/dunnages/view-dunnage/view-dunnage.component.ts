@@ -5,6 +5,8 @@ import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
+import { Dunnage } from 'src/models/dunnage';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-view-dunnage',
@@ -13,10 +15,10 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class ViewDunnageComponent {
   dunnageId: string = '';
-  dunnage: any;
+  dunnage: Dunnage = {} as Dunnage;
   departmentId: string = '';
   departmentName: string = '';
-  departments: any[] = [];
+  departments: Department[] = [];
 
   constructor(
     private confirmationService: ConfirmationService,

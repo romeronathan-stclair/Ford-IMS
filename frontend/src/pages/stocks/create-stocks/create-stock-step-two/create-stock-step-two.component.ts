@@ -7,6 +7,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/services/department.service';
 import { AuthService } from 'src/services/auth.service';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-create-stock-step-two',
@@ -18,9 +19,9 @@ export class CreateStockStepTwoComponent {
   public displayValidationErrors: boolean = false;
   stockForm: FormGroup;
   request: any;
-  activePlantId: any;
-  departments: any[] = [];
-  selectedDepartment: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
 
   constructor(
     private router: Router,

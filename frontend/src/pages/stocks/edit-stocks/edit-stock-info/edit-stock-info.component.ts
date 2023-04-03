@@ -19,7 +19,7 @@ export class EditStockInfoComponent {
   stockForm: FormGroup;
   roughStockChecked = false;
   subAssemblyChecked = false;
-  activePlantId: any;
+  activePlantId: string  = '';
   stockId: string = '';
 
   constructor(
@@ -216,10 +216,6 @@ export class EditStockInfoComponent {
         }
       });
 
-    }
-
-    backButton() {
-      this.location.back();
     }
 
 }

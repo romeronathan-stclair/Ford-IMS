@@ -7,6 +7,8 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { Department } from 'src/models/department';
+import { Stock } from 'src/models/stock';
 
 @Component({
   selector: 'app-edit-stock-department',
@@ -16,12 +18,12 @@ import { DepartmentService } from 'src/services/department.service';
 export class EditStockDepartmentComponent {
   public displayValidationErrors: boolean = false;
   stockForm: FormGroup;
-  activePlantId: any;
-  departments: any[] = [];
-  selectedDepartment: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
   stockId: string = '';
   departmentId: string = '';
-  stock: any;
+  stock: Stock = {} as Stock;
 
   constructor(
     private stockService: StockService,

@@ -8,6 +8,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { Location } from '@angular/common';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-edit-dunnage',
@@ -17,9 +18,9 @@ import { Location } from '@angular/common';
 export class EditDunnageComponent {
   public displayValidationErrors: boolean = false;
   dunnageForm: FormGroup;
-  activePlantId: any;
-  departments: any[] = [];
-  selectedDepartment: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
   dunnageId: string = '';
   departmentId: string = '';
 
@@ -173,10 +174,6 @@ export class EditDunnageComponent {
       });
 
 
-    }
-
-    backButton() {
-      this.location.back();
     }
 
 }

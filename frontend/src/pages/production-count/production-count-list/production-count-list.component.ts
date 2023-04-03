@@ -6,6 +6,8 @@ import { AuthService } from 'src/services/auth.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { EventService } from 'src/services/event.service';
 import { Router } from '@angular/router';
+import { Department } from 'src/models/department';
+import { Event } from 'src/models/event';
 
 @Component({
   selector: 'app-production-count-list',
@@ -18,9 +20,9 @@ export class ProductionCountListComponent {
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
-  departments: any[] = [];
-  events: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  events: Event[] = [];
 
   constructor(
     private confirmationService: ConfirmationService,

@@ -11,6 +11,7 @@ import { ProductService } from 'src/services/product.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { DepartmentCount, ProductionCountRequest } from 'src/models/requests/productionCountRequest';
+import { Department } from 'src/models/department';
 @Component({
   selector: 'app-production-count-step-one',
   templateUrl: './production-count-step-one.component.html',
@@ -20,10 +21,10 @@ export class ProductionCountStepOneComponent {
   public displayValidationErrors: boolean = false;
 
   roles: any[] = [];
-  plants: any[] = [];
-  selectedDepartment: any;
-  departments: any[] = [];
-  products: any[] = [];
+  plants: Plant[] = [];
+  selectedDepartment: Department = {} as Department;
+  departments: Department[] = [];
+  products: Product[] = [];
   selectedProducts: Product[] = [];
   request: ProductionCountRequest;
   constructor(
