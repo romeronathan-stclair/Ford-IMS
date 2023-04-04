@@ -7,6 +7,8 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { Department } from 'src/models/department';
+import { Stock } from 'src/models/stock';
 
 @Component({
   selector: 'app-edit-stock-department',
@@ -16,11 +18,12 @@ import { DepartmentService } from 'src/services/department.service';
 export class EditStockDepartmentComponent {
   public displayValidationErrors: boolean = false;
   stockForm: FormGroup;
-  activePlantId: any;
-  departments: any[] = [];
-  selectedDepartment: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
   stockId: string = '';
   departmentId: string = '';
+  stock: Stock = {} as Stock;
 
   constructor(
     private stockService: StockService,
@@ -44,8 +47,9 @@ export class EditStockDepartmentComponent {
       await this.loadDepartments();
       this.route.params.subscribe(params => {
         this.stockId = params['id'];
-        this.loadStockData();
       });
+      await this.loadStockData();
+      console.log(this.selectedDepartment._id)
     }
 
     async loadDepartments() {
@@ -64,7 +68,7 @@ export class EditStockDepartmentComponent {
 
     }
 
-    loadStockData() {
+    async loadStockData() {
       this.spinnerService.show();
 
       let query = "?stockId=" + this.stockId;
@@ -79,6 +83,8 @@ export class EditStockDepartmentComponent {
             });
 
             this.departmentId = data.body.stocks[0].departmentId;
+            this.stock = data.body.stocks[0];
+            console.log(this.stock);
 
             for (let i = 0; i < this.departments.length; i++) {
               if (this.departments[i]._id === this.departmentId) {
@@ -116,10 +122,21 @@ export class EditStockDepartmentComponent {
       this.spinnerService.show();
 
       const stock = {
+        name: this.stock.name,
+        partNumber: this.stock.partNumber,
+        stockQtyPerTote: this.stock.stockQtyPerTote,
+        totesPerSkid: this.stock.totesPerSkid,
+        totalStockPerSkid: this.stock.totalStockPerSkid,
+        lowStock: this.stock.lowStock,
+        moderateStock: this.stock.moderateStock,
+        roughStock: this.stock.roughStock,
+        isSubAssembly: this.stock.isSubAssembly,
         marketLocation: this.stockForm.value.marketLocation,
-        departmentId: this.selectedDepartment._id,
-        stockId: this.stockId
+        departmentId: this.departmentId,
+        stockId: this.stockId,
       }
+
+      console.log(stock);
 
       this.stockService.editStock(stock)
       .subscribe({

@@ -48,8 +48,12 @@ export class DepartmentService {
     }
 
 
-
-
-
+    deleteDepartment(department: any): Observable<any> {
+        return this.http.delete(`${this.endPoint}/department/${department}`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
 
 }

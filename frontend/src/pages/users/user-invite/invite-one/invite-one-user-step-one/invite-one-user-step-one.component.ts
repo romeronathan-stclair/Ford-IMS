@@ -46,7 +46,12 @@ export class InviteOneUserStepOneComponent {
       );
       this.roles = [
         'Admin',
-        'User'
+        'Plant Manager',
+        'Team Manager',
+        'Senior Process Coach',
+        'Process Coach',
+        'Cycle Checker',
+        'Employee'
       ];
 
     }
@@ -59,16 +64,28 @@ export class InviteOneUserStepOneComponent {
 
   }
   onSubmit() {
+    this.spinnerService.show();
     if (!this.userForm.valid) {
       this.displayValidationErrors = true;
       this.spinnerService.hide();
       return;
     }
-    this.spinnerService.show();
+
+    if (this.userForm.value.adminType === '') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please select a role'
+      });
+      this.spinnerService.hide();
+      return;
+    }
 
     this.request.fullName = this.userForm.value.fullName;
     this.request.email = this.userForm.value.email;
     this.request.adminType = this.userForm.value.adminType;
+
+    console.log(this.userForm.value.adminType);
 
     this.spinnerService.hide();
     this.sharedService.setData(this.request).then(() => {

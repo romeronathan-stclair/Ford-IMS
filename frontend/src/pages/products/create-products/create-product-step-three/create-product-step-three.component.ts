@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UsePerDialogComponent } from 'src/components/use-per-dialog/use-per-dialog.component';
+import { Department } from 'src/models/department';
+import { Stock } from 'src/models/stock';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { ProductService } from 'src/services/product.service';
@@ -21,11 +23,11 @@ export class CreateProductStepThreeComponent {
   request: any;
   roughproductChecked = false;
   subAssemblyChecked = false;
-  departments: any[] = [];
-  selectedDepartment: any;
-  activePlantId: any;
-  stocks: any[] = [];
-  targetStocks: any[] = [];
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
+  activePlantId: string = '';
+  stocks: Stock[] = [];
+  targetStocks: Stock[] = [];
 
   constructor(
     private productService: ProductService,

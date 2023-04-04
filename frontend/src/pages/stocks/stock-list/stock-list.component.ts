@@ -4,6 +4,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Department } from 'src/models/department';
+import { Stock } from 'src/models/stock';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
@@ -13,7 +15,8 @@ import { StockService } from 'src/services/stock.service';
 @Component({
   selector: 'app-stock-list',
   templateUrl: './stock-list.component.html',
-  styleUrls: ['./stock-list.component.scss']
+  styleUrls: ['./stock-list.component.scss'],
+  providers: [StockService, ConfirmationService]
 })
 export class StockListComponent {
   currentPage = 0;
@@ -21,12 +24,12 @@ export class StockListComponent {
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
   stockForm: FormGroup;
-  selectedDepartment: any;
-  departments: any[] = [];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  stocks: any[] = [];
+  selectedDepartment: Department = {} as Department;
+  departments: Department[] = [];
+  dataSource: MatTableDataSource<Stock> = new MatTableDataSource();
+  stocks: Stock[] = [];
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -36,20 +39,20 @@ export class StockListComponent {
     private authService: AuthService,
     private router: Router) {
     this.stockForm = new FormGroup({
-      departmentName: new FormControl(''),
+      stockName: new FormControl(''),
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    this.loadDepartments();
+    await this.loadData();
   }
 
   ngAfterViewInit() {
 
   }
 
-  loadDepartments() {
+  async loadData() {
     this.spinnerService.show();
 
     let departmentQuery = "?plantId=" + this.activePlantId;
@@ -62,32 +65,12 @@ export class StockListComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-          this.spinnerService.hide();
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      });
-
-  }
-
-  loadData() {
-    this.spinnerService.show();
-
-    let departmentQuery = "?plantId=" + this.activePlantId;
-
-    let departmentIds: string[] = [];
-    this.departmentService.getDepartments(departmentQuery)
-      .subscribe({
-        next: (data: any) => {
-          data.body.departments.forEach((department: any) => {
-            departmentIds.push(department._id);
-          });
-          this.departments = data.body.departments;
+          this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
 
           console.log(departmentIds);
 
-          let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
+          let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
+
           console.log(stockQuery);
 
           this.stockService.getStocks(stockQuery)
@@ -122,22 +105,22 @@ export class StockListComponent {
   }
 
   searchByName() {
-    const nameControl = this.stockForm.get('stockName');
+    // const nameControl = this.stockForm.get('stockName');
 
-    if (nameControl) {
-      const name = nameControl.value;
-
-      let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-
-      this.stockService.getStocks(query)
-      .subscribe({
-        next: (data) => {
-          this.length = data.body.stockCount;
-          this.stocks = data.body.stock;
-          this.dataSource = new MatTableDataSource(this.stocks);
-        }
-      })
-    }
+    // if (nameControl) {
+    //   const name = nameControl.value;
+    //   console.log(name);
+    //   let query = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&name=" + name + "&departmentId=" + this.selectedDepartment._id;
+    //   console.log(query);
+    //   this.stockService.getStocks(query)
+    //   .subscribe({
+    //     next: (data) => {
+    //       this.length = data.body.stockCount;
+    //       this.stocks = data.body.stock;
+    //       this.dataSource = new MatTableDataSource(this.stocks);
+    //     }
+    //   })
+    // }
   }
 
   changeDepartment($event: any) {
@@ -166,6 +149,40 @@ export class StockListComponent {
         }
       });
     }
+  }
+
+  deleteStock(stockId: any) {
+    this.confirmationService.confirm({
+
+      message: 'Are you sure that you want to delete this stock?',
+      accept: () => {
+        this.spinnerService.show();
+
+        this.stockService.deleteStock(stockId)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Stock deleted successfully'
+           });
+            this.loadData();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Failed to delete stock'
+           });
+          }
+        });
+      },
+      reject: () => {
+        //reject action
+      }
+    });
   }
 
 

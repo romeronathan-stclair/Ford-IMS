@@ -10,6 +10,9 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from 'src/services/event.service';
 import { Location } from '@angular/common';
+import { Event } from 'src/models/event';
+import { Plant } from 'src/models/plant';
+import { Department } from 'src/models/department';
 
 
 @Component({
@@ -21,15 +24,15 @@ export class EventLogComponent {
   currentPage = 0;
   length = 100;
   pageSize = 10;
-  activePlantId: any;
+  activePlantId: string = '';
   modelType = '';
   operationType = '';
   plant = '';
   department = '';
   date = '';
-  plants: any[] = [];
+  plants: Plant[] = [];
   selectedPlant: any = '';
-  departments: any[] = [];
+  departments: Department[] = [];
   selectedDepartment: any = '';
   operations = [
       { operationName: 'All', operationValue: ''},
@@ -38,8 +41,7 @@ export class EventLogComponent {
       { operationName: 'Delete', operationValue: 'Delete'}
     ];
   selectedOperation: any = '';
-  selectedDate: any;
-  events: any;
+  events: Event[] = [];
 
   constructor(
     private authService: AuthService,
@@ -70,6 +72,10 @@ export class EventLogComponent {
 
     let eventQuery = "?modelType=" + this.modelType + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
+    if (this.modelType !== 'Plant') {
+      eventQuery += "&plantId=" + this.activePlantId;
+    }
+
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
@@ -97,7 +103,7 @@ export class EventLogComponent {
           plantIds.push(plant._id);
         });
         this.plants = data.body.plants;
-        this.plants.unshift({_id: '', plantName: 'All Plants' });
+        this.plants.unshift({_id: '', plantName: 'All Plants', plantId: '', departments: [] });
         console.log(this.plants);
       },
       error: (error: any) => {
@@ -118,7 +124,7 @@ export class EventLogComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-          this.departments.unshift({_id: '', departmentName: 'All Departments' });
+          this.departments.unshift({_id: '', departmentName: 'All Departments', plantId : '', isDeleted: false });
         },
         error: (error: any) => {
           console.log(error);
@@ -127,16 +133,12 @@ export class EventLogComponent {
   }
 
   changePlant($event: any) {
-    let eventQuery = '';
+    let eventQuery = "?modelType=" + this.modelType + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-    if (this.selectedDepartment === '' && this.operationType === '') {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize
-    } else if (this.selectedDepartment === '' && this.operationType !== '') {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    } else if (this.selectedDepartment !== '' && this.operationType === '') {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    } else {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    if (this.operationType === '') {
+      eventQuery += "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation;
+    } else if (this.operationType !== '') {
+      eventQuery += "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation;
     }
 
     this.eventService.getEvents(eventQuery)
@@ -156,16 +158,14 @@ export class EventLogComponent {
   }
 
   changeDepartment($event: any) {
-    let eventQuery = '';
+    let eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.activePlantId + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-    if (this.selectedPlant === '' && this.operationType === '') {
-      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    } else if (this.selectedPlant === '' && this.operationType !== '') {
-      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    } else if (this.selectedPlant !== '' && this.operationType === '') {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    } else {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    if (this.selectedDepartment !== '' && this.selectedOperation === '') {
+      eventQuery += "&plantId=" + this.activePlantId + "&departmentId=" + this.selectedDepartment._id;
+    } else if (this.selectedDepartment === '' && this.selectedOperation !== '') {
+      eventQuery += "&plantId=" + this.activePlantId + "&operationType=" + this.selectedOperation;
+    } else if (this.selectedDepartment !== '' && this.selectedOperation !== '') {
+      eventQuery += "&plantId=" + this.activePlantId + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
     }
 
     this.eventService.getEvents(eventQuery)
@@ -184,17 +184,18 @@ export class EventLogComponent {
   }
 
   changeOperation($event: any) {
-    let eventQuery = '';
+    let eventQuery = "?modelType=" + this.modelType + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-    if (this.selectedPlant === '' && this.selectedDepartment === '') {
-      eventQuery = "?modelType=" + this.modelType + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-      console.log(eventQuery);
-    } else if (this.selectedPlant === '' && this.selectedDepartment !== '') {
-      eventQuery = "?modelType=" + this.modelType + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-    } else if (this.selectedPlant !== '' && this.selectedDepartment === '') {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+    if (this.modelType === 'Plant' && this.selectedPlant === '') {
+      eventQuery += "&operationType=" + this.selectedOperation;
+    } else if (this.modelType === 'Plant' && this.selectedPlant !== '') {
+      eventQuery += "&plantId=" + this.selectedPlant._id + "&operationType=" + this.selectedOperation;
+    } else if (this.modelType === 'Department' && this.selectedDepartment === '') {
+      eventQuery += "&plantId=" + this.activePlantId + "&operationType=" + this.selectedOperation;
+    } else if (this.modelType === 'Department' && this.selectedDepartment !== '') {
+      eventQuery += "&plantId=" + this.activePlantId + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
     } else {
-      eventQuery = "?modelType=" + this.modelType + "&plantId=" + this.selectedPlant._id + "&departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
+      eventQuery += "&plantId=" + this.activePlantId + "departmentId=" + this.selectedDepartment._id + "&operationType=" + this.selectedOperation;
     }
 
     this.eventService.getEvents(eventQuery)

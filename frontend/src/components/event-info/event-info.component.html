@@ -6,7 +6,8 @@
 <div class="table-holder">
   <div class="event-info">
     <div><strong>Plant:</strong> {{event.plantName}}</div>
-    <div><strong>Department:</strong> {{event.departmentName || 'N/A'}}</div>
+    <div *ngIf="this.event.modelType !== 'Sub-assembly' && this.event.modelType !== 'Production-count'"><strong>Department:</strong> {{event.departmentName || 'N/A'}}</div>
+    <div *ngIf="this.event.modelType === 'Sub-assembly' || this.event.modelType === 'Production-count'"><strong>Departments:</strong> {{event.departmentName.toString()}}</div>
     <div><strong>Action Performed:</strong> {{event.operationType}}</div>
     <div><strong>Action Performed on:</strong> {{event.modelType}}</div>
     <div><strong>{{event.modelType}} Name:</strong> {{event.itemName}}</div>

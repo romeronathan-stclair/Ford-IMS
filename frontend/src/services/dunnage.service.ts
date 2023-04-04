@@ -49,4 +49,12 @@ export class DunnageService {
     });
   }
 
+  deleteDunnage(dunnage: any): Observable<any> {
+    return this.http.delete(`${this.endPoint}/dunnage/${dunnage}`, {
+      headers: this.baseHeaders,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
 }

@@ -7,6 +7,7 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-create-dunnage-step-one',
@@ -17,9 +18,9 @@ export class CreateDunnageStepOneComponent {
   public displayValidationErrors: boolean = false;
   dunnageForm: FormGroup;
   request: any;
-  activePlantId: any;
-  departments: any[] = [];
-  selectedDepartment: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
 
   constructor(
     private dunnageService: DunnageService,

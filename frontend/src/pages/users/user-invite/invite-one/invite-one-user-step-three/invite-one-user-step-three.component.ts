@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Department } from 'src/models/department';
 import { Plant } from 'src/models/plant';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
@@ -18,10 +19,10 @@ export class InviteOneUserStepThreeComponent {
   public displayValidationErrors: boolean = false;
   request: any;
   roles: any[] = [];
-  plants: any[] = [];
+  plants: Plant[] = [];
   selectedPlants: Plant[] = [];
-  selectedPlant: any;
-  departments: any[] = [];
+  selectedPlant: Plant = {} as Plant;
+  departments: Department[] = [];
 
   constructor(
     private plantService: PlantService,

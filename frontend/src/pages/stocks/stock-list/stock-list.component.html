@@ -2,7 +2,7 @@
 <div class="table-header">
 
   <div *ngIf="departments.length > 0" class="dropdown">
-      <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
+      <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName"
           [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
   </div>
   <div class="search-bar">
@@ -34,6 +34,7 @@
       <mat-card-actions>
         <button [routerLink]="'/dashboard/stock/edit/info/' + stock._id" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
         <button [routerLink]="'/dashboard/stock/view-info/' + stock._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+        <button mat-mini-fab color="warn" (click)="deleteStock(stock._id)"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>

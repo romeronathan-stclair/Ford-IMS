@@ -28,6 +28,9 @@
                         required</span>
                 </mat-error>
             </div>
+
+            <button type="button" class="submit-button delete-button" (click)="deletePlant(plantId)">Delete Plant</button>
+
             <div class="button-holders">
 
 
@@ -43,3 +46,13 @@
         </form>
     </div>
 </app-ford-container>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+      <h3></h3>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+      <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+      <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>

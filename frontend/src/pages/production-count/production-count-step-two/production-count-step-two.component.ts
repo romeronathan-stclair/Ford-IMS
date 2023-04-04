@@ -13,6 +13,8 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { DepartmentCount, ProductionCountRequest } from 'src/models/requests/productionCountRequest';
 import { ProductionCountService } from 'src/services/productionCount.service';
+import { Plant } from 'src/models/plant';
+import { Department } from 'src/models/department';
 @Component({
   selector: 'app-production-count-step-two',
   templateUrl: './production-count-step-two.component.html',
@@ -22,10 +24,10 @@ export class ProductionCountStepTwoComponent {
   public displayValidationErrors: boolean = false;
   request: any;
   roles: any[] = [];
-  plants: any[] = [];
-  selectedDepartment: any;
-  departments: any[] = [];
-  products: any[] = [];
+  plants: Plant[] = [];
+  selectedDepartment: Department = {} as Department;
+  departments: Department[] = [];
+  products: Product[] = [];
   selectedProducts: Product[] = [];
   confirm = false;
   productionCountRequest: ProductionCountRequest | undefined;

@@ -16,7 +16,7 @@ export class EventInfoComponent {
   itemId = '';
   event = {
     "plantName": "",
-    "departmentName": "",
+    "departmentName": [""],
     "_id": "",
     "plantId": "",
     "departmentId": "",
@@ -89,16 +89,41 @@ export class EventInfoComponent {
           }
 
           if (departmentId) {
-            let departmentQuery = "?departmentId=" + departmentId;
 
-            this.departmentService.getDepartments(departmentQuery)
+            if (this.event.modelType !== 'Sub-assembly' && this.event.modelType !== 'Production-count') {
+              let departmentQuery = "?departmentId=" + departmentId;
+
+              this.departmentService.getDepartments(departmentQuery)
               .subscribe({
                 next: (data: any) => {
                   this.event.departmentName = data.body.departmentName;
+                  console.log(this.event.departmentName);
                 }, error: (error: any) => {
                   console.log(error);
                 }
               });
+            } else {
+              const parsedArray = JSON.parse(departmentId);
+              console.log("PARSED ARRAY "+parsedArray);
+              let departmentNames: string[] = [];
+
+              for (let i = 0; i < parsedArray.length; i++) {
+                let departmentQuery = "?departmentId=" + parsedArray[i];
+                console.log(parsedArray[i]);
+                console.log(departmentQuery);
+
+                this.departmentService.getDepartments(departmentQuery)
+                .subscribe({
+                  next: (data: any) => {
+                    departmentNames.push(data.body.departmentName);
+                  }, error: (error: any) => {
+                    console.log(error);
+                  }
+                });
+              }
+
+              this.event.departmentName = departmentNames;
+            }
           }
 
           console.log(this.event);

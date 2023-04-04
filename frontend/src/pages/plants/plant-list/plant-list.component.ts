@@ -7,6 +7,7 @@ import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { Router } from '@angular/router';
+import { Plant } from 'src/models/plant';
 
 @Component({
   selector: 'app-plant-list',
@@ -20,10 +21,10 @@ export class PlantListComponent {
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  plants: any[] = [];
+  plants: Plant[] = [];
   displayedColumns: string[] = [
     "name",
 

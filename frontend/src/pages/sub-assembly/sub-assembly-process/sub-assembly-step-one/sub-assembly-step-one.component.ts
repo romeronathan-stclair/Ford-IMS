@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { HelpDialogComponent } from 'src/components/help-dialog/help-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-sub-assembly-step-one',
@@ -24,7 +25,8 @@ export class SubAssemblyStepOneComponent {
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -74,10 +76,21 @@ export class SubAssemblyStepOneComponent {
       next: (data: any) => {
         this.spinnerService.hide();
         this.subAssembly = data.body;
-
         this.subAssembly.forEach((department: any) => {
           department.stockList.forEach((stock: any) => stock.currentCount = null);
         });
+
+        const emptyDepartments = this.subAssembly.filter((department: any) => department.stockList.length === 0);
+        if (emptyDepartments.length === this.subAssembly.length) {
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No Sub Assembly Stock Found'
+          });
+          this.location.back();
+        }
+
       },
       error: (err: any) => {
         this.spinnerService.hide();

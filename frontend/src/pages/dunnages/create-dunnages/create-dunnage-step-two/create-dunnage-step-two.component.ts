@@ -74,10 +74,6 @@ export class CreateDunnageStepTwoComponent {
   }
 
   onSubmit() {
-    if (!this.imageUrl) {
-      return;
-    }
-
     this.spinnerService.show();
 
     const dunnage = {

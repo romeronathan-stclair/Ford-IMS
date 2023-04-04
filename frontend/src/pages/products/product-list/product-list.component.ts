@@ -8,11 +8,14 @@ import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ProductService } from 'src/services/product.service';
 import { Router } from '@angular/router';
+import { Product } from 'src/models/product';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.scss']
+  styleUrls: ['./product-list.component.scss'],
+  providers: [ProductService, ConfirmationService]
 })
 export class ProductListComponent {
   currentPage = 0;
@@ -20,12 +23,12 @@ export class ProductListComponent {
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string  = '';
   productForm: FormGroup;
   selectedDepartment: any;
-  departments: any[] = [];
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  products: any[] = [];
+  departments: Department[] = [];
+  dataSource: MatTableDataSource<Product> = new MatTableDataSource();
+  products: Product[] = [];
 
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
@@ -42,7 +45,7 @@ export class ProductListComponent {
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
     console.log(this.activePlantId);
-    if (this.activePlantId != 0) {
+    if (this.activePlantId != '') {
       this.loadData();
     }
   }
@@ -65,6 +68,7 @@ export class ProductListComponent {
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
           this.departments = data.body.departments;
+          this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
           resolve();
         },
         error: (error: any) => {
@@ -98,8 +102,6 @@ export class ProductListComponent {
     });
   }
 
-
-
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
@@ -121,6 +123,40 @@ export class ProductListComponent {
 
   changeDepartment($event: any) {
     this.loadData();
+  }
+
+  deleteProduct(productId: any) {
+    this.confirmationService.confirm({
+
+      message: 'Are you sure that you want to delete this product?',
+      accept: () => {
+        this.spinnerService.show();
+
+        this.productService.deleteProduct(productId)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Success',
+              detail: 'Product deleted successfully'
+            });
+            this.loadData();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error deleting product'
+            });
+          }
+        });
+      },
+      reject: () => {
+        //reject action
+      }
+    });
   }
 
   viewEventLog() {

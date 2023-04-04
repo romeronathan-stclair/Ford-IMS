@@ -191,12 +191,14 @@ export const updateUser = async (req: Request, res: Response) => {
         plantId: plantId,
         departmentId: departmentId,
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.toString(),
         operationType: CrudType.UPDATE,
         modelType: ModelType.USER,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: user._id.valueOf()
+        itemId: user._id.valueOf(),
+        itemName: 'Update User',
     });
 
     try {

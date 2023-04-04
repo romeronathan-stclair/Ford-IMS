@@ -7,6 +7,9 @@ import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
 import { SpinnerService } from 'src/services/spinner.service';
+import { Router } from '@angular/router';
+import { Department } from 'src/models/department';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-user-list',
@@ -19,12 +22,12 @@ export class UserListComponent {
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
-  selectedDepartment: any;
+  activePlantId: string = '';
+  selectedDepartment: Department = {} as Department;
   userForm: FormGroup;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   departments: any[] = [];
-  users: any[] = [];
+  users: User[] = [];
   displayedColumns: string[] = [
     "name",
     "departments",
@@ -37,7 +40,8 @@ export class UserListComponent {
     private spinnerService: SpinnerService,
     private plantService: PlantService,
     private authService: AuthService,
-    private departmentService: DepartmentService) {
+    private departmentService: DepartmentService,
+    private router: Router) {
     this.userForm = new FormGroup({
       name: new FormControl(''),
     });
@@ -54,18 +58,18 @@ export class UserListComponent {
   async loadData() {
     this.spinnerService.show();
     await this.loadDepartments();
+    this.selectedDepartment = this.departments[0];
     await this.loadUsers();
     this.spinnerService.hide();
   }
 
   async loadDepartments() {
-    let userId = this.authService.user._id;
     let query = "?plantId=" + this.authService.user.activePlantId;
 
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(query).subscribe({
         next: (data: any) => {
-          this.departments = [{ departmentName: "All Departments" }, ...data.body.departments];
+          this.departments = [{_id: '', departmentName: "All Departments" }, ...data.body.departments];
           resolve();
         },
         error: (error: any) => {
@@ -76,7 +80,7 @@ export class UserListComponent {
   }
 
   async loadUsers(query: string = '') {
-    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
+    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : '';
     let userQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&plantId=${this.authService.user.activePlantId}&departmentId=${selectedDepartmentId}`;
     if (query) {
       userQuery += query;
@@ -97,6 +101,10 @@ export class UserListComponent {
     });
   }
 
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/user']);
+  }
+
   pageChanged(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
@@ -115,9 +123,10 @@ export class UserListComponent {
     if (this.selectedDepartment && this.selectedDepartment.departmentName != "All Departments") {
       query += `&departmentId=${this.selectedDepartment._id}`;
     }
+
+    this.loadUsers(query);
   }
   multipleDepartments(user: any) {
-    console.log(user);
     let plant = user.plants.find((plant: any) => plant.plantId == this.authService.user.activePlantId);
     if (plant) {
       if (plant.departments.length == 1) {

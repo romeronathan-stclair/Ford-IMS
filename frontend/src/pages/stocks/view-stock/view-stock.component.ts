@@ -5,6 +5,8 @@ import { DepartmentService } from 'src/services/department.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
+import { Stock } from 'src/models/stock';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-view-stock',
@@ -13,10 +15,10 @@ import { AuthService } from 'src/services/auth.service';
 })
 export class ViewStockComponent {
   stockId: string = '';
-  stock: any;
+  stock: Stock = {} as Stock;
   departmentId: string = '';
   departmentName: string = '';
-  departments: any[] = [];
+  departments: Department[] = [];
 
   constructor(
     private confirmationService: ConfirmationService,

@@ -8,6 +8,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { ProductService } from 'src/services/product.service';
 import { DepartmentService } from 'src/services/department.service';
 import { AuthService } from 'src/services/auth.service';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-create-product-step-one',
@@ -20,9 +21,9 @@ export class CreateProductStepOneComponent {
   request: any;
   roughproductChecked = false;
   subAssemblyChecked = false;
-  departments: any[] = [];
-  selectedDepartment: any;
-  activePlantId: any;
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
+  activePlantId: string = '';
 
   constructor(
     private productService: ProductService,

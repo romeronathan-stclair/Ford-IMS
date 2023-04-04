@@ -7,6 +7,7 @@ import { StockService } from 'src/services/stock.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-stock-info',
@@ -18,7 +19,7 @@ export class EditStockInfoComponent {
   stockForm: FormGroup;
   roughStockChecked = false;
   subAssemblyChecked = false;
-  activePlantId: any;
+  activePlantId: string  = '';
   stockId: string = '';
 
   constructor(
@@ -29,7 +30,9 @@ export class EditStockInfoComponent {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private authService: AuthService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private location: Location
+    ) {
         this.stockForm = this.formBuilder.group({
           name: new FormControl(''),
           partNumber: new FormControl(''),
@@ -61,6 +64,7 @@ export class EditStockInfoComponent {
         next: (data: any) => {
           this.spinnerService.hide();
           if (data) {
+            console.log(data.body.stocks[0]);
             this.stockForm.patchValue({
               name: data.body.stocks[0].name,
               partNumber: data.body.stocks[0].partNumber,
@@ -69,6 +73,9 @@ export class EditStockInfoComponent {
               totalStockPerSkid: data.body.stocks[0].totalStockPerSkid,
               lowStock: data.body.stocks[0].lowStock,
             });
+
+            console.log(data.body.stocks[0].roughStock);
+            console.log(data.body.stocks[0].isSubAssembly);
 
             if (data.body.stocks[0].roughStock) {
               this.roughStockChecked = true;
@@ -80,7 +87,7 @@ export class EditStockInfoComponent {
               this.stockForm.controls['totesPerSkid'].setValidators(null);
               this.stockForm.get('roughStock')?.setValue(true);
               this.stockForm.get('subAssembly')?.setValue(false);
-            } else if (data.body.stocks[0].subAssembly) {
+            } else if (data.body.stocks[0].isSubAssembly) {
               this.stockForm.controls['stockQtyPerTote'].enable();
               this.stockForm.controls['totesPerSkid'].enable();
               this.stockForm.controls['stockQtyPerTote'].setValidators([Validators.required]);
@@ -156,13 +163,16 @@ export class EditStockInfoComponent {
 
       this.spinnerService.show();
 
-      let totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
+      let totalStock = 0;
       let moderateStock = 0;
 
       if (this.roughStockChecked === true) {
         moderateStock = this.stockForm.value.lowStock * 2;
+        this.stockForm.value.stockQtyPerTote = null;
+        this.stockForm.value.totesPerSkid = null;
       } else {
         moderateStock = this.stockForm.value.lowStock + 2;
+        totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
       }
 
       const stock = {
@@ -177,6 +187,8 @@ export class EditStockInfoComponent {
         isSubAssembly: this.subAssemblyChecked,
         stockId: this.stockId
       }
+
+      console.log(stock);
 
       this.stockService.editStock(stock)
       .subscribe({
