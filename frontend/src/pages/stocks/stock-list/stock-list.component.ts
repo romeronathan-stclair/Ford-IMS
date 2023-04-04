@@ -35,88 +35,66 @@ export class StockListComponent {
     private authService: AuthService) {
     this.stockForm = new FormGroup({
       departmentName: new FormControl(''),
+      stockName: new FormControl(''),
     });
   }
 
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    this.loadDepartments();
+    if (this.activePlantId != 0) {
+      this.loadData();
+    }
   }
 
-  ngAfterViewInit() {
-
-  }
-
-  loadDepartments() {
+  async loadData() {
     this.spinnerService.show();
+    await this.loadDepartments();
+    await this.loadStocks();
+    this.spinnerService.hide();
+  }
 
-    let departmentQuery = "?plantId=" + this.activePlantId;
+  async loadDepartments() {
+    let departmentQuery = "?plantId=" + this.activePlantId + "&userId=" + this.authService.user._id;
 
-    let departmentIds: string[] = [];
-    this.departmentService.getDepartments(departmentQuery)
-      .subscribe({
+    return new Promise<void>((resolve, reject) => {
+      this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
-          data.body.departments.forEach((department: any) => {
-            departmentIds.push(department._id);
-          });
           this.departments = data.body.departments;
-          this.spinnerService.hide();
+          resolve();
         },
         error: (error: any) => {
-          console.log(error);
+          reject(error);
+
         }
       });
-
+    });
   }
 
-  loadData() {
-    this.spinnerService.show();
+  async loadStocks(query: string = '') {
+    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
+    let stockQuery = `?departmentId=${selectedDepartmentId}&page=${this.currentPage}&pageSize=${this.pageSize}`;
 
-    let departmentQuery = "?plantId=" + this.activePlantId;
+    if (query) {
+      stockQuery += query;
+    }
+    console.log(stockQuery);
 
-    let departmentIds: string[] = [];
-    this.departmentService.getDepartments(departmentQuery)
-      .subscribe({
-        next: (data: any) => {
-          data.body.departments.forEach((department: any) => {
-            departmentIds.push(department._id);
-          });
-          this.departments = data.body.departments;
-
-          console.log(departmentIds);
-
-          let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
-          console.log(stockQuery);
-
-          this.stockService.getStocks(stockQuery)
-            .subscribe({
-              next: (data: any) => {
-                console.log(data);
-                this.spinnerService.hide();
-                this.stocks = data.body.stocks;
-                this.length = data.body.stockCount;
-                console.log(this.stocks);
-                this.dataSource = new MatTableDataSource(this.stocks);
-
-              },
-              error: (error: any) => {
-                this.spinnerService.hide();
-              }
-            });
-        },
-        error: (error: any) => {
-          console.log(error);
-        }
-      });
-
-      console.log(this.stocks);
-  }
-
-
-  pageChanged(event: PageEvent) {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.loadData();
+    return new Promise<void>((resolve, reject) => {
+      this.stockService.getStocks(stockQuery)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.stocks = data.body.stocks;
+            this.length = data.body.stockCount;
+            this.dataSource = new MatTableDataSource(this.stocks);
+            resolve();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            reject();
+          }
+        });
+    });
   }
 
   searchByName() {
@@ -125,45 +103,22 @@ export class StockListComponent {
     if (nameControl) {
       const name = nameControl.value;
 
-      let query = "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
-
-      this.stockService.getStocks(query)
-      .subscribe({
-        next: (data) => {
-          this.length = data.body.stockCount;
-          this.stocks = data.body.stock;
-          this.dataSource = new MatTableDataSource(this.stocks);
-        }
-      })
+      let query = `&name=${name}`
+      console.log(query);
+      this.loadStocks(query);
     }
   }
 
   changeDepartment($event: any) {
-    console.log(this.selectedDepartment);
+    this.loadData();
+  }
 
-    this.spinnerService.show();
 
-    if (this.selectedDepartment.departmentName == "All Departments") {
-      this.loadData();
-    }
-    else {
-      let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-      console.log(stockQuery);
-      this.stockService.getStocks(stockQuery).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.spinnerService.hide();
-          this.stocks = data.body.stocks;
-          this.length = data.body.stockCount;
-          this.dataSource = new MatTableDataSource(this.stocks);
-          console.log(this.stocks);
-        },
-        error: (error: any) => {
-          console.log(error);
-          this.spinnerService.hide();
-        }
-      });
-    }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadData();
   }
 
 

@@ -19,6 +19,7 @@ export type ForecastItem = {
     hoursBeforeShortage?: number;
     fiveShiftsBeforeShortage?: boolean;
     modelType?: ModelType;
+    imageURL?: string;
 }
 export type DepartmentForecast = {
     departmentId: string;
@@ -30,9 +31,14 @@ export type ProductForecast = {
     productId: string;
     name: string;
     departmentName: string;
+    marketLocation: string;
+    dailyTarget: number;
     stockForecast?: {
         forecastedStockItems: ForecastItem[];
         lowestStockItem: ForecastItem;
+        lowStockCount: number;
+        moderateStockCount: number;
+        highStockCount: number;
     },
     dunnageForecast?: {
         forecastedDunnageItems: ForecastItem[];

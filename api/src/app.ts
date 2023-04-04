@@ -135,6 +135,7 @@ router.delete("/auth/department/:id", authMiddleware.isAuthenticated, department
 router.post("/auth/product", authMiddleware.isAuthenticated, productController.createProduct);
 router.get("/auth/product", authMiddleware.isAuthenticated, productController.getProduct);
 router.put("/auth/product", authMiddleware.isAuthenticated, productController.updateProduct);
+router.put("/auth/product/change-production-target", authMiddleware.isAuthenticated, productController.changeProuctionTarget);
 router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productController.deleteProduct);
 router.post("/auth/product/reassign-stock", authMiddleware.isAuthenticated, productController.reassignProductStock);
 router.post("/auth/product/reassign-dunnage", authMiddleware.isAuthenticated, productController.reassignProductDunnage);

@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DepartmentForecast } from 'src/models/responses/Forecast';
 import { AuthService } from 'src/services/auth.service';
@@ -39,7 +40,8 @@ export class ForecastListComponent {
     private spinnerService: SpinnerService,
     private authService: AuthService,
     private forecastService: ForecastService,
-    private departmentService: DepartmentService) { }
+    private departmentService: DepartmentService,
+    private router: Router) { }
 
   ngOnInit() {
     this.spinnerService.showHide();
@@ -121,5 +123,8 @@ export class ForecastListComponent {
     } else {
       return "high-health";
     }
+  }
+  goToDetail(productId: any) {
+    this.router.navigate(['dashboard/forecast/detail', productId]);
   }
 }

@@ -143,7 +143,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   updateForecast() {
     this.forecastService.getLowPlantForecasts().subscribe({
       next: (response) => {
-        console.log(response.body.lowProductsCount);
+        console.log(response);
         if (response.body.lowProductsCount > 0) {
           this.manipulateItemWithTitle("Forecast", response.body.lowProductsCount);
         } else {

@@ -11,7 +11,7 @@ import { ProductStockService } from 'src/services/productStock.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { StockService } from 'src/services/stock.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-reassign-stock',
   templateUrl: './reassign-stock.component.html',
@@ -43,7 +43,9 @@ export class ReassignStockComponent {
     private stockService: StockService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
-    private productStockService: ProductStockService) {
+    private productStockService: ProductStockService,
+    private location: Location
+  ) {
 
 
 
@@ -87,7 +89,7 @@ export class ReassignStockComponent {
   }
   loadStocks() {
     let stockQuery = `?departmentId=${this.product.departmentId}&plantId=${this.authService.user.activePlantId}`;
- 
+
     this.stockService.getStocks(stockQuery).subscribe({
       next: (data: any) => {
 
@@ -157,6 +159,7 @@ export class ReassignStockComponent {
   }
 
   submit() {
+    console.log(this.targetStocks);
 
 
     this.productService.reassignProductStock({
@@ -167,6 +170,7 @@ export class ReassignStockComponent {
 
         this.spinnerService.hide();
         this.messageService.clear();
+        this.sharedService.refreshDashboardForecast(true);
         this.messageService.add({
           severity: 'success',
           summary: `Success: `,
@@ -188,4 +192,8 @@ export class ReassignStockComponent {
       }
     });
   }
+  back() {
+    this.location.back();
+  }
+
 }

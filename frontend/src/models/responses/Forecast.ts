@@ -19,6 +19,7 @@ export interface ForecastItem {
     hoursBeforeShortage?: number;
     fiveShiftsBeforeShortage?: boolean;
     modelType?: string;
+    imageURL?: string;
 }
 
 export interface DepartmentForecast {
@@ -30,9 +31,15 @@ export interface DepartmentForecast {
 export interface ProductForecast {
     productId: string;
     name: string;
+    departmentName: string;
+    marketLocation: string;
+    dailyTarget: number;
     stockForecast?: {
         forecastedStockItems: ForecastItem[];
         lowestStockItem: ForecastItem;
+        lowStockCount: number;
+        moderateStockCount: number;
+        highStockCount: number;
     },
     dunnageForecast?: {
         forecastedDunnageItems: ForecastItem[];

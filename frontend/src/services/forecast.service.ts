@@ -38,5 +38,13 @@ export class ForecastService {
             withCredentials: true
         });
     }
+    getProductForecast(productId: string): Observable<any> {
+
+        return this.http.get(`${this.endPoint}/forecast/${productId}`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
 
 }

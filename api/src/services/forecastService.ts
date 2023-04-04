@@ -140,6 +140,8 @@ export const forecastProduct = async (productId: string) => {
 
     let productForecast: ProductForecast = {
         productId: productId,
+        marketLocation: product.marketLocation,
+        dailyTarget: product.dailyTarget,
         name: product.name,
         departmentName: department.departmentName
     }
@@ -151,9 +153,11 @@ export const forecastProduct = async (productId: string) => {
             forecastedStockItems: ForecastItem[];
             lowestStockItem: ForecastItem;
             lowStockCount: number;
+            moderateStockCount: number;
+            highStockCount: number;
         };
     }).catch((err: any) => {
-        console.log(err);
+
         productForecast.stockForecast = err;
     });
 
@@ -164,7 +168,7 @@ export const forecastProduct = async (productId: string) => {
             lowDunnageCount: number;
         };
     }).catch((err: any) => {
-        console.log(err);
+
         productForecast.dunnageForecast = err;
     }
     );
@@ -175,6 +179,10 @@ export const forecastProduct = async (productId: string) => {
     }
     if (productForecast.dunnageForecast && productForecast.dunnageForecast.forecastedDunnageItems && productForecast.dunnageForecast.forecastedDunnageItems.length > 0) {
         forecastItems = forecastItems.concat(productForecast.dunnageForecast.forecastedDunnageItems);
+    }
+
+    if (forecastItems.length === 0) {
+        await redisClient.set(productId, "false");
     }
 
     await lowProductEntry(forecastItems);
@@ -189,6 +197,8 @@ export const stockForecast = async (
     return new Promise(async (resolve, reject) => {
 
         let lowStockCount = 0
+        let moderateStockCount = 0
+        let highStockCount = 0
 
 
         const product = await Product.findOne({
@@ -204,6 +214,8 @@ export const stockForecast = async (
             productId: productId,
             isDeleted: false
         });
+
+        console.log("productStocks", productStocks.length);
 
 
         if (productStocks.length > 0) {
@@ -241,6 +253,10 @@ export const stockForecast = async (
                 const hoursBeforeShortage = Math.floor(totalPossibleBuilds / jobsPerHour);
                 if (lowStockThreshold || belowDailyTarget || shiftsBeforeShortage < 5) {
                     lowStockCount++;
+                } else if (moderateStockThreshold) {
+                    moderateStockCount++;
+                } else {
+                    highStockCount++;
                 }
 
                 const forecastStockItem = {
@@ -261,6 +277,7 @@ export const stockForecast = async (
                     jobsPerHour: jobsPerHour,
                     shiftsBeforeShortage: shiftsBeforeShortage,
                     hoursBeforeShortage: hoursBeforeShortage,
+                    imageURL: stock.imageURL,
                     modelType: ModelType.STOCK
                 } as ForecastItem;
 
@@ -294,7 +311,9 @@ export const stockForecast = async (
             let response = {
                 forecastedStockItems: filteredResults,
                 lowestStockItem: lowestStockItem,
-                lowStockCount: lowStockCount
+                lowStockCount: lowStockCount,
+                moderateStockCount: moderateStockCount,
+                highStockCount: highStockCount
             }
 
 
@@ -417,18 +436,21 @@ export const dunnageForecast = async (
         }
     });
 };
-export const lowProductEntry = async (forecastItem: ForecastItem[]) => {
+export const lowProductEntry = async (forecastItems: ForecastItem[]) => {
 
 
-    for (const item of forecastItem) {
+
+    for (const item of forecastItems) {
 
         if (item.fiveShiftsBeforeShortage || item.lowThreshold ||
             item.belowDailyTarget) {
-
+            console.log("TRUE");
             await redisClient.set(item.productId, "true");
         } else {
+            console.log("FALSE");
             await redisClient.set(item.productId, "false");
         }
+
     }
 
 };

@@ -9,7 +9,7 @@ import { DepartmentService } from 'src/services/department.service';
 import { DunnageService } from 'src/services/dunnage.service';
 import { ProductService } from 'src/services/product.service';
 import { ProductDunnageService } from 'src/services/productDunnage.service';
-
+import { Location } from '@angular/common';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 
@@ -44,6 +44,7 @@ export class ReassignDunnageComponent {
     private dunnageService: DunnageService,
     public dialog: MatDialog,
     private route: ActivatedRoute,
+    private location: Location,
     private productDunnageService: ProductDunnageService) {
 
 
@@ -184,6 +185,7 @@ export class ReassignDunnageComponent {
           summary: `Success: `,
           detail: `Product dunnage reassigned successfully.`,
         });
+        this.sharedService.refreshDashboardForecast(true);
         this.router.navigate(['/dashboard/products/list']);
 
       }
@@ -199,5 +201,8 @@ export class ReassignDunnageComponent {
         });
       }
     });
+  }
+  back() {
+    this.location.back();
   }
 }

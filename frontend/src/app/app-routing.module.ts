@@ -78,6 +78,8 @@ import { ProductionCountStepTwoComponent } from 'src/pages/production-count/prod
 import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
 import { ForecastListComponent } from 'src/pages/forecast/forecast-list/forecast-list.component';
 import { ForecastComponent } from 'src/pages/forecast/forecast/forecast.component';
+import { ForecastDetailComponent } from 'src/pages/forecast/forecast-detail/forecast-detail.component';
+import { ViewProductComponent } from 'src/pages/products/view-product/view-product.component';
 
 
 const routes: Routes = [
@@ -205,6 +207,7 @@ const routes: Routes = [
             data: { animation: 'Product List Page' },
             component: ProductListComponent,
           },
+
           {
             path: 'create',
             data: { animation: 'Create Product Page' },
@@ -257,7 +260,11 @@ const routes: Routes = [
 
             ]
 
-          }
+          }, {
+            path: 'view-info/:id',
+            data: { animation: 'View Products Page' },
+            component: ViewProductComponent
+          },
         ]
       },
       {
@@ -494,8 +501,11 @@ const routes: Routes = [
         component: ForecastComponent,
         children: [{
           path: 'list',
-          component: ForecastListComponent
+          component: ForecastListComponent,
 
+        }, {
+          path: "detail/:id",
+          component: ForecastDetailComponent
         }]
       }
     ]

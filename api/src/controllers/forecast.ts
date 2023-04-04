@@ -13,6 +13,7 @@ import { getPage, getPageSize } from "../utils/pagination";
 export const getForecastProduct = async (req: Request, res: Response) => {
 
     const productId = req.params.id;
+    console.log("productId", productId);
 
     const productForecast = await forecastService.forecastProduct(productId) as ProductForecast;
 
