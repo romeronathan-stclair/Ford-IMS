@@ -47,9 +47,6 @@ export class StockListComponent {
 
   async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    if (this.activePlantId != 0) {
-      this.loadData();
-    }
     await this.loadData();
   }
 
@@ -64,8 +61,6 @@ export class StockListComponent {
   }
 
   async loadDepartments() {
-    let departmentQuery = "?plantId=" + this.activePlantId + "&userId=" + this.authService.user._id;
-
     let departmentQuery = "?plantId=" + this.activePlantId;
 
     return new Promise<void>((resolve, reject) => {
@@ -75,7 +70,7 @@ export class StockListComponent {
           resolve();
           this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
 
-          console.log(departmentIds);
+          
 
           let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
 

@@ -46,9 +46,10 @@ export class PlantListComponent {
     private spinnerService: SpinnerService,
     private plantService: PlantService,
     private authService: AuthService,
-    private sharedService: SharedService) { }
-    private router: Router
-    ) { }
+    private sharedService: SharedService,
+    private router: Router) { }
+
+
   ngOnInit() {
     this.loadData();
 

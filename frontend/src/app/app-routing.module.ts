@@ -510,12 +510,14 @@ const routes: Routes = [
         }, {
           path: "detail/:id",
           component: ForecastDetailComponent
-        }
-        {
+        },
+        ],
+      },
+      {
         path: 'event',
         data: { animation: 'Event Page' },
         children: [
-            {
+          {
             path: 'list/:modelType',
             data: { animation: 'Event List Page' },
             component: EventLogComponent
