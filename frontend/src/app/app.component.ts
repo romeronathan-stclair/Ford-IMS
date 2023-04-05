@@ -9,6 +9,7 @@ import { SharedService } from 'src/services/shared.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   subscription: Subscription;
   title = 'frontend';
 
@@ -49,5 +50,6 @@ export class AppComponent {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
 
 }

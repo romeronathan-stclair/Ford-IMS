@@ -6,6 +6,7 @@ import { Product } from 'src/models/product';
 import { ProductService } from 'src/services/product.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-edit-product-information',
@@ -23,6 +24,7 @@ export class EditProductInformationComponent {
     private sharedService: SharedService,
     private router: Router,
     private route: ActivatedRoute, // add ActivatedRoute to the constructor
+    private location: Location,
 
     private spinnerService: SpinnerService,
     private messageService: MessageService) {
@@ -125,4 +127,8 @@ export class EditProductInformationComponent {
       }
     });
   }
+  back() {
+    this.location.back();
+  }
+
 }

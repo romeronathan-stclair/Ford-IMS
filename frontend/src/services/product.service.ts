@@ -62,6 +62,13 @@ export class ProductService {
             withCredentials: true
         });
     }
+    changeProductionCount(request: any): Observable<any> {
+        return this.http.put(`${this.endPoint}/product/change-production-target`, request, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
 
     deleteProduct(product: any): Observable<any> {
         return this.http.delete(`${this.endPoint}/product/${product}`, {

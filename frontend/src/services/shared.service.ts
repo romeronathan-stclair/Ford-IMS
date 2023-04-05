@@ -1,14 +1,20 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SharedService {
-
+    private updateForecastDashboard = new BehaviorSubject<boolean>(false);
     private dataKey = '';
 
     constructor() { }
 
+    activePlantChanged$ = this.updateForecastDashboard.asObservable();
+
+    refreshDashboardForecast(changed: boolean) {
+        this.updateForecastDashboard.next(changed);
+    }
     setData(data: any) {
         return new Promise((resolve, reject) => {
             try {

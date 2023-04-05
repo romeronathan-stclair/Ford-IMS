@@ -12,6 +12,7 @@ body {
     font-size: 1.3rem !important;
     max-height: 100vh;
     width: 100%;
+    max-width: 100%;
     overflow: scroll;
 }
 
@@ -23,4 +24,11 @@ body {
     @include column-lg-break {
         padding: 10px 15px;
     }
+}
+.forecast {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: black !important;
+    background-color: orange !important;
 }

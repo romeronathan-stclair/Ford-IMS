@@ -39,32 +39,40 @@ export class StockListComponent {
     private authService: AuthService,
     private router: Router) {
     this.stockForm = new FormGroup({
+
+      departmentName: new FormControl(''),
       stockName: new FormControl(''),
     });
   }
 
   async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
+    if (this.activePlantId != 0) {
+      this.loadData();
+    }
     await this.loadData();
   }
 
   ngAfterViewInit() {
-
   }
 
   async loadData() {
     this.spinnerService.show();
+    await this.loadDepartments();
+    await this.loadStocks();
+    this.spinnerService.hide();
+  }
+
+  async loadDepartments() {
+    let departmentQuery = "?plantId=" + this.activePlantId + "&userId=" + this.authService.user._id;
 
     let departmentQuery = "?plantId=" + this.activePlantId;
 
-    let departmentIds: string[] = [];
-    this.departmentService.getDepartments(departmentQuery)
-      .subscribe({
+    return new Promise<void>((resolve, reject) => {
+      this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
-          data.body.departments.forEach((department: any) => {
-            departmentIds.push(department._id);
-          });
           this.departments = data.body.departments;
+          resolve();
           this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
 
           console.log(departmentIds);
@@ -90,21 +98,50 @@ export class StockListComponent {
             });
         },
         error: (error: any) => {
-          console.log(error);
+          reject(error);
+
         }
       });
-
-      console.log(this.stocks);
+    });
   }
 
+  async loadStocks(query: string = '') {
+    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
+    let stockQuery = `?departmentId=${selectedDepartmentId}&page=${this.currentPage}&pageSize=${this.pageSize}`;
 
-  pageChanged(event: PageEvent) {
-    this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.loadData();
+    if (query) {
+      stockQuery += query;
+    }
+    console.log(stockQuery);
+
+    return new Promise<void>((resolve, reject) => {
+      this.stockService.getStocks(stockQuery)
+        .subscribe({
+          next: (data: any) => {
+            this.spinnerService.hide();
+            this.stocks = data.body.stocks;
+            this.length = data.body.stockCount;
+            this.dataSource = new MatTableDataSource(this.stocks);
+            resolve();
+          },
+          error: (error: any) => {
+            this.spinnerService.hide();
+            reject();
+          }
+        });
+    });
   }
 
   searchByName() {
+    const nameControl = this.stockForm.get('stockName');
+
+    if (nameControl) {
+      const name = nameControl.value;
+
+      let query = `&name=${name}`
+      console.log(query);
+      this.loadStocks(query);
+    }
     // const nameControl = this.stockForm.get('stockName');
 
     // if (nameControl) {
@@ -124,31 +161,15 @@ export class StockListComponent {
   }
 
   changeDepartment($event: any) {
-    console.log(this.selectedDepartment);
+    this.loadData();
+  }
 
-    this.spinnerService.show();
 
-    if (this.selectedDepartment.departmentName == "All Departments") {
-      this.loadData();
-    }
-    else {
-      let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-      console.log(stockQuery);
-      this.stockService.getStocks(stockQuery).subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.spinnerService.hide();
-          this.stocks = data.body.stocks;
-          this.length = data.body.stockCount;
-          this.dataSource = new MatTableDataSource(this.stocks);
-          console.log(this.stocks);
-        },
-        error: (error: any) => {
-          console.log(error);
-          this.spinnerService.hide();
-        }
-      });
-    }
+
+  pageChanged(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadData();
   }
 
   deleteStock(stockId: any) {

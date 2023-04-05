@@ -14,6 +14,7 @@ import { uploadImage } from "./image";
 import env from "../utils/env";
 import { createProductStock } from "./productStock";
 import { createProductDunnage } from "./productDunnage";
+import * as forecastService from "../services/forecastService";
 
 //create Product
 export const createProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -184,11 +185,12 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
     // Parse the incoming stocks
     const incomingStocks = req.body.stocks;
 
-    console.log("Incoming stocks: " + JSON.stringify(productStocks));
+
+    console.log("product stocks " + JSON.stringify(incomingStocks));
 
     // Iterate through the existing product stocks and delete the ones not in the incoming stocks
     for (const existingStock of productStocks) {
-        const isIncoming = incomingStocks.some((incomingStock: any) => incomingStock._id === existingStock.stockId);
+        const isIncoming = incomingStocks.some((incomingStock: any) => incomingStock._id == existingStock.stockId);
         console.log("Is incoming: " + isIncoming);
 
         if (!isIncoming) {
@@ -200,7 +202,7 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
 
     // Iterate through the incoming stocks and add new ones if they don't already exist
     for (const incomingStock of incomingStocks) {
-        const alreadyExists = productStocks.some(existingStock => existingStock.stockId === incomingStock.stockId);
+        const alreadyExists = productStocks.some(existingStock => existingStock.stockId == incomingStock._id);
 
         if (!alreadyExists) {
             const newProductStock = new ProductStock({
@@ -218,8 +220,13 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
             }
         }
     }
+    try {
+        forecastService.forecastProduct(productId);
+        return res.status(200).json({ message: 'Product stocks reassigned successfully.' });
+    } catch (error) {
+        console.error(`Error forecasting product: ${error}`);
+    }
 
-    return res.status(200).json({ message: 'Product stocks reassigned successfully.' });
 };
 // reassign product dunnage
 export const reassignProductDunnage = async (req: Request, res: Response, next: NextFunction) => {
@@ -262,13 +269,18 @@ export const reassignProductDunnage = async (req: Request, res: Response, next: 
             try {
                 await newProductDunnage.save();
             } catch (error) {
-                console.error(`Error saving new product dunnage: ${error}`);
+                return res.status(500).json({ message: 'Error saving new product dunnage.' });
             }
         }
     }
+    try {
+        forecastService.forecastProduct(productId);
+        return res.status(200).json({ message: 'Product dunnage reassigned successfully.' });
+    } catch (error) {
+        return res.status(200).json({ message: 'Product dunnage assigned successfully but error forecasting product.' });
+    }
+}
 
-    return res.status(200).json({ message: 'Product dunnage reassigned successfully.' });
-};
 
 //get Product
 export const getProduct = async (req: Request, res: Response, next: NextFunction) => {
@@ -431,6 +443,31 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
         return res.status(500).json("Error updating Product: " + err);
     }
 };
+
+export const changeProuctionTarget = async (req: Request, res: Response, next: NextFunction) => {
+    const productId = req.body.productId;
+    const dailyTarget = req.body.dailyTarget;
+
+    //find product by id
+    const product: ProductDocument = (await Product.findOne({
+        _id: productId,
+        isDeleted: false
+    })) as ProductDocument;
+
+    if (!product) {
+        return res.status(500).json("Product not found");
+    }
+
+    product.dailyTarget = dailyTarget;
+
+    try {
+        await product.save();
+        return res.status(200).json("Product updated successfully");
+    } catch (err) {
+        return res.status(500).json("Error updating Product: " + err);
+    }
+};
+
 
 //delete Product
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {

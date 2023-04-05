@@ -30,9 +30,7 @@
 <div class="footer-holder">
     <div class="button-holders">
 
-
-        <button type="button" [routerLink]="'/dashboard/products/edit/information/'+product._id"
-            class="submit-button">Back</button>
+        <button type="button" (click)="back()" class="submit-button">Back</button>
         <button (click)="submit()" type="submit" class="submit-button">Submit</button>
     </div>
 </div>

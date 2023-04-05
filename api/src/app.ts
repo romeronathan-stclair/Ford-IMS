@@ -23,7 +23,7 @@ import * as productDunnageController from "./controllers/productDunnage";
 import * as productStockController from "./controllers/productStock";
 import * as forecastController from "./controllers/forecast";
 import * as cycleCheckController from "./controllers/cycleCheck";
-import* as subAssemblyController from "./controllers/subAssembly";
+import * as subAssemblyController from "./controllers/subAssembly";
 import * as productionCountController from "./controllers/productionCount";
 import * as redis from "redis";
 
@@ -135,6 +135,7 @@ router.delete("/auth/department/:id", authMiddleware.isAuthenticated, department
 router.post("/auth/product", authMiddleware.isAuthenticated, productController.createProduct);
 router.get("/auth/product", authMiddleware.isAuthenticated, productController.getProduct);
 router.put("/auth/product", authMiddleware.isAuthenticated, productController.updateProduct);
+router.put("/auth/product/change-production-target", authMiddleware.isAuthenticated, productController.changeProuctionTarget);
 router.delete("/auth/product/:id", authMiddleware.isAuthenticated, productController.deleteProduct);
 router.post("/auth/product/reassign-stock", authMiddleware.isAuthenticated, productController.reassignProductStock);
 router.post("/auth/product/reassign-dunnage", authMiddleware.isAuthenticated, productController.reassignProductDunnage);
@@ -164,7 +165,7 @@ router.get("/auth/product-stock", authMiddleware.isAuthenticated, productStockCo
 // forecast routes
 router.get("/auth/forecast/:id", authMiddleware.isAuthenticated, forecastController.getForecastProduct);
 router.get("/auth/forecast/department/low/:id", authMiddleware.isAuthenticated, forecastController.departmentLowForecasts);
-router.get("/auth/forecast", authMiddleware.isAuthenticated, forecastController.forecastAll);
+router.get("/auth/forecast", authMiddleware.isAuthenticated, forecastController.getForecasts);
 router.get("/auth/forecast/plant/low", authMiddleware.isAuthenticated, forecastController.getPlantLowForecasts);
 router.get("/auth/forecast/department/:id", authMiddleware.isAuthenticated, forecastController.getDepartmentForecasts);
 

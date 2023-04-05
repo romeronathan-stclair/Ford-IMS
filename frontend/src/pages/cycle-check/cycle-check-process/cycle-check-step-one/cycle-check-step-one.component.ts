@@ -6,6 +6,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { HelpDialogComponent } from 'src/components/help-dialog/help-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { SharedService } from 'src/services/shared.service';
 
 @Component({
   selector: 'app-cycle-check-step-one',
@@ -19,6 +20,7 @@ export class CycleCheckStepOneComponent {
 
   constructor(
     private authService: AuthService,
+    private sharedService: SharedService,
     private cycleCheckService: CycleCheckService,
     private spinnerService: SpinnerService,
     private confirmationService: ConfirmationService,
@@ -70,21 +72,21 @@ export class CycleCheckStepOneComponent {
     this.spinnerService.show();
 
     this.cycleCheckService.getCycleCheck()
-    .subscribe({
-      next: (data: any) => {
-        this.spinnerService.hide();
-        this.cycleCheck = data.body;
+      .subscribe({
+        next: (data: any) => {
+          this.spinnerService.hide();
+          this.cycleCheck = data.body;
 
-        this.cycleCheck.forEach((department: any) => {
-          department.stockList.forEach((stock: any) => stock.currentCount = null);
-          department.dunnage.forEach((dunnage: any) => dunnage.currentCount = null);
-        });
-      },
-      error: (err: any) => {
-        this.spinnerService.hide();
-        console.log(err);
-      }
-    });
+          this.cycleCheck.forEach((department: any) => {
+            department.stockList.forEach((stock: any) => stock.currentCount = null);
+            department.dunnage.forEach((dunnage: any) => dunnage.currentCount = null);
+          });
+        },
+        error: (err: any) => {
+          this.spinnerService.hide();
+          console.log(err);
+        }
+      });
   }
 
   validateInputs(): boolean {
@@ -143,28 +145,29 @@ export class CycleCheckStepOneComponent {
     }
 
     this.cycleCheckService.submitCycleCheck(request)
-    .subscribe({
-      next: (data: any) => {
-        this.spinnerService.hide();
-        this.messageService.clear();
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Cycle Check Submitted Successfully'
-        });
-        this.router.navigate(['/dashboard/cycle-check/list']);
-      },
-      error: (err: any) => {
-        this.spinnerService.hide();
-        console.log(err);
-        this.messageService.clear();
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Error Submitting Cycle Check'
-        });
-      }
-    });
+      .subscribe({
+        next: (data: any) => {
+          this.spinnerService.hide();
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Cycle Check Submitted Successfully'
+          });
+          this.sharedService.refreshDashboardForecast(true);
+          this.router.navigate(['/dashboard/cycle-check/list']);
+        },
+        error: (err: any) => {
+          this.spinnerService.hide();
+          console.log(err);
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error Submitting Cycle Check'
+          });
+        }
+      });
   }
 
 

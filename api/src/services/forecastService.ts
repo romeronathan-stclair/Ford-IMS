@@ -12,7 +12,6 @@ export const forecastDepartment = async (departmentId: string) => {
         departmentId: departmentId,
         isDeleted: false
     });
-    console.log(departmentId);
     const productIds = products.map(product => product._id.toString());
 
     const promises = productIds.map(productId => forecastProduct(productId));
@@ -21,11 +20,80 @@ export const forecastDepartment = async (departmentId: string) => {
 
     let response = {
         departmentId: departmentId,
-        productForecasts: results
+        forecastedProducts: results
     }
     return response;
 
 }
+
+export const getDepartmentForecasts = async (departmentId: string, page: number, pageSize: number) => {
+
+
+    const department = await Department.findById(departmentId);
+
+    const products = await Product.find({
+        departmentId: departmentId,
+        isDeleted: false
+    }).skip(page * pageSize).limit(pageSize).exec();
+
+    const forecastedProductsCount = await Product.find({
+        departmentId: departmentId,
+        isDeleted: false
+    }).countDocuments().exec();
+
+    const productIds = products.map(product => product._id.toString());
+
+
+    const promises = productIds.map(productId => forecastProduct(productId));
+
+    const results = await Promise.all(promises);
+
+    let response = {
+        forecastedProducts: results,
+        forecastedProductsCount: forecastedProductsCount,
+    }
+    return response;
+
+}
+export const getPlantForecasts = async (plantId: string, page: number, pageSize: number) => {
+    const departments = await Department.find({
+        plantId: plantId,
+        isDeleted: false
+    });
+    console.log("departments", departments.length);
+
+    const departmentIds = departments.map(department => department._id.toString());
+
+    const promises = departmentIds.map(departmentId => getDepartmentForecasts(departmentId, 0, 0));
+
+    const results = await Promise.all(promises);
+
+    const totalProductForecasts = results.reduce((accumulator, departmentForecast) => {
+        return accumulator + departmentForecast.forecastedProductsCount;
+    }, 0);
+
+    console.log("totalProductForecasts", totalProductForecasts);
+
+    const allForecastedProducts = results.flatMap(departmentForecast => departmentForecast.forecastedProducts);
+
+
+    console.log("allForecastedProducts", allForecastedProducts.length);
+    const startIndex = page * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    const paginatedForecastedProducts = allForecastedProducts.slice(startIndex, endIndex);
+
+
+    console.log("paginatedForecastedProducts", paginatedForecastedProducts.length);
+
+    let response = {
+        forecastedProducts: paginatedForecastedProducts,
+        forecastedProductsCount: totalProductForecasts
+    }
+
+    return response;
+}
+
 export const forecastPlant = async (plantId: string) => {
 
 
@@ -52,19 +120,30 @@ export const forecastPlant = async (plantId: string) => {
 
 export const forecastProduct = async (productId: string) => {
 
+
+
     const product = await Product.findOne({
         _id: productId,
         isDeleted: false
     });
 
-    if (!product) {
+    const department = await Department.findOne({
+        _id: product?.departmentId,
+        isDeleted: false
+    });
+
+
+
+    if (!product || !department) {
         return null;
     }
 
     let productForecast: ProductForecast = {
         productId: productId,
-        name: product.name
-
+        marketLocation: product.marketLocation,
+        dailyTarget: product.dailyTarget,
+        name: product.name,
+        departmentName: department.departmentName
     }
 
 
@@ -73,9 +152,12 @@ export const forecastProduct = async (productId: string) => {
         productForecast.stockForecast = result as {
             forecastedStockItems: ForecastItem[];
             lowestStockItem: ForecastItem;
+            lowStockCount: number;
+            moderateStockCount: number;
+            highStockCount: number;
         };
     }).catch((err: any) => {
-        console.log(err);
+
         productForecast.stockForecast = err;
     });
 
@@ -83,9 +165,10 @@ export const forecastProduct = async (productId: string) => {
         productForecast.dunnageForecast = result as {
             forecastedDunnageItems: ForecastItem[];
             lowestDunnageItem: ForecastItem;
+            lowDunnageCount: number;
         };
     }).catch((err: any) => {
-        console.log(err);
+
         productForecast.dunnageForecast = err;
     }
     );
@@ -98,10 +181,10 @@ export const forecastProduct = async (productId: string) => {
         forecastItems = forecastItems.concat(productForecast.dunnageForecast.forecastedDunnageItems);
     }
 
+    if (forecastItems.length === 0) {
+        await redisClient.set(productId, "false");
+    }
 
-
-
-    console.log("forecastProduct");
     await lowProductEntry(forecastItems);
 
 
@@ -112,6 +195,10 @@ export const stockForecast = async (
     productId: string
 ) => {
     return new Promise(async (resolve, reject) => {
+
+        let lowStockCount = 0
+        let moderateStockCount = 0
+        let highStockCount = 0
 
 
         const product = await Product.findOne({
@@ -127,6 +214,9 @@ export const stockForecast = async (
             productId: productId,
             isDeleted: false
         });
+
+        console.log("productStocks", productStocks.length);
+
 
         if (productStocks.length > 0) {
 
@@ -161,6 +251,13 @@ export const stockForecast = async (
                 const jobsPerHour = dailyTarget / 24;
                 const shiftsBeforeShortage = Math.floor(totalPossibleBuilds / (dailyTarget / 3));
                 const hoursBeforeShortage = Math.floor(totalPossibleBuilds / jobsPerHour);
+                if (lowStockThreshold || belowDailyTarget || shiftsBeforeShortage < 5) {
+                    lowStockCount++;
+                } else if (moderateStockThreshold) {
+                    moderateStockCount++;
+                } else {
+                    highStockCount++;
+                }
 
                 const forecastStockItem = {
                     stockId: stock._id.toString(),
@@ -180,6 +277,7 @@ export const stockForecast = async (
                     jobsPerHour: jobsPerHour,
                     shiftsBeforeShortage: shiftsBeforeShortage,
                     hoursBeforeShortage: hoursBeforeShortage,
+                    imageURL: stock.imageURL,
                     modelType: ModelType.STOCK
                 } as ForecastItem;
 
@@ -212,7 +310,10 @@ export const stockForecast = async (
 
             let response = {
                 forecastedStockItems: filteredResults,
-                lowestStockItem: lowestStockItem
+                lowestStockItem: lowestStockItem,
+                lowStockCount: lowStockCount,
+                moderateStockCount: moderateStockCount,
+                highStockCount: highStockCount
             }
 
 
@@ -231,7 +332,7 @@ export const dunnageForecast = async (
 
     return new Promise(async (resolve, reject) => {
 
-
+        let lowDunnageCount = 0;
 
         const product = await Product.findOne({
             _id: productId,
@@ -283,7 +384,9 @@ export const dunnageForecast = async (
                 const jobsPerHour = dailyTarget / 24;
                 const shiftsBeforeShortage = Math.floor(totalPossibleBuilds / (dailyTarget / 3));
                 const hoursBeforeShortage = Math.floor(totalPossibleBuilds / jobsPerHour);
-
+                if (lowStockThreshold || belowDailyTarget || shiftsBeforeShortage < 5) {
+                    lowDunnageCount++;
+                }
                 const forecastDunnageItem = {
                     stockId: dunnage._id.toString(),
                     productId: product._id.toString(),
@@ -323,7 +426,8 @@ export const dunnageForecast = async (
 
             let response = {
                 lowestDunnageItem: lowestDunnageItem,
-                forecastDunnageItems: filteredResults
+                forecastDunnageItems: filteredResults,
+                lowDunnageCount: lowDunnageCount
             }
 
             return resolve(response);
@@ -332,17 +436,21 @@ export const dunnageForecast = async (
         }
     });
 };
-export const lowProductEntry = async (forecastItem: ForecastItem[]) => {
+export const lowProductEntry = async (forecastItems: ForecastItem[]) => {
 
-    console.log("forecastLow" + forecastItem);
-    for (const item of forecastItem) {
+
+
+    for (const item of forecastItems) {
 
         if (item.fiveShiftsBeforeShortage || item.lowThreshold ||
             item.belowDailyTarget) {
+            console.log("TRUE");
             await redisClient.set(item.productId, "true");
         } else {
+            console.log("FALSE");
             await redisClient.set(item.productId, "false");
         }
+
     }
 
 };
@@ -384,12 +492,12 @@ export const getDepartmentLowForecasts = async (departmentId: string) => {
                             productForecastItems.push(forecastItem);
                         }
                     }).catch((err: any) => {
-                        console.log(err);
+
                     }
                     );
                 }
             }).catch((err: any) => {
-                console.log(err);
+
             }
             );
 

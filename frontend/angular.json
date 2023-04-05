@@ -37,7 +37,9 @@
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/ngx-spinner/animations/line-spin-clockwise-fade.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/chart.js/dist/chart.js"
+            ]
           },
           "configurations": {
             "production": {

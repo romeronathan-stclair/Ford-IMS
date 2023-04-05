@@ -6,12 +6,14 @@ import { ModelType } from "../enums/modelType";
 import util from "util";
 import { redisClient } from "../app";
 import * as forecastService from "../services/forecastService";
+import { getPage, getPageSize } from "../utils/pagination";
 
 
 
 export const getForecastProduct = async (req: Request, res: Response) => {
 
     const productId = req.params.id;
+    console.log("productId", productId);
 
     const productForecast = await forecastService.forecastProduct(productId) as ProductForecast;
 
@@ -42,12 +44,21 @@ export const getPlantLowForecasts = async (req: Request, res: Response) => {
 
     const results = await Promise.all(promises);
 
+    let count = 0;
+    results.forEach((result: any) => {
+        count += result.productForecastItems.length
+    });
+
     let response = {
-        plantLowForecasts: results
+        plantLowForecasts: results,
+        lowProductsCount: count
     }
+
     return res.status(200).json(response);
 
 }
+
+
 export const departmentLowForecasts = async (req: Request, res: Response) => {
     if (!req.params.id) {
         return res.status(400).send("No department id provided");
@@ -75,24 +86,26 @@ export const getDepartmentForecasts = async (req: Request, res: Response) => {
 
 
 
-export const forecastAll = async (req: Request, res: Response) => {
+export const getForecasts = async (req: Request, res: Response) => {
+    const page = getPage(req);
+    const pageSize = getPageSize(req);
+    const departmentId = req.query.departmentId;
+    const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
+    const partNumber = req.query.partNumber;
+    const plantId = req.query.plantId;
 
 
-    const plants = await Plant.find({
-        isDeleted: false
-    });
+    if (departmentId) {
 
-    const plantIds = plants.map(plant => plant._id.toString());
+        const departmentForecasts = await forecastService.getDepartmentForecasts(departmentId.toString(), page, pageSize);
+        return res.status(200).send(departmentForecasts);
+    }
+    if (plantId) {
+        const plantForecasts = await forecastService.getPlantForecasts(plantId.toString(), page, pageSize);
 
-    const promises = plantIds.map(plantId => forecastService.forecastPlant(plantId));
-
-
-    const results = await Promise.all(promises);
-
-    let response = {
-        plantForecasts: results
+        return res.status(200).send(plantForecasts);
     }
 
-    return res.status(200).json(response);
+
 
 }

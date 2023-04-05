@@ -76,9 +76,14 @@ import { ProductionCountCreateComponent } from 'src/pages/production-count/produ
 import { ProductionCountStepOneComponent } from 'src/pages/production-count/production-count-step-one/production-count-step-one.component';
 import { ProductionCountStepTwoComponent } from 'src/pages/production-count/production-count-step-two/production-count-step-two.component';
 import { ProductionCountListComponent } from 'src/pages/production-count/production-count-list/production-count-list.component';
+import { ForecastListComponent } from 'src/pages/forecast/forecast-list/forecast-list.component';
+import { ForecastComponent } from 'src/pages/forecast/forecast/forecast.component';
+import { ForecastDetailComponent } from 'src/pages/forecast/forecast-detail/forecast-detail.component';
+import { ViewProductComponent } from 'src/pages/products/view-product/view-product.component';
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
+
 
 
 const routes: Routes = [
@@ -206,6 +211,7 @@ const routes: Routes = [
             data: { animation: 'Product List Page' },
             component: ProductListComponent,
           },
+
           {
             path: 'create',
             data: { animation: 'Create Product Page' },
@@ -258,7 +264,11 @@ const routes: Routes = [
 
             ]
 
-          }
+          }, {
+            path: 'view-info/:id',
+            data: { animation: 'View Products Page' },
+            component: ViewProductComponent
+          },
         ]
       },
       {
@@ -491,6 +501,17 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'forecast',
+        component: ForecastComponent,
+        children: [{
+          path: 'list',
+          component: ForecastListComponent,
+
+        }, {
+          path: "detail/:id",
+          component: ForecastDetailComponent
+        }
+        {
         path: 'event',
         data: { animation: 'Event Page' },
         children: [
