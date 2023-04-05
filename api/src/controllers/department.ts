@@ -67,13 +67,15 @@ export const createDepartment = async (req: Request, res: Response) => {
         const event = new Event({
             plantId: newDepartment.plantId,
             departmentId: newDepartment._id.valueOf(),
-            eventDate: new Date().toISOString(),
+            eventDate: new Date().toDateString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
             userId: user._id.valueOf(),
             operationType: CrudType.CREATE,
-            itemType: ModelType.DEPARTMENT,
+            modelType: ModelType.DEPARTMENT,
             userName: user.name,
             userEmailAddress: user.email,
-            itemId: newDepartment._id.valueOf()
+            itemId: newDepartment._id.valueOf(),
+            itemName: newDepartment.departmentName
         });
 
         await event.save();
@@ -187,12 +189,14 @@ export const updateDepartment = async (req: Request, res: Response) => {
         plantId: department.plantId,
         departmentId: department._id.valueOf(),
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
-        itemType: ModelType.DEPARTMENT,
+        modelType: ModelType.DEPARTMENT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: department._id.valueOf()
+        itemId: department._id.valueOf(),
+        itemName: department.departmentName
     });
 
     //save Department
@@ -240,12 +244,14 @@ export const deleteDepartment = async (req: Request, res: Response) => {
         plantId: department.plantId,
         departmentId: department._id.valueOf(),
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
-        itemType: ModelType.DEPARTMENT,
+        modelType: ModelType.DEPARTMENT,
         userName: user.name,
         userEmailAddress: user.email,
-        itemId: department._id.valueOf()
+        itemId: department._id.valueOf(),
+        itemName: department.departmentName
     });
 
     // save Department

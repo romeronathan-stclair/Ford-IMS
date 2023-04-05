@@ -2,7 +2,9 @@ import { Component, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Department } from 'src/models/department';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
@@ -19,10 +21,10 @@ export class DepartmentListComponent {
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
   departmentForm: FormGroup;
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  departments: any[] = [];
+  departments: Department[] = [];
   displayedColumns: string[] = [
     "name",
 
@@ -41,7 +43,9 @@ export class DepartmentListComponent {
   constructor(private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private departmentService: DepartmentService,
-    private spinnerService: SpinnerService, private authService: AuthService) {
+    private spinnerService: SpinnerService,
+    private authService: AuthService,
+    private router: Router) {
     this.departmentForm = new FormGroup({
       departmentName: new FormControl(''),
     });
@@ -50,10 +54,6 @@ export class DepartmentListComponent {
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
     this.loadData();
-
-
-
-
   }
 
   ngAfterViewInit() {
@@ -114,5 +114,8 @@ export class DepartmentListComponent {
     }
   }
 
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/department']);
+  }
 
 }

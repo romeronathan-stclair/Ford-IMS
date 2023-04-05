@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-use-per-dialog',
@@ -8,10 +9,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./use-per-dialog.component.scss']
 })
 export class UsePerDialogComponent {
-  departments: any[] = [];
+  departments: Department[] = [];
   public displayValidationErrors: boolean = false;
   valueForm: FormGroup;
-  selectedDepartments: any[] = [];
+  selectedDepartments: Department[] = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<UsePerDialogComponent>,

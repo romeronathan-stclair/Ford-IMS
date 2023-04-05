@@ -80,6 +80,10 @@ import { ForecastListComponent } from 'src/pages/forecast/forecast-list/forecast
 import { ForecastComponent } from 'src/pages/forecast/forecast/forecast.component';
 import { ForecastDetailComponent } from 'src/pages/forecast/forecast-detail/forecast-detail.component';
 import { ViewProductComponent } from 'src/pages/products/view-product/view-product.component';
+import { EventLogComponent } from 'src/components/event-log/event-log.component';
+import { EventInfoComponent } from 'src/components/event-info/event-info.component';
+import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
+
 
 
 const routes: Routes = [
@@ -506,7 +510,22 @@ const routes: Routes = [
         }, {
           path: "detail/:id",
           component: ForecastDetailComponent
-        }]
+        }
+        {
+        path: 'event',
+        data: { animation: 'Event Page' },
+        children: [
+            {
+            path: 'list/:modelType',
+            data: { animation: 'Event List Page' },
+            component: EventLogComponent
+          },
+          {
+            path: 'list/:modelType/:itemId',
+            data: { animation: 'Event Info Page' },
+            component: EventInfoComponent
+          }
+        ]
       }
     ]
   },
@@ -515,7 +534,11 @@ const routes: Routes = [
     data: { animation: 'Signout Page' },
     component: SignoutPageComponent
   },
-
+  {
+    path: '**',
+    data: { animation: 'Page Not Found' },
+    component: PageNotFoundComponent,
+  },
 
 ];
 

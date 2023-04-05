@@ -60,8 +60,12 @@ export class PlantService {
         });
     }
 
-
-
-
+    deletePlant(plant: any): Observable<any> {
+        return this.http.delete(`${this.endPoint}/plant/${plant}`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true,
+        });
+    }
 
 }

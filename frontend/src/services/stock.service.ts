@@ -48,4 +48,12 @@ export class StockService {
     });
   }
 
+  deleteStock(stock: any): Observable<any> {
+    return this.http.delete(`${this.endPoint}/stock/${stock}`, {
+      headers: this.baseHeaders,
+      observe: 'response',
+      withCredentials: true
+    });
+  }
+
 }

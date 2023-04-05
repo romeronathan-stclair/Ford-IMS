@@ -2,7 +2,7 @@
 <div class="table-header">
 
   <div *ngIf="departments.length > 0" class="dropdown">
-      <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
+      <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName"
           [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
   </div>
   <div class="search-bar">
@@ -22,7 +22,7 @@
       <div class="low-dunnage-label-wrapper" *ngIf="dunnage.currentCount <= dunnage.lowStock">
         <div class="low-dunnage-label">LOW STOCK</div>
       </div>
-      <div class="moderate-dunnage-label-wrapper" *ngIf="dunnage.currentCount <= dunnage.moderatStock && dunnage.currentCount > dunnage.lowStock">
+      <div class="moderate-dunnage-label-wrapper" *ngIf="dunnage.currentCount <= dunnage.moderateStock && dunnage.currentCount > dunnage.lowStock">
         <div class="moderate-dunnage-label">MODERATE STOCK</div>
       </div>
       <div class="high-dunnage-label-wrapper" *ngIf="dunnage.currentCount > dunnage.moderateStock">
@@ -34,6 +34,7 @@
       <mat-card-actions>
         <button [routerLink]="'/dashboard/dunnage/edit/info/' + dunnage._id" mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>
         <button [routerLink]="'/dashboard/dunnage/view-info/' + dunnage._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+        <button mat-mini-fab color="warn" (click)="deleteDunnage(dunnage._id)"><mat-icon>delete</mat-icon></button>
       </mat-card-actions>
     </mat-card>
   </div>
@@ -44,7 +45,7 @@
   <mat-paginator (page)="pageChanged($event)" #paginator [pageSize]="pageSize"
       aria-label="Select page of periodic elements" [length]="length">
   </mat-paginator>
-  <button type="submit" class="general-button">View Event Log</button>
+  <button (click)="viewEventLog()" class="general-button">View Event Log</button>
 </div>
 <p-confirmDialog #cd [style]="{width: '30vw'}">
   <ng-template pTemplate="header">

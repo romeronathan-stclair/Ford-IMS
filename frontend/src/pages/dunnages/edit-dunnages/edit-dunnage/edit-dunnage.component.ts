@@ -7,6 +7,8 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { Location } from '@angular/common';
+import { Department } from 'src/models/department';
 
 @Component({
   selector: 'app-edit-dunnage',
@@ -16,9 +18,9 @@ import { DepartmentService } from 'src/services/department.service';
 export class EditDunnageComponent {
   public displayValidationErrors: boolean = false;
   dunnageForm: FormGroup;
-  activePlantId: any;
-  departments: any[] = [];
-  selectedDepartment: any;
+  activePlantId: string = '';
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
   dunnageId: string = '';
   departmentId: string = '';
 
@@ -31,7 +33,9 @@ export class EditDunnageComponent {
     private route: ActivatedRoute,
     private spinnerService: SpinnerService,
     private authService: AuthService,
-    private messageService: MessageService) {
+    private messageService: MessageService,
+    private location: Location
+    ) {
         this.dunnageForm = this.formBuilder.group({
           name: new FormControl(''),
           skidQuantity: new FormControl(''),

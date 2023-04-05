@@ -7,6 +7,8 @@ import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
+import { Router } from '@angular/router';
+import { Plant } from 'src/models/plant';
 
 @Component({
   selector: 'app-plant-list',
@@ -20,10 +22,10 @@ export class PlantListComponent {
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: any;
+  activePlantId: string = '';
 
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
-  plants: any[] = [];
+  plants: Plant[] = [];
   displayedColumns: string[] = [
     "name",
 
@@ -45,9 +47,10 @@ export class PlantListComponent {
     private plantService: PlantService,
     private authService: AuthService,
     private sharedService: SharedService) { }
+    private router: Router
+    ) { }
   ngOnInit() {
     this.loadData();
-
 
   }
 
@@ -126,7 +129,9 @@ export class PlantListComponent {
     });
   }
 
-
+  viewEventLog() {
+    this.router.navigate(['/dashboard/event/list/plant']);
+  }
 
 
 }

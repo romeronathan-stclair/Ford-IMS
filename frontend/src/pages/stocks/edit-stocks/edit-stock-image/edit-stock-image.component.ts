@@ -7,6 +7,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { DepartmentService } from 'src/services/department.service';
 import { AuthService } from 'src/services/auth.service';
+import { Stock } from 'src/models/stock';
 
 @Component({
   selector: 'app-edit-stock-image',
@@ -20,6 +21,7 @@ export class EditStockImageComponent {
   public showOverlay: boolean = false;
   public isImageUploaded: boolean = false;
   stockId: string = '';
+  stock: Stock = {} as Stock;
 
   @ViewChild('fileInput', { static: true }) fileInput!: ElementRef;
 
@@ -78,6 +80,7 @@ export class EditStockImageComponent {
       next: (data: any) => {
         this.spinnerService.hide();
         this.imageUrl = data.body.stocks[0].imageURL;
+        this.stock = data.body.stocks[0];
       },
       error: (error: any) => {
         this.spinnerService.hide();
@@ -99,15 +102,12 @@ export class EditStockImageComponent {
   }
 
   onSubmit() {
+    this.spinnerService.show();
+
     const formData = new FormData();
 
     formData.append('stockId', this.stockId);
-
-    if (this.file) {
-      formData.append('file', this.file);
-    }
-
-    this.spinnerService.show();
+    formData.append('file', this.file);
 
     this.stockService.editStock(formData)
     .subscribe({

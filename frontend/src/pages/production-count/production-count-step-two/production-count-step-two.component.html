@@ -19,7 +19,7 @@
                             <span *ngIf="confirm">{{product.productQtyBuilt}}</span>
                         </td>
                         <td>
-                            <button class="help-btn" (click)="openHelpDialog(product)"></button>
+                            <button *ngIf="!confirm" class="help-btn" (click)="openHelpDialog(product)"></button>
                         </td>
                     </tr>
                 </tbody>

@@ -105,6 +105,12 @@ export class CreatePlantAssignUsersComponent {
     this.plantService.createPlant(request).subscribe({
       next: (response) => {
         this.spinnerService.hide();
+        this.messageService.clear();
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Plant created successfully',
+        });
         this.router.navigate(['/dashboard/plants/create/success']);
       },
       error: (error) => {

@@ -15,7 +15,7 @@
 
       <div>
         <div *ngIf="departments.length > 0" class="dropdown">
-          <p-dropdown formControlName="department" placeholder="Select Department"
+          <p-dropdown formControlName="department"
             optionLabel="departmentName" [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
         </div>
         <mat-error class="field-validation-error" *ngIf="

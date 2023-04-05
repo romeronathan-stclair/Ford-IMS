@@ -5,9 +5,10 @@
     <div class="card">
       <img [src]="stock.imageURL" alt="{{stock.name}}">
       <mat-card-title>Department: {{departmentName}}</mat-card-title>
+      <mat-card-title>Part Number: {{stock.partNumber}}</mat-card-title>
       <mat-card-title>Market Location: {{stock.marketLocation}}</mat-card-title>
-      <mat-card-title>Quantity per Tote: {{stock.stockQtyPerTote}}</mat-card-title>
-      <mat-card-title>Totes per Skid: {{stock.totesPerSkid}}</mat-card-title>
+      <mat-card-title *ngIf="!stock.roughStock">Quantity per Tote: {{stock.stockQtyPerTote}}</mat-card-title>
+      <mat-card-title *ngIf="!stock.roughStock">Totes per Skid: {{stock.totesPerSkid}}</mat-card-title>
       <mat-card-title>Total per Skid: {{stock.totalStockPerSkid}}</mat-card-title>
       <mat-card-title>Current Count (Skids): {{stock.currentCount}}</mat-card-title>
 

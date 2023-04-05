@@ -70,4 +70,12 @@ export class ProductService {
         });
     }
 
+    deleteProduct(product: any): Observable<any> {
+        return this.http.delete(`${this.endPoint}/product/${product}`, {
+            headers: this.baseHeaders,
+            observe: 'response',
+            withCredentials: true
+        });
+    }
+
 }

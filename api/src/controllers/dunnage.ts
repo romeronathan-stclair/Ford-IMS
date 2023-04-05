@@ -1,5 +1,5 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, UserDocument } from "../models";
+import { Department, DepartmentDocument, UserDocument, Event} from "../models";
 import { Dunnage, DunnageDocument } from "../models/dunnage";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -89,12 +89,29 @@ export const createDunnage = async (req: Request, res: Response) => {
                 }
                 return res.status(500).json("Error creating Dunnage");
             });
+
     } else {
         dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
+
     }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.CREATE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name,
+    });
 
     try {
         dunnage.save();
+        await event.save();
     } catch (err) {
         return res.status(500).json("Error creating Dunnage");
     }
@@ -168,6 +185,9 @@ export const updateDunnage = async (req: Request, res: Response) => {
         return res.status(500).json("Department not found");
     }
 
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
     //update Dunnage
 
     dunnage.name = req.body.name || dunnage.name;
@@ -205,11 +225,27 @@ export const updateDunnage = async (req: Request, res: Response) => {
                 }
                 return res.status(500).json("Error creating Stock");
             });
+
     }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name
+    });
 
     //save Dunnage
     try {
         await dunnage.save();
+        await event.save();
         return res.status(200).json("Dunnage updated successfully");
     } catch (err) {
         return res.status(500).json("Error updating Dunnage");
@@ -234,9 +270,39 @@ export const deleteDunnage = async (req: Request, res: Response) => {
     // delete Dunnage
     dunnage.isDeleted = true;
 
+    const departmentId = dunnage.departmentId;
+
+    const department = (await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    })) as DepartmentDocument;
+
+
+    if (!department) {
+        return res.status(500).json("Department not found");
+    }
+
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.DELETE,
+        modelType: ModelType.STOCK,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name
+    });
+
     // save Dunnage
     try {
         await dunnage.save();
+        await event.save();
         return res.status(200).json("Dunnage deleted successfully");
     } catch (err) {
         return res.status(500).json("Error deleting Dunnage" + err);

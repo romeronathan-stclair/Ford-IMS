@@ -55,6 +55,17 @@ export class CreateStockStepOneComponent {
       if (this.request.stock != null) {
         this.roughStockChecked = this.request.stock.roughStockChecked;
         this.subAssemblyChecked = this.request.stock.subAssemblyChecked;
+
+        if (this.roughStockChecked) {
+          this.stockForm.controls['totalStockPerSkid'].enable();
+          this.stockForm.controls['totalStockPerSkid'].setValidators([Validators.required]);
+          this.stockForm.controls['stockQtyPerTote'].disable();
+          this.stockForm.controls['totesPerSkid'].disable();
+          this.stockForm.controls['stockQtyPerTote'].setValidators(null);
+          this.stockForm.controls['totesPerSkid'].setValidators(null);
+          this.stockForm.controls['stockQtyPerTote'].setValue(null);
+          this.stockForm.controls['totesPerSkid'].setValue(null);
+        }
       }
     }
 
@@ -108,6 +119,7 @@ export class CreateStockStepOneComponent {
       let totalStock = this.stockForm.value.stockQtyPerTote * this.stockForm.value.totesPerSkid;
       let moderateStock = 0;
 
+      //TODO Check Math
       if (this.roughStockChecked === true) {
         moderateStock = this.stockForm.value.lowStock * 2;
       } else {

@@ -17,7 +17,7 @@ export class InviteOneUserStepTwoComponent {
   public displayValidationErrors: boolean = false;
   request: any;
   roles: any[] = [];
-  plants: any[] = [];
+  plants: Plant[] = [];
   selectedPlants: Plant[] = [];
   constructor(
     private plantService: PlantService,

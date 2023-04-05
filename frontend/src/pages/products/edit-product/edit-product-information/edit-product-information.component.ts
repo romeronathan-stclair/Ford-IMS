@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { Product } from 'src/models/product';
 import { ProductService } from 'src/services/product.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
@@ -15,7 +16,7 @@ import { Location } from '@angular/common'
 export class EditProductInformationComponent {
   public displayValidationErrors: boolean = false;
   productForm: FormGroup;
-  product: any;
+  product: Product = {} as Product;
   productId: string = ''; // add a variable to hold the product id
   constructor(
     private productService: ProductService,

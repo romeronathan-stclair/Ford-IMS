@@ -46,7 +46,7 @@
         <ng-container matColumnDef="viewDepartments">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let plant">
-                <button type="submit" class="general-button">View Departments</button>
+                <button [routerLink]="'/dashboard/departments/list'" [disabled]="plant._id != activePlantId" type="submit" class="general-button">View Departments</button>
 
             </td>
         </ng-container>
@@ -66,7 +66,7 @@
     <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
     </mat-paginator>
-    <button type="submit" class="general-button">View Event Log</button>
+    <button (click)="viewEventLog()" class="general-button">View Event Log</button>
 </div>
 <p-confirmDialog #cd [style]="{width: '30vw'}">
     <ng-template pTemplate="header">

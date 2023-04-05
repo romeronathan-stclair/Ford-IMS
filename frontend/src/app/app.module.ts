@@ -111,7 +111,9 @@ import { ForecastComponent } from '../pages/forecast/forecast/forecast.component
 import { ForecastListComponent } from 'src/pages/forecast/forecast-list/forecast-list.component';
 import { ForecastDetailComponent } from '../pages/forecast/forecast-detail/forecast-detail.component';
 import { ViewProductComponent } from '../pages/products/view-product/view-product.component';
-
+import { EventLogComponent } from 'src/components/event-log/event-log.component';
+import { EventInfoComponent } from 'src/components/event-info/event-info.component';
+import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -200,6 +202,9 @@ import { ViewProductComponent } from '../pages/products/view-product/view-produc
     ForecastListComponent,
     ForecastDetailComponent,
     ViewProductComponent,
+    EventLogComponent,
+    EventInfoComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

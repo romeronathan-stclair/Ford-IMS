@@ -4,6 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { UsePerDialogComponent } from 'src/components/use-per-dialog/use-per-dialog.component';
+import { Department } from 'src/models/department';
+import { Dunnage } from 'src/models/dunnage';
+import { Product } from 'src/models/product';
+import { ProductDunnage } from 'src/models/productDunnage';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { DunnageService } from 'src/services/dunnage.service';
@@ -23,13 +27,13 @@ export class ReassignDunnageComponent {
   request: any;
   roughproductChecked = false;
   subAssemblyChecked = false;
-  departments: any[] = [];
-  selectedDepartment: any;
-  activePlantId: any;
-  dunnage: any[] = [];
-  productId: any;
-  productDunnage: any[] = [];
-  product: any;
+  departments: Department[] = [];
+  selectedDepartment: Department = {} as Department;
+  activePlantId: string = '';
+  dunnage: Dunnage[] = [];
+  productId: string = '';
+  productDunnage: ProductDunnage[] = [];
+  product: Product = {} as Product;
   targetDunnage: any[] = [];
 
   constructor(
