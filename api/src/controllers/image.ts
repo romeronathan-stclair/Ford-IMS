@@ -30,7 +30,7 @@ export const uploadImage = async (imageRequest: ImageRequest) => {
         const dirPath = getImagePath(imageRequest);
 
         // Check if the image is valid.
-        if (imageRequest.oldImage && imageRequest.oldImage != env.app.apiUrl + "/images/defaultImage.png") {
+        if (imageRequest.oldImage && imageRequest.oldImage != env.app.apiUrl + "/public/default-image") {
             const publicPath = "public/";
             const imagePath = imageRequest.oldImage.split(publicPath)[1];
             const dirPath = path.join(__dirname, '..', '..', 'public', imagePath);
@@ -79,16 +79,40 @@ export const imageUpload = async (req: Request, res: Response) => {
 }
 export const retrieveImage = async (req: Request, res: Response) => {
 
+    console.log("retrieveImage");
+
     const plantId = req.params.plantId;
     const departmentId = req.params.departmentId;
     const item = req.params.item;
     const modelType = req.params.modelType;
 
-    const dirPath = path.join(`images/${plantId}/${departmentId}/${modelType}/${item}`);
+    let dirPath = path.join(`images/${plantId}/${departmentId}/${modelType}/${item}`);
 
-    res.sendFile(dirPath, { root: 'public' });
+    // Check if the image exists
+    if (!fs.existsSync("public/" + dirPath)) {
+        dirPath = path.join(`default-image/default-image.png`);
+        res.sendFile(dirPath, { root: 'public' });
+
+    }
+    else {
+        res.sendFile(dirPath, { root: 'public' });
+    }
+
+    // 
+
+
+
+
 }
+export const retrieveDefaultImage = async (req: Request, res: Response) => {
 
+    console.log("retrieveDefaultImage");
+
+    const dirPath = path.join(`default-image/default-image.png`);
+    res.sendFile(dirPath, { root: 'public' });
+
+
+}
 export const getImagePath = (imageRequest: ImageRequest) => {
 
     const ext = "." + MIME_TYPE_MAP[imageRequest.image.mimetype];

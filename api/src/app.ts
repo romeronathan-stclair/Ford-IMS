@@ -118,6 +118,7 @@ router.get("/event", authMiddleware.isAdminAuthenticated, eventController.getEve
 // image routes
 router.post("/image", imageController.imageUpload);
 router.get("/public/images/:plantId/:departmentId/:modelType/:item", imageController.retrieveImage);
+router.get("/public/default-image", imageController.retrieveDefaultImage);
 //plant routes
 router.post("/plant", authMiddleware.isAuthenticated, plantController.createPlant);
 router.get("/plant", authMiddleware.isAuthenticated, plantController.getActivePlant);

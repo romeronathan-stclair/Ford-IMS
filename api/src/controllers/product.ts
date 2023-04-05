@@ -98,7 +98,7 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
                 return res.status(500).json("Error creating Product");
             });
     } else {
-        product.imageURL = env.app.apiUrl + "/images/defaultImage.png";
+        product.imageURL = env.app.apiUrl + "/public/default-image";
     }
 
     if (req.body.stocks) {
@@ -196,7 +196,7 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
         if (!isIncoming) {
             existingStock.isDeleted = true;
             await existingStock.save();
-            
+
         }
     }
 

@@ -1,5 +1,5 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, UserDocument, Event} from "../models";
+import { Department, DepartmentDocument, UserDocument, Event } from "../models";
 import { Dunnage, DunnageDocument } from "../models/dunnage";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -91,7 +91,7 @@ export const createDunnage = async (req: Request, res: Response) => {
             });
 
     } else {
-        dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
+        dunnage.imageURL = env.app.apiUrl + "/public/default-image";
 
     }
 

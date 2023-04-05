@@ -108,7 +108,7 @@ export const createStock = async (req: Request, res: Response) => {
             });
 
     } else {
-        stock.imageURL = env.app.apiUrl + "/public/images/defaultImage.png";
+        stock.imageURL = env.app.apiUrl + "/public/default-image";
     }
 
     const event = new Event({
