@@ -83,7 +83,7 @@ import { ViewProductComponent } from 'src/pages/products/view-product/view-produ
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
-
+import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component';
 
 
 const routes: Routes = [
@@ -390,11 +390,16 @@ const routes: Routes = [
         path: 'users',
         data: { animation: 'Users Page' },
         component: UsersComponent,
-        children: [{
+        children: [
+        {
           path: 'list',
           data: { animation: 'Users List Page' },
           component: UserListComponent
-
+        },
+        {
+          path: 'view-info/:id',
+          data: { animation: 'View User Page' },
+          component: UserInfoComponent
         },
         {
           path: 'invite',

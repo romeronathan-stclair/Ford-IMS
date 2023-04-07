@@ -27,7 +27,14 @@ export class PageNotFoundComponent {
   }
 
   goBack() {
+    clearInterval(this.timerSub);
+    clearTimeout(this.timeoutSub);
     this.location.back();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.timerSub);
+    clearTimeout(this.timeoutSub);
   }
 
 }

@@ -114,6 +114,7 @@ import { ViewProductComponent } from '../pages/products/view-product/view-produc
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
+import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component';
 
 @NgModule({
   declarations: [
@@ -204,7 +205,8 @@ import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-fo
     ViewProductComponent,
     EventLogComponent,
     EventInfoComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserInfoComponent,
   ],
   imports: [
     BrowserModule,
