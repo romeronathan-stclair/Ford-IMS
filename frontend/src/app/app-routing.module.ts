@@ -84,6 +84,9 @@ import { EventLogComponent } from 'src/components/event-log/event-log.component'
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
 import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component';
+import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-user.component';
+import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
+import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 
 
 const routes: Routes = [
@@ -427,6 +430,23 @@ const routes: Routes = [
             {
               path: 'invite-users',
               component: InviteUsersComponent
+            }
+          ]
+        },
+        {
+          path: 'edit',
+          data: { animation: 'Edit User Page' },
+          component: EditUserComponent,
+          children: [
+            {
+              path: 'info/:id',
+              data: { animation: 'Edit User Page' },
+              component: EditUserInfoComponent,
+            },
+            {
+              path: 'reassign-departments/:id',
+              data: { animation: 'Edit User Page' },
+              component: EditUserDepartmentsComponent,
             }
           ]
         }

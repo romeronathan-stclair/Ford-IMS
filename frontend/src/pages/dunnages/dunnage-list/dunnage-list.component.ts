@@ -151,7 +151,7 @@ export class DunnageListComponent {
   deleteDunnage(dunnageId: any) {
     this.confirmationService.confirm({
 
-      message: 'Are you sure that you want to delete this product?',
+      message: 'Are you sure that you want to delete this dunnage?',
       accept: () => {
         this.spinnerService.show();
 

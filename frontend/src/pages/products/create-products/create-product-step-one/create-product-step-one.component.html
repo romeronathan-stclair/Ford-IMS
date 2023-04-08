@@ -8,9 +8,8 @@
                 <input placeholder="Product Name" formControlName="name" type="name" class="form-control"
                     id="name-input" aria-describedby="nameHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
-          displayValidationErrors ||
-          productForm.controls['name'].dirty ||
-          productForm.controls['name'].touched
+                displayValidationErrors ||
+                productForm.controls['name'].touched && !productForm.controls['name'].dirty
         ">
                     <span *ngIf="productForm.controls['name'].hasError('required')">Product Name is required</span>
                 </mat-error>
@@ -21,8 +20,8 @@
                     id="partNumber-input" aria-describedby="partNumberHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
           displayValidationErrors ||
-          productForm.controls['partNumber'].dirty ||
-          productForm.controls['partNumber'].touched
+          productForm.controls['partNumber'].dirty &&
+          !productForm.controls['partNumber'].touched
         ">
                     <span *ngIf="productForm.controls['partNumber'].hasError('required')">Part Number is required</span>
                 </mat-error>
@@ -32,8 +31,8 @@
                     id="marketLocation-input" aria-describedby="marketLocationHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
                   displayValidationErrors ||
-                  productForm.controls['marketLocation'].dirty ||
-                  productForm.controls['marketLocation'].touched
+                  productForm.controls['marketLocation'].dirty &&
+                  !productForm.controls['marketLocation'].touched
                 ">
                     <span *ngIf="productForm.controls['marketLocation'].hasError('required')">Market Location is
                         required</span>
@@ -45,8 +44,8 @@
                     id="dailyTarget-input" aria-describedby="dailyTargetHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
                   displayValidationErrors ||
-                  productForm.controls['dailyTarget'].dirty ||
-                  productForm.controls['dailyTarget'].touched
+                  productForm.controls['dailyTarget'].dirty &&
+                  !productForm.controls['dailyTarget'].touched
                 ">
                     <span *ngIf="productForm.controls['dailyTarget'].hasError('required')">Daily Target is
                         required</span>
@@ -60,8 +59,8 @@
             </div>
             <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            productForm.controls['department'].dirty ||
-            productForm.controls['department'].touched
+            productForm.controls['department'].dirty &&
+            !productForm.controls['department'].touched
           ">
                 <span *ngIf="productForm.controls['department'].hasError('required') || !selectedDepartment">Department
                     is required</span>
