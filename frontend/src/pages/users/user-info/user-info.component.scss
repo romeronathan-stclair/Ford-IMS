@@ -1,0 +1,40 @@
+@import "src/styles.scss";
+.holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    height: 70vh;
+    padding: 30px;
+    @include column-lg-break {
+        padding: 30px;
+    }
+}
+
+.card {
+  width: 50%;
+  text-align: center;
+  margin: 20px;
+}
+
+img {
+  max-width: 60%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  border: solid black 1px;
+  margin-bottom: 10px;
+}
+
+mat-card-title {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.button-holders {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+

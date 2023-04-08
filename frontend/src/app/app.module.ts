@@ -114,6 +114,10 @@ import { ViewProductComponent } from '../pages/products/view-product/view-produc
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
+import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component';
+import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-user.component';
+import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
+import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 
 @NgModule({
   declarations: [
@@ -204,7 +208,11 @@ import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-fo
     ViewProductComponent,
     EventLogComponent,
     EventInfoComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    UserInfoComponent,
+    EditUserComponent,
+    EditUserInfoComponent,
+    EditUserDepartmentsComponent,
   ],
   imports: [
     BrowserModule,
