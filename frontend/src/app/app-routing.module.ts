@@ -83,6 +83,7 @@ import { ViewProductComponent } from 'src/pages/products/view-product/view-produ
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
+import { InviteMultipleUsersComponent } from 'src/pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
 
 
 
@@ -420,8 +421,8 @@ const routes: Routes = [
               ]
             },
             {
-              path: 'invite-users',
-              component: InviteUsersComponent
+              path: 'invite-multiple',
+              component: InviteMultipleUsersComponent
             }
           ]
         }

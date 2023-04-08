@@ -484,6 +484,7 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
         return res.status(500).json("Product not found");
     }
 
+
     //delete product
     product.isDeleted = true;
 
@@ -515,7 +516,30 @@ export const deleteProduct = async (req: Request, res: Response, next: NextFunct
         itemName: product.name
     });
 
-    //save delete product
+    const productStocks = await ProductStock.find({
+        productId: productId,
+        isDeleted: false
+    });
+
+
+    for (let i = 0; i < productStocks.length; i++) {
+        const productStock = productStocks[i];
+        productStock.isDeleted = true;
+        await productStock.save();
+    }
+    const productDunnage = await ProductDunnage.find({
+        productId: productId,
+        isDeleted: false
+    });
+
+
+    for (let i = 0; i < productDunnage.length; i++) {
+        const pDunnage = productDunnage[i];
+        pDunnage.isDeleted = true;
+        await pDunnage.save();
+    }
+
+
     try {
         await product.save();
         await event.save();

@@ -43,6 +43,9 @@ export class AppComponent {
         if (event.url !== '/dashboard/production-count/create/step-one' && event.url !== '/dashboard/production-count/create/step-two') {
           this.sharedService.clearData('productionCount');
         }
+        if (event.url !== '/dashboard/users/invite/invite-multiple') {
+          this.sharedService.clearData('invite-multiple');
+        }
       }
     });
   }
