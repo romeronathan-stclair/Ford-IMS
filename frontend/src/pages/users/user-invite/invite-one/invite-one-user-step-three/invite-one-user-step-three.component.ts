@@ -94,7 +94,7 @@ export class InviteOneUserStepThreeComponent {
 
 
         this.messageService.clear();
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User invited successfully' });
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User invited successfully. An email has been sent out to the user with an invite link.' });
         this.router.navigate(['/dashboard/users/list']);
         this.spinnerService.hide();
       },

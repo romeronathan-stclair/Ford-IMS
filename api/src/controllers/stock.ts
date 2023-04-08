@@ -1,5 +1,5 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, UserDocument, Event } from "../models";
+import { Department, DepartmentDocument, UserDocument, Event, User } from "../models";
 import { Stock, StockDocument } from "../models/stock";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -9,6 +9,7 @@ import { ImageRequest } from "../type/imageRequest";
 import { uploadImage } from "./image";
 import { Types } from "mongoose";
 import env from "../utils/env";
+import { ProductStock } from "../models/productStock";
 
 //create Stock
 export const createStock = async (req: Request, res: Response) => {
@@ -125,6 +126,19 @@ export const createStock = async (req: Request, res: Response) => {
         itemName: stock.name,
     });
 
+    const productStocks = await ProductStock.find({
+        stockId: stock._id,
+        isDeleted: false
+    });
+
+
+    for (let i = 0; i < productStocks.length; i++) {
+        const productStock = productStocks[i];
+        productStock.isDeleted = true;
+        await productStock.save();
+    }
+
+
     try {
         stock.save();
         event.save();
@@ -145,6 +159,7 @@ export const getStock = async (req: Request, res: Response) => {
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const partNumber = req.query.partNumber;
     const stockId = req.query.stockId;
+    const userId = req.query.userId;
 
 
     const query: any = {
@@ -153,6 +168,14 @@ export const getStock = async (req: Request, res: Response) => {
 
     if (departmentId) {
         query["departmentId"] = departmentId;
+    }
+
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (user) {
+            const departmentIds = user.plants.flatMap(plant => plant.departments);
+            query["departmentId"] = { $in: departmentIds };
+        }
     }
 
     if (name) {

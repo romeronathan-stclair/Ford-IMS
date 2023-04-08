@@ -3,7 +3,7 @@
     <div class="sidebar">
         <lib-ng-simple-sidebar></lib-ng-simple-sidebar>
     </div>
-    <div class="content">
+    <div [ngClass]="{'full-width': !isOpen}" class="content">
 
         <router-outlet></router-outlet>
     </div>

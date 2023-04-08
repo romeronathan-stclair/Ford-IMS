@@ -70,7 +70,7 @@ export class StockListComponent {
           resolve();
           this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
 
-          
+
 
           let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
 
@@ -101,11 +101,17 @@ export class StockListComponent {
   }
 
   async loadStocks(query: string = '') {
-    const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
-    let stockQuery = `?departmentId=${selectedDepartmentId}&page=${this.currentPage}&pageSize=${this.pageSize}`;
+    console.log(this.selectedDepartment);
+    const selectedDepartmentId = this.selectedDepartment._id;
+    let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
 
     if (query) {
       stockQuery += query;
+    }
+    if (selectedDepartmentId) {
+      stockQuery += `&departmentId=${selectedDepartmentId}`;
+    } else {
+      stockQuery += `&userId=${this.authService.user._id}`;
     }
     console.log(stockQuery);
 
@@ -135,6 +141,7 @@ export class StockListComponent {
 
       let query = `&name=${name}`
       console.log(query);
+      this.currentPage = 0;
       this.loadStocks(query);
     }
     // const nameControl = this.stockForm.get('stockName');
@@ -168,6 +175,7 @@ export class StockListComponent {
   }
 
   deleteStock(stockId: any) {
+    this.messageService.clear();
     this.confirmationService.confirm({
 
       message: 'Are you sure that you want to delete this stock?',
@@ -175,25 +183,25 @@ export class StockListComponent {
         this.spinnerService.show();
 
         this.stockService.deleteStock(stockId)
-        .subscribe({
-          next: (data: any) => {
-            this.spinnerService.hide();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Stock deleted successfully'
-           });
-            this.loadData();
-          },
-          error: (error: any) => {
-            this.spinnerService.hide();
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Failed to delete stock'
-           });
-          }
-        });
+          .subscribe({
+            next: (data: any) => {
+              this.spinnerService.hide();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Stock deleted successfully'
+              });
+              this.loadData();
+            },
+            error: (error: any) => {
+              this.spinnerService.hide();
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Failed to delete stock'
+              });
+            }
+          });
       },
       reject: () => {
         //reject action
