@@ -93,6 +93,9 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+.subheader {
+    padding-left: 10px;
+}
 .sidebar-header {
     height: 90px;
     padding: 10px;
@@ -455,6 +458,7 @@ ng-deep .p-toast .p-toast-message .p-toast-message-content {
     border-radius: 7.5px;
     background-color: white;
     color: $darkGrey;
+    z-index: 99999;
 }
 .p-dropdown-item {
     padding: 15px;

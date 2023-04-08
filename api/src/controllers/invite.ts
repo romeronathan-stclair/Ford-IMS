@@ -16,6 +16,7 @@ export const sendInvite = async (req: Request, res: Response) => {
     if (!req.body.invites) {
         return res.status(500).json("No invites found");
     }
+    console.log("INVITES:" + JSON.stringify(req.body.invites));
 
     for (const invite of req.body.invites) {
 
@@ -107,7 +108,7 @@ export const sendInvite = async (req: Request, res: Response) => {
 
 
         const event = new Event({
-            plantId: plants[0].plantId,
+            plantId: plants ? plants[0].plantId : "N/A",
             eventDate: new Date().toDateString(),
             eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
             userId: user._id.toString(),

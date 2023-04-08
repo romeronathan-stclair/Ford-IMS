@@ -87,6 +87,7 @@ import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component
 import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-user.component';
 import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
 import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
+import { InviteMultipleUsersComponent } from 'src/pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
 
 
 const routes: Routes = [
@@ -428,8 +429,8 @@ const routes: Routes = [
               ]
             },
             {
-              path: 'invite-users',
-              component: InviteUsersComponent
+              path: 'invite-multiple',
+              component: InviteMultipleUsersComponent
             }
           ]
         },

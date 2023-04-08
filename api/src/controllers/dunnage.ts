@@ -1,5 +1,5 @@
 import { json, NextFunction, Request, Response } from "express";
-import { Department, DepartmentDocument, UserDocument, Event} from "../models";
+import { Department, DepartmentDocument, UserDocument, Event, ProductDunnage, User } from "../models";
 import { Dunnage, DunnageDocument } from "../models/dunnage";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
@@ -126,6 +126,7 @@ export const getDunnage = async (req: Request, res: Response) => {
     const departmentId = req.query.departmentId;
     const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
     const dunnageId = req.query.dunnageId;
+    const userId = req.query.userId;
 
     const query: any = {
         isDeleted: false
@@ -135,8 +136,16 @@ export const getDunnage = async (req: Request, res: Response) => {
         query["departmentId"] = departmentId;
     }
 
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (user) {
+            const departmentIds = user.plants.flatMap(plant => plant.departments);
+            query["departmentId"] = { $in: departmentIds };
+        }
+    }
     if (name) {
-        query["name"] = name;
+        query["name"] = { $regex: name, $options: "i" };
+        console.log(name);
     }
 
     if (dunnageId) {
@@ -298,7 +307,17 @@ export const deleteDunnage = async (req: Request, res: Response) => {
         itemId: dunnage._id.valueOf(),
         itemName: dunnage.name
     });
+    const productDunnage = await ProductDunnage.find({
+        dunnageId: dunnage._id,
+        isDeleted: false
+    });
 
+
+    for (let i = 0; i < productDunnage.length; i++) {
+        const pDunnage = productDunnage[i];
+        pDunnage.isDeleted = true;
+        await pDunnage.save();
+    }
     // save Dunnage
     try {
         await dunnage.save();
