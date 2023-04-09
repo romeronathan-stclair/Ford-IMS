@@ -17,6 +17,9 @@
 
 </div>
 <div class="table-holder">
+  <div *ngIf="dunnages.length == 0" class="form-text mb-3">
+    There are currently no products in this department.
+  </div>
   <div class="card">
     <mat-card *ngFor="let dunnage of dunnages">
 
