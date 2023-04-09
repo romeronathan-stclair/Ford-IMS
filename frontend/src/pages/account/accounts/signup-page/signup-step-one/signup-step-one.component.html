@@ -1,0 +1,37 @@
+<app-ford-container title="1. Enter User Information">
+    <div class="holder">
+        <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="input-holder">
+                <label for="email-input" class="form-label">Email</label>
+                <input formControlName="email" type="email" class="form-control" id="email-input"
+                    aria-describedby="emailHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                    displayValidationErrors ||
+                    userForm.controls['email'].dirty ||
+                    userForm.controls['email'].touched
+                  ">
+                    <span *ngIf="userForm.controls['email'].hasError('required')">Email is required.</span>
+                </mat-error>
+            </div>
+
+
+            <div class="input-holder">
+                <label for="inviteCode-input" class="form-label">Invite code</label>
+                <input formControlName="inviteCode" type="inviteCode" class="form-control" id="inviteCode-input"
+                    aria-describedby="inviteCodeHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                    displayValidationErrors ||
+                    userForm.controls['inviteCode'].dirty ||
+                    userForm.controls['inviteCode'].touched
+                  ">
+                    <span *ngIf="userForm.controls['inviteCode'].hasError('required')">Invite code required.</span>
+                </mat-error>
+            </div>
+
+
+            <button type="submit" class="submit-button">Submit</button>
+        </form>
+        <p>Already have an account?<a routerLink="/account/login"> Sign in here.</a></p>
+        <p-toast position="bottom-center"></p-toast>
+    </div>
+</app-ford-container>

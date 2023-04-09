@@ -1,0 +1,36 @@
+@import "src/styles.scss";
+.holder {
+    min-width: 50vw;
+    overflow: hidden;
+}
+.container-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+button {
+    margin: 10px;
+    justify-self: end;
+}
+.department-holder {
+    width: 100%;
+    background-color: $grey;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.department-item {
+    display: flex;
+    justify-content: space-between;
+    min-width: 80%;
+    margin: 0 auto;
+    background-color: $grey;
+}
+.mat-icon {
+    padding: 10px;
+    color: white;
+    transform: scale(1.75);
+}

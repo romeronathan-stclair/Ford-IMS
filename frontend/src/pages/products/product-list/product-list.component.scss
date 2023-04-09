@@ -1,0 +1,107 @@
+@import "src/styles.scss";
+.table-header img {
+    width: 150px;
+}
+.table-holder {
+    min-height: 70vh;
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+.paginator-holder {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $grey !important;
+    border-bottom: 0.75px solid black;
+    border-right: 0.75px solid black;
+    border-left: 0.75px solid black;
+    @include column-lg-break {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+mat-paginator {
+    background-color: $grey !important;
+    width: 50%;
+    @include column-lg-break {
+        order: 0;
+        width: 90%;
+    }
+}
+.mat-column-name {
+    display: inline-flex;
+    width: 40%;
+    max-width: 40%;
+}
+i {
+    padding-right: 5.5px;
+}
+.first-button {
+    @include column-lg-break {
+        order: 1;
+    }
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 7.5px;
+}
+.fa-magnifying-glass {
+    padding-left: 7.5px;
+    color: $darkGrey;
+}
+
+.card {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: space-between;
+    padding: 0 15px;
+    margin: 15px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+mat-card {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+}
+
+.product-img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border: solid black 1px;
+}
+
+mat-card-title {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+}
+
+mat-card-subtitle {
+    font-size: 16px;
+    text-align: center;
+}
+
+mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    float: right;
+}
+
+mat-card-actions button {
+    margin-right: 10px;
+}

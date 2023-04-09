@@ -20,7 +20,7 @@ import bcrypt from "bcrypt";
 import logger from "../utils/logger";
 import { getPage, getPageSize } from "../utils/pagination";
 import { CrudType } from "../enums/crudType";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { ModelType } from "../enums/modelType";
 
 export const createPlant = async (
@@ -28,12 +28,14 @@ export const createPlant = async (
     res: Response,
     next: NextFunction
 ) => {
+    console.log(req.body);
     await check("plantName", "plantName is not valid")
         .isLength({ min: 1 })
         .run(req);
     await check("plantLocation", "plantLocation is not valid")
         .isLength({ min: 1 })
         .run(req);
+
 
     let eventList: EventDocument[] = [];
     let response;
@@ -42,6 +44,7 @@ export const createPlant = async (
 
     const plant: PlantDocument = (await Plant.findOne({
         plantName: req.body.plantName,
+        isDeleted: false,
     })) as PlantDocument;
     const user: UserDocument = req.user as UserDocument;
 
@@ -58,7 +61,7 @@ export const createPlant = async (
         await newPlant.save();
 
         const event: EventDocument = new Event({
-            itemType: ModelType.PLANT,
+            modelType: ModelType.PLANT,
             plantId: newPlant._id.valueOf(),
             userId: user._id.valueOf(),
             operationType: CrudType.CREATE,
@@ -66,6 +69,8 @@ export const createPlant = async (
             itemId: newPlant._id.valueOf(),
             userEmailAddress: user.email,
             eventDate: new Date().toDateString(),
+            eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+            itemName: newPlant.plantName,
         }) as EventDocument;
 
         eventList.push(event);
@@ -91,58 +96,48 @@ export const createPlant = async (
             departmentName: { $in: departmentNames },
         });
 
-        if (existingDepartments.length > 0) {
-            const existingDepartmentNames = existingDepartments.map(
-                (department: any) => department.departmentName
+
+        try {
+            departments = req.body.departments.map((department: any) => {
+                const newDepartment: DepartmentDocument = new Department();
+                newDepartment.departmentName = department;
+                newDepartment.plantId = newPlant._id.valueOf();
+                newDepartment.isDeleted = false;
+
+                const event: EventDocument = new Event({
+                    eventDate: new Date().toDateString(),
+                    eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+                    userId: user._id.valueOf(),
+                    operationType: CrudType.CREATE,
+                    modelType: ModelType.DEPARTMENT,
+                    userName: user.name,
+                    plantId: newPlant._id.valueOf(),
+                    userEmailAddress: user.email,
+                    itemId: newDepartment._id.valueOf(),
+                    itemName: newDepartment.departmentName,
+                    departmentId: newDepartment._id.valueOf(),
+                }) as EventDocument;
+
+                eventList.push(event);
+
+
+                return newDepartment;
+            });
+            await Promise.all(
+                departments.map((department: { save: () => any }) => {
+                    return department.save();
+                })
+
             );
+
+            departmentIds = departments.map((department: DepartmentDocument) =>
+                department._id.toString()
+            ) as [String];
+        } catch (err) {
             cancelPlantCreate(newPlant, departments, eventList);
-            return res
-                .status(500)
-                .json(
-                    "Departments already exist with the names " +
-                    existingDepartmentNames.join(", ")
-                );
-        } else {
-            try {
-                departments = req.body.departments.map((department: any) => {
-                    const newDepartment: DepartmentDocument = new Department();
-                    newDepartment.departmentName = department;
-                    newDepartment.plantId = newPlant._id.valueOf();
-                    newDepartment.isDeleted = false;
-
-                    const event: EventDocument = new Event({
-                        eventDate: new Date().toDateString(),
-                        userId: user._id.valueOf(),
-                        operationType: CrudType.CREATE,
-                        itemType: ModelType.DEPARTMENT,
-                        userName: user.name,
-                        plantId: newPlant._id.valueOf(),
-                        userEmailAddress: user.email,
-                        itemId: newDepartment._id.valueOf(),
-                    }) as EventDocument;
-
-                    eventList.push(event);
-
-
-                    return newDepartment;
-                });
-                await Promise.all(
-                    departments.map((department: { save: () => any }) => {
-                        return department.save();
-                    })
-
-                );
-
-
-
-                departmentIds = departments.map((department: DepartmentDocument) =>
-                    department._id.toString()
-                ) as [String];
-            } catch (err) {
-                cancelPlantCreate(newPlant, departments, eventList);
-                return res.status(500).json("Error while creating departments." + err);
-            }
+            return res.status(500).json("Error while creating departments." + err);
         }
+
     }
 
 
@@ -201,8 +196,6 @@ export const createPlant = async (
         });
 };
 export const getActivePlant = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
-
     const user = req.user as UserDocument;
 
     const activePlantId = user.plants.find((plant) => plant.isActive);
@@ -228,22 +221,44 @@ export const getPlants = async (req: Request, res: Response) => {
     const pageSize = getPageSize(req);
     const userId = req.query.userId || undefined;
     const plantId = req.query.plantId || undefined;
+    const plantName = req.query.plantName || undefined;
     const isActive = req.query.isActive || undefined
 
     if (plantId) {
+        console.log(plantId);
         const plant: PlantDocument = (await Plant.findOne({
-            _id: plantId,
-            isDeleted: false
+            _id: plantId.toString(),
+            isDeleted: false,
         })) as PlantDocument;
+
+
+        return res.status(200).json(plant);
+    }
+    if (plantName) {
+        const plant: PlantDocument = (await Plant.findOne({
+            plantName: plantName.toString(),
+            isDeleted: false,
+        })) as PlantDocument;
+
         return res.status(200).json(plant);
     }
 
     if (!userId) {
-        let plants: PlantDocument[] = (await Plant.find({
+        let plantCount = (await Plant.find({
             isDeleted: false,
+        }).countDocuments());
+
+        let plants: PlantDocument[] = (await Plant.find({
         }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
 
-        return res.status(200).json(plants);
+        if (!plants) {
+            return res.status(500).json("Plants do not exist!");
+        }
+        let response = {
+            plants: plants,
+            plantCount: plantCount
+        }
+        return res.status(200).json(response);
     }
 
 
@@ -257,15 +272,7 @@ export const getPlants = async (req: Request, res: Response) => {
     }
 
     const plants = user.plants.map((plant) => {
-        if (isActive == "true") {
-            if (plant.isActive) {
-                return plant.plantId;
-            }
-        }
-        else {
-            return plant.plantId;
-        }
-
+        return plant.plantId;
     });
 
 
@@ -274,11 +281,21 @@ export const getPlants = async (req: Request, res: Response) => {
         isDeleted: false,
     }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
 
+    const plantCount = (await Plant.find({
+        _id: { $in: plants },
+        isDeleted: false,
+    }).countDocuments());
+
+
     if (!plantList) {
         return res.status(500).json("Plants do not exist!");
     }
+    let response = {
+        plants: plantList,
+        plantCount: plantCount
+    }
 
-    return res.status(200).json(plantList);
+    return res.status(200).json(response);
 
 };
 
@@ -302,13 +319,15 @@ export const updatePlant = async (req: Request, res: Response) => {
     plant.plantLocation = req.body.plantLocation;
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.UPDATE,
-        itemType: ModelType.PLANT,
+        modelType: ModelType.PLANT,
         userName: user.name,
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
+        itemName: plant.plantName,
     }) as EventDocument;
 
     console.log("HERE");
@@ -345,13 +364,15 @@ export const deletePlant = async (req: Request, res: Response) => {
 
     const event: EventDocument = new Event({
         eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
         userId: user._id.valueOf(),
         operationType: CrudType.DELETE,
-        itemType: ModelType.PLANT,
+        modelType: ModelType.PLANT,
         userName: user.name,
         plantId: plant._id.valueOf(),
         userEmailAddress: user.email,
         itemId: plant._id.valueOf(),
+        itemName: plant.plantName,
     }) as EventDocument;
 
     try {
@@ -386,27 +407,23 @@ const assignUsers = async (
 
                     if (!assignedUser) {
                         return reject(
-                            "Plant created successfully but user not found when assigning"
+                            "User not found when assigning."
                         );
                     }
 
-                    const assignedDepartments = departments.find(
-                        (department: { departmentName: string }) =>
-                            assignment.departments.includes(department.departmentName)
-                    );
+                    const assignedDepartmentIds: [string] = departments
+                        .filter((department) => assignment.departments.includes(department.departmentName))
+                        .map((department) => department._id.toString()) as [string];
 
-                    if (!assignedDepartments) {
-                        return reject(
-                            "Department not found when assigning to users. Please try again or contact support."
-                        );
+                    if (!assignedDepartmentIds) {
+                        return reject("Department not found when assigning to users. Please try again or contact support.");
                     }
 
                     assignedUser.plants.push({
                         plantId: newPlant._id.valueOf(),
-                        departments: assignedDepartments._id,
+                        departments: assignedDepartmentIds,
                         isActive: false,
                     });
-
                     await assignedUser.save();
 
                     return assignedUser;

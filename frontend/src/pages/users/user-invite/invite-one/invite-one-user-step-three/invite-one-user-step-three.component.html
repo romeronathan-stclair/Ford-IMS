@@ -1,0 +1,25 @@
+<app-ford-container title="3. Assign Department(s)">
+    <div class="holder">
+        <div *ngIf="selectedPlants.length > 0" class="dropdown">
+            <p-dropdown (onChange)="changePlant($event)" placeholder="Sort by Plant" optionLabel="plantName"
+                [options]="selectedPlants" [(ngModel)]="selectedPlant"></p-dropdown>
+        </div>
+        <div class="inner-holder">
+            <h2>Departments</h2>
+            <div class="plant-list">
+                <div *ngFor="let department of departments" class="department-item">
+                    <mat-checkbox [(ngModel)]="department.checked" class="mat-icon" color="#47a8e5"
+                        (change)="onCheckboxChange($event, department)"></mat-checkbox>
+                    <h3>{{department.departmentName}}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="button-holder">
+            <button type="button" [routerLink]="'/dashboard/users/invite/invite-one-user/step-two'"
+                class="submit-button">Back</button>
+
+            <button type="button" (click)="onSubmit()" class="submit-button">Invite</button>
+
+        </div>
+    </div>
+</app-ford-container>

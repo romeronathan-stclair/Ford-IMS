@@ -1,146 +1,181 @@
 import { json, NextFunction, Request, Response } from "express";
-import { UserDocument } from "../models";
+import { Department, DepartmentDocument, UserDocument, Event, ProductDunnage, User } from "../models";
 import { Dunnage, DunnageDocument } from "../models/dunnage";
 import { check } from "express-validator";
 import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
 import { getPage, getPageSize } from "../utils/pagination";
+import { ImageRequest } from "../type/imageRequest";
+import { uploadImage } from "./image";
+import env from "../utils/env";
+import { Types } from "mongoose";
 
 //create Dunnage
 export const createDunnage = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
-    await check("currentCount", "currentCount is not valid").isLength({min: 1}).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({min: 1}).run(req);
-    await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
+    await check("departmentId", "departmentId is not valid").isLength({ min: 1 }).run(req);
+    await check("name", "name is not valid").isLength({ min: 1 }).run(req);
+    await check("skidQuantity", "skidQuantity is not valid").isLength({ min: 1 }).run(req);
+    await check("lowStock", "lowStock is not valid").isLength({ min: 1 }).run(req);
+    await check("moderateStock", "moderateStock is not valid").isLength({ min: 1 }).run(req);
+    await check("marketLocation", "marketLocation is not valid").isLength({ min: 1 }).run(req);
 
-    //check if Dunnage already exists
-    let response;
-    const dunnage: DunnageDocument = (await Dunnage.findOne({
-        departmentId: req.body.departmentId,
-        name: req.body.name,
-        skidQuantity: req.body.skidQuantity,
-        currentCount: req.body.currentCount,
-        lowStock: req.body.lowStock,
-        moderateStock: req.body.moderateStock,
-        imageURL: req.body.imageURL,
+    req.body = JSON.parse(req.body.dunnage);
+
+    const departmentId = req.body.departmentId;
+
+    const department = await Department.findById({
+        _id: departmentId,
         isDeleted: false
+    });
+
+    if (!department) {
+        return res.status(200).json("Department not found");
+    }
+
+    const plantId = department.plantId;
+
+    const user = req.user as UserDocument;
+
+    const existingDunnage: DunnageDocument = (await Dunnage.findOne({
+        departmentId: req.body.departmentId.toString(),
+        name: req.body.name,
     })) as DunnageDocument;
 
-    if (dunnage) {
+    if (existingDunnage) {
         return res.status(500).json("Dunnage already exists");
     }
 
-    //create new Dunnage
-    const newDunnage: DunnageDocument = new Dunnage();
-    newDunnage.departmentId = req.body.departmentId;
-    newDunnage.name = req.body.name;
-    newDunnage.skidQuantity = req.body.skidQuantity;
-    newDunnage.currentCount = req.body.currentCount;
-    newDunnage.lowStock = req.body.lowStock;
-    newDunnage.moderateStock = req.body.moderateStock;
-    newDunnage.imageURL = req.body.imageURL;
-    newDunnage.isDeleted = false;
+    const dunnage: DunnageDocument = new Dunnage({
+        departmentId: req.body.departmentId.toString(),
+        name: req.body.name,
+        skidQuantity: req.body.skidQuantity,
+        currentCount: 0,
+        lowStock: req.body.lowStock,
+        moderateStock: req.body.moderateStock,
+        marketLocation: req.body.marketLocation,
+        isDeleted: false
+    });
 
-    //save Dunnage
-    response = {
-        dunnage: newDunnage,
-        message: "Dunnage created successfully"
-    }
     try {
-        await newDunnage.save();
-        return res.status(200).json(response);
+        await dunnage.save();
+    } catch (err) {
+        return res.status(500).json("Error creating Dunnage" + err);
+    }
+
+    if (req.files) {
+        const image = req.files.file;
+
+        const imageRequest: ImageRequest = {
+            itemId: dunnage._id.toString(),
+            plantId: plantId,
+            departmentId: dunnage.departmentId,
+            modelType: ModelType.DUNNAGE,
+            image: image
+        };
+
+        await uploadImage(imageRequest)
+            .then((result: any) => {
+                dunnage.imageURL = env.app.apiUrl + "/" + result;
+
+            })
+            .catch((err: any) => {
+                console.log(err);
+
+                try {
+                    dunnage.remove();
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                return res.status(500).json("Error creating Dunnage");
+            });
+
+    } else {
+        dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
+
+    }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.CREATE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name,
+    });
+
+    try {
+        dunnage.save();
+        await event.save();
     } catch (err) {
         return res.status(500).json("Error creating Dunnage");
     }
 
-};
-
-//get Dunnage by id
-export const getDunnageById = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({min: 1}).run(req);
-
-    //find Dunnage by id
-    const dunnage: DunnageDocument = (await Dunnage.findOne({
-        _id: req.body.id,
-        isDeleted: false
-    })) as DunnageDocument;
-
-    if (!dunnage) {
-        return res.status(500).json("Dunnage not found");
-    }
-
-    //return Dunnage
     return res.status(200).json(dunnage);
 };
 
-//get all Dunnage
-export const getAllDunnage = async (req: Request, res: Response) => {
+//get Dunnage
+export const getDunnage = async (req: Request, res: Response) => {
     const page = getPage(req);
     const pageSize = getPageSize(req);
+    const departmentId = req.query.departmentId;
+    const name = req.query.name ? decodeURIComponent(req.query.name.toString()) : undefined;
+    const dunnageId = req.query.dunnageId;
+    const userId = req.query.userId;
 
-    const dunnages = await Dunnage.find({ isDeleted: false }).skip(page * pageSize).limit(pageSize).exec();
-
-    if (!dunnages) {
-        return res.status(500).json("Dunnage not found");
-    }
-
-    //return Dunnage
-    return res.status(200).json(dunnages);
-};
-
-//get Dunnage by Department Id
-export const getDunnageByDepartmentId = async (req: Request, res: Response) => {
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-
-    //find Dunnage by Department id
-    const dunnage: DunnageDocument[] = (await Dunnage.find({
-        departmentId: req.body.departmentId,
+    const query: any = {
         isDeleted: false
-    })) as DunnageDocument[];
-
-    if (!dunnage) {
-        return res.status(500).json("Dunnage not found");
     }
 
-    //return Dunnage
-    return res.status(200).json(dunnage);
-};
-
-//get Dunnage by Name
-export const getDunnageByName = async (req: Request, res: Response) => {
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-
-    //find Dunnage by name
-    const dunnage: DunnageDocument[] = (await Dunnage.find({
-        name: req.body.name,
-        isDeleted: false
-    })) as DunnageDocument[];
-
-    if (!dunnage) {
-        return res.status(500).json("Dunnage not found");
+    if (departmentId) {
+        query["departmentId"] = departmentId;
     }
 
-    //return Dunnage
-    return res.status(200).json(dunnage);
+    if (userId) {
+        const user = await User.findOne({ _id: userId, isDeleted: false });
+        if (user) {
+            const departmentIds = user.plants.flatMap(plant => plant.departments);
+            query["departmentId"] = { $in: departmentIds };
+        }
+    }
+    if (name) {
+        query["name"] = { $regex: name, $options: "i" };
+        console.log(name);
+    }
+
+    if (dunnageId) {
+        query["_id"] = new Types.ObjectId(dunnageId.toString());
+    }
+
+    const dunnageCount = await Dunnage.countDocuments(query);
+    const dunnages = await Dunnage.find(query).skip(page * pageSize).limit(pageSize).exec();
+
+    let response = {
+        dunnages: dunnages,
+        count: dunnageCount
+    }
+
+    return res.status(200).json(response);
 };
 
 //update Dunnage
 export const updateDunnage = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({min: 1}).run(req);
-    await check("departmentId", "departmentId is not valid").isLength({min: 1}).run(req);
-    await check("name", "name is not valid").isLength({min: 1}).run(req);
-    await check("skidQuantity", "skidQuantity is not valid").isLength({min: 1}).run(req);
-    await check("currentCount", "currentCount is not valid").isLength({min: 1}).run(req);
-    await check("lowStock", "lowStock is not valid").isLength({min: 1}).run(req);
-    await check("moderateStock", "moderateStock is not valid").isLength({min: 1}).run(req);
-    await check("imageURL", "imageURL is not valid").isLength({min: 1}).run(req);
+    await check("dunnageId", "dunnageId is not valid").isLength({ min: 1 }).run(req);
+
+    const dunnageId = req.body.dunnageId;
+
+    if (dunnageId === undefined) {
+        return res.status(500).json("Dunnage Id required");
+    }
 
     //find Dunnage by id
     const dunnage: DunnageDocument = (await Dunnage.findOne({
-        _id: req.body.id,
+        _id: dunnageId,
         isDeleted: false
     })) as DunnageDocument;
 
@@ -148,48 +183,148 @@ export const updateDunnage = async (req: Request, res: Response) => {
         return res.status(500).json("Dunnage not found");
     }
 
+    const departmentId = dunnage.departmentId;
+
+    const department = (await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    }));
+
+    if (!department) {
+        return res.status(500).json("Department not found");
+    }
+
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
     //update Dunnage
-    dunnage.departmentId = req.body.departmentId;
-    dunnage.name = req.body.name;
-    dunnage.skidQuantity = req.body.skidQuantity;
-    dunnage.currentCount = req.body.currentCount;
-    dunnage.lowStock = req.body.lowStock;
-    dunnage.moderateStock = req.body.moderateStock;
-    dunnage.imageURL = req.body.imageURL;
-    dunnage.isDeleted = false;
+
+    dunnage.name = req.body.name || dunnage.name;
+    dunnage.skidQuantity = req.body.skidQuantity || dunnage.skidQuantity;
+    dunnage.lowStock = req.body.lowStock || dunnage.lowStock;
+    dunnage.moderateStock = req.body.moderateStock || dunnage.moderateStock;
+    dunnage.departmentId = req.body.departmentId || dunnage.departmentId;
+    dunnage.marketLocation = req.body.marketLocation || dunnage.marketLocation;
+
+    if (req.files) {
+        const image = req.files.file;
+
+        const imageRequest: ImageRequest = {
+            itemId: dunnage._id.toString(),
+            plantId: department.plantId,
+            departmentId: dunnage.departmentId,
+            modelType: ModelType.DUNNAGE,
+            image: image,
+            oldImage: dunnage.imageURL
+        };
+
+        await uploadImage(imageRequest)
+            .then((result: any) => {
+                dunnage.imageURL = env.app.apiUrl + "/" + result;
+
+            })
+            .catch((err: any) => {
+                console.log(err);
+
+                try {
+                    dunnage.remove();
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                return res.status(500).json("Error creating Stock");
+            });
+
+    }
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.UPDATE,
+        modelType: ModelType.DUNNAGE,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name
+    });
 
     //save Dunnage
     try {
         await dunnage.save();
+        await event.save();
         return res.status(200).json("Dunnage updated successfully");
     } catch (err) {
         return res.status(500).json("Error updating Dunnage");
     }
 };
 
-//delete Dunnage
+// delete Dunnage
 export const deleteDunnage = async (req: Request, res: Response) => {
-    await check("id", "id is not valid").isLength({min: 1}).run(req);
+    const dunnageId = req.params.id;
+    await check("id", "id is not valid").isLength({ min: 1 }).run(req);
 
-    //find Dunnage by id
+    // find Dunnage by id
     const dunnage: DunnageDocument = (await Dunnage.findOne({
-        _id: req.body.id,
-        isDeleted: false
+        _id: dunnageId,
+        isDeleted: false,
     })) as DunnageDocument;
 
     if (!dunnage) {
         return res.status(500).json("Dunnage not found");
     }
 
-    //delete Dunnage
+    // delete Dunnage
     dunnage.isDeleted = true;
 
-    //save Dunnage
-    try {
-        await dunnage.save();
-        return res.status(200).json("Dunnage deleted successfully");
-    } catch (err) {
-        return res.status(500).json("Error deleting Dunnage");
+    const departmentId = dunnage.departmentId;
+
+    const department = (await Department.findOne({
+        _id: departmentId,
+        isDeleted: false
+    })) as DepartmentDocument;
+
+
+    if (!department) {
+        return res.status(500).json("Department not found");
     }
 
+    const plantId = department.plantId;
+    const user = req.user as UserDocument;
+
+    const event = new Event({
+        plantId: plantId,
+        departmentId: departmentId,
+        eventDate: new Date().toDateString(),
+        eventTime: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+        userId: user._id.toString(),
+        operationType: CrudType.DELETE,
+        modelType: ModelType.STOCK,
+        userName: user.name,
+        userEmailAddress: user.email,
+        itemId: dunnage._id.valueOf(),
+        itemName: dunnage.name
+    });
+    const productDunnage = await ProductDunnage.find({
+        dunnageId: dunnage._id,
+        isDeleted: false
+    });
+
+
+    for (let i = 0; i < productDunnage.length; i++) {
+        const pDunnage = productDunnage[i];
+        pDunnage.isDeleted = true;
+        await pDunnage.save();
+    }
+    // save Dunnage
+    try {
+        await dunnage.save();
+        await event.save();
+        return res.status(200).json("Dunnage deleted successfully");
+    } catch (err) {
+        return res.status(500).json("Error deleting Dunnage" + err);
+    }
 };
+

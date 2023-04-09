@@ -4,12 +4,14 @@ export type EventDocument = Document & {
   plantId: string;
   departmentId: string;
   eventDate: string;
+  eventTime: string;
   userId: string;
   operationType: string;
-  itemType: string;
+  modelType: string;
   userName: string;
   userEmailAddress: string;
   itemId: string;
+  itemName: string;
 };
 
 const EventSchema = new Schema<EventDocument>(
@@ -20,9 +22,13 @@ const EventSchema = new Schema<EventDocument>(
     },
     departmentId: {
       type: String,
-      required: true,
+      required: false,
     },
     eventDate: {
+      type: String,
+      required: true,
+    },
+    eventTime: {
       type: String,
       required: true,
     },
@@ -34,7 +40,7 @@ const EventSchema = new Schema<EventDocument>(
       type: String,
       required: true,
     },
-    itemType: {
+    modelType: {
       type: String,
       required: true,
     },
@@ -50,6 +56,10 @@ const EventSchema = new Schema<EventDocument>(
       type: String,
       required: true,
     },
+    itemName: {
+      type: String,
+      required: true,
+    }
   },
   { timestamps: true }
 );

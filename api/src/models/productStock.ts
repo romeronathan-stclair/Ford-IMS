@@ -4,26 +4,15 @@ import { Schema, Document, model } from "mongoose";
 
 export type ProductStockDocument = Document & {
     productId: string;
-    name: string;
-    partNumber: string;
     stockId: string;
     departmentId: string;
-    dailyTarget: number;
-    usePerProduct: string;
+    usePerProduct: number;
     isDeleted: boolean;
-    
+
 };
 
 const productStockSchema = new Schema<ProductStockDocument>({
     productId: {
-        type: String,
-        required: true,
-    },
-    name: {
-        type: String,
-        required: true,
-    },
-    partNumber: {
         type: String,
         required: true,
     },
@@ -35,12 +24,8 @@ const productStockSchema = new Schema<ProductStockDocument>({
         type: String,
         required: true,
     },
-    dailyTarget: {
-        type: Number,
-        required: true,
-    },
     usePerProduct: {
-        type: String,
+        type: Number,
         required: true,
     },
     isDeleted: {
@@ -51,4 +36,4 @@ const productStockSchema = new Schema<ProductStockDocument>({
 });
 
 
-export const Stock = model<ProductStockDocument>("Stock", productStockSchema);
+export const ProductStock = model<ProductStockDocument>("ProductStock", productStockSchema);

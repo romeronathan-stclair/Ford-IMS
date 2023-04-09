@@ -1,0 +1,136 @@
+<app-ford-container title="2. Enter User Information">
+    <div class="holder">
+        <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+            <div class="input-holder">
+                <label for="fullName-input" class="form-label">Full Name</label>
+                <input formControlName="fullName" type="fullName" class="form-control" id="fullName-input"
+                    aria-describedby="fullNameHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+                    displayValidationErrors ||
+                    userForm.controls['fullName'].dirty ||
+                    userForm.controls['fullName'].touched
+                  ">
+                    <span *ngIf="userForm.controls['fullName'].hasError('required')">Full name required.</span>
+                </mat-error>
+            </div>
+            <div class="input-holder">
+                <label for="password-input" class="form-label">Password</label>
+                <input formControlName="password" type="password" class="form-control" id="password-input" required />
+                <mat-error class="field-validation-error password-required" *ngIf="
+                    userForm.controls['password'].errors &&
+                    (displayValidationErrors ||
+                      userForm.controls['password'].dirty ||
+                      userForm.controls['password'].touched)
+                  ">
+                    <label [ngClass]="
+                      userForm.controls['password'].hasError('required') ||
+                      userForm.controls['password'].hasError('minlength')
+                        ? 'text-danger'
+                        : 'text-success'
+                    ">
+                        <i class="material-icons">
+                            {{
+                            userForm.controls["password"].hasError("required") ||
+                            userForm.controls["password"].hasError("minlength")
+                            ? "cancel"
+                            : "check_circle"
+                            }}
+                        </i>
+                        Password must be at least 8 characters long.
+                    </label>
+
+                    <label class="col" [ngClass]="
+                      userForm.controls['password'].hasError('required') ||
+                      userForm.controls['password'].hasError('hasNumber')
+                        ? 'text-danger'
+                        : 'text-success'
+                    ">
+                        <i class="material-icons">
+                            {{
+                            userForm.controls["password"].hasError("required") ||
+                            userForm.controls["password"].hasError("hasNumber")
+                            ? "cancel"
+                            : "check_circle"
+                            }}
+                        </i>
+                        Password must contain a number.
+                    </label>
+
+                    <label class="col" [ngClass]="
+                      userForm.controls['password'].hasError('required') ||
+                      userForm.controls['password'].hasError('hasCapitalCase')
+                        ? 'text-danger'
+                        : 'text-success'
+                    ">
+                        <i class="material-icons">
+                            {{
+                            userForm.controls["password"].hasError("required") ||
+                            userForm.controls["password"].hasError("hasCapitalCase")
+                            ? "cancel"
+                            : "check_circle"
+                            }}
+                        </i>
+                        Passowrd must contain capital case.
+                    </label>
+
+                    <label class="col" [ngClass]="
+                      userForm.controls['password'].hasError('required') ||
+                      userForm.controls['password'].hasError('hasSmallCase')
+                        ? 'text-danger'
+                        : 'text-success'
+                    ">
+                        <i class="material-icons">
+                            {{
+                            userForm.controls["password"].hasError("required") ||
+                            userForm.controls["password"].hasError("hasSmallCase")
+                            ? "cancel"
+                            : "check_circle"
+                            }}
+                        </i>
+                        Password must contain small case.
+                    </label>
+
+                    <label class="col" [ngClass]="
+                      userForm.controls['password'].hasError('required') ||
+                      userForm.controls['password'].hasError('hasSpecialCharacters')
+                        ? 'text-danger'
+                        : 'text-success'
+                    ">
+                        <i class="material-icons">
+                            {{
+                            userForm.controls["password"].hasError("required") ||
+                            userForm.controls["password"].hasError("hasSpecialCharacters")
+                            ? "cancel"
+                            : "check_circle"
+                            }}
+                        </i>
+                        Password must contain special characters.
+                    </label>
+                </mat-error>
+            </div>
+            <div class="input-holder">
+                <label for="password-input" class="form-label">Confirm Password</label>
+                <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword-input"
+                    required />
+                <mat-error class="field-validation-error" *ngIf="
+                    userForm.controls['confirmPassword'].errors &&
+                    (displayValidationErrors ||
+                      userForm.controls['confirmPassword'].dirty ||
+                      userForm.controls['confirmPassword'].touched)
+                  ">
+                    <label *ngIf="userForm.controls['confirmPassword'].hasError('NoPasswordMatch')">
+                        Passwords do not match.
+                    </label>
+                </mat-error>
+            </div>
+
+            <div class="button-holders">
+                <button [routerLink]="'/account/signup/step-one'" type="button" class="submit-button">Back</button>
+                <button type="submit" class="submit-button">Submit</button>
+            </div>
+
+        </form>
+
+        <p-toast position="bottom-center"></p-toast>
+    </div>
+</app-ford-container>

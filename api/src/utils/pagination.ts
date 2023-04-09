@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-export const MAX_PAGE_SIZE = 5;
+export const MAX_PAGE_SIZE = Number.MAX_SAFE_INTEGER;
 
 export const getPage = (req: Request) => {
     if (!req.params.page && !req.query.page) return 0;

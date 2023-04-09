@@ -1,0 +1,91 @@
+<app-ford-container>
+    <div *ngIf="product" class="holder">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="input-holder">
+                <label for="name">Product Name</label>
+                <input placeholder="product Name" formControlName="name" type="text" class="form-control"
+                    id="name-input" aria-describedby="nameHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+            displayValidationErrors ||
+            productForm.controls['name'].dirty ||
+            productForm.controls['name'].touched
+          ">
+                    <span *ngIf="productForm.controls['name'].hasError('required')">name is
+                        required</span>
+                </mat-error>
+            </div>
+            <div class="input-holder">
+                <label for="partNumber">Part Number</label>
+
+                <input placeholder="Part Number" formControlName="partNumber" type="text" class="form-control"
+                    id="partNumber-input" aria-describedby="partNumberHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+            displayValidationErrors ||
+            productForm.controls['partNumber'].dirty ||
+            productForm.controls['partNumber'].touched
+          ">
+                    <span *ngIf="productForm.controls['partNumber'].hasError('required')">Part Number is
+                        required</span>
+                </mat-error>
+            </div>
+
+
+            <div class="input-holder">
+                <label for="dailyTarget">Daily Target</label>
+                <input placeholder="Daily Target" formControlName="dailyTarget" type="number" class="form-control"
+                    id="dailyTarget-input" aria-describedby="dailyTargetHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+            displayValidationErrors ||
+            productForm.controls['dailyTarget'].dirty ||
+            productForm.controls['dailyTarget'].touched
+          ">
+                    <span *ngIf="productForm.controls['dailyTarget'].hasError('required')">Daily Target is
+                        required</span>
+                </mat-error>
+            </div>
+
+            <div class="input-holder">
+                <label for="marketLocation">Market Location</label>
+                <input placeholder="Market Location" formControlName="marketLocation" type="text" class="form-control"
+                    id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+                <mat-error class="field-validation-error" *ngIf="
+            displayValidationErrors ||
+            productForm.controls['marketLocation'].dirty ||
+            productForm.controls['marketLocation'].touched
+          ">
+                    <span *ngIf="productForm.controls['marketLocation'].hasError('required')">Market Location is
+                        required</span>
+                </mat-error>
+            </div>
+            <div class="buttons">
+                <button type="button" [routerLink]="'/dashboard/products/edit/change-image/' + product.productId"
+                    class="submit-button update-image-button">Update Image</button>
+                <div class="button-holders">
+
+
+                    <button type="button" [routerLink]="'/dashboard/products/edit/reassign-stock/' + product.productId"
+                        class="submit-button">Assign
+                        Stock</button>
+                    <button type="button"
+                        [routerLink]="'/dashboard/products/edit/reassign-dunnage/' + product.productId"
+                        class="submit-button">Assign Dunnage</button>
+                </div>
+                <div class="button-holders">
+
+
+                    <button type="button" (click)="back()" class="submit-button">Cancel</button>
+                    <button type="submit" class="submit-button">Submit</button>
+                    <button type="button" [routerLink]="'/dashboard/products/list'"
+                        class="submit-button">Cancel</button>
+                    <button type="submit" class="submit-button">Update</button>
+                </div>
+            </div>
+            <!-- <div class="button-holder">
+
+        <a routerLink="/account/reset-productLocation">Forgot productLocation?</a>
+    </div> -->
+
+            <p-toast position="bottom-center"></p-toast>
+        </form>
+    </div>
+</app-ford-container>

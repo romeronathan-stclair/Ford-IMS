@@ -1,0 +1,22 @@
+.logout-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+img {
+  width: 200px;
+}
+
+a {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+a:hover {
+  color: darkblue;
+  text-decoration: underline;
+}

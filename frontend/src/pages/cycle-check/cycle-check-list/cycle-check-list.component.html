@@ -1,0 +1,52 @@
+<h1 class="page-header">Cycle Check History</h1>
+<div class="table-header">
+    <div>
+    </div>
+
+    <img src="/assets/ford-logo.png" />
+
+</div>
+<div class="table-holder">
+  <table class="table">
+    <thead>
+      <th>Cycle Check</th>
+      <th>User</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>{{event.itemName}}</td>
+        <td>{{event.userName}}</td>
+        <td>{{event.eventDate}}</td>
+        <td>{{event.eventTime}}</td>
+        <td>
+          <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="paginator-holder">
+    <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/cycle-check/create/step-one'" type="submit"
+        class="general-button first-button">Start Cycle Count</button>
+    <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
+        aria-label="Select page of periodic elements" [length]="length">
+    </mat-paginator>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+    <ng-template pTemplate="header">
+        <h3></h3>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+    </ng-template>
+</p-confirmDialog>
+
