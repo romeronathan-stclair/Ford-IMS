@@ -11,6 +11,8 @@ import {
     Department,
     Event,
     EventDocument,
+    Product,
+    Dunnage,
 } from "../models";
 import passwordSchema from "../utils/passwordValidator";
 import { createRandomToken } from "../utils/randomGenerator";
@@ -164,6 +166,7 @@ export const createPlant = async (
         userId: string;
         departments: string[];
     }[];
+
 
     await assignUsers(newPlant, departments, assignments)
         .then((result) => {
@@ -375,15 +378,89 @@ export const deletePlant = async (req: Request, res: Response) => {
         itemName: plant.plantName,
     }) as EventDocument;
 
+    const departments = await Department.find({ plantId: plantId }).exec();
+
+    if (departments && departments.length > 0) {
+        try {
+            const departmentIds = departments.map((department) => {
+                return department._id;
+            });
+
+            try {
+                const products = await Product.find({ departmentId: { $in: departmentIds } }).exec();
+                if (products && products.length > 0) {
+                    const productIds = products.map((product) => {
+                        return product._id;
+                    });
+                    await Product.updateMany({ _id: { $in: productIds } }, { isDeleted: true }).exec();
+                }
+            } catch (productError) {
+                console.error("Error while handling products:", productError);
+            }
+
+            try {
+                const dunnage = await Dunnage.find({ departmentId: { $in: departmentIds } }).exec();
+                if (dunnage && dunnage.length > 0) {
+                    const dunnageIds = dunnage.map((dunnage) => {
+                        return dunnage._id;
+                    });
+                    await Dunnage.updateMany({ _id: { $in: dunnageIds } }, { isDeleted: true }).exec();
+                }
+            } catch (dunnageError) {
+                console.error("Error while handling dunnage:", dunnageError);
+            }
+
+            try {
+                await Department.updateMany({ _id: { $in: departmentIds } }, { isDeleted: true }).exec();
+            } catch (departmentError) {
+                console.error("Error while updating departments:", departmentError);
+            }
+        } catch (error) {
+            console.error("Error in overall process:", error);
+        }
+    }
+
+
+
+
+
+
+
     try {
         await plant.save();
         await event.save();
+        await deleteUsersActivePlant(plantId);
         return res.status(200).json(plant);
     }
     catch (err) {
         return res.status(500).json({ err });
     }
 }
+async function deleteUsersActivePlant(plantId: string) {
+    try {
+        const users = await User.find({ 'plants.plantId': plantId }).exec();
+        console.log("users", users);
+
+        if (users && users.length > 0) {
+            const bulkUpdateOperations = users.map(user => {
+                const updatedUserPlants = user.plants.filter(plant => plant.plantId !== plantId);
+
+                return {
+                    updateOne: {
+                        filter: { _id: user._id },
+                        update: { $set: { plants: updatedUserPlants } }
+                    }
+                };
+            });
+
+            await User.bulkWrite(bulkUpdateOperations);
+        }
+    } catch (error) {
+        console.error("Error updating users' plants:", error);
+    }
+}
+
+
 
 const assignUsers = async (
     newPlant: any,

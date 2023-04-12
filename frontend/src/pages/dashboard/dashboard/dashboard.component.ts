@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   forecastText: string = '';
   forecastCount: number = 0;
   existingLink: any;
+  disableLink: boolean = false;
   private isOpenSubscription: Subscription | null = null;
   constructor(private sharedService: SharedService, private el: ElementRef, private renderer: Renderer2, private plantService: PlantService, private authService: AuthService, private ngSimpleSidebarService: NgSimpleSidebarService, private forecastService: ForecastService) {
 
@@ -83,7 +84,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         icon: 'fa-solid fa-users',
         routerLink: ['users/list'],
         position: SimpleSidebarPosition.top,
-        class: 'hello'
+       
 
       },
       {
@@ -96,7 +97,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         name: 'Logout',
         icon: 'fa-solid fa-arrow-right-from-bracket',
         routerLink: ['/signout'],
-        position: SimpleSidebarPosition.bottom
+        position: SimpleSidebarPosition.bottom,
       },
     ];
     // required, configure items
@@ -123,6 +124,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.sharedService.activePlantChanged$.subscribe(changed => {
       if (changed) {
         this.updateForecast();
+        if (this.authService.user.activePlantId == "0") {
+          this.disableLink = true;
+        }
+        else {
+          this.disableLink = false;
+        }
 
         this.sharedService.refreshDashboardForecast(false);
       } else {
