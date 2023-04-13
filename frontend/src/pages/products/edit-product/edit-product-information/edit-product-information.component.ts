@@ -108,7 +108,7 @@ export class EditProductInformationComponent {
         this.messageService.add({
           severity: 'success',
           summary: `Success: `,
-          detail: `Plant data updated successfully.`,
+          detail: `Product data updated successfully.`,
         });
 
         this.router.navigate(['/dashboard/products/list']);

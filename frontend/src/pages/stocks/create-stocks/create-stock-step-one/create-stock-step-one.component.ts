@@ -121,9 +121,9 @@ export class CreateStockStepOneComponent {
 
       //TODO Check Math
       if (this.roughStockChecked === true) {
-        moderateStock = this.stockForm.value.lowStock * 2;
+        moderateStock = Number(this.stockForm.value.lowStock) * 2;
       } else {
-        moderateStock = this.stockForm.value.lowStock + 2;
+        moderateStock = Number(this.stockForm.value.lowStock) + 2;
       }
 
       const stock = {
