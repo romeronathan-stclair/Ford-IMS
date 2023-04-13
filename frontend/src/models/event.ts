@@ -11,4 +11,7 @@ export interface Event {
   userEmailAddress: string;
   itemId: string;
   itemName: string;
+  cycleCheckForm: any[];
+  subAssemblyForm: any[];
+  productionCountForm: any[];
 };

@@ -32,7 +32,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
     let stockSaveList: StockDocument[] = [];
 
     const request = req.body.productionCountRequest;
-
+    console.log("REQUEST HERE" + request);
 
 
 
@@ -122,6 +122,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 userEmailAddress: user.email,
                 itemId: new Date().toDateString(),
                 itemName: 'Production Count',
+                productionCountForm: request
             });
 
             console.log(event);

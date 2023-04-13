@@ -184,6 +184,7 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
             userEmailAddress: user.email,
             itemId: new Date().toDateString(),
             itemName: 'Cycle Check',
+            cycleCheckForm: cycleCheckList
         });
 
         event.save();

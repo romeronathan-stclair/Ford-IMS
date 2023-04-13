@@ -170,7 +170,8 @@ export const submitSubAssembly = async (req: Request, res: Response) => {
             userName: user.name,
             userEmailAddress: user.email,
             itemId: new Date().toDateString(),
-            itemName: 'Sub Assembly'
+            itemName: 'Sub Assembly',
+            subAssemblyForm: subAssemblyList
         });
 
         event.save();
