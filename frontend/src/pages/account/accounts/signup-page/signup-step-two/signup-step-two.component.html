@@ -7,7 +7,7 @@
                     aria-describedby="fullNameHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
                     displayValidationErrors ||
-                    userForm.controls['fullName'].dirty ||
+                    !userForm.controls['fullName'].dirty &&
                     userForm.controls['fullName'].touched
                   ">
                     <span *ngIf="userForm.controls['fullName'].hasError('required')">Full name required.</span>
@@ -19,7 +19,7 @@
                 <mat-error class="field-validation-error password-required" *ngIf="
                     userForm.controls['password'].errors &&
                     (displayValidationErrors ||
-                      userForm.controls['password'].dirty ||
+                      !userForm.controls['password'].dirty &&
                       userForm.controls['password'].touched)
                   ">
                     <label [ngClass]="
@@ -115,7 +115,7 @@
                 <mat-error class="field-validation-error" *ngIf="
                     userForm.controls['confirmPassword'].errors &&
                     (displayValidationErrors ||
-                      userForm.controls['confirmPassword'].dirty ||
+                      !userForm.controls['confirmPassword'].dirty &&
                       userForm.controls['confirmPassword'].touched)
                   ">
                     <label *ngIf="userForm.controls['confirmPassword'].hasError('NoPasswordMatch')">

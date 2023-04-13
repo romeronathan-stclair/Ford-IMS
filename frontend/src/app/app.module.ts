@@ -117,6 +117,7 @@ import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-fo
 import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component';
 import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-user.component';
 import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
+import { EditUserPlantsComponent } from 'src/pages/users/edit-users/edit-user-plants/edit-user-plants.component';
 import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 
 @NgModule({
@@ -212,6 +213,7 @@ import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-us
     UserInfoComponent,
     EditUserComponent,
     EditUserInfoComponent,
+    EditUserPlantsComponent,
     EditUserDepartmentsComponent,
   ],
   imports: [

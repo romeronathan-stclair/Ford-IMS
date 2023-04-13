@@ -32,8 +32,9 @@
           <p-dropdown formControlName="adminType" placeholder="Select Role" [options]="roles" [(ngModel)]="selectedRole"
               (onChange)="changeRole($event)"></p-dropdown>
       </div>
-      <div class="button-holders">
+      <button type="button" class="submit-button location-button" (click)="changeLocation()">Change Departments</button>
 
+      <div class="button-holders">
 
           <button type="button" [routerLink]="'/dashboard/users/list'" class="submit-button">Cancel</button>
           <button type="submit" class="submit-button">Update</button>

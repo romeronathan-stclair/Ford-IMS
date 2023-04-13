@@ -46,6 +46,9 @@ export class AppComponent {
         if (event.url !== '/dashboard/users/invite/invite-multiple') {
           this.sharedService.clearData('invite-multiple');
         }
+        if (event.url !== '/dashboard/users/edit/reassign-plants' && event.url !== '/dashboard/users/edit/reassign-departments') {
+          this.sharedService.clearData('editUser');
+        }
       }
     });
   }
