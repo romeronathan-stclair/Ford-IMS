@@ -8,7 +8,7 @@
                     id="plantName-input" aria-describedby="plantNameHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            plantForm.controls['plantName'].dirty ||
+            !plantForm.controls['plantName'].dirty &&
             plantForm.controls['plantName'].touched
           ">
                     <span *ngIf="plantForm.controls['plantName'].hasError('required')">Plant Name is required</span>
@@ -21,7 +21,7 @@
                 <mat-error class="field-validation-error" *ngIf="
             plantForm.controls['plantLocation'].errors &&
             (displayValidationErrors ||
-              plantForm.controls['plantLocation'].dirty ||
+              !plantForm.controls['plantLocation'].dirty &&
               plantForm.controls['plantLocation'].touched)
           ">
                     <span *ngIf="plantForm.controls['plantLocation'].hasError('required')">Plant Location is
