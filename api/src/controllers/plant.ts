@@ -22,6 +22,7 @@ import { getPage, getPageSize } from "../utils/pagination";
 import { CrudType } from "../enums/crudType";
 import mongoose, { Types } from "mongoose";
 import { ModelType } from "../enums/modelType";
+import { Roles } from "../enums/roles";
 
 export const createPlant = async (
     req: Request,
@@ -217,6 +218,8 @@ export const getActivePlant = async (req: Request, res: Response) => {
 };
 export const getPlants = async (req: Request, res: Response) => {
 
+    const user = req.user as UserDocument;
+
     const page = getPage(req);
     const pageSize = getPageSize(req);
     const userId = req.query.userId || undefined;
@@ -224,7 +227,36 @@ export const getPlants = async (req: Request, res: Response) => {
     const plantName = req.query.plantName || undefined;
     const isActive = req.query.isActive || undefined
 
+
+
+
+    if (user.role === Roles.Admin) {
+        console.log("dsf");
+        const plantList: PlantDocument[] = (await Plant.find({
+
+            isDeleted: false,
+        }).skip(page * pageSize).limit(pageSize)) as PlantDocument[];
+
+        const plantCount = (await Plant.find({
+
+            isDeleted: false,
+        }).countDocuments());
+
+        if (!plantList) {
+            return res.status(500).json("Plants do not exist!");
+        }
+
+        let response = {
+            plants: plantList,
+            plantCount: plantCount,
+        };
+
+        return res.status(200).json(response);
+
+    }
+
     if (plantId) {
+
         console.log(plantId);
         const plant: PlantDocument = (await Plant.findOne({
             _id: plantId.toString(),
@@ -261,17 +293,15 @@ export const getPlants = async (req: Request, res: Response) => {
         return res.status(200).json(response);
     }
 
-
-    const user: UserDocument = (await User.findOne({
+    const u = await User.findOne({
         _id: userId,
         isDeleted: false,
-    })) as UserDocument;
-
-    if (!user) {
+    });
+    if (!u) {
         return res.status(500).json("User does not exist!");
     }
 
-    const plants = user.plants.map((plant) => {
+    const plants = u.plants.map((plant) => {
         return plant.plantId;
     });
 
@@ -294,6 +324,7 @@ export const getPlants = async (req: Request, res: Response) => {
         plants: plantList,
         plantCount: plantCount
     }
+    console.log(response);
 
     return res.status(200).json(response);
 

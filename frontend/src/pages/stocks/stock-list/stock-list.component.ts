@@ -8,6 +8,7 @@ import { Department } from 'src/models/department';
 import { Stock } from 'src/models/stock';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
+import { RoleService } from 'src/services/role.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { StockService } from 'src/services/stock.service';
 
@@ -20,7 +21,7 @@ import { StockService } from 'src/services/stock.service';
 })
 export class StockListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -37,7 +38,8 @@ export class StockListComponent {
     private stockService: StockService,
     private spinnerService: SpinnerService,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    public roleService: RoleService) {
     this.stockForm = new FormGroup({
 
       departmentName: new FormControl(''),
@@ -47,7 +49,9 @@ export class StockListComponent {
 
   async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    await this.loadData();
+    if (this.activePlantId != "0") {
+      await this.loadData();
+    }
   }
 
   ngAfterViewInit() {
@@ -103,7 +107,7 @@ export class StockListComponent {
   async loadStocks(query: string = '') {
     console.log(this.selectedDepartment);
     const selectedDepartmentId = this.selectedDepartment._id;
-    let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
+    let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&plantId=${this.authService.user.activePlantId}`;
 
     if (query) {
       stockQuery += query;
@@ -169,6 +173,9 @@ export class StockListComponent {
 
 
   pageChanged(event: PageEvent) {
+    if (this.activePlantId == '0') {
+      return;
+    }
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadData();

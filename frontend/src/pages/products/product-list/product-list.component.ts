@@ -10,6 +10,7 @@ import { ProductService } from 'src/services/product.service';
 import { Router } from '@angular/router';
 import { Product } from 'src/models/product';
 import { Department } from 'src/models/department';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-product-list',
@@ -19,11 +20,11 @@ import { Department } from 'src/models/department';
 })
 export class ProductListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: string  = '';
+  activePlantId: string = '';
   productForm: FormGroup;
   selectedDepartment: any;
   departments: Department[] = [];
@@ -36,6 +37,7 @@ export class ProductListComponent {
     private productService: ProductService,
     private spinnerService: SpinnerService,
     private router: Router,
+    public roleService: RoleService,
     private authService: AuthService) {
     this.productForm = new FormGroup({
       productName: new FormControl(''),
@@ -45,7 +47,7 @@ export class ProductListComponent {
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
     console.log(this.activePlantId);
-    if (this.activePlantId != '') {
+    if (this.activePlantId != '0') {
       this.loadData();
     }
   }
@@ -103,6 +105,9 @@ export class ProductListComponent {
   }
 
   pageChanged(event: PageEvent) {
+    if (this.activePlantId == '0') {
+      return;
+    }
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
 
@@ -133,25 +138,25 @@ export class ProductListComponent {
         this.spinnerService.show();
 
         this.productService.deleteProduct(productId)
-        .subscribe({
-          next: (data: any) => {
-            this.spinnerService.hide();
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Success',
-              detail: 'Product deleted successfully'
-            });
-            this.loadData();
-          },
-          error: (error: any) => {
-            this.spinnerService.hide();
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Error',
-              detail: 'Error deleting product'
-            });
-          }
-        });
+          .subscribe({
+            next: (data: any) => {
+              this.spinnerService.hide();
+              this.messageService.add({
+                severity: 'success',
+                summary: 'Success',
+                detail: 'Product deleted successfully'
+              });
+              this.loadData();
+            },
+            error: (error: any) => {
+              this.spinnerService.hide();
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error deleting product'
+              });
+            }
+          });
       },
       reject: () => {
         //reject action

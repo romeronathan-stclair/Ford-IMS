@@ -8,6 +8,7 @@ import { Department } from 'src/models/department';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
+import { RoleService } from 'src/services/role.service';
 import { SpinnerService } from 'src/services/spinner.service';
 
 @Component({
@@ -17,7 +18,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 })
 export class DepartmentListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -45,6 +46,7 @@ export class DepartmentListComponent {
     private departmentService: DepartmentService,
     private spinnerService: SpinnerService,
     private authService: AuthService,
+    public roleService: RoleService,
     private router: Router) {
     this.departmentForm = new FormGroup({
       departmentName: new FormControl(''),

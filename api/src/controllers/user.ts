@@ -262,21 +262,7 @@ export const changePassword = async (req: Request, res: Response) => {
 };
 
 
-export const getUser = (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
 
-    const activePlantId = user.plants.find((plant) => plant.isActive)?.plantId || '0';
-
-
-
-
-
-
-
-
-
-    return res.json({ user: user, activePlantId: activePlantId });
-};
 
 export const changeActivePlant = async (req: Request, res: Response) => {
     await check("plantId", "plantId is not valid").isMongoId().run(req);
@@ -378,3 +364,18 @@ export const getUsers = async (req: Request, res: Response) => {
 
     return res.status(200).json(response);
 }
+export const getUser = (req: Request, res: Response) => {
+    const user: UserDocument = req.user as UserDocument;
+
+    const activePlantId = user.plants.find((plant) => plant.isActive)?.plantId || '0';
+
+
+
+
+
+
+
+
+
+    return res.json({ user: user, activePlantId: activePlantId });
+};

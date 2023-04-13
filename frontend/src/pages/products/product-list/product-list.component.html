@@ -2,15 +2,19 @@
 <div class="table-header">
 
     <div *ngIf="departments.length > 0" class="dropdown">
-        <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName"
-            [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+        <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName" [options]="departments"
+            [(ngModel)]="selectedDepartment"></p-dropdown>
     </div>
-    <div class="search-bar">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <form [formGroup]="productForm">
-            <input placeholder="Search by Name" formControlName="productName" class="form-control" id="name-input"
-                required (input)="searchByName()" />
-        </form>
+    <div>
+
+        <div *ngIf="activePlantId != '0'" class="search-bar">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <form [formGroup]="productForm">
+                <input placeholder="Search by Name" formControlName="productName" class="form-control" id="name-input"
+                    required (input)="searchByName()" />
+            </form>
+
+        </div>
 
     </div>
     <img src="/assets/ford-logo.png" />
@@ -18,7 +22,7 @@
 </div>
 <div class="table-holder">
     <div *ngIf="products.length == 0" class="form-text mb-3">
-        There are currently no products in this department.
+        There are currently no products to display.
     </div>
     <div class="card">
         <mat-card *ngFor="let product of products">
@@ -29,26 +33,31 @@
                 <button [routerLink]="'/dashboard/products/edit/information/' + product._id" mat-mini-fab
                     color="primary"><mat-icon>edit</mat-icon></button>
                 <button mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
-                <button mat-mini-fab color="warn" (click)="deleteProduct(product._id)"><mat-icon>delete</mat-icon></button>
+                <button mat-mini-fab color="warn"
+                    (click)="deleteProduct(product._id)"><mat-icon>delete</mat-icon></button>
             </mat-card-actions>
         </mat-card>
     </div>
 </div>
 <div class="paginator-holder">
-    <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/products/create/step-one'" type="submit"
-        class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New product</button>
-    <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
+    <div>
+        <button *ngIf="roleService.canCreateProduct()" [disabled]="activePlantId == '0'"
+            [routerLink]="'/dashboard/products/create/step-one'" type="submit" class="general-button first-button"><i
+                class="fa-solid fa-plus"></i>Create New product</button>
+    </div>
+
+    <mat-paginator (page)="pageChanged($event)" #paginator [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
     </mat-paginator>
     <button (click)="viewEventLog()" class="general-button">View Event Log</button>
 </div>
 <p-confirmDialog #cd [style]="{width: '30vw'}">
-  <ng-template pTemplate="header">
-      <h3></h3>
-  </ng-template>
+    <ng-template pTemplate="header">
+        <h3></h3>
+    </ng-template>
 
-  <ng-template pTemplate="footer">
-      <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
-      <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
-  </ng-template>
+    <ng-template pTemplate="footer">
+        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+    </ng-template>
 </p-confirmDialog>

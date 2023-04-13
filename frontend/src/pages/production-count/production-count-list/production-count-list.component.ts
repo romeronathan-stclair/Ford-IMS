@@ -8,6 +8,7 @@ import { EventService } from 'src/services/event.service';
 import { Router } from '@angular/router';
 import { Department } from 'src/models/department';
 import { Event } from 'src/models/event';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-production-count-list',
@@ -16,7 +17,7 @@ import { Event } from 'src/models/event';
 })
 export class ProductionCountListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -30,7 +31,8 @@ export class ProductionCountListComponent {
     private spinnerService: SpinnerService,
     private authService: AuthService,
     private eventService: EventService,
-    private router: Router
+    private router: Router,
+    public roleService: RoleService
     ) { }
 
   ngOnInit() {

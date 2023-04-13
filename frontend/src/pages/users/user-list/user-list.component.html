@@ -2,16 +2,18 @@
 <div class="table-header">
 
     <div *ngIf="departments.length > 0" class="dropdown">
-        <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName"
-            [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+        <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName" [options]="departments"
+            [(ngModel)]="selectedDepartment"></p-dropdown>
     </div>
-    <div class="search-bar">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <form [formGroup]="userForm">
-            <input placeholder="Search by Name" formControlName="name" id="name-input" required
-                (input)="searchByName()" />
-        </form>
 
+    <div>
+        <div class="search-bar" *ngIf="activePlantId != '0'">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <form [formGroup]="userForm">
+                <input placeholder="Search by Name" formControlName="name" id="name-input" required
+                    (input)="searchByName()" />
+            </form>
+        </div>
     </div>
     <img src="/assets/ford-logo.png" />
 
@@ -56,7 +58,8 @@
         <ng-container matColumnDef="editUser">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let user">
-                <button type="submit" class="general-button">Edit Users</button>
+                <button *ngIf="roleService.canManageUser(user.role)" type="submit" class="general-button">Edit
+                    User</button>
 
             </td>
         </ng-container>
