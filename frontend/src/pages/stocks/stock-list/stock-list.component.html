@@ -21,11 +21,7 @@
 </div>
 <div class="table-holder">
   <div *ngIf="stocks.length == 0" class="form-text mb-3">
-<<<<<<< HEAD
     There are currently no stocks to display.
-=======
-    There are currently no products in this department.
->>>>>>> frontend
   </div>
   <div class="card">
     <mat-card *ngFor="let stock of stocks">
@@ -53,17 +49,12 @@
   </div>
 </div>
 <div class="paginator-holder">
-<<<<<<< HEAD
   <div>
     <button *ngIf="roleService.canCreateStock()" [disabled]="activePlantId == '0'"
       [routerLink]="'/dashboard/stock/create/step-one'" type="submit" class="general-button first-button"><i
         class="fa-solid fa-plus"></i>Create New Stock</button>
   </div>
 
-=======
-  <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create/step-one'" type="submit"
-    class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New Stock</button>
->>>>>>> frontend
   <mat-paginator (page)="pageChanged($event)" #paginator [pageSize]="pageSize"
     aria-label="Select page of periodic elements" [length]="length">
   </mat-paginator>
