@@ -7,7 +7,7 @@
                     aria-describedby="emailHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
                     displayValidationErrors ||
-                    userForm.controls['email'].dirty ||
+                    !userForm.controls['email'].dirty &&
                     userForm.controls['email'].touched
                   ">
                     <span *ngIf="userForm.controls['email'].hasError('required')">Email is required.</span>
@@ -21,7 +21,7 @@
                     aria-describedby="inviteCodeHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
                     displayValidationErrors ||
-                    userForm.controls['inviteCode'].dirty ||
+                    !userForm.controls['inviteCode'].dirty &&
                     userForm.controls['inviteCode'].touched
                   ">
                     <span *ngIf="userForm.controls['inviteCode'].hasError('required')">Invite code required.</span>

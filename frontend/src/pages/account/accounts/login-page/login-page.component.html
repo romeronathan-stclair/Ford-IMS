@@ -7,7 +7,7 @@
             required />
         <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            userForm.controls['email'].dirty ||
+            !userForm.controls['email'].dirty &&
             userForm.controls['email'].touched
           ">
                 <span *ngIf="userForm.controls['email'].hasError('required')">Email is required</span>
@@ -19,7 +19,7 @@
         <mat-error class="field-validation-error" *ngIf="
             userForm.controls['password'].errors &&
             (displayValidationErrors ||
-              userForm.controls['password'].dirty ||
+              !userForm.controls['password'].dirty &&
               userForm.controls['password'].touched)
           ">
                 <span *ngIf="userForm.controls['password'].hasError('required')">Password is required</span>

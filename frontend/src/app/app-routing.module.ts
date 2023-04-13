@@ -88,6 +88,7 @@ import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-use
 import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
 import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 import { InviteMultipleUsersComponent } from 'src/pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
+import { EditUserPlantsComponent } from 'src/pages/users/edit-users/edit-user-plants/edit-user-plants.component';
 
 
 const routes: Routes = [
@@ -445,7 +446,12 @@ const routes: Routes = [
               component: EditUserInfoComponent,
             },
             {
-              path: 'reassign-departments/:id',
+              path: 'reassign-plants',
+              data: { animation: 'Edit User Page' },
+              component: EditUserPlantsComponent,
+            },
+            {
+              path: 'reassign-departments',
               data: { animation: 'Edit User Page' },
               component: EditUserDepartmentsComponent,
             }

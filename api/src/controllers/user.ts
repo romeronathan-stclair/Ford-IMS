@@ -183,6 +183,7 @@ export const updateUser = async (req: Request, res: Response) => {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     user.role = req.body.adminType || user.role;
+    user.plants = req.body.plants || user.plants;
 
     const plantId = user.plants[0].plantId;
     const departmentId = user.plants[0].departments[0];
@@ -207,6 +208,7 @@ export const updateUser = async (req: Request, res: Response) => {
         await event.save();
         res.json(user);
     } catch (err) {
+        console.log(user);
         return res.status(500).json({ err });
     }
 };

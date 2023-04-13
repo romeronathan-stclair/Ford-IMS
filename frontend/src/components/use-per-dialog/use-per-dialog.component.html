@@ -16,7 +16,7 @@
                     required />
                 <mat-error class="field-validation-error" *ngIf="
               displayValidationErrors ||
-              valueForm.controls['value'].dirty ||
+              !valueForm.controls['value'].dirty &&
               valueForm.controls['value'].touched
             ">
                     <span *ngIf="valueForm.controls['value'].hasError('required')">Value is required</span>

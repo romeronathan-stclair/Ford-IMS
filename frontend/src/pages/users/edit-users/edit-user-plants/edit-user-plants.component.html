@@ -1,0 +1,22 @@
+<app-ford-container title="1. Re-assign Plant(s)">
+  <div class="holder">
+
+      <div class="inner-holder">
+          <h2>Plants</h2>
+          <div class="plant-list">
+              <div *ngFor="let plant of plants" class="plant-item">
+                  <mat-checkbox [(ngModel)]="plant.checked" class="mat-icon" color="#47a8e5"
+                      (change)="onCheckboxChange($event, plant)"></mat-checkbox>
+                  <h3>{{plant.plantName}}</h3>
+              </div>
+          </div>
+      </div>
+      <div class="button-holder">
+          <button type="button" (click)="goBack()"
+              class="submit-button">Back</button>
+
+          <button type="button" (click)="onSubmit()" class="submit-button">Next</button>
+
+      </div>
+  </div>
+</app-ford-container>

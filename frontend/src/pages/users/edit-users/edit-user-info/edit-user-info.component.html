@@ -7,7 +7,7 @@
               id="fullName-input" aria-describedby="fullNameHelp" required />
           <mat-error class="field-validation-error" *ngIf="
           displayValidationErrors ||
-          userForm.controls['fullName'].dirty ||
+          !userForm.controls['fullName'].dirty &&
           userForm.controls['fullName'].touched
         ">
               <span *ngIf="userForm.controls['fullName'].hasError('required')">Full Name is required</span>
@@ -20,7 +20,7 @@
           <mat-error class="field-validation-error" *ngIf="
           userForm.controls['email'].errors &&
           (displayValidationErrors ||
-            userForm.controls['email'].dirty ||
+            !userForm.controls['email'].dirty &&
             userForm.controls['email'].touched)
         ">
               <span *ngIf="userForm.controls['email'].hasError('required')">Email is
@@ -32,8 +32,9 @@
           <p-dropdown formControlName="adminType" placeholder="Select Role" [options]="roles" [(ngModel)]="selectedRole"
               (onChange)="changeRole($event)"></p-dropdown>
       </div>
-      <div class="button-holders">
+      <button type="button" class="submit-button location-button" (click)="changeLocation()">Change Departments</button>
 
+      <div class="button-holders">
 
           <button type="button" [routerLink]="'/dashboard/users/list'" class="submit-button">Cancel</button>
           <button type="submit" class="submit-button">Update</button>

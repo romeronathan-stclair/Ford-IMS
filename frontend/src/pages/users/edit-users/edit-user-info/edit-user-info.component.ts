@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
+import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 
 @Component({
@@ -16,6 +17,9 @@ export class EditUserInfoComponent {
   userForm: FormGroup;
   request: any;
   selectedRole: string = '';
+  name: string = '';
+  email: string = '';
+  adminType: string = '';
   roles = [
     'Super Admin',
     'Plant Manager',
@@ -29,6 +33,7 @@ export class EditUserInfoComponent {
 
   constructor(
     private plantService: PlantService,
+    private sharedService: SharedService,
     private formBuilder: FormBuilder,
     private router: Router,
     private authService: AuthService,
@@ -41,7 +46,16 @@ export class EditUserInfoComponent {
       adminType: new FormControl(''),
     });
 
-    this.request = {};
+    this.sharedService.setDataKey('editUser');
+
+    if (this.sharedService.getData() != null) {
+      console.log(this.sharedService.getData());
+
+      this.request = this.sharedService.getData();
+      this.userForm.patchValue(
+        this.request
+      );
+    }
   }
 
   async ngOnInit() {
@@ -69,12 +83,27 @@ export class EditUserInfoComponent {
             email: data.body.email,
             adminType: this.selectedRole
           });
-
+          this.name = data.body.name;
+          this.email = data.body.email;
+          this.adminType = data.body.role;
           this.request.adminType = this.selectedRole;
           this.userForm.get('adminType')?.setValue(this.selectedRole);
         }
       }
     })
+  }
+
+  changeLocation() {
+    this.spinnerService.showHide();
+
+    this.request.name = this.name;
+    this.request.email = this.email;
+    this.request.adminType = this.adminType;
+    this.request.userId = this.userId;
+
+    this.sharedService.setData(this.request).then(() => {
+      this.router.navigate(["/dashboard/users/edit/reassign-plants"]);
+    });
   }
 
   onSubmit() {

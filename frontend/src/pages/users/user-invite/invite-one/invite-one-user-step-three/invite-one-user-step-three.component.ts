@@ -82,6 +82,8 @@ export class InviteOneUserStepThreeComponent {
 
     this.sharedService.setData(this.request);
 
+    console.log(this.request);
+
     let inviteRequest = {
       invites: [
         this.request
