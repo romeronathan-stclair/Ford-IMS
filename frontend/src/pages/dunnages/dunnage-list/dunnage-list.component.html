@@ -25,7 +25,16 @@
   </div>
   <div class="card">
     <mat-card *ngFor="let dunnage of dunnages">
-
+      <div class="low-dunnage-label-wrapper" *ngIf="dunnage.currentCount <= dunnage.lowStock">
+        <div class="low-dunnage-label">LOW DUNNAGE</div>
+      </div>
+      <div class="moderate-dunnage-label-wrapper"
+        *ngIf="dunnage.currentCount <= dunnage.moderateStock && dunnage.currentCount > dunnage.lowStock">
+        <div class="moderate-dunnage-label">MODERATE DUNNAGE</div>
+      </div>
+      <div class="high-dunnage-label-wrapper" *ngIf="dunnage.currentCount > dunnage.moderateStock">
+        <div class="high-dunnage-label">HIGH DUNNAGE</div>
+      </div>
       <img class="dunnage-img" mat-card-image [src]="dunnage.imageURL" alt="{{dunnage.name}}">
       <mat-card-title>{{dunnage.name}}</mat-card-title>
       <mat-card-subtitle>{{dunnage.marketLocation}}</mat-card-subtitle>

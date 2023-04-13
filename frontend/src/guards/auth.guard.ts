@@ -7,6 +7,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Observable, map, catchError, of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
@@ -14,7 +15,7 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private _router: Router, private authService: AuthService) { }
+  constructor(private messageService: MessageService, private _router: Router, private authService: AuthService) { }
 
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
@@ -40,6 +41,19 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     return this.authService.getUser().pipe(
       map((res) => {
         this.authService.setUser(res.body);
+        if (this.authService.user._id == '0') {
+          this._router.navigate(['/dashboard/plants/list']);
+          this.messageService.clear();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'You must set an active plant. If you are a plant manager, please create a plant.',
+
+          });
+          
+
+          return false;
+        }
 
         return true;
       }),

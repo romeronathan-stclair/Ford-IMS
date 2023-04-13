@@ -1,0 +1,18 @@
+<h1 class="page-header">User Information</h1>
+<app-ford-container>
+  <div class="holder">
+    <div class="card">
+      <mat-card-title>Full Name: {{user.name}}</mat-card-title>
+      <mat-card-title>Role: {{user.role}}</mat-card-title>
+      <mat-card-title>Plant: {{plantName}}</mat-card-title>
+      <mat-card-title>Departments: {{departmentNames}}</mat-card-title>
+
+      <div class="button-holders">
+        <button type="button" [routerLink]="'/dashboard/users/list'" class="submit-button">Back</button>
+        <button type="submit" [routerLink]="'/dashboard/users/edit/info/' + userId" class="submit-button">Edit User</button>
+      </div>
+    </div>
+  </div>
+</app-ford-container>
+
+

@@ -127,6 +127,14 @@ export class AuthService {
         });
     }
 
+    updateUser(user: User): Observable<any> {
+      return this.http.put(`${this.endPoint}/user`, user, {
+          headers: this.baseHeaders,
+          observe: 'response',
+          withCredentials: true,
+      });
+  }
+
 
 
 }

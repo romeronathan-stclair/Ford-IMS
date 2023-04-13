@@ -201,6 +201,7 @@ export class StockListComponent {
               this.loadData();
             },
             error: (error: any) => {
+              console.log(error);
               this.spinnerService.hide();
               this.messageService.add({
                 severity: 'error',

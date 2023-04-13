@@ -7,7 +7,7 @@
                     id="name-input" aria-describedby="nameHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            productForm.controls['name'].dirty ||
+            !productForm.controls['name'].dirty &&
             productForm.controls['name'].touched
           ">
                     <span *ngIf="productForm.controls['name'].hasError('required')">name is
@@ -21,7 +21,7 @@
                     id="partNumber-input" aria-describedby="partNumberHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            productForm.controls['partNumber'].dirty ||
+            !productForm.controls['partNumber'].dirty &&
             productForm.controls['partNumber'].touched
           ">
                     <span *ngIf="productForm.controls['partNumber'].hasError('required')">Part Number is
@@ -36,7 +36,7 @@
                     id="dailyTarget-input" aria-describedby="dailyTargetHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            productForm.controls['dailyTarget'].dirty ||
+            !productForm.controls['dailyTarget'].dirty &&
             productForm.controls['dailyTarget'].touched
           ">
                     <span *ngIf="productForm.controls['dailyTarget'].hasError('required')">Daily Target is
@@ -50,7 +50,7 @@
                     id="marketLocation-input" aria-describedby="marketLocationHelp" required />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
-            productForm.controls['marketLocation'].dirty ||
+            !productForm.controls['marketLocation'].dirty &&
             productForm.controls['marketLocation'].touched
           ">
                     <span *ngIf="productForm.controls['marketLocation'].hasError('required')">Market Location is
@@ -71,10 +71,6 @@
                         class="submit-button">Assign Dunnage</button>
                 </div>
                 <div class="button-holders">
-
-
-                    <button type="button" (click)="back()" class="submit-button">Cancel</button>
-                    <button type="submit" class="submit-button">Submit</button>
                     <button type="button" [routerLink]="'/dashboard/products/list'"
                         class="submit-button">Cancel</button>
                     <button type="submit" class="submit-button">Update</button>

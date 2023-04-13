@@ -83,8 +83,12 @@ import { ViewProductComponent } from 'src/pages/products/view-product/view-produ
 import { EventLogComponent } from 'src/components/event-log/event-log.component';
 import { EventInfoComponent } from 'src/components/event-info/event-info.component';
 import { PageNotFoundComponent } from 'src/components/page-not-found/page-not-found.component';
+import { UserInfoComponent } from 'src/pages/users/user-info/user-info.component';
+import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-user.component';
+import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
+import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 import { InviteMultipleUsersComponent } from 'src/pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
-
+import { EditUserPlantsComponent } from 'src/pages/users/edit-users/edit-user-plants/edit-user-plants.component';
 
 
 const routes: Routes = [
@@ -391,11 +395,16 @@ const routes: Routes = [
         path: 'users',
         data: { animation: 'Users Page' },
         component: UsersComponent,
-        children: [{
+        children: [
+        {
           path: 'list',
           data: { animation: 'Users List Page' },
           component: UserListComponent
-
+        },
+        {
+          path: 'view-info/:id',
+          data: { animation: 'View User Page' },
+          component: UserInfoComponent
         },
         {
           path: 'invite',
@@ -423,6 +432,28 @@ const routes: Routes = [
             {
               path: 'invite-multiple',
               component: InviteMultipleUsersComponent
+            }
+          ]
+        },
+        {
+          path: 'edit',
+          data: { animation: 'Edit User Page' },
+          component: EditUserComponent,
+          children: [
+            {
+              path: 'info/:id',
+              data: { animation: 'Edit User Page' },
+              component: EditUserInfoComponent,
+            },
+            {
+              path: 'reassign-plants',
+              data: { animation: 'Edit User Page' },
+              component: EditUserPlantsComponent,
+            },
+            {
+              path: 'reassign-departments',
+              data: { animation: 'Edit User Page' },
+              component: EditUserDepartmentsComponent,
             }
           ]
         }
