@@ -20,6 +20,8 @@
             <img [src]="imageUrl" *ngIf="imageUrl" (click)="onBrowseClick()" class="image-upload-preview">
         </div>
 
+        <button *ngIf="imageUrl" class="image-upload-button" (click)="onBrowseClick()">Change Image</button>
+
         <div class="button-holders">
             <button type="button" [routerLink]="'/dashboard/products/edit/information/' + product.productId"
                 class="submit-button">Back</button>

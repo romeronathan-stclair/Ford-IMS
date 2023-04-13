@@ -92,14 +92,6 @@ export class UserInfoComponent {
         next: (data: any) => {
           this.departments.push(data.body);
           this.departmentNames = this.departments.map(d => d.departmentName).join(", ");
-        },
-        error: (error: any) => {
-          this.spinnerService.hide();
-          this.messageService.add({
-            severity:'error',
-            summary:'Error',
-            detail:'Error loading department data'
-          });
         }
       });
     });

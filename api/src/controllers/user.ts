@@ -174,16 +174,16 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
 
 
 export const updateUser = async (req: Request, res: Response) => {
-    const user: UserDocument = req.user as UserDocument;
+    const user = await User.findById(req.body.userId);
 
     if (!user) {
         return res.status(500).json("User does not exist");
     }
 
-    const { name, email } = req.body;
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.role = req.body.adminType || user.role;
 
-    user.name = name || user.name;
-    user.email = email || user.email;
     const plantId = user.plants[0].plantId;
     const departmentId = user.plants[0].departments[0];
 
@@ -202,6 +202,7 @@ export const updateUser = async (req: Request, res: Response) => {
     });
 
     try {
+        console.log(user);
         await user.save();
         await event.save();
         res.json(user);

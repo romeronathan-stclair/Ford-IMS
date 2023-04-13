@@ -47,6 +47,7 @@ export class ForecastListComponent {
     this.spinnerService.showHide();
     this.activePlantId = this.authService.user.activePlantId;
     this.loadForecasts();
+    this.loadDepartments();
   }
 
   ngAfterViewInit() {
