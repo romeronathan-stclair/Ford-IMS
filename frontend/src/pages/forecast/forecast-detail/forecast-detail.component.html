@@ -100,46 +100,16 @@
                         affecting production</h6>
 
                     <div class="stock-holder">
-                        <div class="stock-card"
-                            *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
+                      <div *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
+                        <div class="stock-card" *ngIf="stock.lowStockThreshold">
                             <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
                             <div class="stock-info">
                                 <p class="data-text">{{ stock.name }}</p>
                                 <p class="info-text">{{stock.usePerProduct}} Required Per Build</p>
-                                <p class="info-text">Approx. {{stock.totalAvailableQty}} Available </p>
-
+                                <p class="info-text">Approx. {{stock.totalAvailableQty}} Available</p>
                             </div>
                         </div>
-                        <div class="stock-card"
-                            *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
-                            <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
-                            <div class="stock-info">
-                                <p class="data-text">{{ stock.name }}</p>
-                                <p class="info-text">{{stock.usePerProduct}} Required Per Build</p>
-                                <p class="info-text">Approx. {{stock.totalAvailableQty}} Available </p>
-
-                            </div>
-                        </div>
-                        <div class="stock-card"
-                            *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
-                            <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
-                            <div class="stock-info">
-                                <p class="data-text">{{ stock.name }}</p>
-                                <p class="info-text">{{stock.usePerProduct}} Required Per Build</p>
-                                <p class="info-text">Approx. {{stock.totalAvailableQty}} Available </p>
-
-                            </div>
-                        </div>
-                        <div class="stock-card"
-                            *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
-                            <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
-                            <div class="stock-info">
-                                <p class="data-text">{{ stock.name }}</p>
-                                <p class="info-text">{{stock.usePerProduct}} Required Per Build</p>
-                                <p class="info-text">Approx. {{stock.totalAvailableQty}} Available </p>
-
-                            </div>
-                        </div>
+                      </div>
                     </div>
 
                 </div>

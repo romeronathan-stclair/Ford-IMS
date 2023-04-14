@@ -9,6 +9,7 @@ import { EventService } from 'src/services/event.service';
 import { Router } from '@angular/router';
 import { Event } from 'src/models/event';
 import { Department } from 'src/models/department';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-cycle-check-list',
@@ -17,7 +18,7 @@ import { Department } from 'src/models/department';
 })
 export class CycleCheckListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -31,22 +32,22 @@ export class CycleCheckListComponent {
     private spinnerService: SpinnerService,
     private authService: AuthService,
     private eventService: EventService,
-    private router: Router
-    )
-    { }
+    private router: Router,
+    public roleService: RoleService,
+  ) { }
 
-    ngOnInit() {
-      this.spinnerService.showHide();
-      this.activePlantId = this.authService.user.activePlantId;
-      this.loadEvents();
-    }
+  ngOnInit() {
+    this.spinnerService.showHide();
+    this.activePlantId = this.authService.user.activePlantId;
+    this.loadEvents();
+  }
 
-    loadEvents() {
-      this.spinnerService.show();
+  loadEvents() {
+    this.spinnerService.show();
 
-      let eventQuery = "?modelType=Cycle-check" + "&plantId=" + this.activePlantId + "&page=" + this.currentPage + "&limit=" + this.pageSize;
+    let eventQuery = "?modelType=Cycle-check" + "&plantId=" + this.activePlantId + "&page=" + this.currentPage + "&limit=" + this.pageSize;
 
-      this.eventService.getEvents(eventQuery)
+    this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
           this.events = data.body.events;
@@ -59,17 +60,17 @@ export class CycleCheckListComponent {
           console.log(error);
         }
       });
-    }
+  }
 
-    pageChanged(event: PageEvent) {
-      console.log({ event });
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.loadEvents();
-    }
+  pageChanged(event: PageEvent) {
+    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadEvents();
+  }
 
-    viewEventInfo($event: any) {
-      this.router.navigate(['/dashboard/event/list/Cycle-check' + '/' + $event]);
-    }
+  viewEventInfo($event: any) {
+    this.router.navigate(['/dashboard/event/list/Cycle-check' + '/' + $event]);
+  }
 
 }

@@ -64,6 +64,7 @@ export class ForecastDetailComponent {
         this.spinnerService.showHide();
         this.productForecast = response.body;
         console.log(this.productForecast);
+        console.log(this.productForecast.stockForecast);
         if (this.productForecast.stockForecast?.forecastedStockItems) {
           this.stockForecastExists = true;
         }
@@ -92,9 +93,9 @@ export class ForecastDetailComponent {
   getTotalPossibleBuildsText() {
     if (this.productForecast.dailyTarget && this.productForecast.stockForecast?.lowestStockItem) {
       let dailyLimitDifference = this.productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds - this.productForecast.dailyTarget;
-      if (dailyLimitDifference > this.productForecast.dailyTarget) {
+      if (this.productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds > this.productForecast.dailyTarget) {
         this.dailyLimitDifferenceText = dailyLimitDifference + " OVER Daily Target";
-      } else if (dailyLimitDifference < this.productForecast.dailyTarget) {
+      } else if (this.productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds < this.productForecast.dailyTarget) {
         this.dailyLimitDifferenceText = dailyLimitDifference + " UNDER Daily Target";
       } else {
         this.dailyLimitDifferenceText = dailyLimitDifference + " ON  Daily Target";
@@ -104,27 +105,32 @@ export class ForecastDetailComponent {
   getHealthClassForBuilds() {
     if (this.productForecast.dailyTarget && this.productForecast.stockForecast?.lowestStockItem) {
       let dailyLimitDifference = this.productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds - this.productForecast.dailyTarget;
-      if (dailyLimitDifference > this.productForecast.dailyTarget) {
+      let twoDayProduction = this.productForecast.dailyTarget * 2;
+      if (this.productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds > twoDayProduction) {
         return "high-health";
-      } else if (dailyLimitDifference < this.productForecast.dailyTarget) {
+      } else if (this.productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds < this.productForecast.dailyTarget) {
         return "low-health";
       } else {
-        return "moderate-health";
+        return "medium-health";
       }
 
     }
     return
   }
   getHealthClassForShifts() {
-    if (this.productForecast.stockForecast?.lowestStockItem) {
-
-      if (this.productForecast.stockForecast?.lowestStockItem.fiveShiftsBeforeShortage) {
-        return "low-health";
-      } else {
-        return "high-health";
+      const shiftsThreshold = 3;
+      const greenThreshold = 5;
+      if(this.productForecast.stockForecast?.lowestStockItem?.shiftsBeforeShortage) {
+        if (this.productForecast.stockForecast?.lowestStockItem?.shiftsBeforeShortage < shiftsThreshold) {
+          return "low-health";
+        } else if (this.productForecast.stockForecast?.lowestStockItem?.shiftsBeforeShortage > greenThreshold) {
+          return "high-health";
+        }
+        else {
+          return "medium-health";
+        }
       }
 
-    }
     return
   }
   getShiftsStatusText() {
@@ -176,7 +182,7 @@ export class ForecastDetailComponent {
       } else if (hourlyDifference < 0) {
         return "low-health";
       } else {
-        return "moderate-health";
+        return "medium-health";
       }
     }
     return "";
@@ -199,11 +205,12 @@ export class ForecastDetailComponent {
 
   }
   getProjectTimeBeforeShortageClass() {
-
-    if (this.projectTimeBeforeShortage > 0) {
+    if (this.projectTimeBeforeShortage > 48) {
       return "high-health";
-    } else {
+    } else if (this.projectTimeBeforeShortage < 0) {
       return "low-health";
+    } else {
+      return "medium-health";
     }
   }
 

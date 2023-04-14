@@ -46,7 +46,7 @@ export class InviteOneUserStepTwoComponent {
       { label: 'User', value: 'User' },
     ];
 
-    this.plantService.getPlants('').subscribe({
+    this.plantService.getPlants('?userId=' + this.authService.user._id).subscribe({
       next: (data) => {
 
         this.plants = data.body.plants.map((plant: any) => {

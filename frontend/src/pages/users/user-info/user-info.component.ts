@@ -7,6 +7,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/models/user';
 import { Department } from 'src/models/department';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-user-info',
@@ -30,7 +31,8 @@ export class UserInfoComponent {
     private departmentService: DepartmentService,
     private spinnerService: SpinnerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public roleService: RoleService
   ) { }
 
   ngOnInit(): void {
@@ -47,37 +49,39 @@ export class UserInfoComponent {
     let userQuery = "?userId=" + this.userId;
 
     this.authService.getUsers(userQuery)
-    .subscribe({
-      next: (data: any) => {
-        this.spinnerService.hide();
-        this.user = data.body;
-        this.departmentIds = this.user.plants[0].departments.toString().split(',');
-        this.loadPlantName(this.user.plants[0].plantId);
-        this.loadDepartmentNames(this.departmentIds);
-      },
-      error: (error: any) => {
-        this.spinnerService.hide();
-        this.messageService.add({
-          severity:'error',
-          summary:'Error',
-          detail:'Error loading user data'
-        });
-      }
-    });
+      .subscribe({
+        next: (data: any) => {
+          this.spinnerService.hide();
+          this.user = data.body;
+          console.log(this.user);
+          this.departmentIds = this.user.plants[0].departments.toString().split(',');
+          this.loadPlantName(this.user.plants[0].plantId);
+          this.loadDepartmentNames(this.departmentIds);
+        },
+        error: (error: any) => {
+          this.spinnerService.hide();
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error loading user data'
+          });
+        }
+      });
   }
 
   loadPlantName(plantId: string) {
     let plantQuery = "?plantId=" + plantId;
     this.plantService.getPlants(plantQuery).subscribe({
       next: (data: any) => {
+        console.log(data);
         this.plantName = data.body.plantName;
       },
       error: (error: any) => {
         this.spinnerService.hide();
         this.messageService.add({
-          severity:'error',
-          summary:'Error',
-          detail:'Error loading plant data'
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error loading plant data'
         });
       }
     });
@@ -92,6 +96,9 @@ export class UserInfoComponent {
         next: (data: any) => {
           this.departments.push(data.body);
           this.departmentNames = this.departments.map(d => d.departmentName).join(", ");
+        },
+        error: (error: any) => {
+
         }
       });
     });

@@ -16,7 +16,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 })
 export class ForecastListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -44,7 +44,7 @@ export class ForecastListComponent {
     private router: Router) { }
 
   ngOnInit() {
-    this.spinnerService.showHide();
+  
     this.activePlantId = this.authService.user.activePlantId;
     this.loadForecasts();
     this.loadDepartments();

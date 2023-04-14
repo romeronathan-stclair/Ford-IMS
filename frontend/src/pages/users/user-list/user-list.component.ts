@@ -10,6 +10,7 @@ import { SpinnerService } from 'src/services/spinner.service';
 import { Router } from '@angular/router';
 import { Department } from 'src/models/department';
 import { User } from 'src/models/user';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-user-list',
@@ -18,7 +19,7 @@ import { User } from 'src/models/user';
 })
 export class UserListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -41,14 +42,19 @@ export class UserListComponent {
     private plantService: PlantService,
     private authService: AuthService,
     private departmentService: DepartmentService,
-    private router: Router) {
+    private router: Router,
+    public roleService: RoleService) {
     this.userForm = new FormGroup({
       name: new FormControl(''),
     });
 
   }
   ngOnInit() {
-    this.loadData();
+    this.activePlantId = this.authService.user.activePlantId;
+    if (this.activePlantId != "0") {
+      this.loadData();
+    }
+    console.log(this.roleService.getRolesUnderUser());
   }
 
   ngAfterViewInit() {
@@ -69,7 +75,8 @@ export class UserListComponent {
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(query).subscribe({
         next: (data: any) => {
-          this.departments = [{_id: '', departmentName: "All Departments" }, ...data.body.departments];
+          this.departments = [{ _id: '', departmentName: "All Departments" }, ...data.body.departments];
+
           resolve();
         },
         error: (error: any) => {
@@ -128,9 +135,10 @@ export class UserListComponent {
   }
   multipleDepartments(user: any) {
     let plant = user.plants.find((plant: any) => plant.plantId == this.authService.user.activePlantId);
+    console.log(plant);
     if (plant) {
       if (plant.departments.length == 1) {
-        return this.departments.find((department: any) => department._id == plant.departments[0]).departmentName;
+        return this.departments.find((department: any) => department._id == plant.departments[0]) ? this.departments.find((department: any) => department._id == plant.departments[0]).departmentName : "N/A";
       }
       else {
         return "Multiple Departments"

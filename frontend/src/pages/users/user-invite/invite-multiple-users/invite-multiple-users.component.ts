@@ -7,6 +7,7 @@ import { Invite } from 'src/models/invite';
 import { AuthService } from 'src/services/auth.service';
 import { DepartmentService } from 'src/services/department.service';
 import { PlantService } from 'src/services/plant.service';
+import { RoleService } from 'src/services/role.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 
@@ -23,7 +24,7 @@ export class InviteMultipleUsersComponent {
 
   request: any;
 
-  constructor(private authService: AuthService, private departmentServie: DepartmentService, private dialog: MatDialog, private messageService: MessageService, private spinnerService: SpinnerService, private sharedService: SharedService, private router: Router, private plantService: PlantService) {
+  constructor(public roleService: RoleService, private authService: AuthService, private departmentServie: DepartmentService, private dialog: MatDialog, private messageService: MessageService, private spinnerService: SpinnerService, private sharedService: SharedService, private router: Router, private plantService: PlantService) {
     this.sharedService.setDataKey('invite-multiple');
 
     this.request = this.sharedService.getData();
@@ -33,15 +34,7 @@ export class InviteMultipleUsersComponent {
       this.invites = this.request.invites;
       console.log(this.invites);
     }
-    this.roles = [
-      'Admin',
-      'Plant Manager',
-      'Team Manager',
-      'Senior Process Coach',
-      'Process Coach',
-      'Cycle Checker',
-      'Employee'
-    ];
+    this.roles = this.roleService.getRolesUnderUser();
   }
 
   ngOnInit() {

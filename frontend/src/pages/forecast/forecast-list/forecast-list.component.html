@@ -1,8 +1,10 @@
 <h1 class="page-header">Forecasting</h1>
 <div class="table-header">
-    <div *ngIf="departments.length > 0" class="dropdown">
-        <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department" optionLabel="departmentName"
-            [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+    <div>
+        <div *ngIf="departments.length > 0" class="dropdown">
+            <p-dropdown (onChange)="changeDepartment($event)" placeholder="Sort by Department"
+                optionLabel="departmentName" [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+        </div>
     </div>
 
     <div></div>
@@ -82,6 +84,7 @@
 
 </div>
 <div class="paginator-holder">
+    <div></div>
 
     <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
         aria-label="Select page of periodic elements" [length]="length">
@@ -89,7 +92,7 @@
     <div></div>
     <div></div>
     <div></div>
-    <div></div>
+
 </div>
 <p-confirmDialog #cd [style]="{width: '30vw'}">
     <ng-template pTemplate="header">

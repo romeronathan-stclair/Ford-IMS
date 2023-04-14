@@ -9,6 +9,7 @@ import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { Router } from '@angular/router';
 import { Plant } from 'src/models/plant';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-plant-list',
@@ -18,7 +19,7 @@ import { Plant } from 'src/models/plant';
 })
 export class PlantListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 5;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -47,7 +48,8 @@ export class PlantListComponent {
     private plantService: PlantService,
     private authService: AuthService,
     private sharedService: SharedService,
-    private router: Router) { }
+    private router: Router,
+    public roleService: RoleService) { }
 
 
   ngOnInit() {
@@ -63,13 +65,14 @@ export class PlantListComponent {
   }
 
   loadData() {
+    console.log("loadData");
     this.spinnerService.show();
 
     let userId = this.authService.user._id;
 
     let query = "?userId=" + userId + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-
+    console.log(query);
     this.plantService
       .getUserPlants(query)
       .subscribe({
@@ -83,6 +86,7 @@ export class PlantListComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
+          console.log(error);
 
         },
       });

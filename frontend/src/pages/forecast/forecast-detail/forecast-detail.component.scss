@@ -42,20 +42,7 @@ p {
     margin: 30px 0 30px 0;
     padding: 10px 50px 10px 50px;
 }
-.paginator-holder {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $grey !important;
-    border-bottom: 0.75px solid black;
-    border-right: 0.75px solid black;
-    border-left: 0.75px solid black;
-    @include column-lg-break {
-        flex-direction: column;
-        gap: 20px;
-    }
-}
+
 mat-paginator {
     background-color: $grey !important;
     width: 50%;
