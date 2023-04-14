@@ -114,6 +114,7 @@ export class ProductionCountStepTwoComponent {
   submitCount() {
     this.spinnerService.show();
 
+    console.log(this.request);
     this.productionCountService.submitProductionCount(this.request)
       .subscribe({
         next: (data: any) => {

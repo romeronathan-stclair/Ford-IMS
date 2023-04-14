@@ -169,8 +169,9 @@ export const submitSubAssembly = async (req: Request, res: Response) => {
             modelType: ModelType.SUBASSEMBLY,
             userName: user.name,
             userEmailAddress: user.email,
-            itemId: new Date().toDateString(),
-            itemName: 'Sub Assembly'
+            itemId: new Date().toDateString() + ' ' + new Date().toDateString() + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
+            itemName: 'Sub Assembly',
+            subAssemblyForm: subAssemblyList
         });
 
         event.save();

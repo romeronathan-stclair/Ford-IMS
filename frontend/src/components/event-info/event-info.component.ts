@@ -140,4 +140,8 @@ export class EventInfoComponent {
     this.location.back();
   }
 
+  viewFormData($event: any) {
+    this.router.navigate(['/dashboard/event/list/' + this.modelType + '/' + $event + '/data' ]);
+  }
+
 }

@@ -119,6 +119,7 @@ import { EditUserComponent } from 'src/pages/users/edit-users/edit-user/edit-use
 import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info/edit-user-info.component';
 import { EditUserPlantsComponent } from 'src/pages/users/edit-users/edit-user-plants/edit-user-plants.component';
 import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
+import { EventFormDataComponent } from 'src/components/event-form-data/event-form-data.component';
 
 @NgModule({
   declarations: [
@@ -215,6 +216,7 @@ import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-us
     EditUserInfoComponent,
     EditUserPlantsComponent,
     EditUserDepartmentsComponent,
+    EventFormDataComponent
   ],
   imports: [
     BrowserModule,

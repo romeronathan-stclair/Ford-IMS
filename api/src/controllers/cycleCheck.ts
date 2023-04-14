@@ -182,8 +182,9 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
             modelType: ModelType.CYCLECHECK,
             userName: user.name,
             userEmailAddress: user.email,
-            itemId: new Date().toDateString(),
+            itemId: new Date().toDateString() + ' ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }),
             itemName: 'Cycle Check',
+            cycleCheckForm: cycleCheckList
         });
 
         event.save();

@@ -1,0 +1,89 @@
+<h1 class="page-header">{{itemName}} - {{date}} {{time}}</h1>
+<div class="table-header">
+  <thead>
+    <th>Part Name</th>
+    <th>Market Location</th>
+    <th>Part Type</th>
+    <th>Count</th>
+  </thead>
+</div>
+<div *ngIf="modelType === 'Cycle-check'" class="table-holder">
+  <div *ngFor="let department of cycleCheckForm">
+  <ng-container *ngIf="department.stockList.length || department.dunnage.length">
+    <table class="table">
+      <caption>{{department.departmentName}}: STOCK</caption>
+      <tbody>
+        <tr *ngFor="let stock of department.stockList">
+          <td>{{stock.name}}</td>
+          <td>{{stock.marketLocation}}</td>
+          <td>{{stock.partNumber}}</td>
+          <td>{{stock.currentCount}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <caption>{{department.departmentName}}: EMPTY DUNNAGE</caption>
+      <tbody>
+        <tr *ngFor="let dunnage of department.dunnage">
+          <td>{{dunnage.name}}</td>
+          <td>{{dunnage.marketLocation}}</td>
+          <td></td>
+          <td>{{dunnage.currentCount}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="spacer"></div>
+  </ng-container>
+  </div>
+</div>
+<div *ngIf="modelType === 'Sub-assembly'" class="table-holder">
+  <div *ngFor="let department of subAssemblyForm">
+  <ng-container *ngIf="department.stockList.length || department.dunnage.length">
+    <table class="table">
+      <caption>{{department.departmentName}}: STOCK</caption>
+      <tbody>
+        <tr *ngFor="let stock of department.stockList">
+          <td>{{stock.name}}</td>
+          <td>{{stock.marketLocation}}</td>
+          <td>{{stock.partNumber}}</td>
+          <td>{{stock.currentCount}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="spacer"></div>
+  </ng-container>
+  </div>
+</div>
+<div *ngIf="modelType === 'Production-count'" class="table-holder">
+  <div *ngFor="let department of productionCountForm">
+      <ng-container *ngIf="department.productList && department.productList.length > 0">
+          <table class="table">
+              <caption>{{department.departmentName}}: Products</caption>
+              <tbody>
+                  <tr *ngFor="let product of department.productList">
+                      <td>{{product.name}}</td>
+                      <td>{{product.marketLocation}}</td>
+                      <td>{{product.partNumber}}</td>
+                      <td>{{product.productQtyBuilt}}</td>
+                  </tr>
+              </tbody>
+          </table>
+
+          <div class="spacer"></div>
+      </ng-container>
+  </div>
+</div>
+<div class="paginator-holder">
+  <button (click)="goBack()" class="general-button">Back</button>
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+  <ng-template pTemplate="header">
+    <h3></h3>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+    <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+  </ng-template>
+</p-confirmDialog>
+
