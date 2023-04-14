@@ -18,6 +18,8 @@ export class EventFormDataComponent {
   itemName: string = '';
   modelType: string = '';
   itemId: string = '';
+  date: string = '';
+  time: string = '';
   event: Event = {} as Event;
 
   constructor(
@@ -54,8 +56,11 @@ export class EventFormDataComponent {
           this.subAssemblyForm = data.body.events[0].subAssemblyForm;
         } else if (this.modelType == 'Production-count') {
           this.productionCountForm = data.body.events[0].productionCountForm;
+          console.log(this.productionCountForm);
         }
         this.itemName = data.body.events[0].itemName;
+        this.date = data.body.events[0].eventDate;
+        this.time = data.body.events[0].eventTime;
       }
     });
   }
