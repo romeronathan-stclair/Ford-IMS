@@ -262,7 +262,7 @@ export const stockForecast = async (
                 const forecastStockItem = {
                     stockId: stock._id.toString(),
                     productId: product._id.toString(),
-                    fiveShiftsBeforeShortage: shiftsBeforeShortage < 5,
+                    fiveShiftsBeforeShortage: shiftsBeforeShortage < 3,
                     name: stock.name,
                     partNumber: stock.partNumber,
                     departmentId: stock.departmentId,
@@ -393,7 +393,7 @@ export const dunnageForecast = async (
                     name: dunnage.name,
                     departmentId: dunnage.departmentId,
                     totalAvailableQty: availableSkids,
-                    fiveShiftsBeforeShortage: shiftsBeforeShortage < 5,
+                    fiveShiftsBeforeShortage: shiftsBeforeShortage < 3,
                     totalPossibleBuilds: totalPossibleBuilds,
                     lowThreshold: lowStockThreshold,
                     moderateThreshold: moderateStockThreshold,
