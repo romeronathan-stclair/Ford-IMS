@@ -64,6 +64,7 @@ export class ForecastDetailComponent {
         this.spinnerService.showHide();
         this.productForecast = response.body;
         console.log(this.productForecast);
+        console.log(this.productForecast.stockForecast);
         if (this.productForecast.stockForecast?.forecastedStockItems) {
           this.stockForecastExists = true;
         }
@@ -118,7 +119,7 @@ export class ForecastDetailComponent {
   }
   getHealthClassForShifts() {
       const shiftsThreshold = 3;
-      const greenThreshold = 6;
+      const greenThreshold = 5;
       if(this.productForecast.stockForecast?.lowestStockItem?.shiftsBeforeShortage) {
         if (this.productForecast.stockForecast?.lowestStockItem?.shiftsBeforeShortage < shiftsThreshold) {
           return "low-health";

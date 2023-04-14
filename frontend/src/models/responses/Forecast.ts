@@ -10,8 +10,8 @@ export interface ForecastItem {
     usePerProduct?: number;
     totalAvailableQty?: number;
     totalPossibleBuilds: number;
-    lowThreshold?: boolean;
-    moderateThreshold?: boolean;
+    lowStockThreshold?: boolean;
+    moderateStockThreshold?: boolean;
     belowDailyTarget?: boolean;
     dailyTarget?: number;
     jobsPerHour?: number;

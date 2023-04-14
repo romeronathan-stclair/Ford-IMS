@@ -251,7 +251,7 @@ export const stockForecast = async (
                 const jobsPerHour = dailyTarget / 24;
                 const shiftsBeforeShortage = Math.floor(totalPossibleBuilds / (dailyTarget / 3));
                 const hoursBeforeShortage = Math.floor(totalPossibleBuilds / jobsPerHour);
-                if (lowStockThreshold || belowDailyTarget || shiftsBeforeShortage < 5) {
+                if (lowStockThreshold || belowDailyTarget || shiftsBeforeShortage < 3) {
                     lowStockCount++;
                 } else if (moderateStockThreshold) {
                     moderateStockCount++;
