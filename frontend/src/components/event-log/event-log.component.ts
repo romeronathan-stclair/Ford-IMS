@@ -22,7 +22,7 @@ import { Department } from 'src/models/department';
 })
 export class EventLogComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
   activePlantId: string = '';
   modelType = '';
@@ -35,11 +35,11 @@ export class EventLogComponent {
   departments: Department[] = [];
   selectedDepartment: any = '';
   operations = [
-      { operationName: 'All', operationValue: ''},
-      { operationName: 'Create', operationValue: 'Create'},
-      { operationName: 'Update', operationValue: 'Update'},
-      { operationName: 'Delete', operationValue: 'Delete'}
-    ];
+    { operationName: 'All', operationValue: '' },
+    { operationName: 'Create', operationValue: 'Create' },
+    { operationName: 'Update', operationValue: 'Update' },
+    { operationName: 'Delete', operationValue: 'Delete' }
+  ];
   selectedOperation: any = '';
   events: Event[] = [];
 
@@ -97,19 +97,19 @@ export class EventLogComponent {
 
     let plantIds: string[] = [];
     this.plantService.getPlants(plantQuery)
-    .subscribe({
-      next: (data: any) => {
-        data.body.plants.forEach((plant: any) => {
-          plantIds.push(plant._id);
-        });
-        this.plants = data.body.plants;
-        this.plants.unshift({_id: '', plantName: 'All Plants', plantId: '', departments: [] });
-        console.log(this.plants);
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
+      .subscribe({
+        next: (data: any) => {
+          data.body.plants.forEach((plant: any) => {
+            plantIds.push(plant._id);
+          });
+          this.plants = data.body.plants;
+          this.plants.unshift({ _id: '', plantName: 'All Plants', plantId: '', departments: [] });
+          console.log(this.plants);
+        },
+        error: (error: any) => {
+          console.log(error);
+        }
+      });
   }
 
   loadDepartments() {
@@ -124,7 +124,7 @@ export class EventLogComponent {
             departmentIds.push(department._id);
           });
           this.departments = data.body.departments;
-          this.departments.unshift({_id: '', departmentName: 'All Departments', plantId : '', isDeleted: false });
+          this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
         },
         error: (error: any) => {
           console.log(error);

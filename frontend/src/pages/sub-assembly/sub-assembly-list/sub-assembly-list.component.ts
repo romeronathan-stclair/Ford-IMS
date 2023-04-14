@@ -8,6 +8,7 @@ import { EventService } from 'src/services/event.service';
 import { Router } from '@angular/router';
 import { Department } from 'src/models/department';
 import { Event } from 'src/models/event';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-sub-assembly-list',
@@ -16,11 +17,11 @@ import { Event } from 'src/models/event';
 })
 export class SubAssemblyListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 10;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  activePlantId: string  = '';
+  activePlantId: string = '';
   departments: Department[] = [];
   events: Event[] = [];
 
@@ -30,22 +31,22 @@ export class SubAssemblyListComponent {
     private spinnerService: SpinnerService,
     private authService: AuthService,
     private eventService: EventService,
-    private router: Router
-    )
-    { }
+    private router: Router,
+    public roleService: RoleService,
+  ) { }
 
-    ngOnInit() {
-      this.spinnerService.showHide();
-      this.activePlantId = this.authService.user.activePlantId;
-      this.loadEvents();
-    }
+  ngOnInit() {
+    this.spinnerService.showHide();
+    this.activePlantId = this.authService.user.activePlantId;
+    this.loadEvents();
+  }
 
-    loadEvents() {
-      this.spinnerService.show();
+  loadEvents() {
+    this.spinnerService.show();
 
-      let eventQuery = "?modelType=Sub-assembly" + "&plantId=" + this.activePlantId + "&page=" + this.currentPage + "&limit=" + this.pageSize;
+    let eventQuery = "?modelType=Sub-assembly" + "&plantId=" + this.activePlantId + "&page=" + this.currentPage + "&limit=" + this.pageSize;
 
-      this.eventService.getEvents(eventQuery)
+    this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
           this.events = data.body.events;
@@ -58,17 +59,17 @@ export class SubAssemblyListComponent {
           console.log(error);
         }
       });
-    }
+  }
 
-    pageChanged(event: PageEvent) {
-      console.log({ event });
-      this.pageSize = event.pageSize;
-      this.currentPage = event.pageIndex;
-      this.loadEvents();
-    }
+  pageChanged(event: PageEvent) {
+    console.log({ event });
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.loadEvents();
+  }
 
-    viewEventInfo($event: any) {
-      this.router.navigate(['/dashboard/event/list/Sub-assembly' + '/' + $event]);
-    }
+  viewEventInfo($event: any) {
+    this.router.navigate(['/dashboard/event/list/Sub-assembly' + '/' + $event]);
+  }
 
 }

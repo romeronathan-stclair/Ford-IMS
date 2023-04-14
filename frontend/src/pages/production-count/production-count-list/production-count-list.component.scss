@@ -14,20 +14,7 @@ img {
     align-items: center;
     padding-right: 50px;
 }
-.paginator-holder {
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: $grey !important;
-    border-bottom: 0.75px solid black;
-    border-right: 0.75px solid black;
-    border-left: 0.75px solid black;
-    @include column-lg-break {
-        flex-direction: column;
-        gap: 20px;
-    }
-}
+
 mat-paginator {
     background-color: $grey !important;
     width: 50%;
@@ -60,26 +47,26 @@ i {
 }
 
 .table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
 }
 
 thead {
-  background-color: #999;
+    background-color: #999;
 }
 
 th,
 td {
-  flex: 1;
-  padding: 10px;
-  text-align: left;
+    flex: 1;
+    padding: 10px;
+    text-align: left;
 }
 
 tr {
-  border: solid black 1px;
+    border: solid black 1px;
 }
 
 td {
-  background-color: rgb(217, 217, 217);
+    background-color: rgb(217, 217, 217);
 }

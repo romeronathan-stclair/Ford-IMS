@@ -59,7 +59,7 @@ export class CreateDepartmentComponent {
           this.messageService.add({
             severity: 'error',
             summary: `Error: `,
-            detail: `Plant name already exists.`,
+            detail: `Department name already exists.`,
           });
           return;
 
@@ -72,7 +72,7 @@ export class CreateDepartmentComponent {
         this.messageService.add({
           severity: 'error',
           summary: `Error: `,
-          detail: `Plant name already exists.`,
+          detail: `Department name already exists.`,
         });
         return;
 

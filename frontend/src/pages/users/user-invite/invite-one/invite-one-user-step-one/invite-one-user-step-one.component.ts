@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
+import { RoleService } from 'src/services/role.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
 import { threadId } from 'worker_threads';
@@ -26,6 +27,7 @@ export class InviteOneUserStepOneComponent {
     private router: Router,
     private authService: AuthService,
     private spinnerService: SpinnerService,
+    public roleService: RoleService,
 
     private messageService: MessageService) {
     this.userForm = this.formBuilder.group({
@@ -44,15 +46,7 @@ export class InviteOneUserStepOneComponent {
       this.userForm.patchValue(
         this.request
       );
-      this.roles = [
-        'Admin',
-        'Plant Manager',
-        'Team Manager',
-        'Senior Process Coach',
-        'Process Coach',
-        'Cycle Checker',
-        'Employee'
-      ];
+      this.roles = this.roleService.getRolesUnderUser();
 
     }
 

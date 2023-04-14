@@ -89,6 +89,7 @@ import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info
 import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 import { InviteMultipleUsersComponent } from 'src/pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
 import { EditUserPlantsComponent } from 'src/pages/users/edit-users/edit-user-plants/edit-user-plants.component';
+import { AuthRoleGuard } from 'src/guards/auth.role.guard';
 
 
 const routes: Routes = [
@@ -101,6 +102,7 @@ const routes: Routes = [
       {
         path: 'login',
         data: { animation: 'Login Page' },
+
         component: LoginPageComponent,
       },
       {
@@ -143,7 +145,8 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Plant Page' },
+            data: { animation: 'Create Plant Page', requiredPermission: 'canCreatePlant' },
+            canActivate: [AuthRoleGuard],
             component: CreatePlantComponent,
             children: [
               {
@@ -177,8 +180,9 @@ const routes: Routes = [
             component: PlantListComponent,
           },
           {
+            data: { animation: 'Edit Plant Page', requiredPermission: 'canEditPlant' },
+            canActivate: [AuthRoleGuard],
             path: 'edit/:id',
-            data: { animation: 'Edit Plant Page' },
             component: EditPlantPageComponent
           }
         ]
@@ -195,12 +199,14 @@ const routes: Routes = [
           },
           {
             path: 'create',
-            data: { animation: 'Create Department Page' },
+            data: { animation: 'Create Department Page', requiredPermission: 'canCreateDepartment' },
+            canActivate: [AuthRoleGuard],
             component: CreateDepartmentComponent
           },
           {
             path: 'edit/:id',
-            data: { animation: 'Edit Department Page' },
+            data: { animation: 'Edit Department Page', requiredPermission: 'canEditDepartment' },
+            canActivate: [AuthRoleGuard],
             component: EditDepartmentComponent
           }
         ]
@@ -219,7 +225,8 @@ const routes: Routes = [
 
           {
             path: 'create',
-            data: { animation: 'Create Product Page' },
+            data: { animation: 'Create Product Page', requiredPermission: 'canCreateProduct' },
+            canActivate: [AuthRoleGuard],
             component: CreateProductComponent,
             children: [
               {
@@ -242,7 +249,8 @@ const routes: Routes = [
 
           }, {
             path: 'edit',
-            data: { animation: 'Edit Product Page' },
+            data: { animation: 'Edit Product Page', requiredPermission: 'canEditProduct' },
+            canActivate: [AuthRoleGuard],
             component: EditProductComponent,
             children: [
               {
@@ -283,7 +291,8 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Stock Page' },
+            data: { animation: 'Create Stock Page', requiredPermission: 'canCreateStock' },
+            canActivate: [AuthRoleGuard],
             component: CreateStockComponent,
             children: [
               {
@@ -311,7 +320,8 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { animation: 'Edit Stock Page' },
+            data: { animation: 'Edit Stock Page', requiredPermission: 'canEditStock' },
+            canActivate: [AuthRoleGuard],
             component: EditStockComponent,
             children: [
               {
@@ -345,7 +355,8 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Stock Page' },
+            data: { animation: 'Create Dunnage Page', requiredPermission: 'canCreateDunnage' },
+            canActivate: [AuthRoleGuard],
             component: CreateDunnageComponent,
             children: [
               {
@@ -374,7 +385,8 @@ const routes: Routes = [
           },
           {
             path: 'edit',
-            data: { animation: 'Edit Dunnage Page' },
+            data: { animation: 'Edit Dunnage Page', requiredPermission: 'canEditDunnage' },
+            canActivate: [AuthRoleGuard],
             component: EditDunnageRouterComponent,
             children: [
               {
@@ -396,67 +408,67 @@ const routes: Routes = [
         data: { animation: 'Users Page' },
         component: UsersComponent,
         children: [
-        {
-          path: 'list',
-          data: { animation: 'Users List Page' },
-          component: UserListComponent
-        },
-        {
-          path: 'view-info/:id',
-          data: { animation: 'View User Page' },
-          component: UserInfoComponent
-        },
-        {
-          path: 'invite',
-          component: InviteUsersComponent,
-          children: [
-            {
-              path: 'invite-one-user',
-              component: InviteOneUserComponent,
-              children: [
-                {
-                  path: 'step-one',
-                  component: InviteOneUserStepOneComponent
-                },
-                {
-                  path: 'step-two',
-                  component: InviteOneUserStepTwoComponent
-                },
-                {
-                  path: 'step-three',
-                  component: InviteOneUserStepThreeComponent
+          {
+            path: 'list',
+            data: { animation: 'Users List Page' },
+            component: UserListComponent
+          },
+          {
+            path: 'view-info/:id',
+            data: { animation: 'View User Page' },
+            component: UserInfoComponent
+          },
+          {
+            path: 'invite',
+            component: InviteUsersComponent,
+            children: [
+              {
+                path: 'invite-one-user',
+                component: InviteOneUserComponent,
+                children: [
+                  {
+                    path: 'step-one',
+                    component: InviteOneUserStepOneComponent
+                  },
+                  {
+                    path: 'step-two',
+                    component: InviteOneUserStepTwoComponent
+                  },
+                  {
+                    path: 'step-three',
+                    component: InviteOneUserStepThreeComponent
 
-                }
-              ]
-            },
-            {
-              path: 'invite-multiple',
-              component: InviteMultipleUsersComponent
-            }
-          ]
-        },
-        {
-          path: 'edit',
-          data: { animation: 'Edit User Page' },
-          component: EditUserComponent,
-          children: [
-            {
-              path: 'info/:id',
-              data: { animation: 'Edit User Page' },
-              component: EditUserInfoComponent,
-            },
-            {
-              path: 'reassign-plants',
-              data: { animation: 'Edit User Page' },
-              component: EditUserPlantsComponent,
-            },
-            {
-              path: 'reassign-departments',
-              data: { animation: 'Edit User Page' },
-              component: EditUserDepartmentsComponent,
-            }
-          ]
-        }
+                  }
+                ]
+              },
+              {
+                path: 'invite-multiple',
+                component: InviteMultipleUsersComponent
+              }
+            ]
+          },
+          {
+            path: 'edit',
+            data: { animation: 'Edit User Page' },
+            component: EditUserComponent,
+            children: [
+              {
+                path: 'info/:id',
+                data: { animation: 'Edit User Page' },
+                component: EditUserInfoComponent,
+              },
+              {
+                path: 'reassign-plants',
+                data: { animation: 'Edit User Page' },
+                component: EditUserPlantsComponent,
+              },
+              {
+                path: 'reassign-departments',
+                data: { animation: 'Edit User Page' },
+                component: EditUserDepartmentsComponent,
+              }
+            ]
+          }
         ]
       },
       {
@@ -466,7 +478,9 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Cycle Check Page' },
+            data: { animation: 'Create Cycle Check Page', requiredPermission: 'canCreateCycleCheck' },
+            canActivate: [AuthRoleGuard],
+
             component: CycleCheckRouterComponent,
             children: [
               {
@@ -489,7 +503,8 @@ const routes: Routes = [
         children: [
           {
             path: 'create',
-            data: { animation: 'Create Sub Assembly Page' },
+            data: { animation: 'Create Sub Assembly Page', requiredPermission: 'canCreateSubAssembly' },
+            canActivate: [AuthRoleGuard],
             component: SubAssemblyRouterComponent,
             children: [
               {
@@ -517,7 +532,8 @@ const routes: Routes = [
           },
           {
             path: 'create',
-            data: { animation: 'Create Cycle Check Page' },
+            data: { animation: 'Create Cycle Check Page', requiredPermission: 'canCreateCycleCheck' },
+            canActivate: [AuthRoleGuard],
             component: ProductionCountCreateComponent,
             children: [
               {

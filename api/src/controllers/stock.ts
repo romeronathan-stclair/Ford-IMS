@@ -162,6 +162,8 @@ export const getStock = async (req: Request, res: Response) => {
     const userId = req.query.userId;
 
 
+
+
     const query: any = {
         isDeleted: false,
     };
@@ -170,11 +172,18 @@ export const getStock = async (req: Request, res: Response) => {
         query["departmentId"] = departmentId;
     }
 
+
+
     if (userId) {
         const user = await User.findOne({ _id: userId, isDeleted: false });
         if (user) {
             const departmentIds = user.plants.flatMap(plant => plant.departments);
-            query["departmentId"] = { $in: departmentIds };
+
+            const departments = await Department.find({ _id: { $in: departmentIds }, isDeleted: false });
+
+
+
+            query["departmentId"] = { $in: departments.map(department => department._id) };
         }
     }
 

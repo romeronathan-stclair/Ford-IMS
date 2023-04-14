@@ -254,6 +254,21 @@ export const deleteDepartment = async (req: Request, res: Response) => {
         itemName: department.departmentName
     });
 
+    const users = await User.find({
+        'plants': {
+            $elemMatch: {
+                'plantId': department.plantId,
+                'departments': department._id
+            }
+        }
+    }).exec();
+
+    console.log(users);
+    // Remove department from users
+    for (const user of users) {
+        await removeDepartmentFromPlant(user._id, department.plantId, department._id);
+    }
+
     // save Department
     try {
         await department.save();
@@ -265,3 +280,16 @@ export const deleteDepartment = async (req: Request, res: Response) => {
 };
 
 
+async function removeDepartmentFromPlant(userId: string, plantId: string, department: string): Promise<UserDocument | null> {
+    const updatedUser = await User.findOneAndUpdate(
+        { _id: userId, 'plants.plantId': plantId },
+        {
+            $pull: {
+                'plants.$.departments': department
+            }
+        },
+        { new: true }
+    ).exec();
+
+    return updatedUser;
+}

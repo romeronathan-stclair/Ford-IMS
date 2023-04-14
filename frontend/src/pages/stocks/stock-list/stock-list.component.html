@@ -5,20 +5,23 @@
     <p-dropdown (onChange)="changeDepartment($event)" optionLabel="departmentName" [options]="departments"
       [(ngModel)]="selectedDepartment"></p-dropdown>
   </div>
-  <div class="search-bar">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <form [formGroup]="stockForm">
-      <input placeholder="Search by Name" formControlName="stockName" class="form-control" id="name-input" required
-        (input)="searchByName()" />
-    </form>
 
+  <div>
+    <div *ngIf="activePlantId != '0'" class="search-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <form [formGroup]="stockForm">
+        <input placeholder="Search by Name" formControlName="stockName" class="form-control" id="name-input" required
+          (input)="searchByName()" />
+      </form>
+
+    </div>
   </div>
   <img src="/assets/ford-logo.png" />
 
 </div>
 <div class="table-holder">
   <div *ngIf="stocks.length == 0" class="form-text mb-3">
-    There are currently no products in this department.
+    There are currently no stocks to display.
   </div>
   <div class="card">
     <mat-card *ngFor="let stock of stocks">
@@ -46,8 +49,12 @@
   </div>
 </div>
 <div class="paginator-holder">
-  <button [disabled]="activePlantId == '0'" [routerLink]="'/dashboard/stock/create/step-one'" type="submit"
-    class="general-button first-button"><i class="fa-solid fa-plus"></i>Create New Stock</button>
+  <div>
+    <button *ngIf="roleService.canCreateStock()" [disabled]="activePlantId == '0'"
+      [routerLink]="'/dashboard/stock/create/step-one'" type="submit" class="general-button first-button"><i
+        class="fa-solid fa-plus"></i>Create New Stock</button>
+  </div>
+
   <mat-paginator (page)="pageChanged($event)" #paginator [pageSize]="pageSize"
     aria-label="Select page of periodic elements" [length]="length">
   </mat-paginator>

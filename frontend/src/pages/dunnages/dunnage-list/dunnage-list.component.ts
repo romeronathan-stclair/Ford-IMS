@@ -10,6 +10,7 @@ import { DunnageService } from 'src/services/dunnage.service';
 import { Router } from '@angular/router';
 import { Dunnage } from 'src/models/dunnage';
 import { Department } from 'src/models/department';
+import { RoleService } from 'src/services/role.service';
 
 @Component({
   selector: 'app-dunnage-list',
@@ -19,7 +20,7 @@ import { Department } from 'src/models/department';
 })
 export class DunnageListComponent {
   currentPage = 0;
-  length = 100;
+  length = 0;
   pageSize = 6;
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -36,7 +37,8 @@ export class DunnageListComponent {
     private dunnageService: DunnageService,
     private spinnerService: SpinnerService,
     private authService: AuthService,
-    private router: Router) {
+    private router: Router,
+    public roleService: RoleService) {
     this.dunnageForm = new FormGroup({
 
       departmentName: new FormControl(''),
@@ -46,7 +48,9 @@ export class DunnageListComponent {
 
   async ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    await this.loadData();
+    if (this.activePlantId != "0") {
+      await this.loadData();
+    }
   }
 
   ngAfterViewInit() {
@@ -168,6 +172,9 @@ export class DunnageListComponent {
 
 
   pageChanged(event: PageEvent) {
+    if (this.activePlantId == '0') {
+      return;
+    }
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadData();
