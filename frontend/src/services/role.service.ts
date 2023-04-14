@@ -200,11 +200,11 @@ export class RoleService {
         return allowedRoles.includes(this.authService.user.role as Roles);
     }
     // User Management
-    canManageUser(targetRole: Roles): boolean {
+    canManageUser(targetRole?: Roles): boolean {
 
         const userRole = this.authService.user.role as Roles;
         const userRolePower = rolePowerLevels[userRole];
-        const targetRolePower = rolePowerLevels[targetRole];
+        const targetRolePower = rolePowerLevels[targetRole ? targetRole : userRole];
         console.log(userRole);
 
         return userRolePower > targetRolePower;

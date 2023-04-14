@@ -233,6 +233,29 @@ export const getPlants = async (req: Request, res: Response) => {
 
 
 
+
+
+
+
+    if (plantId) {
+
+        console.log(plantId);
+        const plant: PlantDocument = (await Plant.findOne({
+            _id: plantId.toString(),
+            isDeleted: false,
+        })) as PlantDocument;
+
+
+        return res.status(200).json(plant);
+    }
+    if (plantName) {
+        const plant: PlantDocument = (await Plant.findOne({
+            plantName: plantName.toString(),
+            isDeleted: false,
+        })) as PlantDocument;
+
+        return res.status(200).json(plant);
+    }
     if (user.role === Roles.Admin) {
         console.log("dsf");
         const plantList: PlantDocument[] = (await Plant.find({
@@ -256,26 +279,6 @@ export const getPlants = async (req: Request, res: Response) => {
 
         return res.status(200).json(response);
 
-    }
-
-    if (plantId) {
-
-        console.log(plantId);
-        const plant: PlantDocument = (await Plant.findOne({
-            _id: plantId.toString(),
-            isDeleted: false,
-        })) as PlantDocument;
-
-
-        return res.status(200).json(plant);
-    }
-    if (plantName) {
-        const plant: PlantDocument = (await Plant.findOne({
-            plantName: plantName.toString(),
-            isDeleted: false,
-        })) as PlantDocument;
-
-        return res.status(200).json(plant);
     }
 
     if (!userId) {
