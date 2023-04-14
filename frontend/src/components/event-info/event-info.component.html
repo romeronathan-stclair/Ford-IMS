@@ -15,6 +15,7 @@
     <div><strong>Event Time:</strong> {{event.eventTime}}</div>
     <div><strong>Employee:</strong> {{event.userName}}</div>
     <div><strong>Employee Email:</strong> {{event.userEmailAddress}}</div>
+    <button (click)="viewFormData(event.itemId)" *ngIf="this.event.modelType === 'Cycle-check' || this.event.modelType === 'Sub-assembly' || this.event.modelType === 'Production-count'" type="button" class="submit-button">View Count</button>
   </div>
 </div>
 <div class="paginator-holder">

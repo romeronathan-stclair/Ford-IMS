@@ -89,6 +89,7 @@ import { EditUserInfoComponent } from 'src/pages/users/edit-users/edit-user-info
 import { EditUserDepartmentsComponent } from 'src/pages/users/edit-users/edit-user-departments/edit-user-departments.component';
 import { InviteMultipleUsersComponent } from 'src/pages/users/user-invite/invite-multiple-users/invite-multiple-users.component';
 import { EditUserPlantsComponent } from 'src/pages/users/edit-users/edit-user-plants/edit-user-plants.component';
+import { EventFormDataComponent } from 'src/components/event-form-data/event-form-data.component';
 
 
 const routes: Routes = [
@@ -558,6 +559,11 @@ const routes: Routes = [
             path: 'list/:modelType/:itemId',
             data: { animation: 'Event Info Page' },
             component: EventInfoComponent
+          },
+          {
+            path: 'list/:modelType/:itemId/data',
+            data: { animation: 'Event Data Page' },
+            component: EventFormDataComponent
           }
         ]
       }
