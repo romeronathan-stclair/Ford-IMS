@@ -43,7 +43,7 @@ export const createPlant = async (
     let eventList: EventDocument[] = [];
     let response;
     let departments: DepartmentDocument[] = [];
-    let departmentIds: [String] = [""];
+    let departmentIds: [] = [];
 
     const plant: PlantDocument = (await Plant.findOne({
         plantName: req.body.plantName,
@@ -135,7 +135,7 @@ export const createPlant = async (
 
             departmentIds = departments.map((department: DepartmentDocument) =>
                 department._id.toString()
-            ) as [String];
+            ) as any;
         } catch (err) {
             cancelPlantCreate(newPlant, departments, eventList);
             return res.status(500).json("Error while creating departments." + err);
@@ -558,7 +558,7 @@ const assignUsers = async (
                     try {
                         assignedUser.plants.push({
                             plantId: newPlant._id.valueOf(),
-                            departments: [""],
+                            departments: [],
                             isActive: false,
                         });
 

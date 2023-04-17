@@ -46,7 +46,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
 
 
 
-                const productQtyBuild = product.productQtyBuilt;
+                const productQtyBuilt = product.productQtyBuilt;
                 const productId = product._id;
 
 
@@ -62,7 +62,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
 
                     for (const productStock of productStocks) {
                         const usePerBuild = Number(productStock.usePerProduct);
-                        const stockUsed = productQtyBuild * usePerBuild;
+                        const stockUsed = productQtyBuilt * usePerBuild;
 
                         const stock: StockDocument = (await Stock.findOne({
                             _id: productStock.stockId,
@@ -110,6 +110,7 @@ export const submitProductionCount = async (req: Request, res: Response) => {
             if (!plant) {
                 return res.status(500).json("No active plants");
             }
+            console.log("REQuest " + JSON.stringify(request));
 
             const event = new Event({
                 plantId: plant.plantId,

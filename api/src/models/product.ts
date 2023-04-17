@@ -4,11 +4,12 @@ import { Schema, Document, model } from "mongoose";
 export type ProductDocument = Document & {
     name: string;
     partNumber: string;
-    departmentId: string; 
+    departmentId: string;
     dailyTarget: number;
     marketLocation: string;
     imageURL: string;
     isDeleted: boolean;
+    productQtyBuilt?: number;
 
 };
 
@@ -25,7 +26,7 @@ const productSchema = new Schema<ProductDocument>({
         type: String,
         required: true,
     },
-    dailyTarget: {  
+    dailyTarget: {
         type: Number,
         required: true,
     },
@@ -40,6 +41,10 @@ const productSchema = new Schema<ProductDocument>({
     isDeleted: {
         type: Boolean,
         required: true,
+    },
+    productQtyBuilt: {
+        type: Number,
+        required: false,
     },
 
 });

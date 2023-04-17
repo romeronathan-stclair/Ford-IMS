@@ -1,14 +1,14 @@
 @import "src/styles.scss";
 .holder {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    height: 70vh;
-    @include column-lg-break {
-        padding: 30px;
-    }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  height: 70vh;
+  @include column-lg-break {
+    padding: 30px;
+  }
 }
 
 .button-holders {
@@ -109,4 +109,9 @@
 
 .hover-active:hover .image-upload-preview {
   filter: brightness(1);
+}
+.action-holders {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

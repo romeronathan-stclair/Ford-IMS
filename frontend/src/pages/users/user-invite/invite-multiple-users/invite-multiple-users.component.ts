@@ -228,8 +228,13 @@ export class InviteMultipleUsersComponent {
 
       this.departmentServie.getDepartments(query).subscribe(
         (data) => {
+          console.log(data);
           let mappedDepartmentNames = data.body.departments.map((department: any) => department.departmentName);
-          let mappedSelectedDepartmentNames = invite.plants?.[0].departments.map((department: any) => department.departmentName);
+          let mappedSelectedDepartmentNames;
+          if (invite.plants?.[0].departments) {
+            mappedSelectedDepartmentNames = invite.plants?.[0].departments.map((department: any) => department.departmentName);
+          }
+
           const dialogRef = this.dialog.open(AssignDepartmentsDialogComponent, {
 
             data: { departments: mappedDepartmentNames, userDepartments: mappedSelectedDepartmentNames }

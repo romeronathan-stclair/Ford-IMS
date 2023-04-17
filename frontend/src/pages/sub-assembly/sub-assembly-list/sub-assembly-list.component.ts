@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Department } from 'src/models/department';
 import { Event } from 'src/models/event';
 import { RoleService } from 'src/services/role.service';
+import { ExportService } from 'src/services/export.service';
 
 @Component({
   selector: 'app-sub-assembly-list',
@@ -33,6 +34,7 @@ export class SubAssemblyListComponent {
     private eventService: EventService,
     private router: Router,
     public roleService: RoleService,
+    private exportService: ExportService
   ) { }
 
   ngOnInit() {
@@ -71,5 +73,7 @@ export class SubAssemblyListComponent {
   viewEventInfo($event: any) {
     this.router.navigate(['/dashboard/event/list/Sub-assembly' + '/' + $event]);
   }
-
+  exportToCSV(event: any) {
+    this.exportService.exportToCsv(event, event.modelType + '-' + event.itemId);
+  }
 }

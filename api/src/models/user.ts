@@ -9,7 +9,7 @@ export type UserDocument = Document & {
     email: string;
     plants: [{
         plantId: string;
-        departments: [String];
+        departments: string[];
         isActive: boolean;
     }]
     role: string;

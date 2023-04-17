@@ -23,7 +23,10 @@
         <td>{{event.eventDate}}</td>
         <td>{{event.eventTime}}</td>
         <td>
-          <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
+          <div class="action-holders">
+            <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
+            <button mat-icon-button (click)="exportToCSV(event)"><mat-icon>download</mat-icon></button>
+          </div>
         </td>
       </tr>
     </tbody>

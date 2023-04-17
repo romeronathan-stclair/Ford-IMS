@@ -23,7 +23,10 @@
         <td>{{event.eventDate}}</td>
         <td>{{event.eventTime}}</td>
         <td>
-          <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
+          <div class="action-holders">
+            <button (click)="viewEventInfo(event.itemId)" class="general-button">More Info</button>
+            <button mat-icon-button (click)="exportToCSV(event)"><mat-icon>download</mat-icon></button>
+          </div>
         </td>
       </tr>
     </tbody>
@@ -34,6 +37,7 @@
   <button *ngIf="roleService.canCreateSubAssembly()" [disabled]="activePlantId == '0'"
     [routerLink]="'/dashboard/sub-assembly/create/step-one'" type="submit" class="general-button first-button">Start Sub
     Assembly Count</button>
+
   <mat-paginator (page)="pageChanged($event)" #paginator [pageSizeOptions]="[10, 15, 20]" [pageSize]="pageSize"
     aria-label="Select page of periodic elements" [length]="length">
   </mat-paginator>

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { Event } from 'src/models/event';
 import { Department } from 'src/models/department';
 import { RoleService } from 'src/services/role.service';
+import { ExportService } from 'src/services/export.service';
 
 @Component({
   selector: 'app-cycle-check-list',
@@ -34,6 +35,7 @@ export class CycleCheckListComponent {
     private eventService: EventService,
     private router: Router,
     public roleService: RoleService,
+    private exportService: ExportService
   ) { }
 
   ngOnInit() {
@@ -71,6 +73,9 @@ export class CycleCheckListComponent {
 
   viewEventInfo($event: any) {
     this.router.navigate(['/dashboard/event/list/Cycle-check' + '/' + $event]);
+  }
+  exportToCSV(event: any) {
+    this.exportService.exportToCsv(event, event.modelType + '-' + event.itemId);
   }
 
 }

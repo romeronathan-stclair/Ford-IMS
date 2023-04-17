@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Department } from 'src/models/department';
 import { Event } from 'src/models/event';
 import { RoleService } from 'src/services/role.service';
+import { ExportService } from 'src/services/export.service';
 
 @Component({
   selector: 'app-production-count-list',
@@ -32,8 +33,9 @@ export class ProductionCountListComponent {
     private authService: AuthService,
     private eventService: EventService,
     private router: Router,
-    public roleService: RoleService
-    ) { }
+    public roleService: RoleService,
+    private exportService: ExportService
+  ) { }
 
   ngOnInit() {
     this.spinnerService.showHide();
@@ -47,18 +49,18 @@ export class ProductionCountListComponent {
     let eventQuery = "?modelType=Production-count" + "&plantId=" + this.activePlantId + "&page=" + this.currentPage + "&limit=" + this.pageSize;
 
     this.eventService.getEvents(eventQuery)
-    .subscribe({
-      next: (data: any) => {
-        this.events = data.body.events;
-        this.events.reverse();
-        this.length = data.body.eventCount;
-        this.spinnerService.hide();
-      },
-      error: (error: any) => {
-        this.spinnerService.hide();
-        console.log(error);
-      }
-    });
+      .subscribe({
+        next: (data: any) => {
+          this.events = data.body.events;
+          this.events.reverse();
+          this.length = data.body.eventCount;
+          this.spinnerService.hide();
+        },
+        error: (error: any) => {
+          this.spinnerService.hide();
+          console.log(error);
+        }
+      });
   }
 
   pageChanged(event: PageEvent) {
@@ -70,5 +72,8 @@ export class ProductionCountListComponent {
 
   viewEventInfo($event: any) {
     this.router.navigate(['/dashboard/event/list/Production-count' + '/' + $event]);
+  }
+  exportToCSV(event: any) {
+    this.exportService.exportToCsv(event, event.modelType + '-' + event.itemId);
   }
 }

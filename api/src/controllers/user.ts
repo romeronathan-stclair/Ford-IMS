@@ -9,6 +9,7 @@ import { CrudType } from "../enums/crudType";
 import { ImageRequest } from "../type/imageRequest";
 import env from "../utils/env";
 import { getPage, getPageSize } from "../utils/pagination";
+import { Roles } from "../enums/roles";
 
 export const signin = async (req: Request, res: Response, next: NextFunction) => {
     await check("email", "Email is not valid").isEmail().run(req);
@@ -270,18 +271,25 @@ export const changePassword = async (req: Request, res: Response) => {
 export const changeActivePlant = async (req: Request, res: Response) => {
     await check("plantId", "plantId is not valid").isMongoId().run(req);
     const errors = validationResult(req);
+
     const plantId = req.body.plantId;
     if (!errors.isEmpty()) {
         return res.status(400).json(errors);
     }
+
     const user: UserDocument = req.user as UserDocument;
     if (!user) {
         return res.status(500).json("User does not exist");
     }
-    const plant = user.plants.find((plant) => plant.plantId === plantId);
-    if (!plant) {
+    let plant = user.plants.find((plant) => plant.plantId === plantId);
+    if (!plant && user.role !== Roles.Admin) {
+        console.log("ERROR");
         return res.status(500).json("Plant does not exist");
+    } else if (!plant && user.role === Roles.Admin) {
+        user.plants.push({ plantId: plantId, departments: [], isActive: true });
+        plant = user.plants.find((plant) => plant.plantId === plantId);
     }
+
     user.plants.forEach((plant) => {
         if (plant.plantId != plantId) plant.isActive = false;
         else plant.isActive = true;
@@ -291,6 +299,7 @@ export const changeActivePlant = async (req: Request, res: Response) => {
         await user.save();
         return res.json(user);
     } catch (err) {
+        console.log("ERROR" + err);
         return res.status(500).json({ err });
     }
 };
