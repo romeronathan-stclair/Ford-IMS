@@ -5,7 +5,7 @@
 The Inventory Management Software is a project developed for the Mobile Application Development Capstone Project 2023, sponsored by Ford Motor Company. The goal of this software is to help Ford Motor Company track their current inventory counts and forecast future production using the collected data. With this software, Ford can manage their inventory and make informed decisions about their production.
 
 ![Project Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)
-![version](https://img.shields.io/badge/version-0.1.0--pre--release-orange.svg)
+![version](https://img.shields.io/badge/version-1.0.0--release-orange.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
 
 ## Prerequistes
@@ -21,8 +21,8 @@ To get started with the project, please follow the below instructions:
 3. Open your operating system's terminal and ensure that you have Redis installed. If you do not have Redis installed, please install it before proceeding.
 4. In the terminal, type the command "redis-server" to start the Redis server.
 5. Navigate to the project's root directory in your IDE's terminal and run the command "npm install" to install all the required dependencies mentioned in the package.json file.
-6. After the dependencies have been installed, run the command "npm run watch" to start the Nodemon server.
-7. The API is now ready to be used. You can test the API using Postman or any other REST API client of your choice.
+6. After the dependencies have been installed, cd into the api folder and run the command "npm run watch" to start the Nodemon server.
+7. Now open a second terminal and cd into the frontend folder and run the command "npm run start" to start the Angular application.
 
 ## Credits
 
