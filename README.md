@@ -4,9 +4,10 @@
 
 The Inventory Management Software is a project developed for the Mobile Application Development Capstone Project 2023, sponsored by Ford Motor Company. The goal of this software is to help Ford Motor Company track their current inventory counts and forecast future production using the collected data. With this software, Ford can manage their inventory and make informed decisions about their production.
 
-![Project Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)
-![version](https://img.shields.io/badge/version-1.0.0--release-orange.svg)
+![Project Status](https://img.shields.io/badge/status-completed-brightgreen.svg)
+![version](https://img.shields.io/badge/version-1.0.0--first%20release-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Prerequistes
 
