@@ -26,8 +26,8 @@ To run this project, you will need a few dependencies installed. First, you will
 9. Click "OK" to close all windows
 10. Open a terminal window and navigate to the project's root directory
 11. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-12. After the dependencies have been installed, cd into the api folder and run the command "npm run watch" to start the Nodemon server
-13. Now open a second terminal and cd into the frontend folder and run the command "npm run start" to start the Angular application
+12. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
+13. Now open a second terminal and cd into the frontend folder and run the command ```npm run start``` to start the Angular application
 
 ## Run the Project on MacOS
 
@@ -40,8 +40,8 @@ To run this project, you will need a few dependencies installed. First, you will
 4. Start the Redis server by running the command: redis-server
 5. Open a new terminal window and navigate to the project's root directory
 6. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-7. After the dependencies have been installed, cd into the api folder and run the command "npm run watch" to start the Nodemon server
-8. Now open a second terminal and cd into the frontend folder and run the command "npm run start" to start the Angular application
+7. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
+8. Now open a second terminal and cd into the frontend folder and run the command ``` npm run start ``` to start the Angular application
 
 ## Run the Project on LinuxOS
 
@@ -56,12 +56,18 @@ sudo apt-get install nodejs
 ```
 sudo apt-get install npm
 ```
-5. Install Redis by running the command: sudo apt-get install redis-server
-6. Start the Redis server by running the command: redis-server
+5. Install Redis by running the command: 
+```
+sudo apt-get install redis-server
+```
+6. Start the Redis server by running the command: 
+```
+redis-server
+```
 7. Open a new terminal window and navigate to the project's root directory
 8. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-9. After the dependencies have been installed, cd into the api folder and run the command "npm run watch" to start the Nodemon server
-10. Now open a second terminal and cd into the frontend folder and run the command "npm run start" to start the Angular application
+9. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
+10. Now open a second terminal and cd into the frontend folder and run the command ```npm run start``` to start the Angular application
 
 ## Credits
 
