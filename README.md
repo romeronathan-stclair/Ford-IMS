@@ -49,7 +49,11 @@ To run this project, you will need a few dependencies installed. First, you will
 2. Run the following commands
 ```
 sudo apt-get update
+```
+```
 sudo apt-get install nodejs
+```
+```
 sudo apt-get install npm
 ```
 5. Install Redis by running the command: sudo apt-get install redis-server
