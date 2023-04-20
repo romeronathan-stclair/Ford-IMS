@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/models/user';
 import { Department } from 'src/models/department';
 import { RoleService } from 'src/services/role.service';
-
+import { Roles } from 'src/enums/roles';
 @Component({
   selector: 'app-user-info',
   templateUrl: './user-info.component.html',
@@ -22,6 +22,7 @@ export class UserInfoComponent {
   departmentIds: string[] = [];
   departmentNames: string = '';
   departments: Department[] = [];
+  userRole: any;
 
   constructor(
     private confirmationService: ConfirmationService,
@@ -57,6 +58,7 @@ export class UserInfoComponent {
           this.departmentIds = this.user.plants[0].departments.toString().split(',');
           this.loadPlantName(this.user.plants[0].plantId);
           this.loadDepartmentNames(this.departmentIds);
+          this.userRole = this.user.role as Roles;
         },
         error: (error: any) => {
           this.spinnerService.hide();
