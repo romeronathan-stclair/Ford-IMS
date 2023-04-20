@@ -177,11 +177,11 @@ export const getStock = async (req: Request, res: Response) => {
     if (userId) {
         const user = await User.findOne({ _id: userId, isDeleted: false });
         if (user) {
-            const departmentIds = user.plants.flatMap(plant => plant.departments);
+            const activePlant = user.plants.find((plant) => plant.isActive);
+            if (!activePlant) return res.status(200).json({ stocks: [], stockCount: 0 });
+            const departmentIds = activePlant?.departments.map((department: any) => department._id);
 
             const departments = await Department.find({ _id: { $in: departmentIds }, isDeleted: false });
-
-
 
             query["departmentId"] = { $in: departments.map(department => department._id) };
         }

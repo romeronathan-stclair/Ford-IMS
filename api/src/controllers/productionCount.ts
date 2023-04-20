@@ -84,7 +84,10 @@ export const submitProductionCount = async (req: Request, res: Response) => {
 
 
             }
-            await forecastService.forecastDepartment(department.departmentId).catch((e) => {
+            await forecastService.forecastDepartment(department.departmentId).then((data) => {
+                console.log("Forecast updated for department: " + data);
+
+            }).catch((e) => {
                 return res.status(500).json("Forecast update failed for department: " + department.departmentName + ".");
             }
             );

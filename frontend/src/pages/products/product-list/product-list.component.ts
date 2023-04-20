@@ -83,11 +83,16 @@ export class ProductListComponent {
 
   async loadProducts(query: string = '') {
     const selectedDepartmentId = this.selectedDepartment ? this.selectedDepartment._id : this.departments[0]._id;
-    let productQuery = `?departmentId=${selectedDepartmentId}&page=${this.currentPage}&pageSize=${this.pageSize}`;
+    let productQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
     if (query) {
       productQuery += query;
     }
 
+    if (selectedDepartmentId) {
+      productQuery += `&departmentId=${selectedDepartmentId}`;
+    } else {
+      productQuery += `&userId=${this.authService.user._id}`;
+    }
     return new Promise<void>((resolve, reject) => {
       this.productService.getProducts(productQuery).subscribe({
         next: (data: any) => {

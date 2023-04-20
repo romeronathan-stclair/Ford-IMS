@@ -300,8 +300,13 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
     if (userId) {
         const user = await User.findOne({ _id: userId, isDeleted: false });
         if (user) {
-            const departmentIds = user.plants.map(plant => plant.departments.map(department => department));
-            query["departmentId"] = { $in: departmentIds };
+            const activePlant = user.plants.find((plant) => plant.isActive);
+            if (!activePlant) return res.status(200).json({ products: [], productCount: 0 });
+            const departmentIds = activePlant?.departments.map((department: any) => department._id);
+
+            const departments = await Department.find({ _id: { $in: departmentIds }, isDeleted: false });
+
+            query["departmentId"] = { $in: departments.map(department => department._id) };
         }
     }
     if (departmentId) {
@@ -326,7 +331,7 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
     const products = await Product.find(query).skip(page * pageSize).limit(pageSize).exec();
     const productCount = await Product.countDocuments(query).exec();
-
+    console.log("HEY " + JSON.stringify(query));
     let response = {
         products: products,
         productCount: productCount
