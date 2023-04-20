@@ -35,13 +35,31 @@ To run this project, you will need a few dependencies installed. First, you will
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-2. Install Node.js and npm by running the command: brew install node
-3. Install Redis by running the command: brew install redis
-4. Start the Redis server by running the command: redis-server
+2. Install Node.js and npm by running the command: 
+```
+brew install node
+```
+3. Install Redis by running the command: 
+```
+brew install redis
+```
+4. Start the Redis server by running the command: 
+```
+redis-server
+```
 5. Open a new terminal window and navigate to the project's root directory
-6. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-7. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
-8. Now open a second terminal and cd into the frontend folder and run the command ``` npm run start ``` to start the Angular application
+6. Run the following command to install all the required dependencies mentioned in the package.json file
+```
+npm install
+```
+7. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
+```
+npm run watch
+```
+8. Now open a second terminal and cd into the frontend folder and run the following command to start the Angular application:
+``` 
+npm run start 
+```
 
 ## Run the Project on LinuxOS
 
@@ -66,8 +84,14 @@ redis-server
 ```
 7. Open a new terminal window and navigate to the project's root directory
 8. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-9. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
-10. Now open a second terminal and cd into the frontend folder and run the command ```npm run start``` to start the Angular application
+9. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
+```
+npm run watch
+```
+10. Now open a second terminal and cd into the frontend folder and run the following command to start the Angular application:
+```
+npm run start
+``` 
 
 ## Credits
 
