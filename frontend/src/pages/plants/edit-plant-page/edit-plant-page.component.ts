@@ -45,7 +45,6 @@ export class EditPlantPageComponent {
     this.plantService.getPlants(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         if (data) {
           // populate the form controls with the plant data
           this.plantForm.patchValue({
@@ -56,7 +55,6 @@ export class EditPlantPageComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -74,12 +72,10 @@ export class EditPlantPageComponent {
       message: 'Are you sure that you want to delete this plant?',
       accept: () => {
         this.spinnerService.show();
-        console.log(plantId);
         this.plantService.deletePlant(plantId)
         .subscribe({
           next: (data: any) => {
             this.spinnerService.hide();
-            console.log(data);
             this.messageService.clear();
             this.messageService.add({
               severity: 'success',
@@ -90,7 +86,6 @@ export class EditPlantPageComponent {
           },
           error: (error: any) => {
             this.spinnerService.hide();
-            console.log(error);
             this.messageService.clear();
             this.messageService.add({
               severity: 'error',
@@ -127,7 +122,6 @@ export class EditPlantPageComponent {
     this.plantService.editPlant(plant).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         this.messageService.clear();
         this.messageService.add({
           severity: 'success',
@@ -139,7 +133,6 @@ export class EditPlantPageComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

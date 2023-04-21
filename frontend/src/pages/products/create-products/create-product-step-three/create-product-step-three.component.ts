@@ -46,8 +46,6 @@ export class CreateProductStepThreeComponent {
       this.request = this.sharedService.getData();
       this.selectedDepartment = this.request.product.department;
 
-
-      console.log(this.request);
       if (!this.request.product.stocks) {
         this.request.product.stocks = [];
       }
@@ -64,10 +62,8 @@ export class CreateProductStepThreeComponent {
 
   loadStocks() {
     let stockQuery = `?departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-    console.log(stockQuery);
     this.stockService.getStocks(stockQuery).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spinnerService.hide();
         this.stocks = data.body.stocks;
         if (this.request.product.stocks && this.request.product.stocks.length > 0) {
@@ -84,7 +80,6 @@ export class CreateProductStepThreeComponent {
               usePerProduct: productStock?.usePerProduct
             }
           });
-          console.log(this.targetStocks);
 
 
           this.stocks = this.stocks.filter((stock: any) => {
@@ -95,7 +90,6 @@ export class CreateProductStepThreeComponent {
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
       }
     });
@@ -105,7 +99,6 @@ export class CreateProductStepThreeComponent {
   openDialog($event: any) {
 
     const stock = $event.items[0];
-    console.log(stock);
 
 
 
@@ -119,7 +112,6 @@ export class CreateProductStepThreeComponent {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
 
       if (result) {
         const productStock = {
@@ -130,7 +122,6 @@ export class CreateProductStepThreeComponent {
 
         this.request.product.stocks.push(productStock);
         this.sharedService.setData(this.request);
-        console.log(productStock);
       } else {
         this.targetStocks = this.targetStocks.filter((stock: any) => stock._id !== $event.items[0]._id);
         this.stocks.push($event.items[0]);

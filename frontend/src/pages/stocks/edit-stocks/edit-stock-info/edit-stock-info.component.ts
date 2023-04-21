@@ -64,7 +64,6 @@ export class EditStockInfoComponent {
         next: (data: any) => {
           this.spinnerService.hide();
           if (data) {
-            console.log(data.body.stocks[0]);
             this.stockForm.patchValue({
               name: data.body.stocks[0].name,
               partNumber: data.body.stocks[0].partNumber,
@@ -73,9 +72,6 @@ export class EditStockInfoComponent {
               totalStockPerSkid: data.body.stocks[0].totalStockPerSkid,
               lowStock: data.body.stocks[0].lowStock,
             });
-
-            console.log(data.body.stocks[0].roughStock);
-            console.log(data.body.stocks[0].isSubAssembly);
 
             if (data.body.stocks[0].roughStock) {
               this.roughStockChecked = true;
@@ -188,8 +184,6 @@ export class EditStockInfoComponent {
         stockId: this.stockId
       }
 
-      console.log(stock);
-
       this.stockService.editStock(stock)
       .subscribe({
         next: (data: any) => {
@@ -205,7 +199,6 @@ export class EditStockInfoComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',

@@ -63,15 +63,12 @@ export class CreateDunnageStepOneComponent {
 
     async loadDepartments() {
       let departmentQuery = "?plantId=" + this.activePlantId;
-      console.log("DEPARTMENT QUERY => " + departmentQuery);
 
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.departments = data.body.departments;
         },
         error: (err: any) => {
-          console.log(err);
         }
       });
     }
@@ -110,7 +107,6 @@ export class CreateDunnageStepOneComponent {
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log("DATA => " + data);
           if (data.body.dunnages && data.body.dunnages.length > 0) {
             this.messageService.clear();
             this.messageService.add({severity:'error', summary:'Error', detail:'Dunnage already exists.'});

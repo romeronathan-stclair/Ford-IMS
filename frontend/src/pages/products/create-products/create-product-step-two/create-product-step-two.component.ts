@@ -42,7 +42,6 @@ export class CreateProductStepTwoComponent {
     } else {
       this.request = this.sharedService.getData();
       this.imageUrl = this.request.file;
-      console.log(this.request);
     }
 
 

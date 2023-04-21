@@ -54,7 +54,6 @@ export class UserListComponent {
     if (this.activePlantId != "0") {
       this.loadData();
     }
-    console.log(this.roleService.getRolesUnderUser());
   }
 
   ngAfterViewInit() {
@@ -135,7 +134,6 @@ export class UserListComponent {
   }
   multipleDepartments(user: any) {
     let plant = user.plants.find((plant: any) => plant.plantId == this.authService.user.activePlantId);
-    console.log(plant);
     if (plant) {
       if (plant.departments.length == 1) {
         return this.departments.find((department: any) => department._id == plant.departments[0]) ? this.departments.find((department: any) => department._id == plant.departments[0]).departmentName : "N/A";

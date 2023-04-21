@@ -91,7 +91,6 @@ export class ExportService {
                 'Part Number',
                 'Current Count',
             ];
-            console.log(event);
 
 
             event.productionCountForm

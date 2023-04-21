@@ -16,7 +16,6 @@ export class PageNotFoundComponent {
   ngOnInit() {
     this.timerSub = setInterval(() => {
       this.timer--;
-      console.log(this.timer);
     }, 1000);
 
 

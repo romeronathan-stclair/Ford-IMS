@@ -79,14 +79,12 @@ export class EventLogComponent {
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           this.events = data.body.events;
           this.events.reverse();
           this.length = data.body.eventCount;
           this.spinnerService.hide();
         },
         error: (error: any) => {
-          console.log(error);
           this.spinnerService.hide();
         }
       });
@@ -104,10 +102,8 @@ export class EventLogComponent {
           });
           this.plants = data.body.plants;
           this.plants.unshift({ _id: '', plantName: 'All Plants', plantId: '', departments: [] });
-          console.log(this.plants);
         },
         error: (error: any) => {
-          console.log(error);
         }
       });
   }
@@ -127,7 +123,6 @@ export class EventLogComponent {
           this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
         },
         error: (error: any) => {
-          console.log(error);
         }
       });
   }
@@ -150,7 +145,6 @@ export class EventLogComponent {
           this.spinnerService.hide();
         },
         error: (error: any) => {
-          console.log(error);
           this.spinnerService.hide();
         }
       });
@@ -177,7 +171,6 @@ export class EventLogComponent {
           this.spinnerService.hide();
         },
         error: (error: any) => {
-          console.log(error);
           this.spinnerService.hide();
         }
       });
@@ -207,7 +200,6 @@ export class EventLogComponent {
           this.spinnerService.hide();
         },
         error: (error: any) => {
-          console.log(error);
           this.spinnerService.hide();
         }
       });

@@ -60,7 +60,6 @@ export const getPlantForecasts = async (plantId: string, page: number, pageSize:
         plantId: plantId,
         isDeleted: false
     });
-    console.log("departments", departments.length);
 
     const departmentIds = departments.map(department => department._id.toString());
 
@@ -72,19 +71,16 @@ export const getPlantForecasts = async (plantId: string, page: number, pageSize:
         return accumulator + departmentForecast.forecastedProductsCount;
     }, 0);
 
-    console.log("totalProductForecasts", totalProductForecasts);
 
     const allForecastedProducts = results.flatMap(departmentForecast => departmentForecast.forecastedProducts);
 
 
-    console.log("allForecastedProducts", allForecastedProducts.length);
     const startIndex = page * pageSize;
     const endIndex = startIndex + pageSize;
 
     const paginatedForecastedProducts = allForecastedProducts.slice(startIndex, endIndex);
 
 
-    console.log("paginatedForecastedProducts", paginatedForecastedProducts.length);
 
     let response = {
         forecastedProducts: paginatedForecastedProducts,
@@ -215,7 +211,6 @@ export const stockForecast = async (
             isDeleted: false
         });
 
-        console.log("productStocks", productStocks.length);
 
 
         if (productStocks.length > 0) {
@@ -444,10 +439,8 @@ export const lowProductEntry = async (forecastItems: ForecastItem[]) => {
 
         if (item.fiveShiftsBeforeShortage || item.lowThreshold ||
             item.belowDailyTarget) {
-            console.log("TRUE");
             await redisClient.set(item.productId, "true");
         } else {
-            console.log("FALSE");
             await redisClient.set(item.productId, "false");
         }
 

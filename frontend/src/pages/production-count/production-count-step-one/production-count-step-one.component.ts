@@ -52,14 +52,10 @@ export class ProductionCountStepOneComponent {
       }
     }
     else {
-      console.log('else');
       this.request = {
         productionCountRequest: []
       };
     }
-
-
-    console.log(this.request);
 
 
   }
@@ -86,7 +82,6 @@ export class ProductionCountStepOneComponent {
 
   }
   onCheckboxChange(event: any, product: Product) {
-    console.log(product);
 
     if (event.checked) {
       this.addProductToRequest(product);
@@ -111,7 +106,6 @@ export class ProductionCountStepOneComponent {
       });
     }
     this.selectedProducts.push(product);
-    console.log(this.selectedProducts);
 
     this.sharedService.setData(this.request);
   }
@@ -159,7 +153,6 @@ export class ProductionCountStepOneComponent {
     return new Promise<void>((resolve, reject) => {
       this.productService.getProducts(productQuery).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.products = data.body.products.map((product: any) => {
             const existingProduct = this.selectedProducts.find((selectedProduct: any) => selectedProduct._id === product._id);
             return {

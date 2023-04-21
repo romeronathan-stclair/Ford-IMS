@@ -128,7 +128,6 @@ export const submitSubAssembly = async (req: Request, res: Response) => {
                     matchedStock.totalAvailableQty = stock.currentCount * matchedStock.totalStockPerSkid;
 
                     stockSaveList.push(matchedStock);
-                    console.log(matchedStock);
 
 
                 }

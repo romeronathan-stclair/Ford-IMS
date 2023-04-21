@@ -16,7 +16,6 @@ export const sendInvite = async (req: Request, res: Response) => {
     if (!req.body.invites) {
         return res.status(500).json("No invites found");
     }
-    console.log("INVITES:" + JSON.stringify(req.body.invites));
 
     for (const invite of req.body.invites) {
 
@@ -33,7 +32,6 @@ export const sendInvite = async (req: Request, res: Response) => {
         if (plants) {
 
             for (const p of plants) {
-                console.log(p);
                 // add only the departmentId to the array
 
                 p.departments = p.departments.map((d: any) => d.departmentId);
@@ -120,11 +118,9 @@ export const sendInvite = async (req: Request, res: Response) => {
             itemName: 'Inviting New User',
         });
 
-        console.log(event);
 
 
         try {
-            console.log("MADE IT HERE");
             event.save();
             await newInviteLink.save();
 

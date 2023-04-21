@@ -59,16 +59,11 @@ export class EventInfoComponent {
 
     let eventQuery = "?modelType=" + this.modelType + "&itemId=" + this.itemId;
 
-    console.log(eventQuery);
 
     this.eventService.getEvents(eventQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           this.event = data.body.events[0];
-          console.log(this.event);
-          console.log(this.event.plantId);
-          console.log(this.event.departmentId);
 
           let plantId = this.event.plantId;
           let departmentId = this.event.departmentId;
@@ -83,7 +78,6 @@ export class EventInfoComponent {
                   this.event.plantName = data.body.plantName;
                 },
                 error: (error: any) => {
-                  console.log(error);
                 }
               });
           }
@@ -97,27 +91,21 @@ export class EventInfoComponent {
               .subscribe({
                 next: (data: any) => {
                   this.event.departmentName = data.body.departmentName;
-                  console.log(this.event.departmentName);
                 }, error: (error: any) => {
-                  console.log(error);
                 }
               });
             } else {
               const parsedArray = JSON.parse(departmentId);
-              console.log("PARSED ARRAY "+parsedArray);
               let departmentNames: string[] = [];
 
               for (let i = 0; i < parsedArray.length; i++) {
                 let departmentQuery = "?departmentId=" + parsedArray[i];
-                console.log(parsedArray[i]);
-                console.log(departmentQuery);
 
                 this.departmentService.getDepartments(departmentQuery)
                 .subscribe({
                   next: (data: any) => {
                     departmentNames.push(data.body.departmentName);
                   }, error: (error: any) => {
-                    console.log(error);
                   }
                 });
               }
@@ -126,11 +114,9 @@ export class EventInfoComponent {
             }
           }
 
-          console.log(this.event);
           this.spinnerService.hide();
         },
         error: (error: any) => {
-          console.log(error);
           this.spinnerService.hide();
         }
       });

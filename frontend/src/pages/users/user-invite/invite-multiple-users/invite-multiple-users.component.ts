@@ -28,11 +28,9 @@ export class InviteMultipleUsersComponent {
     this.sharedService.setDataKey('invite-multiple');
 
     this.request = this.sharedService.getData();
-    console.log(this.request);
 
     if (this.request.invites) {
       this.invites = this.request.invites;
-      console.log(this.invites);
     }
     this.roles = this.roleService.getRolesUnderUser();
   }
@@ -58,11 +56,8 @@ export class InviteMultipleUsersComponent {
         }]
       }]
     });
-    console.log(this.invites);
     this.request.invites = this.invites;
-    console.log(this.request);
     this.sharedService.setData(this.request);
-    console.log(this.sharedService.getData());
   }
   removeInvite(i: number) {
     this.invites.splice(i, 1);
@@ -105,7 +100,6 @@ export class InviteMultipleUsersComponent {
     const inviteEmails = this.invites.map(invite => invite.email);
     const uniqueinviteEmails = [...new Set(inviteEmails)];
     if (inviteEmails.length !== uniqueinviteEmails.length) {
-      console.log('There are invites with the same email.');
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'There are invites with the same email.' });
       return;
     }
@@ -115,7 +109,6 @@ export class InviteMultipleUsersComponent {
       let request = {
         invites: []
       } as any;
-      console.log("INVITES" + JSON.stringify(this.invites));
       for (let invite of this.invites) {
 
 
@@ -126,7 +119,6 @@ export class InviteMultipleUsersComponent {
             email: invite.email,
             adminType: invite.adminType,
           });
-          console.log("HEREEEE");
         } else {
           request.invites.push({
             email: invite.email,
@@ -141,7 +133,6 @@ export class InviteMultipleUsersComponent {
 
       }
 
-      console.log(request);
       this.authService.inviteUsers(request).subscribe({
         next: (data) => {
 
@@ -152,7 +143,6 @@ export class InviteMultipleUsersComponent {
           this.spinnerService.hide();
         },
         error: (error) => {
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error while inviting user' });
           this.spinnerService.hide();
@@ -162,22 +152,7 @@ export class InviteMultipleUsersComponent {
     }
 
 
-
   }
-
-
-
-
-  // this.plantService.createPlant(this.request).subscribe({
-  //   next: (response) => {
-  //     console.log(response);
-  //   },
-  //   error: (error) => {
-  //     console.log(error);
-  //   }
-  // });
-
-
 
 
   changeRole($event: any, invite: any) {
@@ -188,9 +163,6 @@ export class InviteMultipleUsersComponent {
 
   }
   changePlant($event: any, invite: any) {
-    console.log($event);
-
-    console.log(this.request);
 
     this.sharedService.setData(this.request);
   }
@@ -207,7 +179,6 @@ export class InviteMultipleUsersComponent {
   loadPlants() {
     this.plantService.getPlants('').subscribe({
       next: (data) => {
-        console.log(data);
 
         this.plants = data.body.plants.map((plant: any) => {
           return {
@@ -228,7 +199,6 @@ export class InviteMultipleUsersComponent {
 
       this.departmentServie.getDepartments(query).subscribe(
         (data) => {
-          console.log(data);
           let mappedDepartmentNames = data.body.departments.map((department: any) => department.departmentName);
           let mappedSelectedDepartmentNames;
           if (invite.plants?.[0].departments) {
@@ -244,7 +214,6 @@ export class InviteMultipleUsersComponent {
             if (result && invite.plants?.[0]) {
               let mappedDepartments = data.body.departments.filter((department: any) => result.includes(department.departmentName));
               invite.plants[0].departments = mappedDepartments;
-              console.log(invite);
 
               this.sharedService.setData(this.request);
             }
@@ -252,7 +221,6 @@ export class InviteMultipleUsersComponent {
         }
       );
     } else {
-      console.log(invite);
       // Handle the case when 'invite.plants' is undefined or empty
     }
   }

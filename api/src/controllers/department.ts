@@ -158,7 +158,7 @@ export const getDepartments = async (req: Request, res: Response) => {
     }
 
 
-    console.log(query);
+    
     const departmentCount = await Department.countDocuments(query);
     const departments = await Department.find(query).skip(page * pageSize).limit(pageSize).exec();
 
@@ -226,7 +226,6 @@ export const updateDepartment = async (req: Request, res: Response) => {
 export const deleteDepartment = async (req: Request, res: Response) => {
 
     const departmentId = req.params.id;
-    console.log(departmentId);
 
     if (!departmentId) {
         return res.status(500).json("Department Id is not valid");
@@ -270,7 +269,6 @@ export const deleteDepartment = async (req: Request, res: Response) => {
         }
     }).exec();
 
-    console.log(users);
     // Remove department from users
     for (const user of users) {
         await removeDepartmentFromPlant(user._id, department.plantId, department._id);

@@ -50,12 +50,10 @@ export class EditProductInformationComponent {
     this.productService.getProducts(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         if (data.body.products && data.body.products.length > 0) {
           // populate the form controls with the product data
           this.product = data.body.products[0];
           this.product.productId = data.body.products[0]._id;
-          console.log(this.product);
           this.productForm.patchValue({
             name: data.body.products[0].name,
             partNumber: data.body.products[0].partNumber,
@@ -66,7 +64,6 @@ export class EditProductInformationComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -103,7 +100,6 @@ export class EditProductInformationComponent {
     this.productService.editProduct(formData).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         this.messageService.clear();
         this.messageService.add({
           severity: 'success',
@@ -115,7 +111,6 @@ export class EditProductInformationComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

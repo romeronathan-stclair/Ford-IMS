@@ -53,20 +53,16 @@ export class EditDunnageComponent {
         this.dunnageId = params['id'];
         this.loadDunnageData();
       });
-      console.log("DUNNAGE ID => " + this.dunnageId);
     }
 
     async loadDepartments() {
       let departmentQuery = "?plantId=" + this.activePlantId;
-      console.log("DEPARTMENT QUERY => " + departmentQuery);
 
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.departments = data.body.departments;
         },
         error: (err: any) => {
-          console.log(err);
         }
       });
 
@@ -80,7 +76,6 @@ export class EditDunnageComponent {
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log(data.body.dunnages[0]);
           if (data) {
             // populate the form controls with the department data
             this.dunnageForm.patchValue({
@@ -91,13 +86,11 @@ export class EditDunnageComponent {
             });
 
             this.departmentId = data.body.dunnages[0].departmentId;
-            console.log("DEPARTMENT ID => " + this.departmentId);
 
             for (let i = 0; i < this.departments.length; i++) {
               if (this.departments[i]._id === this.departmentId) {
                 this.departments[i].position = i;
                 this.selectedDepartment = this.departments[i];
-                console.log("SELECTED DEPARTMENT => " + this.selectedDepartment);
                 break;
               }
             }
@@ -106,7 +99,6 @@ export class EditDunnageComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',
@@ -150,7 +142,6 @@ export class EditDunnageComponent {
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log(data);
           this.messageService.clear();
           this.messageService.add({
             severity: 'success',
@@ -162,7 +153,6 @@ export class EditDunnageComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',

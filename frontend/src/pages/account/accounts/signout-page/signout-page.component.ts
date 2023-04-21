@@ -23,7 +23,6 @@ export class SignoutPageComponent implements OnInit, OnDestroy {
 
         this.timerSub = setInterval(() => {
           this.timer--;
-          console.log(this.timer);
         }, 1000);
 
 
@@ -35,8 +34,7 @@ export class SignoutPageComponent implements OnInit, OnDestroy {
 
       },
       error: (err) => {
-        
-        console.log('THERE WAS AN ERROR ' + JSON.stringify(err));
+
         this.timerSub = setInterval(() => {
           this.timer--;
         }, 1000);

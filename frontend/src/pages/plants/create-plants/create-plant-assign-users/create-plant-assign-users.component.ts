@@ -35,7 +35,6 @@ export class CreatePlantAssignUsersComponent {
     this.sharedService.setDataKey('plants');
 
     this.request = this.sharedService.getData();
-    console.log(this.request);
   }
 
   ngOnInit() {
@@ -48,7 +47,6 @@ export class CreatePlantAssignUsersComponent {
   }
   removeUser(id: string) {
 
-    console.log(id);
     if (!id) {
       return;
     }
@@ -62,8 +60,6 @@ export class CreatePlantAssignUsersComponent {
 
   openDialog(user: any) {
 
-
-    console.log(user);
 
     const dialogRef = this.dialog.open(AssignDepartmentsDialogComponent, {
 
@@ -100,7 +96,6 @@ export class CreatePlantAssignUsersComponent {
       plantLocation: this.request.plant.plantLocation,
     }
 
-    console.log(request);
 
     this.plantService.createPlant(request).subscribe({
       next: (response) => {
@@ -115,7 +110,6 @@ export class CreatePlantAssignUsersComponent {
       },
       error: (error) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -124,8 +118,6 @@ export class CreatePlantAssignUsersComponent {
         });
       }
     });
-
-    console.log(request);
   }
 }
 

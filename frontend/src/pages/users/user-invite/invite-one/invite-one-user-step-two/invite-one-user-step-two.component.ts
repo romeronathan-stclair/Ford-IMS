@@ -61,7 +61,6 @@ export class InviteOneUserStepTwoComponent {
       }, error: (error) => {
         this.messageService.clear();
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error while fetching plants' });
-        console.log(error);
       }
 
     });

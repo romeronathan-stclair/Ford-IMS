@@ -46,7 +46,6 @@ export class ProductListComponent {
 
   ngOnInit() {
     this.activePlantId = this.authService.user.activePlantId;
-    console.log(this.activePlantId);
     if (this.activePlantId != '0') {
       this.loadData();
     }
@@ -96,7 +95,6 @@ export class ProductListComponent {
     return new Promise<void>((resolve, reject) => {
       this.productService.getProducts(productQuery).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.products = data.body.products;
           this.length = data.body.productCount;
           this.dataSource = new MatTableDataSource(this.products);

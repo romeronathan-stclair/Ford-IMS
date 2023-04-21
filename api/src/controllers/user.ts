@@ -128,8 +128,6 @@ export const signup = async (req: Request, res: Response, next: NextFunction) =>
         return res.status(400).json("Passwords do not match");
     }
 
-    console.log(invite);
-
 
     const user = new User({
         name: req.body.name,
@@ -204,12 +202,10 @@ export const updateUser = async (req: Request, res: Response) => {
     });
 
     try {
-        console.log(user);
         await user.save();
         await event.save();
         res.json(user);
     } catch (err) {
-        console.log(user);
         return res.status(500).json({ err });
     }
 };
@@ -283,7 +279,6 @@ export const changeActivePlant = async (req: Request, res: Response) => {
     }
     let plant = user.plants.find((plant) => plant.plantId === plantId);
     if (!plant && user.role !== Roles.Admin) {
-        console.log("ERROR");
         return res.status(500).json("Plant does not exist");
     } else if (!plant && user.role === Roles.Admin) {
         user.plants.push({ plantId: plantId, departments: [], isActive: true });
@@ -299,7 +294,6 @@ export const changeActivePlant = async (req: Request, res: Response) => {
         await user.save();
         return res.json(user);
     } catch (err) {
-        console.log("ERROR" + err);
         return res.status(500).json({ err });
     }
 };

@@ -27,7 +27,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.ngSimpleSidebarService.open();
 
-    console.log(this.authService.user);
     this.sidebarItems = [
       {
         name: 'Departments',
@@ -84,7 +83,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         icon: 'fa-solid fa-users',
         routerLink: ['users/list'],
         position: SimpleSidebarPosition.top,
-       
+
 
       },
       {
@@ -150,7 +149,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   updateForecast() {
     this.forecastService.getLowPlantForecasts().subscribe({
       next: (response) => {
-        console.log(response);
         if (response.body.lowProductsCount > 0) {
           this.manipulateItemWithTitle("Forecast", response.body.lowProductsCount);
         } else {
@@ -247,9 +245,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   changeSidebar() {
-    console.log(this.isOpen);
     if (this.existingLink) {
-      console.log("DASDAS");
       this.renderer.setProperty(this.existingLink, 'textContent', this.isOpen ? `${this.forecastText}` : this.forecastCount.toString());
     }
   }

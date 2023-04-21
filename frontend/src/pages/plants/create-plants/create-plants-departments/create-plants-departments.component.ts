@@ -20,7 +20,6 @@ export class CreatePlantsDepartmentsComponent implements OnInit {
     this.sharedService.setDataKey('plants');
 
     this.request = this.sharedService.getData();
-    console.log(this.request);
 
     if (this.request.departments) {
       this.departments = this.request.departments.map((department: string) => {
@@ -54,7 +53,6 @@ export class CreatePlantsDepartmentsComponent implements OnInit {
     const departmentNames = this.departments.map(department => department.name);
     const uniqueDepartmentNames = [...new Set(departmentNames)];
     if (departmentNames.length !== uniqueDepartmentNames.length) {
-      console.log('There are departments with the same name');
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'There are departments with the same name.' });
     } else {
       if (this.request.users) {
@@ -73,18 +71,6 @@ export class CreatePlantsDepartmentsComponent implements OnInit {
       }
       this.router.navigate(['/dashboard/plants/create/step-three']);
     }
-
-
-
-    // this.plantService.createPlant(this.request).subscribe({
-    //   next: (response) => {
-    //     console.log(response);
-    //   },
-    //   error: (error) => {
-    //     console.log(error);
-    //   }
-    // });
-
 
   }
 

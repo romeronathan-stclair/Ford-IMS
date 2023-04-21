@@ -50,8 +50,6 @@ export class ProductionCountStepTwoComponent {
     if (this.sharedService.getData() != null) {
       this.request = this.sharedService.getData();
       this.productionCountRequest = this.request;
-      console.log(this.productionCountRequest);
-      console.log(this.request);
 
 
 
@@ -85,7 +83,6 @@ export class ProductionCountStepTwoComponent {
   }
   openHelpDialog(item: any) {
     const helpItem = item;
-    console.log(helpItem);
 
     const dialogRef = this.dialog.open(HelpDialogComponent, {
       data: {
@@ -114,7 +111,6 @@ export class ProductionCountStepTwoComponent {
   submitCount() {
     this.spinnerService.show();
 
-    console.log(this.request);
     this.productionCountService.submitProductionCount(this.request)
       .subscribe({
         next: (data: any) => {
@@ -125,13 +121,11 @@ export class ProductionCountStepTwoComponent {
             summary: 'Success',
             detail: 'Production Count Submitted Successfully'
           });
-          console.log(data);
           this.sharedService.refreshDashboardForecast(true);
           this.router.navigate(['/dashboard/production-count/list']);
         },
         error: (err: any) => {
           this.spinnerService.hide();
-          console.log(err);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',

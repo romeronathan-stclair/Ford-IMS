@@ -55,7 +55,6 @@ export class ForecastListComponent {
   }
 
   pageChanged(event: PageEvent) {
-    console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadForecasts();
@@ -88,7 +87,6 @@ export class ForecastListComponent {
       query = `?page=${this.currentPage}&pageSize=${this.pageSize}&departmentId=${this.selectedDepartment._id}`;
     }
 
-    console.log(query);
 
     return new Promise<void>((resolve, reject) => {
       this.forecastService.getForecast(query).subscribe({

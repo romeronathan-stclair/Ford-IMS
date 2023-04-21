@@ -28,8 +28,6 @@ export const createStock = async (req: Request, res: Response) => {
     await check("totalQuantity", "totalQuantity is not valid").isLength({ min: 1 }).run(req);
 
 
-    console.log(req.body);
-
     req.body = JSON.parse(req.body.stock);
 
     const departmentId = req.body.departmentId;
@@ -98,13 +96,11 @@ export const createStock = async (req: Request, res: Response) => {
 
             })
             .catch((err: any) => {
-                console.log(err);
 
                 try {
                     stock.remove();
                 }
                 catch (err) {
-                    console.log(err);
                 }
                 return res.status(500).json("Error creating Stock");
             });
@@ -193,7 +189,6 @@ export const getStock = async (req: Request, res: Response) => {
 
     if (name) {
         query["name"] = { $regex: name, $options: "i" };
-        console.log(name);
     }
 
     if (partNumber) {
@@ -204,7 +199,6 @@ export const getStock = async (req: Request, res: Response) => {
         query["_id"] = new Types.ObjectId(stockId.toString());
     }
 
-    console.log(query);
     const stockCount = await Stock.countDocuments(query);
     const stocks = await Stock.find(query).skip(page * pageSize).limit(pageSize).exec();
 
@@ -267,7 +261,6 @@ export const updateStock = async (req: Request, res: Response) => {
     stock.isSubAssembly = req.body.isSubAssembly || stock.isSubAssembly;
     stock.departmentId = req.body.departmentId || stock.departmentId;
 
-    console.log(stock);
 
     if (req.files) {
         const image = req.files.file;
@@ -287,7 +280,6 @@ export const updateStock = async (req: Request, res: Response) => {
                 stock.imageURL = env.app.apiUrl + "/" + result;
             })
             .catch((err: any) => {
-                console.log(err);
 
                 return res.status(500).json("Error updating Stock");
             });

@@ -68,7 +68,6 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
 
     if (req.files) {
-        console.log("HERE IS THE FILE" + JSON.stringify(req.files));
 
         const image = req.files.file;
 
@@ -88,13 +87,11 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
             })
             .catch((err: any) => {
-                console.log(err);
 
                 try {
                     product.remove();
                 }
                 catch (err) {
-                    console.log(err);
                 }
                 return res.status(500).json("Error creating Product");
             });
@@ -120,16 +117,13 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 
             try {
                 const savedProductStock = await productStock.save();
-                console.log(`Saved product stock ${savedProductStock._id}`);
             } catch (error) {
-                console.error(`Error saving product stock: ${error}`);
             }
         }
     }
 
     if (req.body.dunnage) {
         const dunnage = req.body.dunnage;
-        console.log(req.body.dunnage);
         const newProductDunnage = new ProductDunnage({
             productId: product._id,
             dunnageId: dunnage.dunnageId,
@@ -140,7 +134,6 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
         try {
             await newProductDunnage.save();
         } catch (err) {
-            console.log("Error saving dunnage" + err);
         }
     }
 
@@ -175,7 +168,6 @@ export const createProduct = async (req: Request, res: Response, next: NextFunct
 // reassign product stock
 export const reassignProductStock = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.body.productId;
-    console.log("Product Id: " + productId);
 
     const productStocks = await ProductStock.find({
         productId: productId,
@@ -187,12 +179,10 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
     const incomingStocks = req.body.stocks;
 
 
-    console.log("product stocks " + JSON.stringify(incomingStocks));
 
     // Iterate through the existing product stocks and delete the ones not in the incoming stocks
     for (const existingStock of productStocks) {
         const isIncoming = incomingStocks.some((incomingStock: any) => incomingStock._id == existingStock.stockId);
-        console.log("Is incoming: " + isIncoming);
 
         if (!isIncoming) {
             existingStock.isDeleted = true;
@@ -232,7 +222,6 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
 // reassign product dunnage
 export const reassignProductDunnage = async (req: Request, res: Response, next: NextFunction) => {
     const productId = req.body.productId;
-    console.log("Product Id: " + productId);
 
     const productDunnages = await ProductDunnage.find({
         productId: productId,
@@ -242,12 +231,10 @@ export const reassignProductDunnage = async (req: Request, res: Response, next: 
     // Parse the incoming dunnage array
     const incomingDunnage = req.body.dunnage;
 
-    console.log("Incoming dunnage: " + JSON.stringify(productDunnages));
 
     // Iterate through the existing product dunnages and delete the ones not in the incoming dunnage
     for (const existingDunnage of productDunnages) {
         const isIncoming = incomingDunnage.some((incomingDunnageItem: any) => incomingDunnageItem._id === existingDunnage.dunnageId);
-        console.log("Is incoming: " + isIncoming);
 
         if (!isIncoming) {
             existingDunnage.isDeleted = true;
@@ -335,7 +322,6 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
     const products = await Product.find(query).skip(page * pageSize).limit(pageSize).exec();
     const productCount = await Product.countDocuments(query).exec();
-    console.log("HEY " + JSON.stringify(query));
     let response = {
         products: products,
         productCount: productCount
@@ -346,7 +332,6 @@ export const getProduct = async (req: Request, res: Response, next: NextFunction
 
 //update Product
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
-    console.log("update product");
 
     req.body = JSON.parse(req.body.product);
 
@@ -354,7 +339,6 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        console.log(errors.array());
         return res.status(400).json({ errors: errors.array() });
     }
 
@@ -415,7 +399,6 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
             image: image,
             oldImage: product.imageURL
         };
-        console.log(imageRequest);
 
         await uploadImage(imageRequest)
             .then((result: any) => {
@@ -423,7 +406,6 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 
             })
             .catch((err: any) => {
-                console.log(err);
 
 
                 return res.status(500).json("Error Updating Product");

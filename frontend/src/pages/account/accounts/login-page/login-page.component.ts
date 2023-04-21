@@ -47,7 +47,6 @@ export class LoginPageComponent implements OnInit {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

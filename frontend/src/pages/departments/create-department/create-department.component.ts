@@ -67,7 +67,6 @@ export class CreateDepartmentComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -93,7 +92,6 @@ export class CreateDepartmentComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

@@ -47,7 +47,6 @@ export class ViewDunnageComponent {
     this.dunnageService.getDunnages(dunnageQuery)
     .subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spinnerService.hide();
         this.dunnage = data.body.dunnages[0];
         this.departmentId = this.dunnage.departmentId;
@@ -58,7 +57,6 @@ export class ViewDunnageComponent {
         .subscribe({
           next: (data: any) => {
             this.spinnerService.hide();
-            console.log(data)
             this.departmentName = data.body.departmentName;
           },
           error: (error: any) => {

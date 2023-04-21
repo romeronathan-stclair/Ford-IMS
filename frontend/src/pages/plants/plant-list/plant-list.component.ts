@@ -61,18 +61,15 @@ export class PlantListComponent {
 
 
     this.dataSource.paginator = this.paginator;
-    console.log(this.paginator);
   }
 
   loadData() {
-    console.log("loadData");
     this.spinnerService.show();
 
     let userId = this.authService.user._id;
 
     let query = "?userId=" + userId + "&page=" + this.currentPage + "&pageSize=" + this.pageSize;
 
-    console.log(query);
     this.plantService
       .getUserPlants(query)
       .subscribe({
@@ -82,11 +79,9 @@ export class PlantListComponent {
           this.length = data.body.plantCount;
           this.dataSource = new MatTableDataSource(this.plants);
           this.activePlantId = this.authService.user.activePlantId;
-          console.log(this.plants);
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
 
         },
       });
@@ -95,7 +90,6 @@ export class PlantListComponent {
 
   }
   pageChanged(event: PageEvent) {
-    console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadData();

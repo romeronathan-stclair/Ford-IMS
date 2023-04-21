@@ -41,7 +41,6 @@ export class EditUserPlantsComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.request);
     this.plantService.getPlants('').subscribe({
       next: (data) => {
 
@@ -57,7 +56,6 @@ export class EditUserPlantsComponent {
       }, error: (error) => {
         this.messageService.clear();
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error while fetching plants' });
-        console.log(error);
       }
 
     });

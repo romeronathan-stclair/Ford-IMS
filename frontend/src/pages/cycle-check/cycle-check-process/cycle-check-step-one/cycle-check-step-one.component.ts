@@ -56,7 +56,6 @@ export class CycleCheckStepOneComponent {
 
   openHelpDialog(item: any) {
     const helpItem = item;
-    console.log(helpItem);
 
     const dialogRef = this.dialog.open(HelpDialogComponent, {
       data: {
@@ -84,7 +83,6 @@ export class CycleCheckStepOneComponent {
         },
         error: (err: any) => {
           this.spinnerService.hide();
-          console.log(err);
         }
       });
   }
@@ -139,7 +137,6 @@ export class CycleCheckStepOneComponent {
   submitCount() {
     this.spinnerService.show();
 
-    console.log(this.cycleCheck);
     let request = {
       cycleCheckList: this.cycleCheck
     }
@@ -159,7 +156,6 @@ export class CycleCheckStepOneComponent {
         },
         error: (err: any) => {
           this.spinnerService.hide();
-          console.log(err);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',

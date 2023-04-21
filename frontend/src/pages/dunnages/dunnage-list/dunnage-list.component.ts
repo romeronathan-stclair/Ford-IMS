@@ -81,7 +81,6 @@ export class DunnageListComponent {
     });
   }
   async loaddunnages(query: string = '') {
-    console.log(this.selectedDepartment);
     const selectedDepartmentId = this.selectedDepartment._id;
     let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
 
@@ -93,7 +92,6 @@ export class DunnageListComponent {
     } else {
       dunnageQuery += `&userId=${this.authService.user._id}`;
     }
-    console.log(dunnageQuery);
 
     return new Promise<void>((resolve, reject) => {
       this.dunnageService.getDunnages(dunnageQuery)
@@ -120,26 +118,9 @@ export class DunnageListComponent {
       const name = nameControl.value;
 
       let query = `&name=${name}`
-      console.log(query);
       this.currentPage = 0;
       this.loaddunnages(query);
     }
-    // const nameControl = this.dunnageForm.get('dunnageName');
-
-    // if (nameControl) {
-    //   const name = nameControl.value;
-    //   console.log(name);
-    //   let query = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&name=" + name + "&departmentId=" + this.selectedDepartment._id;
-    //   console.log(query);
-    //   this.dunnageService.getdunnages(query)
-    //   .subscribe({
-    //     next: (data) => {
-    //       this.length = data.body.dunnageCount;
-    //       this.dunnages = data.body.dunnage;
-    //       this.dataSource = new MatTableDataSource(this.dunnages);
-    //     }
-    //   })
-    // }
   }
 
   changeDepartment($event: any) {

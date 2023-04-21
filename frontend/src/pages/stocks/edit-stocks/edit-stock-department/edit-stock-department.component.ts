@@ -49,20 +49,16 @@ export class EditStockDepartmentComponent {
         this.stockId = params['id'];
       });
       await this.loadStockData();
-      console.log(this.selectedDepartment._id)
     }
 
     async loadDepartments() {
       let departmentQuery = "?plantId=" + this.activePlantId;
-      console.log("DEPARTMENT QUERY => " + departmentQuery);
 
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
-          console.log(data);
           this.departments = data.body.departments;
         },
         error: (err: any) => {
-          console.log(err);
         }
       });
 
@@ -84,13 +80,11 @@ export class EditStockDepartmentComponent {
 
             this.departmentId = data.body.stocks[0].departmentId;
             this.stock = data.body.stocks[0];
-            console.log(this.stock);
 
             for (let i = 0; i < this.departments.length; i++) {
               if (this.departments[i]._id === this.departmentId) {
                 this.departments[i].position = i;
                 this.selectedDepartment = this.departments[i];
-                console.log("SELECTED DEPARTMENT => " + this.selectedDepartment);
                 break;
               }
             }
@@ -99,7 +93,6 @@ export class EditStockDepartmentComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',
@@ -136,8 +129,6 @@ export class EditStockDepartmentComponent {
         stockId: this.stockId,
       }
 
-      console.log(stock);
-
       this.stockService.editStock(stock)
       .subscribe({
         next: (data: any) => {
@@ -153,7 +144,6 @@ export class EditStockDepartmentComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',

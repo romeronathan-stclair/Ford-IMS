@@ -22,17 +22,14 @@ export const getEvents = async (req: Request, res: Response) => {
 
   if (plantId) {
     query["plantId"] = plantId;
-    console.log(plantId)
   }
 
   if (departmentId) {
     query["departmentId"] = departmentId;
-    console.log(departmentId)
   }
 
   if (userId) {
     query["userId"] = userId;
-    console.log(userId);
   }
 
   if (operationType) {
@@ -47,12 +44,10 @@ export const getEvents = async (req: Request, res: Response) => {
 
   if (itemId) {
     query["itemId"] = itemId;
-    console.log(itemId);
   }
 
   if (date) {
     query["eventDate"] = date;
-    console.log(date);
   }
 
   const eventCount = await Event.countDocuments(query);

@@ -58,7 +58,6 @@ export class EventFormDataComponent {
             this.subAssemblyForm = data.body.events[0].subAssemblyForm;
           } else if (this.modelType == 'Production-count') {
             this.productionCountForm = data.body.events[0].productionCountForm;
-            console.log(this.productionCountForm);
           }
           this.event = data.body.events[0];
           this.itemName = data.body.events[0].itemName;

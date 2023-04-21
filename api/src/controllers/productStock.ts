@@ -170,7 +170,6 @@ export const getProductStock = async (req: Request, res: Response) => {
     if (productId) {
         query["productId"] = productId;
     }
-    console.log(query);
 
 
     const productStocks = await ProductStock.find(

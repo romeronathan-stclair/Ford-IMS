@@ -63,8 +63,6 @@ export class ForecastDetailComponent {
       next: (response: any) => {
         this.spinnerService.showHide();
         this.productForecast = response.body;
-        console.log(this.productForecast);
-        console.log(this.productForecast.stockForecast);
         if (this.productForecast.stockForecast?.forecastedStockItems) {
           this.stockForecastExists = true;
         }
@@ -76,7 +74,6 @@ export class ForecastDetailComponent {
       },
       error: (error: any) => {
         this.spinnerService.showHide();
-        console.log(error);
       },
       complete: () => {
         this.getTotalPossibleBuildsText();
@@ -218,7 +215,6 @@ export class ForecastDetailComponent {
 
     const documentStyle = getComputedStyle(document.documentElement);
     let stockForecast = this.productForecast.stockForecast;
-    console.log(stockForecast);
 
     this.data = {
       labels: [`High Stock - ${stockForecast?.highStockCount}`, `Medium Stock - ${stockForecast?.moderateStockCount}`, `Low Stock - ${stockForecast?.lowStockCount}`],
@@ -275,7 +271,6 @@ export class ForecastDetailComponent {
       autoFocus: false,
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
 
       if (result) {
         const request = {
@@ -294,7 +289,6 @@ export class ForecastDetailComponent {
           },
           error: (error: any) => {
             this.spinnerService.showHide();
-            console.log(error);
           },
 
         }

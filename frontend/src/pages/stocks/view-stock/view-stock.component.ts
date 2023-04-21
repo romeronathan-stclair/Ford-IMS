@@ -47,7 +47,6 @@ export class ViewStockComponent {
     this.stockService.getStocks(stockQuery)
     .subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spinnerService.hide();
         this.stock = data.body.stocks[0];
         this.departmentId = this.stock.departmentId;
@@ -58,7 +57,6 @@ export class ViewStockComponent {
         .subscribe({
           next: (data: any) => {
             this.spinnerService.hide();
-            console.log(data)
             this.departmentName = data.body.departmentName;
           },
           error: (error: any) => {

@@ -45,7 +45,6 @@ export const uploadImage = async (imageRequest: ImageRequest) => {
 
         image.mv(dirPath, (err: any) => {
             if (err) {
-                console.log(err);
                 return reject(err);
             }
         });
@@ -79,7 +78,6 @@ export const imageUpload = async (req: Request, res: Response) => {
 }
 export const retrieveImage = async (req: Request, res: Response) => {
 
-    console.log("retrieveImage");
 
     const plantId = req.params.plantId;
     const departmentId = req.params.departmentId;
@@ -106,7 +104,6 @@ export const retrieveImage = async (req: Request, res: Response) => {
 }
 export const retrieveDefaultImage = async (req: Request, res: Response) => {
 
-    console.log("retrieveDefaultImage");
 
     const dirPath = path.join(`default-image/default-image.png`);
     res.sendFile(dirPath, { root: 'public' });

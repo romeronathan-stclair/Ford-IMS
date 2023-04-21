@@ -78,12 +78,9 @@ export class EditDunnageImageComponent {
       next: (data: any) => {
         this.spinnerService.hide();
         this.imageUrl = data.body.dunnages[0].imageURL;
-        console.log(this.imageUrl)
-        console.log(data.body.dunnages[0]);
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -124,7 +121,6 @@ export class EditDunnageImageComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

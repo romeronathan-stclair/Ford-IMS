@@ -31,7 +31,6 @@ export const createPlant = async (
     res: Response,
     next: NextFunction
 ) => {
-    console.log(req.body);
     await check("plantName", "plantName is not valid")
         .isLength({ min: 1 })
         .run(req);
@@ -239,7 +238,6 @@ export const getPlants = async (req: Request, res: Response) => {
 
     if (plantId) {
 
-        console.log(plantId);
         const plant: PlantDocument = (await Plant.findOne({
             _id: plantId.toString(),
             isDeleted: false,
@@ -257,7 +255,6 @@ export const getPlants = async (req: Request, res: Response) => {
         return res.status(200).json(plant);
     }
     if (user.role === Roles.Admin) {
-        console.log("dsf");
         const plantList: PlantDocument[] = (await Plant.find({
 
             isDeleted: false,
@@ -330,7 +327,6 @@ export const getPlants = async (req: Request, res: Response) => {
         plants: plantList,
         plantCount: plantCount
     }
-    console.log(response);
 
     return res.status(200).json(response);
 
@@ -367,7 +363,6 @@ export const updatePlant = async (req: Request, res: Response) => {
         itemName: plant.plantName,
     }) as EventDocument;
 
-    console.log("HERE");
     try {
         await event.save();
         await plant.save();
@@ -473,7 +468,6 @@ export const deletePlant = async (req: Request, res: Response) => {
 async function deleteUsersActivePlant(plantId: string) {
     try {
         const users = await User.find({ 'plants.plantId': plantId }).exec();
-        console.log("users", users);
 
         if (users && users.length > 0) {
             const bulkUpdateOperations = users.map(user => {

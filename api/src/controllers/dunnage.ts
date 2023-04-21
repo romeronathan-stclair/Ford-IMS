@@ -80,13 +80,11 @@ export const createDunnage = async (req: Request, res: Response) => {
 
             })
             .catch((err: any) => {
-                console.log(err);
 
                 try {
                     dunnage.remove();
                 }
                 catch (err) {
-                    console.log(err);
                 }
                 return res.status(500).json("Error creating Dunnage");
             });
@@ -155,7 +153,6 @@ export const getDunnage = async (req: Request, res: Response) => {
     }
     if (name) {
         query["name"] = { $regex: name, $options: "i" };
-        console.log(name);
     }
 
     if (dunnageId) {
@@ -234,13 +231,11 @@ export const updateDunnage = async (req: Request, res: Response) => {
 
             })
             .catch((err: any) => {
-                console.log(err);
 
                 try {
                     dunnage.remove();
                 }
                 catch (err) {
-                    console.log(err);
                 }
                 return res.status(500).json("Error creating Stock");
             });

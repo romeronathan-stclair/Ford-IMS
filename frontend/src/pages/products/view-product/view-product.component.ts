@@ -47,7 +47,6 @@ export class ViewProductComponent {
     this.productService.getProducts(productQuery)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           this.spinnerService.hide();
           this.product = data.body.products[0];
           this.departmentId = this.product.departmentId;
@@ -58,7 +57,6 @@ export class ViewProductComponent {
             .subscribe({
               next: (data: any) => {
                 this.spinnerService.hide();
-                console.log(data)
                 this.departmentName = data.body.departmentName;
               },
               error: (error: any) => {

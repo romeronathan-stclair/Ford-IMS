@@ -84,7 +84,6 @@ export class StockListComponent {
 
 
   async loadStocks(query: string = '') {
-    console.log(this.selectedDepartment);
     const selectedDepartmentId = this.selectedDepartment._id;
     let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
 
@@ -96,7 +95,6 @@ export class StockListComponent {
     } else {
       stockQuery += `&userId=${this.authService.user._id}`;
     }
-    console.log(stockQuery);
 
     return new Promise<void>((resolve, reject) => {
       this.stockService.getStocks(stockQuery)
@@ -123,26 +121,9 @@ export class StockListComponent {
       const name = nameControl.value;
 
       let query = `&name=${name}`
-      console.log(query);
       this.currentPage = 0;
       this.loadStocks(query);
     }
-    // const nameControl = this.stockForm.get('stockName');
-
-    // if (nameControl) {
-    //   const name = nameControl.value;
-    //   console.log(name);
-    //   let query = "?page=" + this.currentPage + "&pageSize=" + this.pageSize + "&name=" + name + "&departmentId=" + this.selectedDepartment._id;
-    //   console.log(query);
-    //   this.stockService.getStocks(query)
-    //   .subscribe({
-    //     next: (data) => {
-    //       this.length = data.body.stockCount;
-    //       this.stocks = data.body.stock;
-    //       this.dataSource = new MatTableDataSource(this.stocks);
-    //     }
-    //   })
-    // }
   }
 
   changeDepartment($event: any) {
@@ -180,7 +161,6 @@ export class StockListComponent {
               this.loadData();
             },
             error: (error: any) => {
-              console.log(error);
               this.spinnerService.hide();
               this.messageService.add({
                 severity: 'error',

@@ -131,7 +131,6 @@ export const submitCycleCheck = async (req: Request, res: Response) => {
                     matchedStock.totalAvailableQty = stock.currentCount * matchedStock.totalStockPerSkid;
 
                     stockSaveList.push(matchedStock);
-                    console.log(matchedStock);
 
 
                 }

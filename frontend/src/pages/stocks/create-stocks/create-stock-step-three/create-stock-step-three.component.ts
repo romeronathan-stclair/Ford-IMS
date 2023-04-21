@@ -44,7 +44,6 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.sharedService.setDataKey('stock');
     this.request = this.sharedService.getData();
-    console.log(this.request);
   }
 
   onImageHover(show: boolean) {
@@ -109,7 +108,6 @@ export class CreateStockStepThreeComponent implements AfterViewInit {
       },
       error: (error) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

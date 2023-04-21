@@ -46,10 +46,6 @@ export class CreateProductStepFourComponent {
       this.request = this.sharedService.getData();
       this.selectedDepartment = this.request.product.department;
 
-      console.log(this.request);
-
-
-      console.log(this.request);
       if (!this.request.product.dunnages) {
         this.request.product.dunnages = [];
       }
@@ -66,10 +62,8 @@ export class CreateProductStepFourComponent {
 
   loadDunnages() {
     let dunnageQuery = `?departmentId=${this.selectedDepartment._id}&plantId=${this.authService.user.activePlantId}`;
-    console.log(dunnageQuery);
     this.dunnageService.getDunnages(dunnageQuery).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spinnerService.hide();
         this.dunnages = data.body.dunnages;
         if (this.request.product.dunnages && this.request.product.dunnages.length > 0) {
@@ -77,7 +71,6 @@ export class CreateProductStepFourComponent {
             return this.request.product.dunnages.findIndex((targetDunnages: any) => targetDunnages.dunnageId === dunnage._id) !== -1;
           }
           );
-          console.log(this.targetDunnages);
           this.dunnages = this.dunnages.filter((dunnage: any) => {
             return this.targetDunnages.findIndex((targetDunnages: any) => targetDunnages._id === dunnage._id) === -1;
           }
@@ -86,7 +79,6 @@ export class CreateProductStepFourComponent {
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
       }
     });
@@ -107,7 +99,6 @@ export class CreateProductStepFourComponent {
 
 
       const dunnage = $event.items[0];
-      console.log(dunnage);
 
 
 
@@ -117,8 +108,6 @@ export class CreateProductStepFourComponent {
       });
 
       this.sharedService.setData(this.request);
-
-      console.log(this.request);
     }
 
   }
@@ -138,10 +127,8 @@ export class CreateProductStepFourComponent {
 
     if (this.request.file) {
       const file = this.imageUrlToFile(this.request.file);
-      console.log(file);
       formData.append('file', file);
     }
-    console.log(this.request.product);
 
     const createProductRequest = {
       departmentId: this.request.product.department._id,
@@ -158,12 +145,10 @@ export class CreateProductStepFourComponent {
 
     this.productService.createProduct(formData).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spinnerService.hide();
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product created successfully' });
         this.router.navigate(['/dashboard/products/list']);
       }, error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error creating product' });
       }

@@ -56,7 +56,6 @@ export class SubAssemblyStepOneComponent {
 
   openHelpDialog(item: any) {
     const helpItem = item;
-    console.log(helpItem);
 
     const dialogRef = this.dialog.open(HelpDialogComponent, {
       data: {
@@ -94,7 +93,6 @@ export class SubAssemblyStepOneComponent {
       },
       error: (err: any) => {
         this.spinnerService.hide();
-        console.log(err);
       }
     });
   }
@@ -159,7 +157,6 @@ export class SubAssemblyStepOneComponent {
       },
       error: (err: any) => {
         this.spinnerService.hide();
-        console.log(err);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

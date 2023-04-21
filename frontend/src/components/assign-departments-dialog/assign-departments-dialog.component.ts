@@ -16,7 +16,6 @@ export class AssignDepartmentsDialogComponent {
 
 
   ) {
-    console.log(data);
 
   }
 
@@ -32,7 +31,6 @@ export class AssignDepartmentsDialogComponent {
           name: department
         });
         this.selectedDepartments.push(department);
-        console.log("HERE");
       } else {
         this.departments.push({
           checked: false,

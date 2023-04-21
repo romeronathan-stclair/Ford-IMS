@@ -148,7 +148,6 @@ export class CreateStockStepOneComponent {
       this.stockService.getStocks(query).subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
-          console.log("DATA => " + data);
           if (data.body.stocks && data.body.stocks.length > 0) {
             this.messageService.clear();
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Stock already exists' });

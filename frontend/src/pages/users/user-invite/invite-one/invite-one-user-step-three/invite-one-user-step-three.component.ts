@@ -82,7 +82,6 @@ export class InviteOneUserStepThreeComponent {
 
     this.sharedService.setData(this.request);
 
-    console.log(this.request);
 
     let inviteRequest = {
       invites: [
@@ -101,7 +100,6 @@ export class InviteOneUserStepThreeComponent {
         this.spinnerService.hide();
       },
       error: (error) => {
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error while inviting user' });
         this.spinnerService.hide();

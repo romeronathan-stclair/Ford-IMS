@@ -41,7 +41,6 @@ export class CreateStockStepTwoComponent {
     if (this.sharedService.getData() != null) {
 
       this.request = this.sharedService.getData();
-      console.log("REQUEST => " + JSON.stringify(this.request));
       this.stockForm.patchValue(
         this.request.stock
       );
@@ -61,15 +60,12 @@ export class CreateStockStepTwoComponent {
 
   async loadDepartments() {
     let departmentQuery = "?plantId=" + this.activePlantId;
-    console.log("DEPARTMENT QUERY => " + departmentQuery);
 
     this.departmentService.getDepartments(departmentQuery).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.departments = data.body.departments;
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
   }
@@ -104,16 +100,12 @@ export class CreateStockStepTwoComponent {
       this.router.navigate(['/dashboard/stock/create/step-three']);
     });
 
-    console.log(this.request);
-
 
   }
   changeDepartment($event: any) {
-    console.log(this.selectedDepartment);
 
     this.request.stock.selectedDepartment = this.selectedDepartment;
     this.sharedService.setData(this.request);
-    console.log(this.request);
 
 
   }

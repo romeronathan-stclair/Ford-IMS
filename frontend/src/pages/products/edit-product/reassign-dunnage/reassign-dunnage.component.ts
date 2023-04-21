@@ -78,7 +78,6 @@ export class ReassignDunnageComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -112,7 +111,6 @@ export class ReassignDunnageComponent {
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
       }
     });
@@ -120,7 +118,6 @@ export class ReassignDunnageComponent {
   }
   loadProductDunnages() {
     let dunnageQuery = `?productId=${this.productId}`;
-    console.log(dunnageQuery);
     this.productDunnageService.getProductDunnage(dunnageQuery).subscribe({
       next: (data: any) => {
 
@@ -129,7 +126,6 @@ export class ReassignDunnageComponent {
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
       }
     });
@@ -195,7 +191,6 @@ export class ReassignDunnageComponent {
       }
       ,
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
         this.messageService.clear();
         this.messageService.add({

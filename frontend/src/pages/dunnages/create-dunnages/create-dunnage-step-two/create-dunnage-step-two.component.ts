@@ -44,7 +44,6 @@ export class CreateDunnageStepTwoComponent {
   ngAfterViewInit() {
     this.sharedService.setDataKey('dunnage');
     this.request = this.sharedService.getData();
-    console.log(this.request);
   }
 
   onImageHover(show: boolean) {
@@ -98,7 +97,6 @@ export class CreateDunnageStepTwoComponent {
       },
       error: (error) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

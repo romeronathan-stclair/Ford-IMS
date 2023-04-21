@@ -40,7 +40,6 @@ export class InviteOneUserStepOneComponent {
     this.sharedService.setDataKey('inviteUser');
 
     if (this.sharedService.getData() != null) {
-      console.log(this.sharedService.getData());
 
       this.request = this.sharedService.getData();
       this.userForm.patchValue(
@@ -78,8 +77,6 @@ export class InviteOneUserStepOneComponent {
     this.request.fullName = this.userForm.value.fullName;
     this.request.email = this.userForm.value.email;
     this.request.adminType = this.userForm.value.adminType;
-
-    console.log(this.userForm.value.adminType);
 
     this.spinnerService.hide();
     this.sharedService.setData(this.request).then(() => {

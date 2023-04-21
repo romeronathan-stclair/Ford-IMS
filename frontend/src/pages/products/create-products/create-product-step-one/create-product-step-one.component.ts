@@ -69,20 +69,16 @@ export class CreateProductStepOneComponent {
 
   async loadDepartments() {
     let departmentQuery = "?plantId=" + this.activePlantId;
-    console.log("DEPARTMENT QUERY => " + departmentQuery);
 
     this.departmentService.getDepartments(departmentQuery).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.departments = data.body.departments;
       },
       error: (err: any) => {
-        console.log(err);
       }
     });
   }
   changeDepartment($event: any) {
-    console.log(this.selectedDepartment);
 
 
   }
@@ -126,7 +122,6 @@ export class CreateProductStepOneComponent {
     this.productService.getProducts(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log("DATA => " + data);
         if (data.body.products && data.body.products.length > 0) {
           this.messageService.clear();
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'product already exists' });

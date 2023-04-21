@@ -68,7 +68,6 @@ export class ReassignStockComponent {
     this.productService.getProducts(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         if (data.body.products && data.body.products.length > 0) {
           // populate the form controls with the product data
           this.product = data.body.products[0];
@@ -80,7 +79,6 @@ export class ReassignStockComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -117,7 +115,6 @@ export class ReassignStockComponent {
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
       }
     });
@@ -134,7 +131,6 @@ export class ReassignStockComponent {
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
       }
     });
@@ -172,7 +168,6 @@ export class ReassignStockComponent {
   }
 
   submit() {
-    console.log(this.targetStocks);
 
 
     this.productService.reassignProductStock({
@@ -194,7 +189,6 @@ export class ReassignStockComponent {
       }
       ,
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
         this.messageService.clear();
         this.messageService.add({

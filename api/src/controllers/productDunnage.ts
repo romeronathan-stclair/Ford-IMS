@@ -96,7 +96,6 @@ export const getProductDunnage = async (req: Request, res: Response) => {
     if (productId) {
         query["productId"] = productId;
     }
-    console.log(query);
 
 
     const productDunnage = await ProductDunnage.find(

@@ -79,8 +79,6 @@ export class EditUserDepartmentsComponent {
   onSubmit() {
     this.sharedService.setData(this.request);
 
-    console.log(this.request);
-
     this.authService.updateUser(this.request)
     .subscribe({
       next: (data: any) => {

@@ -32,7 +32,6 @@ export const submitProductionCount = async (req: Request, res: Response) => {
     let stockSaveList: StockDocument[] = [];
 
     const request = req.body.productionCountRequest;
-    console.log("REQUEST HERE" + request);
 
 
 
@@ -85,7 +84,6 @@ export const submitProductionCount = async (req: Request, res: Response) => {
 
             }
             await forecastService.forecastDepartment(department.departmentId).then((data) => {
-                console.log("Forecast updated for department: " + data);
 
             }).catch((e) => {
                 return res.status(500).json("Forecast update failed for department: " + department.departmentName + ".");
@@ -113,7 +111,6 @@ export const submitProductionCount = async (req: Request, res: Response) => {
             if (!plant) {
                 return res.status(500).json("No active plants");
             }
-            console.log("REQuest " + JSON.stringify(request));
 
             const event = new Event({
                 plantId: plant.plantId,
@@ -129,14 +126,11 @@ export const submitProductionCount = async (req: Request, res: Response) => {
                 productionCountForm: request
             });
 
-            console.log(event);
-
             event.save();
 
             return res.status(200).json("Submitted production count.");
         }
     } catch (e) {
-        console.log("ERROR => " + e);
         return res.status(500).json(e);
     }
 

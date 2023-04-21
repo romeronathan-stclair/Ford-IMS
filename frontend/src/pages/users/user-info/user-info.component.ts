@@ -54,7 +54,6 @@ export class UserInfoComponent {
         next: (data: any) => {
           this.spinnerService.hide();
           this.user = data.body;
-          console.log(this.user);
           this.departmentIds = this.user.plants[0].departments.toString().split(',');
           this.loadPlantName(this.user.plants[0].plantId);
           this.loadDepartmentNames(this.departmentIds);
@@ -75,7 +74,6 @@ export class UserInfoComponent {
     let plantQuery = "?plantId=" + plantId;
     this.plantService.getPlants(plantQuery).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.plantName = data.body.plantName;
       },
       error: (error: any) => {

@@ -55,7 +55,6 @@ export class SignupStepTwoComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.activatedRoute.snapshot.paramMap);
     if (this.activatedRoute.snapshot.paramMap.get('id')) {
       this.userForm.patchValue({
         inviteCode: this.activatedRoute.snapshot.paramMap.get('id'),
@@ -88,7 +87,6 @@ export class SignupStepTwoComponent {
 
     this.authService.signup(request).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.spinnerService.hide();
 
         this.messageService.clear();
@@ -100,11 +98,9 @@ export class SignupStepTwoComponent {
 
         this.router.navigate(['/dashboard/plants/list']);
 
-        console.log()
 
       },
       error: (error: any) => {
-        console.log(error);
         this.spinnerService.hide();
         this.messageService.clear();
 

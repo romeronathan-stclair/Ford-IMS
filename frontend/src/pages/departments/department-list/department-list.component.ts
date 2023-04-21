@@ -62,7 +62,6 @@ export class DepartmentListComponent {
 
 
     this.dataSource.paginator = this.paginator;
-    console.log(this.paginator);
   }
 
   loadData() {
@@ -76,13 +75,10 @@ export class DepartmentListComponent {
     this.departmentService.getDepartments(query)
       .subscribe({
         next: (data: any) => {
-          console.log(data.body.departmentCount);
           this.spinnerService.hide();
           this.departments = data.body.departments;
           this.length = data.body.departmentCount;
           this.dataSource = new MatTableDataSource(this.departments);
-
-          console.log(this.departments);
         },
         error: (error: any) => {
           this.spinnerService.hide();
@@ -94,7 +90,6 @@ export class DepartmentListComponent {
 
   }
   pageChanged(event: PageEvent) {
-    console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadData();

@@ -22,7 +22,6 @@ export class UsePerDialogComponent {
     this.valueForm = new FormGroup({
       value: new FormControl(''),
     });
-    console.log(data);
 
   }
 

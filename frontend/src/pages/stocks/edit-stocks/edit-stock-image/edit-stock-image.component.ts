@@ -84,7 +84,6 @@ export class EditStockImageComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',
@@ -112,7 +111,6 @@ export class EditStockImageComponent {
     this.stockService.editStock(formData)
       .subscribe({
         next: (data: any) => {
-          console.log(data);
           this.spinnerService.hide();
           this.messageService.clear();
           this.messageService.add({
@@ -124,7 +122,6 @@ export class EditStockImageComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
           this.messageService.clear();
           this.messageService.add({
             severity: 'error',

@@ -45,7 +45,6 @@ export class EditDepartmentComponent {
     this.departmentService.getDepartments(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         if (data) {
           // populate the form controls with the department data
           this.departmentForm.patchValue({
@@ -56,7 +55,6 @@ export class EditDepartmentComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -79,7 +77,6 @@ export class EditDepartmentComponent {
         .subscribe({
           next: (data: any) => {
             this.spinnerService.hide();
-            console.log(data);
             this.messageService.clear();
             this.messageService.add({
               severity: 'success',
@@ -91,7 +88,6 @@ export class EditDepartmentComponent {
           },
           error: (error: any) => {
             this.spinnerService.hide();
-            console.log(error);
             this.messageService.clear();
             this.messageService.add({
               severity: 'error',
@@ -127,7 +123,6 @@ export class EditDepartmentComponent {
     this.departmentService.editDepartment(department).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         this.messageService.clear();
         this.messageService.add({
           severity: 'success',
@@ -139,7 +134,6 @@ export class EditDepartmentComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

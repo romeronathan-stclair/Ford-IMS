@@ -58,13 +58,11 @@ export class SubAssemblyListComponent {
         },
         error: (error: any) => {
           this.spinnerService.hide();
-          console.log(error);
         }
       });
   }
 
   pageChanged(event: PageEvent) {
-    console.log({ event });
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
     this.loadEvents();

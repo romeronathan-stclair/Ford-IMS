@@ -58,7 +58,6 @@ export class RoleService {
     }
 
     canCreatePlant(): boolean {
-        console.log(this.authService.user.role as Roles);
         return this.authService.user.role as Roles === Roles.Admin;
     }
 
@@ -205,7 +204,6 @@ export class RoleService {
         const userRole = this.authService.user.role as Roles;
         const userRolePower = rolePowerLevels[userRole];
         const targetRolePower = rolePowerLevels[targetRole ? targetRole : userRole];
-        console.log(userRole);
 
         return userRolePower > targetRolePower;
     }

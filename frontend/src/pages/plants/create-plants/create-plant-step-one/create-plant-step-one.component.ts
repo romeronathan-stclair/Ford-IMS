@@ -65,7 +65,6 @@ export class CreatePlantStepOneComponent {
     this.plantService.getPlants(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log("DATA =>" + data);
         if (data.body) {
           this.messageService.clear();
           this.messageService.add({
@@ -80,7 +79,6 @@ export class CreatePlantStepOneComponent {
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',

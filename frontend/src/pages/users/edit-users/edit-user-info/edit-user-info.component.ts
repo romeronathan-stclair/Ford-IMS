@@ -49,7 +49,6 @@ export class EditUserInfoComponent {
     this.sharedService.setDataKey('editUser');
 
     if (this.sharedService.getData() != null) {
-      console.log(this.sharedService.getData());
 
       this.request = this.sharedService.getData();
       this.userForm.patchValue(
@@ -77,7 +76,6 @@ export class EditUserInfoComponent {
         this.spinnerService.hide();
         if (data) {
           this.selectedRole = data.body.role;
-          console.log(this.selectedRole);
           this.userForm.patchValue({
             fullName: data.body.name,
             email: data.body.email,
@@ -120,8 +118,6 @@ export class EditUserInfoComponent {
       adminType: this.userForm.value.adminType,
       userId: this.userId
     }
-
-    console.log(this.request);
 
     this.authService.updateUser(this.request)
     .subscribe({

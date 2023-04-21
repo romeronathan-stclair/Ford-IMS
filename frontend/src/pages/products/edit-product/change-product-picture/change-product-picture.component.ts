@@ -54,7 +54,6 @@ export class ChangeProductPictureComponent {
     this.productService.getProducts(query).subscribe({
       next: (data: any) => {
         this.spinnerService.hide();
-        console.log(data);
         if (data.body.products && data.body.products.length > 0) {
           // populate the form controls with the product data
           this.product = data.body.products[0];
@@ -62,14 +61,12 @@ export class ChangeProductPictureComponent {
           this.product.productId = data.body.products[0]._id;
 
           this.imageUrl = this.product.imageURL;
-          console.log(this.imageUrl);
 
 
         }
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
@@ -129,12 +126,10 @@ export class ChangeProductPictureComponent {
           summary: `Success: `,
           detail: `Product updated successfully.`,
         });
-        console.log(data);
         this.router.navigate(['/dashboard/products/list']);
       },
       error: (error: any) => {
         this.spinnerService.hide();
-        console.log(error);
         this.messageService.clear();
         this.messageService.add({
           severity: 'error',
