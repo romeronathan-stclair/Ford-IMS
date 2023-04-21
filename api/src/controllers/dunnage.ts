@@ -40,6 +40,7 @@ export const createDunnage = async (req: Request, res: Response) => {
     const existingDunnage: DunnageDocument = (await Dunnage.findOne({
         departmentId: req.body.departmentId.toString(),
         name: req.body.name,
+        isDeleted: false
     })) as DunnageDocument;
 
     if (existingDunnage) {
@@ -90,7 +91,7 @@ export const createDunnage = async (req: Request, res: Response) => {
             });
 
     } else {
-        dunnage.imageURL = env.app.apiUrl + "/images/defaultImage.png";
+        dunnage.imageURL = env.app.apiUrl + "/public/default-image";
 
     }
 

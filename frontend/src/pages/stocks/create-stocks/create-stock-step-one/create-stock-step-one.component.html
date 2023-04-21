@@ -35,7 +35,7 @@
       </div>
 
       <div *ngIf="!roughStockChecked || subAssemblyChecked">
-        <input placeholder="Stock Quantity per Tote" formControlName="stockQtyPerTote" type="stockQtyPerTote" class="form-control"
+        <input placeholder="Stock Quantity per Tote" formControlName="stockQtyPerTote" type="number"  class="form-control"
         id="stockQtyPerTote-input" aria-describedby="stockQtyPerToteHelp"/>
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
@@ -46,7 +46,7 @@
       </div>
 
       <div *ngIf="!roughStockChecked || subAssemblyChecked">
-        <input placeholder="Amount of Totes per Skid" formControlName="totesPerSkid" type="totesPerSkid" class="form-control"
+        <input placeholder="Amount of Totes per Skid" formControlName="totesPerSkid" type="number"  class="form-control"
         id="totesPerSkid-input" aria-describedby="totesPerSkidHelp"/>
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
@@ -57,7 +57,7 @@
       </div>
 
       <div *ngIf="roughStockChecked">
-        <input placeholder="Total Stock per Skid" formControlName="totalStockPerSkid" type="totalStockPerSkid" class="form-control"
+        <input placeholder="Total Stock per Skid" formControlName="totalStockPerSkid" type="number"  class="form-control"
         id="totalStockPerSkid-input" aria-describedby="totalStockPerSkidHelp"/>
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
@@ -68,7 +68,7 @@
       </div>
 
       <div>
-        <input placeholder="Low Stock Amount" formControlName="lowStock" type="lowStock" class="form-control"
+        <input placeholder="Low Stock Amount" formControlName="lowStock"type="number"  class="form-control"
         id="lowStock-input" aria-describedby="totesPerSkidHelp" required />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||

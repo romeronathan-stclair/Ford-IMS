@@ -69,8 +69,6 @@ export class ForecastDetailComponent {
 
 
 
-
-
       },
       error: (error: any) => {
         this.spinnerService.showHide();

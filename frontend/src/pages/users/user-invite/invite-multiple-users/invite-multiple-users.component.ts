@@ -113,13 +113,16 @@ export class InviteMultipleUsersComponent {
 
 
 
-        let departmentIds = invite.plants?.[0]?.departments.map(department => department._id);
         if (invite.plants?.[0]?.plantId === '' || invite.plants?.[0]?.plantId === undefined) {
           request.invites.push({
             email: invite.email,
             adminType: invite.adminType,
           });
         } else {
+          let departmentIds = [] as any;
+          if(invite.plants?.[0]?.departments){
+            departmentIds = invite.plants?.[0]?.departments.map(department => department._id);
+            }
           request.invites.push({
             email: invite.email,
             adminType: invite.adminType,

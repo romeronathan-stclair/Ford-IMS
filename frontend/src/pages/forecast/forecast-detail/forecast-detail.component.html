@@ -44,7 +44,7 @@
                     </div>
                     <div [class]="getHealthClassForJobsPerHour()" class="grid-item">
                         <p class="info-text">Target Jobs Per Hour</p>
-                        <p class="data-text">{{productForecast.stockForecast?.lowestStockItem?.jobsPerHour}}</p>
+                        <p class="data-text">{{productForecast.stockForecast?.lowestStockItem?.jobsPerHour | number : '1.2-2'}}</p>
                         <p class="info-text"> {{hourlyProductionStatusText}}</p>
                     </div>
                     <div [class]="getProjectTimeBeforeShortageClass()" class="grid-item">
@@ -101,7 +101,8 @@
 
                     <div class="stock-holder">
                       <div *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
-                        <div class="stock-card" *ngIf="stock.lowStockThreshold">
+                        <div class="stock-card" *ngIf="stock.lowStockThreshold || stock.belowDailyTarget
+                        ">
                             <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
                             <div class="stock-info">
                                 <p class="data-text">{{ stock.name }}</p>
@@ -110,6 +111,7 @@
                             </div>
                         </div>
                       </div>
+
                     </div>
 
                 </div>

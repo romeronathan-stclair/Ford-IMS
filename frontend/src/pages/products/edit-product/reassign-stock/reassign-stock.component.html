@@ -1,5 +1,5 @@
 <div class="container-header">
-    <p>3. Assign Product to Stock</p>
+    <p>Reassign Product to Stock</p>
 
     <img class="container-img" src="/assets/ford-logo.png" />
 
@@ -19,7 +19,7 @@
                         </div>
                         <div class="pick-list-list-detail">
                             <h5 class="mb-2">{{stock.name}}</h5>
-                            <h5 class="mb-2">Use per Product: {{stock.usePerProduct}}</h5>
+                            <h5 *ngIf="stock.usePerProduct" class="mb-2">Use per Product: {{stock.usePerProduct}}</h5>
                             <!-- <span class="pick-list-category">{{selectedDepartment.departmentName}}</span> -->
                         </div>
                     </div>

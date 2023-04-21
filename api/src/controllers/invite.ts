@@ -21,6 +21,7 @@ export const sendInvite = async (req: Request, res: Response) => {
 
         // Check thats plants exist
         const plants = invite.plants;
+       
 
         const user = req.user as UserDocument;
 

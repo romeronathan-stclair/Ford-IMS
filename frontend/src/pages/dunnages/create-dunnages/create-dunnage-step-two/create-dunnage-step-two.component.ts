@@ -96,6 +96,7 @@ export class CreateDunnageStepTwoComponent {
         this.router.navigate(['/dashboard/dunnage/create/success']);
       },
       error: (error) => {
+
         this.spinnerService.hide();
         this.messageService.clear();
         this.messageService.add({

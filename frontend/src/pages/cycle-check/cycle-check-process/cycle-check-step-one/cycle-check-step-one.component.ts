@@ -74,6 +74,7 @@ export class CycleCheckStepOneComponent {
       .subscribe({
         next: (data: any) => {
           this.spinnerService.hide();
+
           this.cycleCheck = data.body;
 
           this.cycleCheck.forEach((department: any) => {

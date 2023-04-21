@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { AuthService } from 'src/services/auth.service';
 import { PlantService } from 'src/services/plant.service';
 import { SharedService } from 'src/services/shared.service';
 import { SpinnerService } from 'src/services/spinner.service';
@@ -24,6 +25,7 @@ export class EditPlantPageComponent {
     private route: ActivatedRoute, // add ActivatedRoute to the constructor
     private spinnerService: SpinnerService,
     private messageService: MessageService,
+    private authService: AuthService,
     private confirmationService: ConfirmationService) {
 
     this.plantForm = this.formBuilder.group({
@@ -83,6 +85,9 @@ export class EditPlantPageComponent {
               detail: `Plant deleted successfully.`,
             });
             this.router.navigate(['/dashboard/plants/list']);
+            if(this.authService.user.activePlantId == plantId) {
+              this.sharedService.refreshDashboardForecast(true);
+            }
           },
           error: (error: any) => {
             this.spinnerService.hide();

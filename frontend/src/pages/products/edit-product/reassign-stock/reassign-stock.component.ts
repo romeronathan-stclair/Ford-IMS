@@ -164,6 +164,7 @@ export class ReassignStockComponent {
   }
   moveBack($event: any) {
     const stock = $event.items[0];
+    stock.usePerProduct = null;
 
   }
 

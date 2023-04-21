@@ -14,7 +14,7 @@
       </div>
 
       <div>
-        <input placeholder="Skid Quantity" formControlName="skidQuantity" type="skidQuantity" class="form-control"
+        <input  placeholder="Skid Quantity" formControlName="skidQuantity" type="number" class="form-control"
         id="skidQuantity-input" aria-describedby="skidQuantityHelp" required />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
@@ -25,7 +25,7 @@
       </div>
 
       <div>
-        <input placeholder="Low Dunnage Amount" formControlName="lowStock" type="lowStock" class="form-control"
+        <input placeholder="Low Dunnage Amount" formControlName="lowStock" type="number"  class="form-control"
         id="lowStock-input" aria-describedby="lowStockHelp" required />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||

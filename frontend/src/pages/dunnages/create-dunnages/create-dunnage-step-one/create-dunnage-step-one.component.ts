@@ -56,9 +56,10 @@ export class CreateDunnageStepOneComponent {
       this.activePlantId = this.authService.user.activePlantId;
       await this.loadDepartments();
 
-      if (this.request != null) {
+      if (this.request != null && this.request.dunnage) {
         this.selectedDepartment = this.request.dunnage.selectedDepartment;
       }
+
     }
 
     async loadDepartments() {

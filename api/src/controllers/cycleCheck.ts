@@ -17,26 +17,20 @@ export const getCycleCheck = async (req: Request, res: Response) => {
             return plant
         }
     });
+
     if (!plant) {
         return res.status(500).json("No active plants");
     }
-    const departmentIds = plant.departments.map((department) => {
-        return department;
+
+    const departments = await Department.find({
+        plantId: plant.plantId,
+        isDeleted: false
     });
+ 
 
-    const validDepartmentIds = [];
-
-    for (const departmentId of departmentIds) {
-
-        const department: DepartmentDocument = (await Department.findOne({
-            _id: departmentId,
-            isDeleted: false
-        })) as DepartmentDocument;
-
-        if (department && !department.isDeleted) {
-            validDepartmentIds.push(departmentId);
-        }
-    }
+    const validDepartmentIds = departments.map((department) => {
+        return department._id;
+    }); 
 
     for (const departmentId of validDepartmentIds) {
 

@@ -47,6 +47,7 @@ export const createStock = async (req: Request, res: Response) => {
     const existingStock: StockDocument = (await Stock.findOne({
         departmentId: req.body.departmentId.toString(),
         name: req.body.name,
+        isDeleted: false,
     })) as StockDocument;
 
     if (existingStock) {

@@ -101,6 +101,7 @@ export class DunnageListComponent {
             this.dunnages = data.body.dunnages;
             this.length = data.body.dunnageCount;
             this.dataSource = new MatTableDataSource(this.dunnages);
+
             resolve();
           },
           error: (error: any) => {

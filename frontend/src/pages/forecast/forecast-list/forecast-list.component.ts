@@ -94,6 +94,7 @@ export class ForecastListComponent {
           this.dataSource = new MatTableDataSource(data.body.forecastedProducts);
           this.length = data.body.forecastedProductsCount;
           this.spinnerService.hide();
+      
           resolve();
         },
         error: (error: any) => {
