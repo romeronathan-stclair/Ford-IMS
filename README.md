@@ -13,6 +13,8 @@ The Inventory Management Software is a project developed for the Mobile Applicat
 
 To run this project, you will need a few dependencies installed. First, you will need Node Package Manager (npm) to manage your project's dependencies. Additionally, you will need Redis, an in-memory data structure store, to handle session management. Finally, you will need Mongoose, an Object Data Modeling (ODM) library for MongoDB and Node.js.
 
+Follow MongoDB's documentation on how to install MongoDB Community Edition on your computer: https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/
+
 ## Run the Project on WindowsOS
 
 1. Install Node.js and npm by downloading and running the installer from the official website: https://nodejs.org/en/download/
@@ -92,8 +94,11 @@ sudo apt-get install redis-server
 redis-server
 ```
 7. Open a new terminal window and navigate to the project's root directory
-8. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-9. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
+8. Run the following command to install all the required dependencies mentioned in the package.json file
+```
+npm install
+```
+10. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
 ```
 npm run watch
 ```
