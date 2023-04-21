@@ -1,0 +1,48 @@
+@import "src/styles.scss";
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    max-width: 100vw;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    font-size: 1.3rem !important;
+
+    width: 100%;
+    max-width: 100%;
+
+}
+.sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+
+  top: 0; /* Specify the position (top, bottom, left or right) where you want the div to stick */
+  z-index: 100;
+}
+
+.content {
+    padding: 10px 10px;
+    margin: 0 auto;
+    width: 80vw;
+
+    transition: all 0.2s ease;
+    @include column-lg-break {
+        padding: 10px 15px;
+    }
+}
+.full-width {
+    margin: 0 auto;
+    min-width: 90vw;
+}
+
+.forecast {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    color: black !important;
+    background-color: orange !important;
+}

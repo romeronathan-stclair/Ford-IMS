@@ -1,0 +1,86 @@
+@import "src/styles.scss";
+.footer-holder {
+    display: flex;
+    justify-content: space-between;
+}
+.invite {
+    background-color: $grey;
+    padding: 10px;
+    border: $border;
+    margin: -0.75px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+}
+.container-holder {
+    display: flex;
+    flex-direction: column;
+}
+input {
+    width: 200px;
+    height: 35px;
+    border: 1px solid $lightGrey;
+    border-radius: 5px;
+}
+.top-holder {
+    width: 100%;
+
+    display: flex;
+    gap: 5px;
+    justify-content: start;
+    overflow: visible !important;
+    min-height: 50px;
+    position: relative;
+
+    @include column-lg-break {
+        flex-direction: column;
+    }
+}
+.p-dropdown-item {
+    overflow: visible;
+}
+.bottom-holder {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    justify-content: space-between;
+    position: relative;
+}
+.add-invite-button {
+    background-color: $lightBlue;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 7.5px 10px;
+    margin: 7.5px;
+
+    margin-left: auto;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.remove-invite-button {
+    background-color: $lightBlue;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    padding: 7.5px 10px;
+    cursor: pointer;
+
+    font-size: 1.5rem;
+}
+
+.next-button {
+    @include column-lg-break {
+        order: 1;
+    }
+}
+.back-button {
+    @include column-lg-break {
+        order: 2;
+    }
+}

@@ -1,0 +1,20 @@
+<h1 class="page-header">Product Information</h1>
+<app-ford-container *ngIf="product" title="{{product.name}}">
+    <div class="holder">
+
+        <div class="card">
+            <img [src]="product.imageURL" alt="{{product.name}}">
+            <mat-card-title>Department: {{departmentName}}</mat-card-title>
+            <mat-card-title>Part Number: {{product.partNumber}}</mat-card-title>
+            <mat-card-title>Daily Target: {{product.dailyTarget}}</mat-card-title>
+            <mat-card-title>Market Location: {{product.marketLocation}}</mat-card-title>
+
+            <div class="button-holders">
+                <button type="button" (click)="back()" class="submit-button">Back</button>
+                <button type="submit" [routerLink]="'/dashboard/products/edit/information/' + productId"
+                    class="submit-button">Edit product</button>
+            </div>
+        </div>
+
+    </div>
+</app-ford-container>

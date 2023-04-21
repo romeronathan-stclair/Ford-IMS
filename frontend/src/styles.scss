@@ -1,0 +1,580 @@
+@import "~primeicons/primeicons.css";
+
+/*******************
+  * Global Style Variables  *
+  *******************/
+
+$darkBlue: #133a7c;
+$lightRed: #f7cfd3;
+$lightYellow: #fcedb6;
+$mustard: #835644;
+$crimson: #bc4c46;
+$blue: #2a6bac;
+$green: #cee5cb;
+$darkGreen: #355f2f;
+$lightBlue: #47a8e5;
+$darkGrey: #999999;
+$grey: #d9d9d9;
+$lightGrey:  #f1f1f1;
+$border: 0.75px solid black;
+
+/*******************
+    * Breakpoints  *
+    *******************/
+@mixin very-small-screens {
+    @media (max-width: 200px) {
+        @content;
+    }
+}
+@mixin mobile {
+    @media (min-width: 200px) and (max-width: 480px) {
+        @content;
+    }
+}
+@mixin tablets {
+    @media (min-width: 481px) and (max-width: 768px) {
+        @content;
+    }
+}
+@mixin small-screens {
+    @media (min-width: 769px) and (max-width: 1024px) {
+        @content;
+    }
+}
+@mixin column-lg-break {
+    @media (min-width: 0px) and (max-width: 992px) {
+        @content;
+    }
+}
+@mixin column-sm-break {
+    @media (min-width: 0px) and (max-width: 500px) {
+        @content;
+    }
+}
+@mixin column-very-sm-break {
+    @media (min-width: 0px) and (max-width: 300px) {
+        @content;
+    }
+}
+
+@mixin large-screens {
+    @media (min-width: 1025px) {
+        @content;
+    }
+}
+@mixin side-bar-mobile {
+    @media (max-width: 1350px) {
+        @content;
+    }
+}
+
+/*******************
+    * Global Normalize Fixes  *
+    *******************/
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+input {
+    width: 300px;
+    height: 35px;
+    border: 1px solid $lightGrey;
+    border-radius: 5px;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.subheader {
+    padding-left: 10px;
+}
+.sidebar-header {
+    height: 90px;
+    padding: 10px;
+    background-image: url("/assets/ford-logo.png");
+    background-repeat: no-repeat;
+    background-position: left;
+    background-size: 80%;
+    display: flex;
+    align-items: center;
+
+    justify-content: center;
+}
+.menu-opener {
+    align-self: flex-end;
+    justify-self: center;
+    padding-left: 10px;
+
+    text-align: center;
+    background-color: $darkBlue;
+}
+// i {
+//     font-size: 40px !important;
+//     padding-bottom: 20px !important;
+//     color: transparent !important;
+//     -webkit-box-flex: 1;
+//     flex: 1;
+//     -webkit-text-stroke: 2px white;
+// }
+.text-success {
+    color: #28a745 !important;
+}
+.text-danger {
+    color: #dc3545 !important;
+}
+// Common container styling
+
+.container-holder {
+    min-height: 70vh;
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+}
+
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
+    padding-right: 50px;
+    background-color: $darkBlue;
+}
+.footer-holder {
+    padding: 20px;
+    display: flex;
+
+    align-items: center;
+    background-color: $grey !important;
+    border-bottom: 0.75px solid black;
+    border-right: 0.75px solid black;
+    border-left: 0.75px solid black;
+    @include column-lg-break {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.container-img {
+    width: 150px;
+    padding: 10px;
+}
+// .sidebar-container {
+.sidebar-container-end a {
+    border: 1px solid white;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 0px !important;
+    padding: 10px;
+}
+.sidebar-container lib-sidebar-item .menu-item {
+    padding: 7px;
+    font-weight: 400;
+}
+.sidebar-container lib-sidebar-item .forecast {
+    padding-bottom: 0;
+    height: 33px !important;
+    background-color: transparent !important;
+}
+.sidebar-container lib-sidebar-item .forecast-tag {
+    padding-bottom: 0;
+    background-color: $lightRed !important;
+    text-decoration: none;
+    color: $crimson;
+    text-align: center;
+    font-size: 1rem;
+}
+.sidebar-container .forecast-holder {
+    display: flex !important;
+    flex-direction: column;
+    background-color: red !important;
+    font-weight: 400;
+}
+.sidebar-container a .menu-icon-pointer {
+    text-align: center;
+}
+.mat-icon {
+  height: fit-content;
+  width: fit-content;
+}
+.dock {
+    padding: 5px !important;
+    min-width: 50px !important;
+    height: 100vh !important;
+    position: sticky;
+    top: 0;
+    display:initial;
+}
+.menu-icon-item {
+    padding-bottom: 5px;
+}
+.page-header {
+    font-size: 3rem;
+    margin: 0;
+    @include column-lg-break {
+        font-size: 2rem;
+    }
+}
+.form-text {
+    text-align: center;
+}
+.paginator-holder {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $grey !important;
+    border-bottom: 0.75px solid black;
+    border-right: 0.75px solid black;
+    border-left: 0.75px solid black;
+    @include column-lg-break {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+.mat-mdc-paginator-container {
+    justify-content: center !important;
+    align-items: center !important;
+}
+.table-header {
+    min-height: 80px;
+    background-color: $darkBlue !important;
+    color: white;
+    @include column-lg-break {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+.search-bar {
+    @include column-lg-break {
+        order: 1;
+    }
+}
+table {
+    background-color: $lightGrey !important;
+    border-bottom: 0.75px solid black;
+    overflow: scroll;
+}
+.table-holder,
+table,
+.table {
+    overflow: visible;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+// Button styles
+.general-button {
+    background-color: $blue;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 400;
+    min-width: 150px;
+}
+.general-button:hover {
+    background-color: $darkBlue;
+    transition: 0.2s ease-in-out;
+}
+button:disabled,
+button[disabled],
+button:disabled:hover,
+button[disabled]:hover {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+    cursor: auto;
+}
+.submit-button,
+.p-confirm-dialog-reject,
+.p-confirm-dialog-accept {
+    background-color: $darkBlue;
+    cursor: pointer;
+    margin-top: 15px;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    width: 120px;
+    height: 30px;
+}
+.submit-button:hover {
+    background-color: $blue;
+    transition: 0.2s ease-in-out;
+}
+
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+    border: none;
+}
+.mdc-data-table__header-row {
+    background-color: $darkGrey !important;
+}
+mat-header-cell {
+    color: white !important;
+}
+.mat-mdc-row {
+    background-color: $grey !important;
+}
+mat-row {
+    justify-content: space-between;
+}
+mat-row {
+    border-top: $border !important;
+}
+.mdc-data-table__row {
+    border-top: $border !important;
+}
+
+.table {
+    overflow: visible;
+
+    position: relative;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+.field-validation-error {
+    display: flex;
+    flex-direction: column;
+}
+
+// Confirmation Dialog Styles
+::ng-deep .p-dialog.p-confirm-dialog {
+    border-radius: 7.5px;
+    min-width: 50vw;
+    position: absolute;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+::ng-deep .p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+    padding: 50px;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    background-color: $grey;
+}
+.mdc-data-table__cell,
+.mdc-data-table__header-cell {
+    padding: 0 16px 0 16px;
+}
+::ng-deep .p-dialog .p-dialog-header {
+    background-color: $darkBlue;
+}
+::ng-deep .p-dialog .p-dialog-footer {
+    background-color: $grey;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+
+// Toast Styling
+::ng-deep p.dropdown .p-dropdown-panel,
+ng-deep .p-toast .p-toast-message .p-toast-message-content {
+    z-index: 10000 !important;
+    position: absolute;
+}
+.p-toast {
+    opacity: 1;
+}
+.p-toast .p-toast-message {
+    margin: 0 0 1rem 0;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+.p-toast .p-toast-message .p-toast-message-content {
+    padding: 1rem;
+    border-width: 0;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-text {
+    margin: 0 0 0 1rem;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon {
+    font-size: 2rem;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-summary {
+    font-weight: 700;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+    margin: 0.5rem 0 0 0;
+}
+.p-toast .p-toast-message .p-toast-icon-close {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: transparent;
+    transition: color 0.15s, box-shadow 0.15s;
+}
+.p-toast .p-toast-message .p-toast-icon-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+.p-toast .p-toast-message .p-toast-icon-close:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 1px #e3f3fe;
+}
+.p-toast .p-toast-message.p-toast-message-info {
+    background: #cce5ff;
+    border: solid #b8daff;
+    border-width: 1px;
+    color: #004085;
+}
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+    color: #004085;
+}
+.p-toast .p-toast-message.p-toast-message-success {
+    background: #d4edda;
+    border: solid #c3e6cb;
+    border-width: 1px;
+    color: #155724;
+}
+.p-toast .p-toast-message.p-toast-message-success .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-success .p-toast-icon-close {
+    color: #155724;
+}
+.p-toast .p-toast-message.p-toast-message-warn {
+    background: #fff3cd;
+    border: solid #ffeeba;
+    border-width: 1px;
+    color: #856404;
+}
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-warn .p-toast-icon-close {
+    color: #856404;
+}
+.p-toast .p-toast-message.p-toast-message-error {
+    background: #f8d7da;
+    border: solid #f5c6cb;
+    border-width: 1px;
+    color: #721c24;
+}
+.p-toast .p-toast-message.p-toast-message-error .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-error .p-toast-icon-close {
+    color: #721c24;
+}
+// Dropdown Styling
+
+.p-dropdown {
+    width: 300px;
+    height: 40px;
+    border: 1px solid $lightGrey;
+    border-radius: 7.5px;
+    background-color: white;
+    color: $darkGrey;
+    padding: 10px;
+    font-size: 0.75rem;
+    align-items: center;
+}
+.p-dropdown-trigger-icon {
+    color: $darkGrey;
+}
+.p-dropdown-items {
+    border: 1px solid $lightGrey;
+    padding: 100px;
+    border-radius: 7.5px;
+    background-color: white;
+    color: $darkGrey;
+    z-index: 99999;
+}
+.p-dropdown-item {
+    padding: 15px;
+}
+// Pick List Styles
+.pick-list-item-holder {
+    padding: 10px;
+}
+.p-pick-list-filter-container {
+    width: 50% !important;
+    margin: 0 auto !important;
+}
+.p-picklist-filter-input {
+    width: 50% !important;
+
+    display: block;
+
+    margin: 10px auto 10px auto !important;
+}
+.p-picklist-filter-icon {
+    visibility: hidden !important;
+}
+
+.pick-list-holder {
+    margin: 30px;
+
+    width: 80%;
+}
+.p-picklist-buttons {
+    visibility: hidden;
+}
+.pick-list-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 7.5px;
+
+    img {
+        width: 75px;
+
+        margin-right: 1rem;
+    }
+
+    .pick-list-list-detail {
+        flex: 1 1 0;
+    }
+
+    .pick-list-list-action {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .pick-list-category-icon {
+        vertical-align: middle;
+        margin-right: 0.5rem;
+    }
+
+    .pick-list-category {
+        vertical-align: middle;
+        line-height: 1;
+    }
+}
+.p-picklist-title {
+    background-color: $darkGrey;
+    text-align: center;
+    padding: 20px;
+    border-bottom: $border;
+}
+.p-picklist-list-wrapper {
+    background-color: $grey;
+    border: $border;
+}
+@media screen and (max-width: 576px) {
+    .pick-list-item {
+        flex-wrap: wrap;
+
+        .image-container {
+            width: 100%;
+            text-align: center;
+        }
+
+        img {
+            margin: 0 0 1rem 0;
+            width: 100px;
+        }
+    }
+}

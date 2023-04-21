@@ -1,0 +1,47 @@
+<div class="container-header">
+    <p>4. Assign Product to Dunnage</p>
+
+    <img class="container-img" src="/assets/ford-logo.png" />
+
+</div>
+<div class="table-holder">
+    <div class="pick-list-holder">
+        <p-pickList (onMoveToTarget)="moveToTarget($event)" (onMoveToSource)="moveBack($event)"
+            [showSourceControls]="false" [showTargetControls]="false" [source]="dunnage" [target]="targetDunnage"
+            sourceHeader="Dunnage List" targetHeader="Product Dunnage List" [dragdrop]="true" [responsive]="true"
+            [sourceStyle]="{'height':'400px'}" [targetStyle]="{'height':'400px'}" filterBy="name"
+            sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name">
+            <ng-template let-dunnage pTemplate="item">
+                <div class="pick-list-item-holder">
+                    <div class="pick-list-item">
+                        <div>
+                            <img class="pick-list-img" mat-card-image [src]="dunnage.imageURL" alt="{{dunnage.name}}">
+                        </div>
+                        <div class="pick-list-list-detail">
+                            <h5 class="mb-2">{{dunnage.name}}</h5>
+                            <!-- <span class="pick-list-category">{{selectedDepartment.departmentName}}</span> -->
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-pickList>
+    </div>
+</div>
+<div class="footer-holder">
+    <div class="button-holders">
+
+        <button type="button" (click)="back()" class="submit-button">Back</button>
+        <button (click)="submit()" type="submit" class="submit-button">Submit</button>
+    </div>
+</div>
+
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+    <ng-template pTemplate="header">
+        <h3></h3>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+    </ng-template>
+</p-confirmDialog>

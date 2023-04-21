@@ -1,0 +1,10 @@
+<!-- You can now use your library component in app.component.html -->
+<div class="content-wrapper">
+    <div class="sidebar">
+        <lib-ng-simple-sidebar></lib-ng-simple-sidebar>
+    </div>
+    <div [ngClass]="{'full-width': !isOpen}" class="content">
+
+        <router-outlet></router-outlet>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<app-ford-container title="1. Enter Stock Information">
+  <div class="holder">
+    <form [formGroup]="stockForm" (ngSubmit)="onSubmit()">
+
+      <div class="checkbox-holder">
+        <mat-checkbox formControlName="roughStock" class="form-control"
+                      (change)="onCheckboxChange($event, 'roughStock')"
+                      [checked]="roughStockChecked">Rough Stock</mat-checkbox>
+        <mat-checkbox formControlName="subAssembly" class="form-control"
+                      (change)="onCheckboxChange($event, 'subAssembly')"
+                      [checked]="subAssemblyChecked">Sub Assembly</mat-checkbox>
+      </div>
+
+
+      <div>
+        <input placeholder="Stock Name" formControlName="name" type="name" class="form-control"
+        id="name-input" aria-describedby="nameHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        stockForm.controls['name'].touched && !stockForm.controls['name'].dirty
+      ">
+        <span *ngIf="stockForm.controls['name'].hasError('required')">Stock Name is required</span>
+      </mat-error>
+      </div>
+
+      <div>
+        <input placeholder="Part Number" formControlName="partNumber" type="partNumber" class="form-control"
+        id="partNumber-input" aria-describedby="partNumberHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        stockForm.controls['partNumber'].touched && !stockForm.controls['partNumber'].dirty
+      ">
+        <span *ngIf="stockForm.controls['partNumber'].hasError('required')">Part Number is required</span>
+      </mat-error>
+      </div>
+
+      <div *ngIf="!roughStockChecked || subAssemblyChecked">
+        <input placeholder="Stock Quantity per Tote" formControlName="stockQtyPerTote" type="number"  class="form-control"
+        id="stockQtyPerTote-input" aria-describedby="stockQtyPerToteHelp"/>
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        stockForm.controls['stockQtyPerTote'].touched && !stockForm.controls['stockQtyPerTote'].dirty
+      ">
+        <span *ngIf="stockForm.controls['stockQtyPerTote'].hasError('required')">Stock Quantity per Tote is required</span>
+      </mat-error>
+      </div>
+
+      <div *ngIf="!roughStockChecked || subAssemblyChecked">
+        <input placeholder="Amount of Totes per Skid" formControlName="totesPerSkid" type="number"  class="form-control"
+        id="totesPerSkid-input" aria-describedby="totesPerSkidHelp"/>
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        stockForm.controls['totesPerSkid'].touched && !stockForm.controls['totesPerSkid'].dirty
+      ">
+        <span *ngIf="stockForm.controls['totesPerSkid'].hasError('required')">Totes per Skid is required</span>
+      </mat-error>
+      </div>
+
+      <div *ngIf="roughStockChecked">
+        <input placeholder="Total Stock per Skid" formControlName="totalStockPerSkid" type="number"  class="form-control"
+        id="totalStockPerSkid-input" aria-describedby="totalStockPerSkidHelp"/>
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        stockForm.controls['totalStockPerSkid'].touched  && !stockForm.controls['totalStockPerSkid'].dirty
+      ">
+        <span *ngIf="stockForm.controls['totalStockPerSkid'].hasError('required')">Total Stock per Skid is required</span>
+      </mat-error>
+      </div>
+
+      <div>
+        <input placeholder="Low Stock Amount" formControlName="lowStock"type="number"  class="form-control"
+        id="lowStock-input" aria-describedby="totesPerSkidHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        stockForm.controls['lowStock'].touched && !stockForm.controls['lowStock'].dirty
+      ">
+        <span *ngIf="stockForm.controls['lowStock'].hasError('required')">Low Stock Amount is required</span>
+      </mat-error>
+      </div>
+
+      <div class="button-holders">
+        <button type="button" [routerLink]="'/dashboard/stock/list'" class="submit-button">Cancel</button>
+        <button type="submit" class="submit-button">Next</button>
+      </div>
+
+    </form>
+  </div>
+</app-ford-container>

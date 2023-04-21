@@ -1,0 +1,41 @@
+<div class="container-header">
+    <p class="subheader">Invite multiple users</p>
+
+    <img class="container-img" src="/assets/ford-logo.png" />
+
+</div>
+<div *ngIf="plantsLoaded" class="container-holder">
+
+    <div class="invite" *ngFor="let invite of invites; let i = index">
+        <div *ngIf="invite.plants && invite.plants[0]" class="top-holder">
+            Email: <input (change)="changeInviteEmail($event, invite)" placeholder="johndoe@example.com" type="text" [(ngModel)]="invite.email" />
+            <p-dropdown [(ngModel)]="invite.adminType" placeholder="Select Role" [options]="roles"
+                (onChange)="changeRole($event, invite)"></p-dropdown>
+
+            <p-dropdown optionLabel="plantName" [(ngModel)]="invite.plants[0]" placeholder="Select Plant"
+                [options]="plants" (onChange)="changePlant($event, invite)"></p-dropdown>
+
+        </div>
+        <div *ngIf="invite.plants && invite.plants[0]" class="bottom-holder">
+            <button (click)="openDialog(invite)" [disabled]="invite.plants[0].plantName == ''"
+                class="general-button">Assign
+                Departments</button>
+
+            <button (click)="removeInvite(i)" class="remove-invite-button">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+        </div>
+
+
+
+    </div>
+
+    <button (click)="addInvite()" class="add-invite-button">
+        <i class="fa-solid fa-plus"></i>
+    </button>
+</div>
+<div class="footer-holder">
+    <button [routerLink]="'/dashboard/users/invite/invite-one-user/step-one'"
+        class="general-button back-button">Back</button>
+    <button type="submit" (click)="submit()" class="general-button next-button">Send Invites</button>
+</div>

@@ -1,0 +1,142 @@
+<h1 class="page-header">Forecasting</h1>
+
+<div class="table-header">
+
+
+    <img src="/assets/ford-logo.png" />
+
+</div>
+<div *ngIf="productForecast" class="table-holder">
+
+    <div class="forecast-info-holder">
+        <div>
+            <p class="data-text">{{productForecast.name}}</p>
+
+        </div>
+        <div>
+            <p class="data-text">Daily Target</p>
+            <p> {{productForecast.dailyTarget}}</p>
+
+        </div>
+
+        <div>
+            <p class="data-text">Location: {{productForecast.marketLocation}}</p>
+
+
+        </div>
+    </div>
+    <div *ngIf="stockForecastExists" class="forecast-data-holder">
+
+        <div class="left-holder">
+            <div class="block-holder">
+                <h6 class="estimate-title">Product Forecast Estimates</h6>
+                <div class="grid-container">
+                    <div [class]="getHealthClassForBuilds()" class="grid-item">
+                        <p class="info-text">Products Possible To Create</p>
+                        <p class="data-text">{{productForecast.stockForecast?.lowestStockItem?.totalPossibleBuilds}}</p>
+                        <p class="info-text">{{dailyLimitDifferenceText}}</p>
+                    </div>
+                    <div [class]="getHealthClassForShifts()" class="grid-item">
+                        <p class="info-text">Shifts Before Shortage</p>
+                        <p class="data-text">{{productForecast.stockForecast?.lowestStockItem?.shiftsBeforeShortage}}
+                        </p>
+                        <p class="info-text"> {{shiftsStockStatusText}}</p>
+                    </div>
+                    <div [class]="getHealthClassForJobsPerHour()" class="grid-item">
+                        <p class="info-text">Target Jobs Per Hour</p>
+                        <p class="data-text">{{productForecast.stockForecast?.lowestStockItem?.jobsPerHour | number : '1.2-2'}}</p>
+                        <p class="info-text"> {{hourlyProductionStatusText}}</p>
+                    </div>
+                    <div [class]="getProjectTimeBeforeShortageClass()" class="grid-item">
+                        <p class="info-text">Project Time Before Shortgage</p>
+                        <p class="data-text">{{projectTimeBeforeShortage}} HOURS</p>
+                        <p class="info-text"> {{projectTimeBeforeShortageText}}</p>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="block-holder action-holder">
+                <h6 class="estimate-title">Actions</h6>
+                <div class="button-grid">
+
+
+                    <button type="button" [routerLink]="'/dashboard/products/view-info/' + productForecast.productId"
+                        class="submit-button">View Product Info</button>
+                    <button type="button"
+                        [routerLink]="'/dashboard/products/edit/reassign-stock/' +  productForecast.productId"
+                        class=" submit-button">Assign
+                        Stock</button>
+
+                    <button type="button"
+                        [routerLink]="'/dashboard/products/edit/information/' + productForecast.productId"
+                        class="submit-button">Edit Product</button>
+                    <button type="button"
+                        [routerLink]="'/dashboard/products/edit/reassign-dunnage/' +  productForecast.productId"
+                        class="submit-button">Assign Dunnage</button>
+
+                    <button type="button" (click)="openDialog($event)" class="submit-button">Set Production
+                        Target</button>
+                </div>
+
+            </div>
+            <div>
+
+            </div>
+        </div>
+        <div class="right-holder">
+            <div class="block-holder">
+
+                <h6 class="estimate-title">Stock Quantities</h6>
+                <div class="chart-holder">
+
+                    <p-chart type="pie" [data]="data" [options]="options"></p-chart>
+                </div>
+                <div class="list-holder">
+                    <h6 *ngIf="productForecast.stockForecast?.lowStockCount" class="estimate-title">Stocks affecting
+                        production</h6>
+                    <h6 *ngIf="!productForecast.stockForecast?.lowStockCount" class="estimate-title">Currently no stock
+                        items
+                        affecting production</h6>
+
+                    <div class="stock-holder">
+                      <div *ngFor="let stock of productForecast?.stockForecast?.forecastedStockItems">
+                        <div class="stock-card" *ngIf="stock.lowStockThreshold || stock.belowDailyTarget
+                        ">
+                            <img class="stock-img" mat-card-image [src]="stock.imageURL" alt="{{stock.name}}">
+                            <div class="stock-info">
+                                <p class="data-text">{{ stock.name }}</p>
+                                <p class="info-text">{{stock.usePerProduct}} Required Per Build</p>
+                                <p class="info-text">Approx. {{stock.totalAvailableQty}} Available</p>
+                            </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <h6 *ngIf="!stockForecastExists">No forecast available for this product. Try associating some stock to it <a
+            [routerLink]="'/dashboard/products/edit/reassign-stock/' +  productForecast.productId">here</a></h6>
+
+</div>
+
+<div class="paginator-holder">
+    <button [routerLink]="'/dashboard/forecast/list'" type="submit" class="general-button first-button">Back to
+        forecast search</button>
+
+</div>
+<p-confirmDialog #cd [style]="{width: '30vw'}">
+    <ng-template pTemplate="header">
+        <h3></h3>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button class="submit-button" type="button" label="No" (click)="cd.reject()">No</button>
+        <button class="submit-button" type="button" label="Yes" (click)="cd.accept()">Yes</button>
+    </ng-template>
+</p-confirmDialog>

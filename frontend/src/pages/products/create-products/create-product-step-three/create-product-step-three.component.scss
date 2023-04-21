@@ -1,0 +1,60 @@
+@import "src/styles.scss";
+.table-header img {
+    width: 150px;
+}
+.table-holder {
+    min-height: 70vh;
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 50px;
+    padding-left: 50px;
+}
+
+mat-paginator {
+    background-color: $grey !important;
+    width: 50%;
+    @include column-lg-break {
+        order: 0;
+        width: 90%;
+    }
+}
+.mat-column-name {
+    display: inline-flex;
+    width: 40%;
+    max-width: 40%;
+}
+i {
+    padding-right: 5.5px;
+}
+.first-button {
+    @include column-lg-break {
+        order: 1;
+    }
+}
+.search-bar {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 7.5px;
+}
+.fa-magnifying-glass {
+    padding-left: 7.5px;
+    color: $darkGrey;
+}
+.button-holders {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 15px;
+}

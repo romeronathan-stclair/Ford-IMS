@@ -1,0 +1,70 @@
+<app-ford-container title="1. Enter Dunnage Information">
+  <div class="holder">
+    <form [formGroup]="dunnageForm" (ngSubmit)="onSubmit()">
+
+      <div>
+        <input placeholder="Dunnage Name" formControlName="name" type="name" class="form-control"
+        id="name-input" aria-describedby="nameHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        dunnageForm.controls['name'].touched && !dunnageForm.controls['name'].dirty
+      ">
+        <span *ngIf="dunnageForm.controls['name'].hasError('required')">Dunnage Name is required</span>
+      </mat-error>
+      </div>
+
+      <div>
+        <input  placeholder="Skid Quantity" formControlName="skidQuantity" type="number" class="form-control"
+        id="skidQuantity-input" aria-describedby="skidQuantityHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        dunnageForm.controls['skidQuantity'].touched && !dunnageForm.controls['skidQuantity'].dirty
+      ">
+        <span *ngIf="dunnageForm.controls['skidQuantity'].hasError('required')">Skid Quantity is required</span>
+      </mat-error>
+      </div>
+
+      <div>
+        <input placeholder="Low Dunnage Amount" formControlName="lowStock" type="number"  class="form-control"
+        id="lowStock-input" aria-describedby="lowStockHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        dunnageForm.controls['lowStock'].touched && !dunnageForm.controls['lowStock'].dirty
+      ">
+        <span *ngIf="dunnageForm.controls['lowStock'].hasError('required')">Low Dunnage Amount is required</span>
+      </mat-error>
+      </div>
+
+      <div>
+        <input placeholder="Market Location" formControlName="marketLocation" type="marketLocation" class="form-control"
+          id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+        <mat-error class="field-validation-error" *ngIf="
+        displayValidationErrors ||
+        dunnageForm.controls['marketLocation'].touched && !dunnageForm.controls['marketLocation'].dirty
+      ">
+          <span *ngIf="dunnageForm.controls['marketLocation'].hasError('required')">Market Location is required</span>
+        </mat-error>
+      </div>
+
+      <div>
+        <div *ngIf="departments.length > 0" class="dropdown">
+          <p-dropdown formControlName="department" placeholder="Select Department"
+            optionLabel="departmentName" [options]="departments" [(ngModel)]="selectedDepartment"></p-dropdown>
+        </div>
+        <mat-error class="field-validation-error" *ngIf="
+          displayValidationErrors ||
+          dunnageForm.controls['department'].touched && !dunnageForm.controls['department'].dirty
+        ">
+          <span *ngIf="dunnageForm.controls['department'].hasError('required')">Department is required</span>
+        </mat-error>
+      </div>
+
+      <div class="button-holders">
+        <button type="button" [routerLink]="'/dashboard/dunnage/list'" class="submit-button">Cancel</button>
+        <button type="submit" class="submit-button">Next</button>
+      </div>
+
+    </form>
+  </div>
+</app-ford-container>
+

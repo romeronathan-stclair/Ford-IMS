@@ -1,0 +1,215 @@
+@import "src/styles.scss";
+img {
+    width: 150px;
+}
+p {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.info-text {
+    font-size: 0.9rem;
+}
+.data-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.table-holder {
+    min-height: 70vh;
+    background-color: $lightGrey !important;
+    width: 100%;
+    border: $border;
+    text-align: center;
+}
+.estimate-title {
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+.table-header {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 50px;
+}
+.forecast-info-holder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $darkGrey;
+    border: $border;
+
+    margin: 30px 0 30px 0;
+    padding: 10px 50px 10px 50px;
+}
+
+mat-paginator {
+    background-color: $grey !important;
+    width: 50%;
+    @include column-lg-break {
+        order: 0;
+        width: 90%;
+    }
+}
+
+i {
+    padding-right: 5.5px;
+}
+.block-holder {
+    background-color: $grey;
+    border: $border;
+    border-radius: 7.5px;
+    width: 100%;
+}
+.forecast-label {
+    text-align: center;
+    padding: 3px 0 3px 0;
+}
+.forecast-label h2 {
+    margin: 0;
+}
+.low-health {
+    color: $crimson;
+    background-color: $lightRed;
+}
+.medium-health {
+    color: $mustard;
+    background-color: $lightYellow;
+}
+.high-health {
+    color: $darkGreen;
+    background-color: $green;
+}
+.forecast-data-holder {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    justify-content: space-between;
+
+    @include column-lg-break {
+        flex-direction: column;
+    }
+}
+.left-holder,
+.right-holder {
+    width: 100%;
+    gap: 10px;
+    border-radius: 7.5px;
+
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}
+.right-holder {
+    overflow: visible;
+    overflow-y: scroll;
+}
+.product-estimate-holder {
+}
+.grid-container {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+    width: 100%;
+    margin: 0 auto;
+    max-width: fit-content; /* Adjust this value according to your needs */
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f1f1f1; /* Choose your preferred background color */
+    min-height: 150px;
+    border: 1px solid #ccc; /* Choose your preferred border color */
+    box-sizing: border-box;
+}
+
+.low-health {
+    color: $crimson;
+    background-color: $lightRed;
+}
+.medium-health {
+    color: $mustard;
+    background-color: $lightYellow;
+}
+.high-health {
+    color: $darkGreen;
+    background-color: $green;
+}
+.stock-involved-holder {
+    padding: 10px;
+
+    background-color: $darkGrey;
+}
+.chart-holder {
+    display: flex;
+    justify-content: center;
+    z-index: 999;
+    margin: 25px;
+}
+.stock-holder {
+    padding-top: 10px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+
+    margin: 10px;
+    height: 500px;
+
+    overflow: auto;
+
+    gap: 10px;
+}
+.stock-card {
+    padding: 25px;
+    display: flex;
+    background-color: white;
+    border-radius: 7.5px;
+    border: $border;
+}
+.stock-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    text-align: left !important;
+}
+.stock-img {
+    max-width: 30%;
+    height: auto;
+    display: block;
+    border: solid black 1px;
+}
+.button-grid {
+    display: grid;
+    margin-top: 10px;
+    padding: 20px;
+    width: 100%;
+    // center
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: auto;
+    gap: 25px;
+}
+.action-holder {
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.submit-button {
+    width: 250px;
+    height: 35px;
+    margin: 0 auto;
+}
