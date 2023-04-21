@@ -4,25 +4,94 @@
 
 The Inventory Management Software is a project developed for the Mobile Application Development Capstone Project 2023, sponsored by Ford Motor Company. The goal of this software is to help Ford Motor Company track their current inventory counts and forecast future production using the collected data. With this software, Ford can manage their inventory and make informed decisions about their production.
 
-![Project Status](https://img.shields.io/badge/status-in%20progress-yellow.svg)
-![version](https://img.shields.io/badge/version-0.1.0--pre--release-orange.svg)
+![Project Status](https://img.shields.io/badge/status-completed-brightgreen.svg)
+![version](https://img.shields.io/badge/version-1.0.0--first%20release-blue.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Prerequistes
 
 To run this project, you will need a few dependencies installed. First, you will need Node Package Manager (npm) to manage your project's dependencies. Additionally, you will need Redis, an in-memory data structure store, to handle session management. Finally, you will need Mongoose, an Object Data Modeling (ODM) library for MongoDB and Node.js.
 
-## Instructions
+## Run the Project on WindowsOS
 
-To get started with the project, please follow the below instructions:
+1. Install Node.js and npm by downloading and running the installer from the official website: https://nodejs.org/en/download/
+2. Install Redis by downloading the MSI installer from the official website: https://github.com/tporadowski/redis/releases/tag/v3.2.100
+3. Add Redis to the system PATH variable:
+4. Right-click on "Computer" or "This PC" in the file explorer and select "Properties"
+5. Click on "Advanced system settings"
+6. Click on the "Environment Variables" button
+7. Under "System variables", find the "Path" variable and click on "Edit"
+8. Click on "New" and add the path to the Redis executable, for example: C:\Program Files\Redis\
+9. Click "OK" to close all windows
+10. Open a terminal window and navigate to the project's root directory
+11. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
+12. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
+13. Now open a second terminal and cd into the frontend folder and run the command ```npm run start``` to start the Angular application
 
-1. Download the project and extract it to your desired location.
-2. Open your preferred IDE and open the extracted project.
-3. Open your operating system's terminal and ensure that you have Redis installed. If you do not have Redis installed, please install it before proceeding.
-4. In the terminal, type the command "redis-server" to start the Redis server.
-5. Navigate to the project's root directory in your IDE's terminal and run the command "npm install" to install all the required dependencies mentioned in the package.json file.
-6. After the dependencies have been installed, run the command "npm run watch" to start the Nodemon server.
-7. The API is now ready to be used. You can test the API using Postman or any other REST API client of your choice.
+## Run the Project on MacOS
+
+1. Install Homebrew by running the following command in the terminal: 
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+2. Install Node.js and npm by running the command: 
+```
+brew install node
+```
+3. Install Redis by running the command: 
+```
+brew install redis
+```
+4. Start the Redis server by running the command: 
+```
+redis-server
+```
+5. Open a new terminal window and navigate to the project's root directory
+6. Run the following command to install all the required dependencies mentioned in the package.json file
+```
+npm install
+```
+7. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
+```
+npm run watch
+```
+8. Now open a second terminal and cd into the frontend folder and run the following command to start the Angular application:
+``` 
+npm run start 
+```
+
+## Run the Project on LinuxOS
+
+1. Install Node.js and npm by running the following commands in the terminal:
+2. Run the following commands
+```
+sudo apt-get update
+```
+```
+sudo apt-get install nodejs
+```
+```
+sudo apt-get install npm
+```
+5. Install Redis by running the command: 
+```
+sudo apt-get install redis-server
+```
+6. Start the Redis server by running the command: 
+```
+redis-server
+```
+7. Open a new terminal window and navigate to the project's root directory
+8. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
+9. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
+```
+npm run watch
+```
+10. Now open a second terminal and cd into the frontend folder and run the following command to start the Angular application:
+```
+npm run start
+``` 
 
 ## Credits
 
@@ -35,7 +104,7 @@ https://git-scm.com/doc <br />
 
 ## License
 
-Copyright <2023>
+Copyright &copy; 2023
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

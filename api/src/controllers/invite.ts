@@ -34,7 +34,6 @@ export const sendInvite = async (req: Request, res: Response) => {
             for (const p of plants) {
                 // add only the departmentId to the array
 
-                p.departments = p.departments.map((d: any) => d.departmentId);
                 departments.push(...p.departments);
                 const plant = await Plant.findOne({ _id: p.plantId, isDeleted: false });
 
