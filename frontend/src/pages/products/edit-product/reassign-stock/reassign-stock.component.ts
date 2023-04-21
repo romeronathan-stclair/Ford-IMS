@@ -104,6 +104,15 @@ export class ReassignStockComponent {
 
         this.targetStocks = data.body.stocks.filter((stock: any) => {
           return this.productStocks.find((productStock: any) => productStock.stockId === stock._id);
+        }).map((stock: any) => {
+          const productStock = this.productStocks.find((ps: any) => ps.stockId === stock._id);
+          return {
+            id: stock._id,
+            name: stock.name,
+            imageURL: stock.imageURL,
+            usePerProduct: productStock?.usePerProduct || 0,
+            // add any other properties you need
+          };
         });
 
       },

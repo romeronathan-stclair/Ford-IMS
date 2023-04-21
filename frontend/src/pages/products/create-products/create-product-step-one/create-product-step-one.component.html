@@ -62,7 +62,7 @@
             productForm.controls['department'].dirty &&
             !productForm.controls['department'].touched
           ">
-                <span *ngIf="productForm.controls['department'].hasError('required') || !selectedDepartment">Department
+                <span *ngIf="productForm.controls['department'].hasError('required') ">Department
                     is required</span>
             </mat-error>
 

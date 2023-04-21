@@ -9,6 +9,7 @@ import { ImageRequest } from "../type/imageRequest";
 import { uploadImage } from "./image";
 import env from "../utils/env";
 import { Types } from "mongoose";
+import { Roles } from "../enums/roles";
 
 //create Dunnage
 export const createDunnage = async (req: Request, res: Response) => {
@@ -139,13 +140,16 @@ export const getDunnage = async (req: Request, res: Response) => {
 
     if (userId) {
         const user = await User.findOne({ _id: userId, isDeleted: false });
-        if (user) {
+        if(!user) return res.status(200).json({ stocks: [], stockCount: 0 });
+        if(user.role == Roles.Admin || user.role == Roles.PlantManager) {
             const activePlant = user.plants.find((plant) => plant.isActive);
-            if(!activePlant) return res.status(200).json({dunnages: [], count: 0});
+            if (!activePlant) return res.status(200).json({ stocks: [], stockCount: 0 });
+            const departments = await Department.find({ plantId: activePlant.plantId, isDeleted: false });
+            query["departmentId"] = { $in: departments.map(department => department._id) };
+        } else  {   const activePlant = user.plants.find((plant) => plant.isActive);
+            if (!activePlant) return res.status(200).json({ stocks: [], stockCount: 0 });
             const departmentIds = activePlant?.departments.map((department: any) => department._id);
-
             const departments = await Department.find({ _id: { $in: departmentIds }, isDeleted: false });
-
             query["departmentId"] = { $in: departments.map(department => department._id) };
         }
     }

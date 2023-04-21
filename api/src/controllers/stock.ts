@@ -10,6 +10,7 @@ import { uploadImage } from "./image";
 import { Types } from "mongoose";
 import env from "../utils/env";
 import { ProductStock } from "../models/productStock";
+import { Roles } from "../enums/roles";
 
 //create Stock
 export const createStock = async (req: Request, res: Response) => {
@@ -176,13 +177,16 @@ export const getStock = async (req: Request, res: Response) => {
 
     if (userId) {
         const user = await User.findOne({ _id: userId, isDeleted: false });
-        if (user) {
+        if(!user) return res.status(200).json({ stocks: [], stockCount: 0 });
+        if(user.role == Roles.Admin || user.role == Roles.PlantManager) {
             const activePlant = user.plants.find((plant) => plant.isActive);
             if (!activePlant) return res.status(200).json({ stocks: [], stockCount: 0 });
+            const departments = await Department.find({ plantId: activePlant.plantId, isDeleted: false });
+            query["departmentId"] = { $in: departments.map(department => department._id) };
+        } else  {   const activePlant = user.plants.find((plant) => plant.isActive);
+            if (!activePlant) return res.status(200).json({ stocks: [], stockCount: 0 });
             const departmentIds = activePlant?.departments.map((department: any) => department._id);
-
             const departments = await Department.find({ _id: { $in: departmentIds }, isDeleted: false });
-
             query["departmentId"] = { $in: departments.map(department => department._id) };
         }
     }

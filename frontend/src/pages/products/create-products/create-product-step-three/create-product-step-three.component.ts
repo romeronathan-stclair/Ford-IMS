@@ -75,8 +75,18 @@ export class CreateProductStepThreeComponent {
 
             return this.request.product.stocks.findIndex((targetStock: any) => targetStock.stockId === stock._id) !== -1;
           }
-          );
+          ).map((stock: any) => {
+
+            const productStock = this.request.product.stocks.find((ps: any) => ps.stockId === stock._id);
+      
+            return {
+              ...stock,
+              usePerProduct: productStock?.usePerProduct
+            }
+          });
           console.log(this.targetStocks);
+
+
           this.stocks = this.stocks.filter((stock: any) => {
             return this.targetStocks.findIndex((targetStock: any) => targetStock._id === stock._id) === -1;
           }
@@ -116,6 +126,7 @@ export class CreateProductStepThreeComponent {
           stockId: stock._id,
           usePerProduct: result
         }
+        stock.usePerProduct = result;
 
         this.request.product.stocks.push(productStock);
         this.sharedService.setData(this.request);

@@ -15,4 +15,5 @@ export interface Stock {
   isSubAssembly: boolean;
   isDeleted: boolean;
   totalAvailableQty: number;
+  usePerProduct?: number;
 };

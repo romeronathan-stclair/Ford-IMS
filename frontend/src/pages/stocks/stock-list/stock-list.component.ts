@@ -65,36 +65,14 @@ export class StockListComponent {
   }
 
   async loadDepartments() {
-    let departmentQuery = "?plantId=" + this.activePlantId;
+    let departmentQuery = "?plantId=" + this.activePlantId + "&userId=" + this.authService.user._id;
 
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
           this.departments = data.body.departments;
-          resolve();
           this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
-
-
-
-          let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
-
-          console.log(stockQuery);
-
-          this.stockService.getStocks(stockQuery)
-            .subscribe({
-              next: (data: any) => {
-                console.log(data);
-                this.spinnerService.hide();
-                this.stocks = data.body.stocks;
-                this.length = data.body.stockCount;
-                console.log(this.stocks);
-                this.dataSource = new MatTableDataSource(this.stocks);
-
-              },
-              error: (error: any) => {
-                this.spinnerService.hide();
-              }
-            });
+          resolve();
         },
         error: (error: any) => {
           reject(error);
@@ -104,10 +82,11 @@ export class StockListComponent {
     });
   }
 
+
   async loadStocks(query: string = '') {
     console.log(this.selectedDepartment);
     const selectedDepartmentId = this.selectedDepartment._id;
-    let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}&plantId=${this.authService.user.activePlantId}`;
+    let stockQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
 
     if (query) {
       stockQuery += query;

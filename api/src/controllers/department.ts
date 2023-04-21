@@ -5,6 +5,7 @@ import { ModelType } from "../enums/modelType";
 import { CrudType } from "../enums/crudType";
 import { getPage, getPageSize } from "../utils/pagination";
 import { Types } from "mongoose";
+import { Roles } from "../enums/roles";
 
 
 //create Department
@@ -129,20 +130,26 @@ export const getDepartments = async (req: Request, res: Response) => {
         if (!user) {
             return res.status(500).json("User does not exist");
         }
-
-        const plant = user.plants.find(plant => {
-            return plant.plantId == plantId;
-        });
-
-        if (!plant) {
-            return res.status(500).json("Plant does not exist");
+        if(user.role = Roles.Admin) {
+            const activePlantId = user.plants.find((plant) => plant.isActive)?.plantId || '0';
+            query["plantId"] = activePlantId;
+        } else {
+            const plant = user.plants.find(plant => {
+                return plant.plantId == plantId;
+            });
+    
+            if (!plant) {
+                return res.status(500).json("Plant does not exist");
+            }
+    
+            const departmentIds = plant.departments.map(department => {
+                return new Types.ObjectId(department.toString())
+            });
+            query["_id"] = { $in: departmentIds };
+    
         }
 
-        const departmentIds = plant.departments.map(department => {
-            return new Types.ObjectId(department.toString())
-        });
-        query["_id"] = { $in: departmentIds };
-
+       
     }
 
 

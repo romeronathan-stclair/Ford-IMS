@@ -64,36 +64,14 @@ export class DunnageListComponent {
   }
 
   async loadDepartments() {
-    let departmentQuery = "?plantId=" + this.activePlantId;
+    let departmentQuery = "?plantId=" + this.activePlantId + "&userId=" + this.authService.user._id;
 
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(departmentQuery).subscribe({
         next: (data: any) => {
           this.departments = data.body.departments;
-          resolve();
           this.departments.unshift({ _id: '', departmentName: 'All Departments', plantId: '', isDeleted: false });
-
-
-
-          let dunnageQuery = `?page=${this.currentPage}&pageSize=${this.pageSize}`;
-
-          console.log(dunnageQuery);
-
-          this.dunnageService.getDunnages(dunnageQuery)
-            .subscribe({
-              next: (data: any) => {
-                console.log(data);
-                this.spinnerService.hide();
-                this.dunnages = data.body.dunnages;
-                this.length = data.body.dunnageCount;
-                console.log(this.dunnages);
-                this.dataSource = new MatTableDataSource(this.dunnages);
-
-              },
-              error: (error: any) => {
-                this.spinnerService.hide();
-              }
-            });
+          resolve();
         },
         error: (error: any) => {
           reject(error);
@@ -102,7 +80,6 @@ export class DunnageListComponent {
       });
     });
   }
-
   async loaddunnages(query: string = '') {
     console.log(this.selectedDepartment);
     const selectedDepartmentId = this.selectedDepartment._id;

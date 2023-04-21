@@ -78,7 +78,11 @@ export class CreateStockStepTwoComponent {
 
   onSubmit() {
     this.spinnerService.show();
-    if (!this.stockForm.valid) {
+    if(this.selectedDepartment.departmentName == null) {
+      this.messageService.clear();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please select a department' });
+    }
+    if (!this.stockForm.valid ) {
       this.displayValidationErrors = true;
       this.spinnerService.hide();
       return;

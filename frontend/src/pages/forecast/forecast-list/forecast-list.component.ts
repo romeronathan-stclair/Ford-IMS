@@ -44,7 +44,7 @@ export class ForecastListComponent {
     private router: Router) { }
 
   ngOnInit() {
-  
+
     this.activePlantId = this.authService.user.activePlantId;
     this.loadForecasts();
     this.loadDepartments();
@@ -67,7 +67,7 @@ export class ForecastListComponent {
     return new Promise<void>((resolve, reject) => {
       this.departmentService.getDepartments(query).subscribe({
         next: (data: any) => {
-          this.departments = [{ departmentName: "All Departments" }, ...data.body.departments];
+          this.departments = data.body.departments;
           resolve();
         },
         error: (error: any) => {

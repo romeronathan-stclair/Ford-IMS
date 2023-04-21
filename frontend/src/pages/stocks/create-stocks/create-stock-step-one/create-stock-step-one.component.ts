@@ -108,7 +108,7 @@ export class CreateStockStepOneComponent {
     }
 
     onSubmit() {
-      if (!this.stockForm.valid) {
+      if (!this.stockForm.valid ) {
         this.displayValidationErrors = true;
         this.spinnerService.hide();
         return;

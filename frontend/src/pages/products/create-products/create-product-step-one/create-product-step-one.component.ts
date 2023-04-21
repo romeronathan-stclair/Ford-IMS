@@ -85,13 +85,13 @@ export class CreateProductStepOneComponent {
     console.log(this.selectedDepartment);
 
 
-
-
-
-
   }
 
   onSubmit() {
+    if(this.selectedDepartment.departmentName == null) {
+      this.messageService.clear();
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please select a department' });
+    }
     if (!this.productForm.valid || this.selectedDepartment == null) {
       this.displayValidationErrors = true;
       this.spinnerService.hide();

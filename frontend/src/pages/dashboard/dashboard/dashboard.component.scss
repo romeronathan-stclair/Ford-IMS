@@ -11,17 +11,24 @@ body {
     display: flex;
     flex-wrap: nowrap;
     font-size: 1.3rem !important;
-    max-height: 100vh;
+
     width: 100%;
     max-width: 100%;
-    overflow: scroll;
+
+}
+.sidebar {
+  position: -webkit-sticky;
+  position: sticky;
+
+  top: 0; /* Specify the position (top, bottom, left or right) where you want the div to stick */
+  z-index: 100;
 }
 
 .content {
     padding: 10px 10px;
     margin: 0 auto;
-    min-width: 80vw;
-    overflow: scroll;
+    width: 80vw;
+
     transition: all 0.2s ease;
     @include column-lg-break {
         padding: 10px 15px;

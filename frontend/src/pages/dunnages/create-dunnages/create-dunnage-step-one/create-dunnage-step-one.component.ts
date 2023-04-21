@@ -77,6 +77,10 @@ export class CreateDunnageStepOneComponent {
     }
 
     onSubmit() {
+      if(this.selectedDepartment.departmentName == null) {
+        this.messageService.clear();
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please select a department' });
+      }
       if(!this.dunnageForm.valid) {
         this.displayValidationErrors = true;
         this.spinnerService.hide();

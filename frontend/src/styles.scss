@@ -206,6 +206,9 @@ body {
     padding: 5px !important;
     min-width: 50px !important;
     height: 100vh !important;
+    position: sticky;
+    top: 0;
+    display:initial;
 }
 .menu-icon-item {
     padding-bottom: 5px;
