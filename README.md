@@ -25,9 +25,18 @@ To run this project, you will need a few dependencies installed. First, you will
 8. Click on "New" and add the path to the Redis executable, for example: C:\Program Files\Redis\
 9. Click "OK" to close all windows
 10. Open a terminal window and navigate to the project's root directory
-11. Run the command "npm install" to install all the required dependencies mentioned in the package.json file
-12. After the dependencies have been installed, cd into the api folder and run the command ```npm run watch``` to start the Nodemon server
-13. Now open a second terminal and cd into the frontend folder and run the command ```npm run start``` to start the Angular application
+11. Run the following command to install all the required dependencies mentioned in the package.json file:
+```
+npm install
+```
+12. After the dependencies have been installed, cd into the api folder and run the following command to start the Nodemon server:
+```
+npm run watch
+```
+13. Now open a second terminal and cd into the frontend folder and run the following command to start the Angular application:
+```
+npm run start
+```
 
 ## Run the Project on MacOS
 
@@ -48,7 +57,7 @@ brew install redis
 redis-server
 ```
 5. Open a new terminal window and navigate to the project's root directory
-6. Run the following command to install all the required dependencies mentioned in the package.json file
+6. Run the following command to install all the required dependencies mentioned in the package.json file:
 ```
 npm install
 ```
