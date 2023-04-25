@@ -209,14 +209,14 @@ export class RoleService {
     }
 
     getRolesUnderUser(): Roles[] {
-        const userRole = this.authService.user.role as Roles;
-        const userPower = rolePowerLevels[userRole];
+      const userRole = this.authService.user.role as Roles;
+      const userPower = rolePowerLevels[userRole];
 
-        const rolesUnderUser = Object.values(Roles)
-            .filter(role => rolePowerLevels[role as Roles] < userPower);
+      const rolesUnderUser = Object.values(Roles)
+          .filter(role => rolePowerLevels[role as Roles] <= userPower);
 
-        return rolesUnderUser;
-    }
+      return rolesUnderUser;
+  }
 
     // Cycle Check
     canCreateCycleCheck(): boolean {

@@ -82,6 +82,9 @@ export class InviteOneUserStepThreeComponent {
 
     this.sharedService.setData(this.request);
 
+    for (const plant of this.request.plants) {
+      plant.departments = plant.departments.map((d: any) => d.departmentId);
+    }
 
     let inviteRequest = {
       invites: [
