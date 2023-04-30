@@ -32,7 +32,7 @@
             <mat-card-actions>
                 <button [routerLink]="'/dashboard/products/edit/information/' + product._id" mat-mini-fab
                     color="primary"><mat-icon>edit</mat-icon></button>
-                <button [routerLink]="'/dashboard/product/view-info/' + product._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
+                <button [routerLink]="'/dashboard/products/view-info/' + product._id" mat-mini-fab color="primary"><mat-icon>info</mat-icon></button>
                 <button mat-mini-fab color="warn"
                     (click)="deleteProduct(product._id)"><mat-icon>delete</mat-icon></button>
             </mat-card-actions>

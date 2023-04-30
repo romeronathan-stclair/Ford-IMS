@@ -5,10 +5,13 @@
   </div>
   <div class="container-holder">
       <div class="content">
-        <h1>{{data.name}}</h1>
+        <h1>Name: {{data.name}}</h1>
         <img src="{{data.imageURL}}" alt="{{data.name}}" />
-        <h3>{{data.marketLocation}}</h3>
-        <h3>{{data.partNumber || null}}</h3>
+        <h3>Market Location: {{data.marketLocation}}</h3>
+        <h3>Part Number: {{data.partNumber || null}}</h3>
+        <h3 *ngIf="data.stockQtyPerTote">Stock per Tote: {{data.stockQtyPerTote}}</h3>
+        <h3 *ngIf="data.totesPerSkid">Totes per Skid: {{data.totesPerSkid}}</h3>
+        <h3 *ngIf="data.totalStockPerSkid">Stock per Skid: {{data.totalStockPerSkid}}</h3>
 
         <div class="button-holders">
           <button type="submit" (click)="close()" class="submit-button">Close</button>

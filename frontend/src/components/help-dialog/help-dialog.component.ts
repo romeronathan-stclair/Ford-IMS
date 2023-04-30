@@ -14,7 +14,7 @@ export class HelpDialogComponent {
   ) { }
 
   ngOnInit(): void {
-
+    console.log(this.data);
   }
 
   close() {

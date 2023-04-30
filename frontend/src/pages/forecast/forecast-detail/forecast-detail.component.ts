@@ -66,6 +66,7 @@ export class ForecastDetailComponent {
         if (this.productForecast.stockForecast?.forecastedStockItems) {
           this.stockForecastExists = true;
         }
+        this.sharedService.refreshDashboardForecast(true);
 
 
 
@@ -281,12 +282,14 @@ export class ForecastDetailComponent {
             this.spinnerService.showHide();
             this.messageService.clear();
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Production Count Changed' });
-            this.sharedService.refreshDashboardForecast(true);
+
+
             this.loadForecast();
 
           },
           error: (error: any) => {
             this.spinnerService.showHide();
+
           },
 
         }

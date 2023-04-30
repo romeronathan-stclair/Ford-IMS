@@ -4,7 +4,7 @@
 
       <div>
         <input placeholder="Dunnage Name" formControlName="name" type="name" class="form-control"
-        id="name-input" aria-describedby="nameHelp" required />
+        id="name-input" aria-describedby="nameHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         dunnageForm.controls['name'].touched && !dunnageForm.controls['name'].dirty
@@ -15,7 +15,7 @@
 
       <div>
         <input  placeholder="Skid Quantity" formControlName="skidQuantity" type="number" class="form-control"
-        id="skidQuantity-input" aria-describedby="skidQuantityHelp" required />
+        id="skidQuantity-input" aria-describedby="skidQuantityHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         dunnageForm.controls['skidQuantity'].touched && !dunnageForm.controls['skidQuantity'].dirty
@@ -26,7 +26,7 @@
 
       <div>
         <input placeholder="Low Dunnage Amount" formControlName="lowStock" type="number"  class="form-control"
-        id="lowStock-input" aria-describedby="lowStockHelp" required />
+        id="lowStock-input" aria-describedby="lowStockHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         dunnageForm.controls['lowStock'].touched && !dunnageForm.controls['lowStock'].dirty
@@ -37,7 +37,7 @@
 
       <div>
         <input placeholder="Market Location" formControlName="marketLocation" type="marketLocation" class="form-control"
-          id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+          id="marketLocation-input" aria-describedby="marketLocationHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         dunnageForm.controls['marketLocation'].touched && !dunnageForm.controls['marketLocation'].dirty

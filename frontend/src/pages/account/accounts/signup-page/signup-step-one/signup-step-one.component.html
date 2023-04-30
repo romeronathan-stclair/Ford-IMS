@@ -4,7 +4,7 @@
             <div class="input-holder">
                 <label for="email-input" class="form-label">Email</label>
                 <input formControlName="email" type="email" class="form-control" id="email-input"
-                    aria-describedby="emailHelp" required />
+                    aria-describedby="emailHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                     displayValidationErrors ||
                     !userForm.controls['email'].dirty &&
@@ -18,7 +18,7 @@
             <div class="input-holder">
                 <label for="inviteCode-input" class="form-label">Invite code</label>
                 <input formControlName="inviteCode" type="inviteCode" class="form-control" id="inviteCode-input"
-                    aria-describedby="inviteCodeHelp" required />
+                    aria-describedby="inviteCodeHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                     displayValidationErrors ||
                     !userForm.controls['inviteCode'].dirty &&

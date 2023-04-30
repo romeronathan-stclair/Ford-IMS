@@ -5,7 +5,7 @@
             <div>
 
                 <input placeholder="Department Name" formControlName="departmentName" type="departmentName"
-                    class="form-control" id="departmentName-input" aria-describedby="departmentNameHelp" required />
+                    class="form-control" id="departmentName-input" aria-describedby="departmentNameHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                 displayValidationErrors ||
                 !departmentForm.controls['departmentName'].dirty &&

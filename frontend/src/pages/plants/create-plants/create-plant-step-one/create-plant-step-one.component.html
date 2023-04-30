@@ -4,7 +4,7 @@
             <div>
 
                 <input placeholder="Plant Name" formControlName="plantName" type="plantName" class="form-control"
-                    id="plantName-input" aria-describedby="plantNameHelp" required />
+                    id="plantName-input" aria-describedby="plantNameHelp" autocomplete="off" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                 displayValidationErrors ||
                 !plantForm.controls['plantName'].dirty &&
@@ -16,7 +16,7 @@
 
             <div>
                 <input placeholder="Plant Location" formControlName="plantLocation" type="plantLocation"
-                    class="form-control" id="plantLocation-input" required />
+                    class="form-control" id="plantLocation-input" autocomplete="off" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                 plantForm.controls['plantLocation'].errors &&
                 (displayValidationErrors ||

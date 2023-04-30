@@ -26,6 +26,7 @@ export class CreateStockStepOneComponent {
     private sharedService: SharedService,
     private router: Router,
     private spinnerService: SpinnerService,
+    private authService: AuthService,
 
     private messageService: MessageService) {
         this.stockForm = this.formBuilder.group({

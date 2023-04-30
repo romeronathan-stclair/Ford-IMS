@@ -14,7 +14,7 @@
 
       <div>
         <input placeholder="Stock Name" formControlName="name" type="name" class="form-control"
-        id="name-input" aria-describedby="nameHelp" required />
+        id="name-input" aria-describedby="nameHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['name'].touched && !stockForm.controls['name'].dirty
@@ -25,7 +25,7 @@
 
       <div>
         <input placeholder="Part Number" formControlName="partNumber" type="partNumber" class="form-control"
-        id="partNumber-input" aria-describedby="partNumberHelp" required />
+        id="partNumber-input" aria-describedby="partNumberHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['partNumber'].touched && !stockForm.controls['partNumber'].dirty
@@ -36,7 +36,7 @@
 
       <div *ngIf="!roughStockChecked || subAssemblyChecked">
         <input placeholder="Stock Quantity per Tote" formControlName="stockQtyPerTote" type="stockQtyPerTote" class="form-control"
-        id="stockQtyPerTote-input" aria-describedby="stockQtyPerToteHelp"/>
+        id="stockQtyPerTote-input" aria-describedby="stockQtyPerToteHelp" autocomplete="off"/>
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['stockQtyPerTote'].touched && !stockForm.controls['stockQtyPerTote'].dirty
@@ -47,7 +47,7 @@
 
       <div *ngIf="!roughStockChecked || subAssemblyChecked">
         <input placeholder="Amount of Totes per Skid" formControlName="totesPerSkid" type="totesPerSkid" class="form-control"
-        id="totesPerSkid-input" aria-describedby="totesPerSkidHelp"/>
+        id="totesPerSkid-input" aria-describedby="totesPerSkidHelp" autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['totesPerSkid'].touched && !stockForm.controls['totesPerSkid'].dirty
@@ -58,7 +58,7 @@
 
       <div *ngIf="roughStockChecked">
         <input placeholder="Total Stock per Skid" formControlName="totalStockPerSkid" type="totalStockPerSkid" class="form-control"
-        id="totalStockPerSkid-input" aria-describedby="totalStockPerSkidHelp"/>
+        id="totalStockPerSkid-input" aria-describedby="totalStockPerSkidHelp" autocomplete="off"/>
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['totalStockPerSkid'].touched  && !stockForm.controls['totalStockPerSkid'].dirty
@@ -69,7 +69,7 @@
 
       <div>
         <input placeholder="Low Stock Amount" formControlName="lowStock" type="lowStock" class="form-control"
-        id="lowStock-input" aria-describedby="totesPerSkidHelp" required />
+        id="lowStock-input" aria-describedby="totesPerSkidHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['lowStock'].touched && !stockForm.controls['lowStock'].dirty

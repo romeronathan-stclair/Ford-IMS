@@ -4,7 +4,7 @@
 
       <div>
         <input placeholder="Market Location" formControlName="marketLocation" type="marketLocation" class="form-control"
-          id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+          id="marketLocation-input" aria-describedby="marketLocationHelp" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
         displayValidationErrors ||
         stockForm.controls['marketLocation'].touched && !stockForm.controls['marketLocation'].dirty

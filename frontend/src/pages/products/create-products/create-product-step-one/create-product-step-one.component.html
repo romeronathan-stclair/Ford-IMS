@@ -6,7 +6,7 @@
 
             <div>
                 <input placeholder="Product Name" formControlName="name" type="name" class="form-control"
-                    id="name-input" aria-describedby="nameHelp" required />
+                    id="name-input" aria-describedby="nameHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                 displayValidationErrors ||
                 productForm.controls['name'].touched && !productForm.controls['name'].dirty
@@ -17,7 +17,7 @@
 
             <div>
                 <input placeholder="Part Number" formControlName="partNumber" type="partNumber" class="form-control"
-                    id="partNumber-input" aria-describedby="partNumberHelp" required />
+                    id="partNumber-input" aria-describedby="partNumberHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
           displayValidationErrors ||
           productForm.controls['partNumber'].dirty &&
@@ -28,7 +28,7 @@
             </div>
             <div>
                 <input placeholder="Market Location" formControlName="marketLocation" type="text" class="form-control"
-                    id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+                    id="marketLocation-input" aria-describedby="marketLocationHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                   displayValidationErrors ||
                   productForm.controls['marketLocation'].dirty &&
@@ -41,7 +41,7 @@
 
             <div>
                 <input placeholder="Daily Target" formControlName="dailyTarget" type="number" class="form-control"
-                    id="dailyTarget-input" aria-describedby="dailyTargetHelp" required />
+                    id="dailyTarget-input" aria-describedby="dailyTargetHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                   displayValidationErrors ||
                   productForm.controls['dailyTarget'].dirty &&

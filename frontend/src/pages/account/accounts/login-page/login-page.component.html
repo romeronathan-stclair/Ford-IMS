@@ -4,7 +4,7 @@
         <div>
 
         <input formControlName="email" type="email" class="form-control" id="email-input" aria-describedby="emailHelp" placeholder="email@ford.com"
-            required />
+            required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
             !userForm.controls['email'].dirty &&
@@ -15,7 +15,7 @@
         </div>
 
     <div>
-        <input formControlName="password" type="password" class="form-control" id="password-input" placeholder="password" required />
+        <input formControlName="password" type="password" class="form-control" id="password-input" placeholder="password" required autocomplete="off" />
         <mat-error class="field-validation-error" *ngIf="
             userForm.controls['password'].errors &&
             (displayValidationErrors ||

@@ -4,7 +4,7 @@
             <div class="input-holder">
                 <label for="fullName-input" class="form-label">Full Name</label>
                 <input formControlName="fullName" type="fullName" class="form-control" id="fullName-input"
-                    aria-describedby="fullNameHelp" required />
+                    aria-describedby="fullNameHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                     displayValidationErrors ||
                     !userForm.controls['fullName'].dirty &&
@@ -15,7 +15,7 @@
             </div>
             <div class="input-holder">
                 <label for="password-input" class="form-label">Password</label>
-                <input formControlName="password" type="password" class="form-control" id="password-input" required />
+                <input formControlName="password" type="password" class="form-control" id="password-input" required autocomplete="off" />
                 <mat-error class="field-validation-error password-required" *ngIf="
                     userForm.controls['password'].errors &&
                     (displayValidationErrors ||
@@ -70,7 +70,7 @@
                             : "check_circle"
                             }}
                         </i>
-                        Passowrd must contain capital case.
+                        Password must contain capital case.
                     </label>
 
                     <label class="col" [ngClass]="
@@ -111,7 +111,7 @@
             <div class="input-holder">
                 <label for="password-input" class="form-label">Confirm Password</label>
                 <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword-input"
-                    required />
+                    required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                     userForm.controls['confirmPassword'].errors &&
                     (displayValidationErrors ||

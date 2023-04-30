@@ -4,7 +4,7 @@
             <div>
 
                 <input placeholder="Full Name" formControlName="fullName" type="fullName" class="form-control"
-                    id="fullName-input" aria-describedby="fullNameHelp" required />
+                    id="fullName-input" aria-describedby="fullNameHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                 displayValidationErrors ||
                 !userForm.controls['fullName'].dirty &&
@@ -16,7 +16,7 @@
 
             <div>
                 <input placeholder="Email" formControlName="email" type="email" class="form-control" id="email-input"
-                    required />
+                    required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
                 userForm.controls['email'].errors &&
                 (displayValidationErrors ||

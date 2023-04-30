@@ -63,6 +63,9 @@ export class CycleCheckStepOneComponent {
         imageURL: helpItem.imageURL,
         marketLocation: helpItem.marketLocation,
         partNumber: helpItem.partNumber,
+        stockQtyPerTote: helpItem.stockQtyPerTote,
+        totesPerSkid: helpItem.totesPerSkid,
+        totalStockPerSkid: helpItem.totalStockPerSkid
       }
     });
   }

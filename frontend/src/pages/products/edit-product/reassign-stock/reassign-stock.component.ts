@@ -105,7 +105,7 @@ export class ReassignStockComponent {
         }).map((stock: any) => {
           const productStock = this.productStocks.find((ps: any) => ps.stockId === stock._id);
           return {
-            id: stock._id,
+            _id: stock._id,
             name: stock.name,
             imageURL: stock.imageURL,
             usePerProduct: productStock?.usePerProduct || 0,
@@ -169,6 +169,7 @@ export class ReassignStockComponent {
   }
 
   submit() {
+    console.log(this.targetStocks);
 
 
     this.productService.reassignProductStock({

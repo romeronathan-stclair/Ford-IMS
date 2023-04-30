@@ -183,6 +183,7 @@ export const reassignProductStock = async (req: Request, res: Response, next: Ne
     // Iterate through the existing product stocks and delete the ones not in the incoming stocks
     for (const existingStock of productStocks) {
         const isIncoming = incomingStocks.some((incomingStock: any) => incomingStock._id == existingStock.stockId);
+        console.log(isIncoming);
 
         if (!isIncoming) {
             existingStock.isDeleted = true;

@@ -13,7 +13,7 @@
 
 
                 <input placeholder="Value" formControlName="value" type="number" class="form-control" id="name-input"
-                    required />
+                    required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
               displayValidationErrors ||
               !valueForm.controls['value'].dirty &&

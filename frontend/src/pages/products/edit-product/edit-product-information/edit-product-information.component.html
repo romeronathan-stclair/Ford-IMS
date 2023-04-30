@@ -4,7 +4,7 @@
             <div class="input-holder">
                 <label for="name">Product Name</label>
                 <input placeholder="product Name" formControlName="name" type="text" class="form-control"
-                    id="name-input" aria-describedby="nameHelp" required />
+                    id="name-input" aria-describedby="nameHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
             !productForm.controls['name'].dirty &&
@@ -18,7 +18,7 @@
                 <label for="partNumber">Part Number</label>
 
                 <input placeholder="Part Number" formControlName="partNumber" type="text" class="form-control"
-                    id="partNumber-input" aria-describedby="partNumberHelp" required />
+                    id="partNumber-input" aria-describedby="partNumberHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
             !productForm.controls['partNumber'].dirty &&
@@ -33,7 +33,7 @@
             <div class="input-holder">
                 <label for="dailyTarget">Daily Target</label>
                 <input placeholder="Daily Target" formControlName="dailyTarget" type="number" class="form-control"
-                    id="dailyTarget-input" aria-describedby="dailyTargetHelp" required />
+                    id="dailyTarget-input" aria-describedby="dailyTargetHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
             !productForm.controls['dailyTarget'].dirty &&
@@ -47,7 +47,7 @@
             <div class="input-holder">
                 <label for="marketLocation">Market Location</label>
                 <input placeholder="Market Location" formControlName="marketLocation" type="text" class="form-control"
-                    id="marketLocation-input" aria-describedby="marketLocationHelp" required />
+                    id="marketLocation-input" aria-describedby="marketLocationHelp" required autocomplete="off" />
                 <mat-error class="field-validation-error" *ngIf="
             displayValidationErrors ||
             !productForm.controls['marketLocation'].dirty &&
